@@ -1,7 +1,5 @@
 package com.diden.demo;
 
-import java.util.Objects;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
