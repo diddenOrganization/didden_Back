@@ -1,8 +1,12 @@
 package com.diden.user.vo;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
+@Getter
+@Setter
 public class UserVo {
     private String userId = null;
     private String userName = null;
