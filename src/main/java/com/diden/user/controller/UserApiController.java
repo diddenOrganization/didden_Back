@@ -10,6 +10,7 @@ import com.diden.user.vo.UserVo;
 import com.google.gson.JsonObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -50,22 +51,22 @@ public class UserApiController {
     }
 
     @PostMapping("/user/api/get")
-    public ResponseEntity<UserVo> userData(@RequestBody UserVo userVo) String userPassword) {
+    public ResponseEntity<UserVo> userData(@RequestBody UserVo userVo) {
 
         Map<String, Object> userData = new HashMap<String, Object>();
 
-        userData.put("userId", userId);
-        userData.put("userPassword", userPassword);
+        userData.put("userId", userVo.getUserId());
+        userData.put("userPassword", userVo.getUserPassword());
 
-        UserVo userVo = userService.userInfo(userData);
+        UserVo userVoData = userService.userInfo(userData);
         JsonObject userResult = new JsonObject();
 
-        if (userVo == null || Objects.toString(userVo.getUserId(), "").equals("")) {
+        if (userVoData == null || Objects.toString(userVoData.getUserId(), "").equals("")) {
             userResult.addProperty("result", false);
-            return new ResponseEntity<>(UserVo, HttpStatus.OK);
+            return new ResponseEntity<>(userVo, HttpStatus.OK);
         } else {
             userResult.addProperty("result", true);
-            return new ResponseEntity<>(UserVo, HttpStatus.OK);
+            return new ResponseEntity<>(userVo, HttpStatus.OK);
         }
     }
 }
