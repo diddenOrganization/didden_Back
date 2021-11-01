@@ -10,8 +10,11 @@ import com.diden.user.vo.UserVo;
 import com.google.gson.JsonObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -46,9 +49,8 @@ public class UserApiController {
         return userJsonList.toString();
     }
 
-    @GetMapping("/user/api/get/{userId}/{userPassword}")
-    public String userGet(@PathVariable(value = "userId") String userId,
-            @PathVariable(value = "userPassword") String userPassword) {
+    @PostMapping("/user/api/get")
+    public ResponseEntity<UserVo> userData(@RequestBody UserVo userVo) String userPassword) {
 
         Map<String, Object> userData = new HashMap<String, Object>();
 
@@ -60,10 +62,10 @@ public class UserApiController {
 
         if (userVo == null || Objects.toString(userVo.getUserId(), "").equals("")) {
             userResult.addProperty("result", false);
-            return userResult.toString();
+            return new ResponseEntity<>(UserVo, HttpStatus.OK);
         } else {
             userResult.addProperty("result", true);
-            return userResult.toString();
+            return new ResponseEntity<>(UserVo, HttpStatus.OK);
         }
     }
 }
