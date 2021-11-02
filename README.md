@@ -30,7 +30,7 @@ SELECT USER_ID
 @GetMapping(value = "/user/list", produces = "application/json; charset=UTF-8")
 ~~~
 > 사용자 리스트 정보
-
+--------------------------------------------------------------
 ~~~java
 @PostMapping(value = "/user/login", produces = "application/json; charset=UTF-8")
 ~~~
@@ -50,30 +50,38 @@ userResult.addProperty("error", e.getMessage());
 ~~~JAVA
 @PutMapping(value = "/user", produces = "application/json; charset=UTF-8")
 ~~~
-> 회원정보 Insert URL
+> 회원정보 Insert/Update URL
 
 ~~~JAVA
 userResult.addProperty("result", true);
 userResult.addProperty("put", "insert");
 ~~~
-> 
+> 회원정보 Insert 성공시
 
 ~~~JAVA
 userResult.addProperty("result", true);
 userResult.addProperty("put", "update");
 ~~~
+> 회원정보 Update 성공시
 
 ~~~JAVA
 userResult.addProperty("result", false);
 userResult.addProperty("error", e.getMessage());
 ~~~
+> 회원정보 Insert/Update 실패시
 
 ~~~JAVA
 @DeleteMapping(value = "/user", produces = "application/json; charset=UTF-8")
+~~~
+> 사용자 정보 삭제 URL
+
+~~~JAVA
 userResult.addProperty("result", true);
 ~~~
+> 사용자 정보 삭제 성공시
 
 ~~~JAVA
 userResult.addProperty("result", false);
 userResult.addProperty("error", e.getMessage());
 ~~~
+> 사용자 정보 삭제 
