@@ -22,8 +22,5 @@ public class GpConfig implements WebMvcConfigurer {
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.setHeader("Access-Control-Allow-Headers", "*");
         chain.doFilter(request, response);
-        // res.setHeader(name, value);
-        // cr.addMapping("/**").allowedOrigins("http://127.0.0.1:8081") // 허용할 주소 및 포트
-        // .allowedOrigins("http://localhost:8081"); // 허용할 주소 및 포트
     }
 }

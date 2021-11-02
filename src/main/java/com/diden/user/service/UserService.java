@@ -10,4 +10,8 @@ public interface UserService {
     public UserVo userInfo(UserVo userVo);
 
     public void userInsert(UserVo userVo);
+
+    public void userUpdate(UserVo userVo);
+
+    public void userDelete(UserVo userVo);
 }

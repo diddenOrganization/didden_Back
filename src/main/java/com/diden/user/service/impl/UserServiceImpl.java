@@ -32,4 +32,16 @@ public class UserServiceImpl implements UserService {
         userMapper.userInsert(userVo);
     }
 
+    @Override
+    public void userUpdate(UserVo userVo) {
+        // TODO Auto-generated method stub
+        userMapper.userUpdate(userVo);
+    }
+
+    @Override
+    public void userDelete(UserVo userVo) {
+        // TODO Auto-generated method stub
+        userMapper.userDelete(userVo);
+    }
+
 }
