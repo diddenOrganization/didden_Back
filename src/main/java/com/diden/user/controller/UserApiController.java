@@ -23,7 +23,7 @@ public class UserApiController {
     @Autowired
     UserService userService;
 
-    @GetMapping(value = "/user/list", produces = "application/json; charset=UTF-8")
+    @GetMapping(value = "/user/list")
     public String userList() {
         List<UserVo> userVoList = userService.userList();
         JsonObject userJsonList = new JsonObject();
@@ -49,7 +49,7 @@ public class UserApiController {
         return userJsonList.toString();
     }
 
-    @PostMapping(value = "/user/login", produces = "application/json; charset=UTF-8")
+    @PostMapping(value = "/user/login")
     public ResponseEntity<String> userData(@RequestBody(required = false) UserVo userVo) throws Exception {
         try {
             if (Objects.isNull(userVo)) {
@@ -81,7 +81,7 @@ public class UserApiController {
         }
     }
 
-    @PutMapping(value = "/user", produces = "application/json; charset=UTF-8")
+    @PutMapping(value = "/user")
     public ResponseEntity<String> userInsert(@RequestBody(required = false) UserVo userVo) {
         JsonObject userResult = new JsonObject();
         try {
@@ -113,7 +113,7 @@ public class UserApiController {
         return new ResponseEntity<>(userResult.toString(), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/user", produces = "application/json; charset=UTF-8")
+    @DeleteMapping(value = "/user")
     public ResponseEntity<String> userDelete(@RequestBody(required = false) UserVo userVo) {
         JsonObject userResult = new JsonObject();
         try {

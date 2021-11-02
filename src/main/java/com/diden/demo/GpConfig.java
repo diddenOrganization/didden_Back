@@ -21,6 +21,8 @@ public class GpConfig implements WebMvcConfigurer {
 
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.setHeader("Access-Control-Allow-Headers", "*");
+        res.setContentType("application/json; charset=UTF-8");
+        res.setCharacterEncoding("UTF-8");
         chain.doFilter(request, response);
     }
 }
