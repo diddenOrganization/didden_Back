@@ -3,7 +3,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.diden.user.mapper.UserMapper">
-    <select id="userList" resultType="com.diden.user.vo.UserVo">
+  <select id="userList" resultType="com.diden.user.vo.UserVo">
         SELECT USER_ID
              , USER_NAME
              , USER_PASSWORD
@@ -18,7 +18,7 @@
           FROM TB_USER
     </select>
 
-    <select id="userInfo" parameterType="com.diden.user.vo.UserVo" resultType="com.diden.user.vo.UserVo">
+  <select id="userInfo" parameterType="com.diden.user.vo.UserVo" resultType="com.diden.user.vo.UserVo">
         SELECT USER_ID
              , USER_NAME
              , USER_PASSWORD
@@ -35,7 +35,7 @@
            AND USER_PASSWORD = #{userPassword}
     </select>
 
-    <insert id="userInsert" parameterType="com.diden.user.vo.UserVo">
+  <insert id="userInsert" parameterType="com.diden.user.vo.UserVo">
         INSERT INTO TB_USER (
             USER_ID
           , USER_NAME
