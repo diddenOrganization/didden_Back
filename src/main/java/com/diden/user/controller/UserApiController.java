@@ -1,8 +1,6 @@
 package com.diden.user.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import com.diden.user.service.UserService;
@@ -13,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -50,23 +48,50 @@ public class UserApiController {
         return userJsonList.toString();
     }
 
-    @PostMapping("/user/api/get")
-    public ResponseEntity<UserVo> userData(@RequestBody UserVo userVo) {
+    @PostMapping(value = "/user/api/get", produces = "application/json; charset=UTF-8")
+    public ResponseEntity<String> userData(@RequestBody(required = false) UserVo userVo) throws Exception {
+        try {
+            if (Objects.isNull(userVo)) {
+                throw new Exception("파라미터 null");
+            }
 
-        Map<String, Object> userData = new HashMap<String, Object>();
+            UserVo userVoData = userService.userInfo(userVo);
+            if (Objects.isNull(userVoData)) {
+                throw new Exception("계정이 존재하지 않습니다.");
+            }
 
-        userData.put("userId", userVo.getUserId());
-        userData.put("userPassword", userVo.getUserPassword());
+            JsonObject userResult = new JsonObject();
 
-        UserVo userVoData = userService.userInfo(userData);
-        JsonObject userResult = new JsonObject();
-
-        if (userVoData == null || Objects.toString(userVoData.getUserId(), "").equals("")) {
+            if (Objects.toString(userVo.getUserId(), "").equals(userVoData.getUserId())) {
+                if (Objects.toString(userVo.getUserPassword(), "").equals(userVoData.getUserPassword())) {
+                    userResult.addProperty("result", true);
+                    return new ResponseEntity<>(userResult.toString(), HttpStatus.OK);
+                } else {
+                    throw new Exception("비밀번호가 틀리거나, 입력하지 않았습니다.");
+                }
+            } else {
+                throw new Exception("계정이 없거나, 아이디가 틀립니다.");
+            }
+        } catch (Exception e) {
+            JsonObject userResult = new JsonObject();
             userResult.addProperty("result", false);
-            return new ResponseEntity<>(userVo, HttpStatus.OK);
-        } else {
-            userResult.addProperty("result", true);
-            return new ResponseEntity<>(userVo, HttpStatus.OK);
+            userResult.addProperty("error", e.getMessage());
+            return new ResponseEntity<>(userResult.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PutMapping(value = "/user", produces = "application/json; charset=UTF-8")
+    public ResponseEntity<String> userInsert(@RequestBody(required = false) UserVo userVo) {
+        JsonObject userResult = new JsonObject();
+        try {
+            userService.userInsert(userVo);
+            userResult.addProperty("result", true);
+        } catch (Exception e) {
+            // TODO: handle exception
+            userResult.addProperty("result", false);
+            userResult.addProperty("error", e.getMessage());
+            return new ResponseEntity<>(userResult.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(userResult.toString(), HttpStatus.OK);
     }
 }

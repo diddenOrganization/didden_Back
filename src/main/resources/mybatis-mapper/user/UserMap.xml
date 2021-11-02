@@ -18,8 +18,7 @@
           FROM TB_USER
     </select>
 
-
-    <select id="userInfo" parameterType="map" resultType="com.diden.user.vo.UserVo">
+    <select id="userInfo" parameterType="com.diden.user.vo.UserVo" resultType="com.diden.user.vo.UserVo">
         SELECT USER_ID
              , USER_NAME
              , USER_PASSWORD
@@ -35,5 +34,29 @@
          WHERE USER_ID = #{userId}
            AND USER_PASSWORD = #{userPassword}
     </select>
+
+    <insert id="userInsert" parameterType="com.diden.user.vo.UserVo">
+        INSERT INTO TB_USER (
+            USER_ID
+          , USER_NAME
+          , USER_PASSWORD
+          , USER_NICKNAME
+          , USER_BIRTHDAY
+          , USER_GENDER
+          , USER_EMAIL
+          , USER_PHONE_NUMBER
+          , USER_PRIVACY_CONSENT 
+        ) VALUES (
+            #{userId}
+          , #{userName}
+          , #{userPassword}
+          , #{userNickname}
+          , #{userBirthday}
+          , #{userGender}
+          , #{userEmail}
+          , #{userPhoneNumber}
+          , #{userPrivacyConsent}           
+        )
+    </insert>
 
 </mapper>
