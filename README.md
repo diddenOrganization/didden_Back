@@ -26,6 +26,51 @@ SELECT USER_ID
   
 # 2021-11-02(화) 현재 진행상황
 
+UserVo.java
+~~~java
+package com.diden.user.vo;
+
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+@Data
+@Getter
+@Setter
+public class UserVo {
+    private String userId = null;
+    private String userName = null;
+    private String userPassword = null;
+    private String userNickname = null;
+    private String userBirthday = null;
+    private String userGender = null;
+    private String userEmail = null;
+    private String userPhoneNumber = null;
+    private String userCreateDate = null;
+    private String userUpdateDate = null;
+    private String userPrivacyConsent = null;
+}
+~~~
+> 파라미터 Key 값
+
+~~~json
+{
+    "userId" : "user1"
+    ,"userName" : "test"
+    ,"userPassword" : "test"
+    ,"userNickname" : "test"
+    ,"userBirthday" : "test"
+    ,"userGender" : "test"
+    ,"userEmail" : "test"
+    ,"userPhoneNumber" : "test"
+    ,"userCreateDate" : "test"
+    ,"userUpdateDate" : "test"
+    ,"userPrivacyConsent" : "1"
+}
+~~~
+> Json 형식으로 데이터를 전달해줘야 합니다.
+--------------------------------------------------------------
+
 ~~~JAVA
 @GetMapping(value = "/user/list", produces = "application/json; charset=UTF-8")
 ~~~
