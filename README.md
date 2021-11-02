@@ -46,7 +46,7 @@ userResult.addProperty("result", false);
 userResult.addProperty("error", e.getMessage());
 ~~~
 > 로그인 실패시
-
+--------------------------------------------------------------
 ~~~JAVA
 @PutMapping(value = "/user", produces = "application/json; charset=UTF-8")
 ~~~
@@ -69,7 +69,7 @@ userResult.addProperty("result", false);
 userResult.addProperty("error", e.getMessage());
 ~~~
 > 회원정보 Insert/Update 실패시
-
+--------------------------------------------------------------
 ~~~JAVA
 @DeleteMapping(value = "/user", produces = "application/json; charset=UTF-8")
 ~~~
@@ -84,4 +84,5 @@ userResult.addProperty("result", true);
 userResult.addProperty("result", false);
 userResult.addProperty("error", e.getMessage());
 ~~~
-> 사용자 정보 삭제 
+> 사용자 정보 삭제 실패시
+--------------------------------------------------------------
