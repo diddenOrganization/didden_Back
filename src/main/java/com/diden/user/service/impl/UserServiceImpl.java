@@ -1,7 +1,6 @@
 package com.diden.user.service.impl;
 
 import java.util.List;
-import java.util.Map;
 
 import com.diden.user.mapper.UserMapper;
 import com.diden.user.service.UserService;
@@ -22,9 +21,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserVo userInfo(Map<String, Object> userData) {
+    public UserVo userInfo(UserVo userVo) {
         // TODO Auto-generated method stub
-        return userMapper.userInfo(userData);
+        return userMapper.userInfo(userVo);
+    }
+
+    @Override
+    public void userInsert(UserVo userVo) {
+        // TODO Auto-generated method stub
+        userMapper.userInsert(userVo);
     }
 
 }
