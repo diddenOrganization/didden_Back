@@ -27,8 +27,7 @@ public class GpConfig implements WebMvcConfigurer {
         chain.doFilter(request, res);
     }
 
-    public void addCorsMappings(CorsRegistry cr, HttpHeaders header) {
+    public void addCorsMappings(CorsRegistry cr) {
         cr.addMapping("/**").allowedOrigins("*").allowedMethods("*");
-        header.setContentType(MediaType.APPLICATION_JSON);
     }
 }
