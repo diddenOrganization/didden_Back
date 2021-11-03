@@ -1,8 +1,10 @@
 package com.diden.user.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
+import com.diden.demo.ParsingJSONFromURL;
 import com.diden.user.service.UserService;
 import com.diden.user.vo.UserVo;
 import com.google.gson.JsonObject;
@@ -22,6 +24,13 @@ public class UserApiController {
 
     @Autowired
     UserService userService;
+
+    @GetMapping(value = "/user/test")
+    public String test() throws IOException {
+        ParsingJSONFromURL parsingJSONFromURL = new ParsingJSONFromURL();
+        return parsingJSONFromURL.getParsingJSONFromURL(
+                "https://api.odcloud.kr/api/15003416/v1/uddi:a635e6c7-82cf-4714-b002-c7cf4cb20121_201609071527?page=1&perPage=10&serviceKey=96EIT1koaTBt2OfbhSFR9PyKGOKS%2FAMqgeugwN1XT2QwjnE97ZiG1uszeNCPJquN2y2XIYC8GX8BlAcpvUcusw%3D%3D");
+    }
 
     @GetMapping(value = "/user/list")
     public String userList() {
