@@ -9,6 +9,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -19,10 +22,13 @@ public class GpConfig implements WebMvcConfigurer {
             throws IOException, ServletException {
         HttpServletResponse res = (HttpServletResponse) response;
 
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.setHeader("Access-Control-Allow-Headers", "*");
         res.setContentType("application/json; charset=UTF-8");
         res.setCharacterEncoding("UTF-8");
-        chain.doFilter(request, response);
+        chain.doFilter(request, res);
+    }
+
+    public void addCorsMappings(CorsRegistry cr, HttpHeaders header) {
+        cr.addMapping("/**").allowedOrigins("*").allowedMethods("*");
+        header.setContentType(MediaType.APPLICATION_JSON);
     }
 }
