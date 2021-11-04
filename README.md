@@ -167,3 +167,27 @@ userResult.addProperty("error", e.getMessage());
 > 사용자 정보 삭제 실패시
 
 ---
+
+# 2021-11-04(목) 현재 진행상황
+
+## 1. 관광 데이터 테스트 URL
+
+```java
+@GetMapping(value = "/user/test")
+```
+
+> 관광 데이터 10건 호출.
+
+```java
+rootobj = root.getAsJsonObject(); // 관광데이터
+rootobj.addProperty("result", true);
+```
+
+> URL 호출 성공시
+
+```java
+userResult.addProperty("result", false);
+userResult.addProperty("error", e.getMessage());
+```
+
+> URL 호출 실패시
