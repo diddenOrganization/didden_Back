@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import com.diden.demo.ParsingJSONFromURL;
 import com.diden.user.service.UserService;
 import com.diden.user.vo.UserVo;
@@ -19,7 +22,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
+@Slf4j
 public class UserApiController {
 
     @Autowired
@@ -58,35 +64,62 @@ public class UserApiController {
         return userJsonList.toString();
     }
 
+    // Exception 어노테이션.
+    // Json Exception 공통.
+    // View Exception 공통.
     @PostMapping(value = "/user/login")
-    public ResponseEntity<String> userData(@RequestBody(required = false) UserVo userVo) throws Exception {
+    public ResponseEntity<String> userData(@RequestBody(required = false) UserVo userVo, HttpServletRequest request)
+            throws Exception {
         try {
+            JsonObject userResult = new JsonObject();
+            log.info("{}", request.getSession());
+
             if (Objects.isNull(userVo)) {
                 throw new Exception("파라미터 null");
             }
 
             UserVo userVoData = userService.userInfo(userVo);
             if (Objects.isNull(userVoData)) {
-                throw new Exception("계정이 존재하지 않습니다.");
+                return new ResponseEntity<>(errorMethod("login", null), HttpStatus.INTERNAL_SERVER_ERROR);
             }
-
-            JsonObject userResult = new JsonObject();
 
             if (Objects.toString(userVo.getUserId(), "").equals(userVoData.getUserId())) {
                 if (Objects.toString(userVo.getUserPassword(), "").equals(userVoData.getUserPassword())) {
                     userResult.addProperty("result", true);
+                    HttpSession session = request.getSession();
+                    session.setAttribute("sessionId", userVoData);
                     return new ResponseEntity<>(userResult.toString(), HttpStatus.OK);
                 } else {
-                    throw new Exception("비밀번호가 틀리거나, 입력하지 않았습니다.");
+                    return new ResponseEntity<>(errorMethod("login", null), HttpStatus.INTERNAL_SERVER_ERROR);
                 }
             } else {
-                throw new Exception("계정이 없거나, 아이디가 틀립니다.");
+                return new ResponseEntity<>(errorMethod("login", null), HttpStatus.INTERNAL_SERVER_ERROR);
             }
+
         } catch (Exception e) {
+            return new ResponseEntity<>(errorMethod("", e), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping(value = "/user/logout")
+    public ResponseEntity<String> userLogout(@RequestBody(required = false) UserVo userVo, HttpServletRequest request)
+            throws Exception {
+        try {
             JsonObject userResult = new JsonObject();
-            userResult.addProperty("result", false);
-            userResult.addProperty("error", e.getMessage());
-            return new ResponseEntity<>(userResult.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+            log.info("{}", request.getSession());
+
+            if (request.getSession() != null) {
+                HttpSession session = request.getSession();
+                session.invalidate();
+
+                userResult.addProperty("result", true);
+                return new ResponseEntity<>(userResult.toString(), HttpStatus.OK);
+            } else {
+                throw new Exception("잘못된 접근.");
+            }
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(errorMethod("", e), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -149,5 +182,19 @@ public class UserApiController {
             return new ResponseEntity<>(userResult.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(userResult.toString(), HttpStatus.OK);
+    }
+
+    public String errorMethod(String errorType, Exception e) {
+        JsonObject errorResult = new JsonObject();
+
+        if (e != null) {
+            errorResult.addProperty("result", false);
+            errorResult.addProperty("error", e.getMessage());
+        } else if ("login".equals(errorType)) {
+            errorResult.addProperty("result", false);
+            errorResult.addProperty("error", "계정이 존재하지 않습니다.");
+        }
+
+        return errorResult.toString();
     }
 }

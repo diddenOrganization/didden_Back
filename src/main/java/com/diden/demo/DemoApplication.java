@@ -9,18 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan("com.diden")
 @MapperScan("com.diden.*.mapper*")
 public class DemoApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
 	}
-
-	// @Bean
-	// public CharacterEncodingFilter characterEncodingFilter() {
-	// CharacterEncodingFilter characterEncodingFilter = new
-	// CharacterEncodingFilter();
-	// characterEncodingFilter.setEncoding("UTF-8");
-	// characterEncodingFilter.setForceEncoding(true);
-	// return characterEncodingFilter;
-	// }
-
 }

@@ -1,0 +1,34 @@
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@tourdev_medium?TNS_ADMIN=/Users/ohjeung/key/Wallet_tourdev
+    driver-class-name: oracle.jdbc.OracleDriver
+    username: admin
+    password: Tourproject123!
+  mvc:
+    view:
+      prefix: /WEB-INF/template/
+      suffix: .jsp
+    converters:
+      preferred-json-mapper: gson
+
+mybatis:
+  mapper-locations: mybatis-mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  config: classpath:log4j2.xml
+
+server:
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+      force-response: true
+
+jasypt:
+  encryptor:
+    password: password # 암호화에 사용할 Passowrd 설정
+    bean: jasyptStringEncryptor # Bean 이름
