@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@tourdev_medium?TNS_ADMIN=/Users/ohjeung/key/Wallet_tourdev
+    driver-class-name: oracle.jdbc.OracleDriver
+    username: admin
+    password: Tourproject123!
+
+logging:
+  config: classpath:log4j2.xml
