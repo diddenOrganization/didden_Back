@@ -19,4 +19,5 @@ public class UserVo {
     private String userCreateDate = null;
     private String userUpdateDate = null;
     private String userPrivacyConsent = null;
+    private String userSocialLoginType = null;
 }

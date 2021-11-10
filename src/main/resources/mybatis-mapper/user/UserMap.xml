@@ -15,6 +15,7 @@
              , USER_CREATE_DATE
              , USER_UPDATE_DATE
              , USER_PRIVACY_CONSENT 
+             , USER_SOCIAL_LOGIN_TYPE
           FROM TB_USER
   </select>
 
@@ -30,6 +31,7 @@
              , USER_CREATE_DATE
              , USER_UPDATE_DATE
              , USER_PRIVACY_CONSENT 
+             , USER_SOCIAL_LOGIN_TYPE
           FROM TB_USER
          WHERE USER_ID = #{userId}
            AND USER_PASSWORD = #{userPassword}
@@ -46,6 +48,7 @@
           , USER_EMAIL
           , USER_PHONE_NUMBER
           , USER_PRIVACY_CONSENT 
+          , USER_SOCIAL_LOGIN_TYPE
         ) VALUES (
             #{userId}
           , #{userName}
@@ -56,6 +59,7 @@
           , #{userEmail}
           , #{userPhoneNumber}
           , #{userPrivacyConsent}
+          , #{userSocialLoginType}
         )
   </insert>
 

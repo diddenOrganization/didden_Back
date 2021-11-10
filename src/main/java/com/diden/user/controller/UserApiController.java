@@ -68,11 +68,11 @@ public class UserApiController {
     // Json Exception 공통.
     // View Exception 공통.
     @PostMapping(value = "/user/login")
-    public ResponseEntity<String> userData(@RequestBody(required = false) UserVo userVo, HttpServletRequest request)
-            throws Exception {
+    public ResponseEntity<String> userData(@RequestBody(required = false) UserVo userVo, HttpServletRequest request,
+            HttpSession session) throws Exception {
         try {
             JsonObject userResult = new JsonObject();
-            log.info("{}", request.getSession());
+            log.info("Session Check ============================== {}", request.getSession());
 
             if (Objects.isNull(userVo)) {
                 throw new Exception("파라미터 null");
@@ -86,8 +86,9 @@ public class UserApiController {
             if (Objects.toString(userVo.getUserId(), "").equals(userVoData.getUserId())) {
                 if (Objects.toString(userVo.getUserPassword(), "").equals(userVoData.getUserPassword())) {
                     userResult.addProperty("result", true);
-                    HttpSession session = request.getSession();
+                    // session = request.getxSession();
                     session.setAttribute("sessionId", userVoData);
+                    session.setMaxInactiveInterval(-1);
                     return new ResponseEntity<>(userResult.toString(), HttpStatus.OK);
                 } else {
                     return new ResponseEntity<>(errorMethod("login", null), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -106,7 +107,7 @@ public class UserApiController {
             throws Exception {
         try {
             JsonObject userResult = new JsonObject();
-            log.info("{}", request.getSession());
+            log.info("Session Check ============================== {}", request.getSession());
 
             if (request.getSession() != null) {
                 HttpSession session = request.getSession();
