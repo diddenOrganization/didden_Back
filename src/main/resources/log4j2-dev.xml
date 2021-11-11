@@ -24,9 +24,9 @@
             <AppenderRef ref="file" />
         </logger>
         <!-- rolling file에는 debug, console에는 info 분리하여 처리 가능하다. -->
-        <logger name="com.didden.demo" additivity="true">
+        <logger name="com.diden" additivity="true">
             <AppenderRef ref="console" level="debug" />
-            <AppenderRef ref="file" level="info" />
+            <AppenderRef ref="file" level="debug" />
         </logger>
     </Loggers>
 </Configuration>

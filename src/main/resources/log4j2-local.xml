@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Properties>
+        <Property name="logFileName">diddenDemo</Property>
+        <Property name="consoleLayout">%style{%d{ISO8601}}{white} %highlight{%-5level }[%style{%t}{bright,blue}] %style{%C{1.}}{bright,yellow}: %msg%n%throwable</Property>
+        <Property name="fileLayout">%d [%t] %-5level %c(%M:%L) - %m%n</Property>
+    </Properties>
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${consoleLayout}" />
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Logger name="java.sql" level="info" additivity="false">
+            <AppenderRef ref="console" />
+        </Logger>
+        <Logger name="egovframework" level="info" additivity="false">
+            <AppenderRef ref="console" />
+        </Logger>
+        <Logger name="jdbc.sqltiming" level="info" additivity="false">
+            <AppenderRef ref="console" />
+        </Logger>
+        <!-- 스프링 프레임워크에서 찍는건 level을 info로 설정 -->
+        <Logger name="org.springframework" level="info" additivity="false">
+            <AppenderRef ref="console" />
+        </Logger>
+        <Logger name="com.diden" level="debug" additivity="false">
+            <AppenderRef ref="console" />
+        </Logger>
+        <!-- <root level="info" additivity="false">
+            <AppenderRef ref="console" />
+        </root> -->
+    </Loggers>
+</Configuration>
