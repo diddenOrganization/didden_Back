@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: jdbc:oracle:thin:@tourdev_medium?TNS_ADMIN=/key/Wallet_tourdev
-    driver-class-name: oracle.jdbc.OracleDriver
-    username: admin
-    password: Tourproject123!
+    url: ENC(ET5sagzF8+buNcpKR0qgJdbl2c8A9fqqt3vsLmXofOMZgjUCEP6OpSwJDNCsS/K9HC5WAZhFyc9f7gUObmNvZgT/RUtWVkGRS/6X6XH2OwbSmiQ23cqHPA==)
+    driver-class-name: ENC(cnKupb0pmWOZcLymHFTUf1DZUuM8D3LP7ry5mcJcn18Udf4van287w==)
+    username: ENC(UHt96JlmrJnnGxC0kDYQXA==)
+    password: ENC(qBXfL3kT/WKsvL6S7wpzkVuDBQegEbdl)
 
 logging:
   config: classpath:log4j2-dev.xml
