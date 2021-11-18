@@ -7,6 +7,7 @@ import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.diden.config.JwtTokenUtil;
 import com.diden.demo.ParsingJSONFromURL;
 import com.diden.user.service.UserService;
 import com.diden.user.vo.UserVo;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -30,6 +32,9 @@ public class UserApiController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    JwtTokenUtil jwtTokenUtil;
 
     @GetMapping(value = "/user/test")
     public String test() throws IOException {
@@ -64,6 +69,19 @@ public class UserApiController {
         return userJsonList.toString();
     }
 
+    @GetMapping(value = "/user/tokentest")
+    public void TokenTest(HttpServletRequest request) {
+        // String token = request.getParameter("token");
+        // log.info(Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody(););
+        // log.info("================================ {}",
+        // jwtTokenUtil.getUsernameFromToken(token));
+        // log.info("================================ {}",
+        // jwtTokenUtil.getExpirationDateFromToken(token));
+        // <T> T test = jwtTokenUtil.getExpirationDateFromToken(token);
+        // log.info("================================ {}",
+        // jwtTokenUtil.getAllClaimsFromToken(token).().toString());
+    }
+
     // Exception 어노테이션.
     // Json Exception 공통.
     // View Exception 공통.
@@ -85,10 +103,11 @@ public class UserApiController {
 
             if (Objects.toString(userVo.getUserId(), "").equals(userVoData.getUserId())) {
                 if (Objects.toString(userVo.getUserPassword(), "").equals(userVoData.getUserPassword())) {
+                    String token = jwtTokenUtil.makeJwtToken(userVo);
+
                     userResult.addProperty("result", true);
-                    // session = request.getxSession();
-                    session.setAttribute("sessionId", userVoData);
-                    session.setMaxInactiveInterval(-1);
+                    userResult.addProperty("token", token);
+
                     return new ResponseEntity<>(userResult.toString(), HttpStatus.OK);
                 } else {
                     return new ResponseEntity<>(errorMethod("login", null), HttpStatus.INTERNAL_SERVER_ERROR);
