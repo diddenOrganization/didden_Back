@@ -1,7 +1,7 @@
 spring:
   datasource:
     url: ENC(tL6Im2LK4mAZOPpsVarjt6orJwis+lgbup4IL/CkdwtXwn/+vWMChRwla41MecKgKEkdy2WRXxfEMSRnUfZIy9XOnKFR3J/7)
-    driver-class-name: ENC(cnKupb0pmWOZcLymHFTUf1DZUuM8D3LP7ry5mcJcn18Udf4van287w==)
+    driver-class-name: ENC(lY7R26arc1+SwSQwE4eCD+y1yfZKbbPIAmPd1T57rZU=)
     username: ENC(UHt96JlmrJnnGxC0kDYQXA==)
     password: ENC(qBXfL3kT/WKsvL6S7wpzkVuDBQegEbdl)
 
