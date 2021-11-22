@@ -8,8 +8,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 
-import com.diden.config.LoginCheckInterceptor;
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -50,9 +48,9 @@ public class GpConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginCheckInterceptor()).order(1) // 인터셉터 체인 순서
-                .addPathPatterns("/**") // 모든 requestURL에 대해 적용
-                .excludePathPatterns("/" // 제외하고 싶은 whitelist
-                        , "/**/login", "/**/logout", "/**/error");
+        // registry.addInterceptor(new LoginCheckInterceptor()).order(1) // 인터셉터 체인 순서
+        // .addPathPatterns("/**") // 모든 requestURL에 대해 적용
+        // .excludePathPatterns("/" // 제외하고 싶은 whitelist
+        // , "/**/login", "/**/logout", "/**/error");
     }
 }
