@@ -29,7 +29,6 @@ public class ParsingJSONFromURL {
             rootobj.addProperty("result", true);
             return rootobj.toString();
         } catch (Exception e) {
-            // TODO: handle exception
             JsonObject userResult = new JsonObject();
             userResult.addProperty("result", false);
             userResult.addProperty("error", e.getMessage());

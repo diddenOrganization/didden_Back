@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -167,7 +166,6 @@ public class UserApiController {
             }
 
         } catch (Exception e) {
-            // TODO: handle exception
             userResult.addProperty("result", false);
             userResult.addProperty("error", e.getMessage());
             return new ResponseEntity<>(userResult.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -196,7 +194,6 @@ public class UserApiController {
             }
 
         } catch (Exception e) {
-            // TODO: handle exception
             userResult.addProperty("result", false);
             userResult.addProperty("error", e.getMessage());
             return new ResponseEntity<>(userResult.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
