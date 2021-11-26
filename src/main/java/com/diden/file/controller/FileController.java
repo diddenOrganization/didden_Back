@@ -12,13 +12,11 @@ import java.util.Objects;
 
 import com.diden.file.service.FileService;
 import com.diden.file.vo.FileVo;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.bouncycastle.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -86,8 +84,9 @@ public class FileController {
         System.out.println(fileVo.getFileContent64());
     }
 
-    @GetMapping(value = "/file/list")
+    @GetMapping(value = "/file/list", produces = "application/json; charrset=UTF-8")
     public ResponseEntity<String> fileList() {
+
         JsonObject fileJsonList = new JsonObject();
         JsonArray fileJsonArr = new JsonArray();
 
@@ -95,7 +94,8 @@ public class FileController {
         FileVo paramFileVo = new FileVo();
         listFileVo = fileService.fileList(paramFileVo);
 
-        listFileVo.stream().forEach(fileData -> {
+        for (FileVo fileData : listFileVo) {
+            JsonObject tmpJson = new JsonObject();
             String encodedString = Base64.getEncoder().encodeToString(fileData.getFileContent());
             fileData.setFileContent64(encodedString);
 
@@ -105,11 +105,15 @@ public class FileController {
             fileData.setFileContent64("");
             fileData.setFileContent(new byte[1]);
 
-            Gson gson = new Gson();
-            String gsonString = gson.toJson(fileData);
-            fileJsonArr.add(gsonString);
-        });
-
+            tmpJson.addProperty("fileId", fileData.getFileId());
+            tmpJson.addProperty("fileName", fileData.getFileName());
+            tmpJson.addProperty("fileSize", fileData.getFileSize());
+            tmpJson.addProperty("fileCreateDate", fileData.getFileCreateDate());
+            tmpJson.addProperty("fileUpdateDate", fileData.getFileUpdateDate());
+            tmpJson.addProperty("fileExtension", fileData.getFileExtension());
+            tmpJson.addProperty("fileUrl", fileData.getFileUrl());
+            fileJsonArr.add(tmpJson);
+        }
         fileJsonList.add("data", fileJsonArr);
         return new ResponseEntity<>(fileJsonList.toString(), HttpStatus.OK);
     }

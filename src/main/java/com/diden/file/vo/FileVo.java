@@ -14,7 +14,7 @@ public class FileVo {
     private String fileCreateDate = null;
     private String fileUpdateDate = null;
     private byte[] fileContent;
-    private String fileContent64;
-    private String fileExtension;
-    private String fileUrl;
+    private String fileContent64 = null;
+    private String fileExtension = null;
+    private String fileUrl = null;
 }
