@@ -5,8 +5,8 @@ jasypt:
 
 spring:
   datasource:
-    url: ENC(ET5sagzF8+buNcpKR0qgJdbl2c8A9fqqt3vsLmXofOMZgjUCEP6OpSwJDNCsS/K9HC5WAZhFyc9f7gUObmNvZgT/RUtWVkGRS/6X6XH2OwbSmiQ23cqHPA==)
-    driver-class-name: ENC(cnKupb0pmWOZcLymHFTUf1DZUuM8D3LP7ry5mcJcn18Udf4van287w==)
+    url: ENC(obiFG6cJsmR1erpg46K0QmUuKW0LY4Bm2fhZKtM6/bi7JfXTuR8MWGc7yswxf8QyIMGdL6iyYjuehsBUG1MfGziw989Ttv1ZFI35ZM/4RH9DJDSZgGNsQOj3NJprUIXQ)
+    driver-class-name: ENC(Buur8cwc8t/JoN/14LwTVivPQDSdf4ZmFF8tgUqyZwLMwH91HFqxCcj8J/Dq6pvc)
     username: ENC(UHt96JlmrJnnGxC0kDYQXA==)
     password: ENC(qBXfL3kT/WKsvL6S7wpzkVuDBQegEbdl)
 
