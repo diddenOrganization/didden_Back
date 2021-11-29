@@ -13,6 +13,8 @@ mybatis:
     map-underscore-to-camel-case: true
 
 spring:
+  aop:
+    proxy-target-class: true
   mvc:
     view:
       prefix: /WEB-INF/template/

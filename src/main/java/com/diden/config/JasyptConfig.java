@@ -1,4 +1,4 @@
-package com.diden.demo;
+package com.diden.config;
 
 import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
@@ -29,6 +29,19 @@ public class JasyptConfig {
         config.setIvGeneratorClassName("org.jasypt.iv.NoIvGenerator");
         config.setStringOutputType("base64");
         encryptor.setConfig(config);
+        // /key/Wallet_tourdev
+        // url: jdbc:oracle:thin:@tourdev_medium?TNS_ADMIN=/key/Wallet_tourdev
+        // driver-class-name: oracle.jdbc.OracleDriver
+        // username: admin
+        // password: Tourproject123!
+
+        log.info("===================================================== {}",
+                encryptor.encrypt("jdbc:oracle:thin:@tourdev_medium?TNS_ADMIN=/key/Wallet_tourdev"));
+        log.info("===================================================== {}",
+                encryptor.encrypt("oracle.jdbc.OracleDriver"));
+        log.info("===================================================== {}", encryptor.encrypt("admin"));
+        log.info("===================================================== {}", encryptor.encrypt("Tourproject123!"));
+
         return encryptor;
     }
 }

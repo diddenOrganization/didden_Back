@@ -1,6 +1,5 @@
 package com.diden.file.service.impl;
 
-import java.io.File;
 import java.util.List;
 
 import com.diden.file.mapper.FileMapper;
@@ -23,13 +22,11 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public FileVo fileRead(FileVo fileVo) {
-        // TODO Auto-generated method stub
         return fileMapper.fileRead(fileVo);
     }
 
     @Override
     public List<FileVo> fileList(FileVo fileVo) {
-        // TODO Auto-generated method stub
         return fileMapper.fileList(fileVo);
     }
 

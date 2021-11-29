@@ -5,7 +5,7 @@
 
 <mapper namespace="com.diden.file.mapper.FileMapper">
 
-  <select id="fileList" parameterType="com.diden.file.vo.FileVo" resultType="com.diden.file.vo.FileVo">
+  <select id="fileList" resultType="com.diden.file.vo.FileVo">
     SELECT FILE_ID
          , FILE_NAME
          , FILE_SIZE

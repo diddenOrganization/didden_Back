@@ -8,10 +8,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.diden.config.JwtTokenUtil;
-import com.diden.demo.ParsingJSONFromURL;
 import com.diden.user.service.UserService;
 import com.diden.user.vo.UserVo;
+import com.diden.utils.ParsingFromURL;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,36 +39,34 @@ public class UserApiController {
     @Autowired
     JwtTokenUtil jwtTokenUtil;
 
-    @GetMapping(value = "/user/test")
+    @GetMapping(value = "/user/api/tour/image", produces = "application/json;application/xml; charset=UTF-8")
+    public String tourImageApi() {
+        String url = new String(
+                "http://api.visitkorea.or.kr/openapi/service/rest/PhotoGalleryService/galleryList?serviceKey=96EIT1koaTBt2OfbhSFR9PyKGOKS%2FAMqgeugwN1XT2QwjnE97ZiG1uszeNCPJquN2y2XIYC8GX8BlAcpvUcusw%3D%3D&pageNo=1&numOfRows=10&MobileOS=ETC&MobileApp=AppTest&arrange=A");
+        ParsingFromURL parsingFromURL = new ParsingFromURL();
+        return parsingFromURL.getParsingURL(url);
+    }
+
+    @GetMapping(value = "/user/test", produces = "application/json; charset=UTF-8")
     public String test() throws IOException {
-        ParsingJSONFromURL parsingJSONFromURL = new ParsingJSONFromURL();
-        return parsingJSONFromURL.getParsingJSONFromURL(
+        ParsingFromURL parsingJSONFromURL = new ParsingFromURL();
+        return parsingJSONFromURL.getParsingURL(
                 "https://api.odcloud.kr/api/15003416/v1/uddi:a635e6c7-82cf-4714-b002-c7cf4cb20121_201609071527?page=1&perPage=10&serviceKey=96EIT1koaTBt2OfbhSFR9PyKGOKS%2FAMqgeugwN1XT2QwjnE97ZiG1uszeNCPJquN2y2XIYC8GX8BlAcpvUcusw%3D%3D");
     }
 
-    @GetMapping(value = "/user/list")
+    @GetMapping(value = "/user/list", produces = "application/json; charset=UTF-8")
     public String userList() {
         List<UserVo> userVoList = userService.userList();
         JsonObject userJsonList = new JsonObject();
+        JsonArray jsonArray = new JsonArray();
 
-        for (int i = 0; i < userVoList.size(); i++) {
-            // Map<String, UserVo> map = userVo.get(i);
-            JsonObject userJson = new JsonObject();
-            UserVo userVo = (UserVo) userVoList.get(i);
-            userJson.addProperty("userId", userVo.getUserId());
-            userJson.addProperty("userName", userVo.getUserName());
-            userJson.addProperty("userPassword", userVo.getUserPassword());
-            userJson.addProperty("userNickname", userVo.getUserNickname());
-            userJson.addProperty("userBirthday", userVo.getUserBirthday());
-            userJson.addProperty("userGender", userVo.getUserGender());
-            userJson.addProperty("userEmail", userVo.getUserEmail());
-            userJson.addProperty("userPhoneNumber", userVo.getUserPhoneNumber());
-            userJson.addProperty("userCreateDate", userVo.getUserCreateDate());
-            userJson.addProperty("userUpdateDate", userVo.getUserUpdateDate());
-            userJson.addProperty("userPrivacyConsent", userVo.getUserPrivacyConsent());
-            userJsonList.add("user" + i, userJson);
-        }
+        userVoList.stream().forEach(userVoData -> {
+            Gson gson = new Gson();
+            JsonElement userJsonData = new JsonParser().parse(gson.toJson(userVoData));
+            jsonArray.add(userJsonData);
+        });
 
+        userJsonList.add("data", jsonArray);
         return userJsonList.toString();
     }
 

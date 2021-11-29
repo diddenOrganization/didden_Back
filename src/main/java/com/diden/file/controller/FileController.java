@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
@@ -12,8 +11,11 @@ import java.util.Objects;
 
 import com.diden.file.service.FileService;
 import com.diden.file.vo.FileVo;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -87,34 +89,26 @@ public class FileController {
     @GetMapping(value = "/file/list", produces = "application/json; charrset=UTF-8")
     public ResponseEntity<String> fileList() {
 
-        JsonObject fileJsonList = new JsonObject();
-        JsonArray fileJsonArr = new JsonArray();
+        JsonObject fileJsonObject = new JsonObject();
+        JsonArray fileJsonArray = new JsonArray();
 
-        List<FileVo> listFileVo = new ArrayList<FileVo>();
-        FileVo paramFileVo = new FileVo();
-        listFileVo = fileService.fileList(paramFileVo);
+        FileVo fileVo = new FileVo();
+        List<FileVo> fileVoList = fileService.fileList(fileVo);
 
-        for (FileVo fileData : listFileVo) {
-            JsonObject tmpJson = new JsonObject();
-            String encodedString = Base64.getEncoder().encodeToString(fileData.getFileContent());
-            fileData.setFileContent64(encodedString);
+        fileVoList.stream().forEach(fileVoData -> {
+            Gson gson = new Gson();
+            JsonElement jsonFileVoData = new JsonParser().parse(gson.toJson(fileVoData));
+            String encodedString = Base64.getEncoder().encodeToString(fileVoData.getFileContent());
+            fileVoData.setFileContent64(encodedString);
 
-            String src = "data:image/" + fileData.getFileExtension() + ";base64," + fileData.getFileContent64();
-            fileData.setFileUrl(src);
-
-            fileData.setFileContent64("");
-            fileData.setFileContent(new byte[1]);
-
-            tmpJson.addProperty("fileId", fileData.getFileId());
-            tmpJson.addProperty("fileName", fileData.getFileName());
-            tmpJson.addProperty("fileSize", fileData.getFileSize());
-            tmpJson.addProperty("fileCreateDate", fileData.getFileCreateDate());
-            tmpJson.addProperty("fileUpdateDate", fileData.getFileUpdateDate());
-            tmpJson.addProperty("fileExtension", fileData.getFileExtension());
-            tmpJson.addProperty("fileUrl", fileData.getFileUrl());
-            fileJsonArr.add(tmpJson);
-        }
-        fileJsonList.add("data", fileJsonArr);
-        return new ResponseEntity<>(fileJsonList.toString(), HttpStatus.OK);
+            jsonFileVoData.getAsJsonObject().addProperty("fileUrl",
+                    "data:image/" + fileVoData.getFileExtension() + ";base64," + fileVoData.getFileContent64());
+            jsonFileVoData.getAsJsonObject().addProperty("fileContent", "");
+            jsonFileVoData.getAsJsonObject().addProperty("fileContent64", "");
+            fileJsonArray.add(jsonFileVoData);
+        });
+        fileJsonObject.add("data", fileJsonArray);
+        return new ResponseEntity<String>(fileJsonObject.toString(), HttpStatus.OK);
     }
+
 }

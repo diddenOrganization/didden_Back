@@ -1,4 +1,4 @@
-package com.diden.demo;
+package com.diden.config;
 
 import java.io.IOException;
 
