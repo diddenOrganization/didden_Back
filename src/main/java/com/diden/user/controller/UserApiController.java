@@ -92,7 +92,7 @@ public class UserApiController {
 
             UserVo userVoData = userService.userInfo(userVo);
             if (Objects.isNull(userVoData)) {
-                return new ResponseEntity<>(errorMethod("login", null), HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<>(errorMethod("login", null), HttpStatus.OK);
             }
 
             if (Objects.toString(userVo.getUserId(), "").equals(userVoData.getUserId())) {
@@ -104,10 +104,10 @@ public class UserApiController {
 
                     return new ResponseEntity<>(userResult.toString(), HttpStatus.OK);
                 } else {
-                    return new ResponseEntity<>(errorMethod("login", null), HttpStatus.INTERNAL_SERVER_ERROR);
+                    return new ResponseEntity<>(errorMethod("login", null), HttpStatus.OK);
                 }
             } else {
-                return new ResponseEntity<>(errorMethod("login", null), HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<>(errorMethod("login", null), HttpStatus.OK);
             }
 
         } catch (Exception e) {
