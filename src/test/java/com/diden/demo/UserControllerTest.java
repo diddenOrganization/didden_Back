@@ -27,8 +27,8 @@ public class UserControllerTest {
     @Spy
     JwtTokenProvider jwtTokenProvider;
 
-    @Test
-    @Transactional
+    // @Test
+    // @Transactional
     public void 토큰생성() {
         UserVo userVo = new UserVo();
         userVo.setUserId("test");
@@ -43,7 +43,7 @@ public class UserControllerTest {
         토큰체크(tokenVo.getAccessJwsToken(), tokenVo.getRefreshJwsToken());
     }
 
-    @Test
+    // @Test
     public void 토큰체크(String AccToken, String RefToken) {
         try {
             TokenVo tokenVo = new TokenVo();
