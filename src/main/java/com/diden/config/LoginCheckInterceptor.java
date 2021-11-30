@@ -28,13 +28,13 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         TokenVo requestToken = new TokenVo();
         requestToken.setAccessJwsToken(requestAccToken);
         requestToken.setRefreshJwsToken(requestRefToken);
-        log.debug("Acc : {}", requestAccToken);
-        log.debug("Ref : {}", requestRefToken);
+        System.out.println("Acc : " + requestAccToken);
+        System.out.println("Ref : " + requestRefToken);
         Claims claims;
         try {
             claims = jwtTokenProvider.parseJwtToken(requestToken);
-            log.debug("claims : {}", claims);
-            result = (boolean) claims.get("resulbt");
+            System.out.println("claims : " + claims);
+            result = (boolean) claims.get("result");
         } catch (Exception e) {
             e.printStackTrace();
         }

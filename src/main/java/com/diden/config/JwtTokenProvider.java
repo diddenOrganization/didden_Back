@@ -25,12 +25,14 @@ public class JwtTokenProvider {
         Claims refreshClaims = null;
 
         try {
+            System.out.println("============================================= ");
             token = extractToken(tokenVo.getAccessJwsToken());
+            System.out.println("token : " + token);
             accessClaims = Jwts.parser()
                     .setSigningKey(ACCESS_KEY)
                     .parseClaimsJws(token)
                     .getBody();
-
+            System.out.println("accessClaims : " + accessClaims);
             return accessClaims;
         } catch (Exception e) {
             token = extractToken(tokenVo.getRefreshJwsToken());
