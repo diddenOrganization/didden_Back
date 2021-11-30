@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import io.jsonwebtoken.Claims;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class LoginCheckInterceptor implements HandlerInterceptor {
 
     @Autowired
@@ -26,11 +28,13 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         TokenVo requestToken = new TokenVo();
         requestToken.setAccessJwsToken(requestAccToken);
         requestToken.setRefreshJwsToken(requestRefToken);
+        Claims claims = null;
         try {
-            Claims claims = jwtTokenProvider.parseJwtToken(requestToken);
+            claims = jwtTokenProvider.parseJwtToken(requestToken);
+            log.info("claims : {}", claims);
             result = (boolean) claims.get("result");
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
 
         return result;
