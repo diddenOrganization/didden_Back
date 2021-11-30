@@ -51,6 +51,9 @@ public class JwtTokenUtil implements Serializable {
         System.out.println("=========================" + userVo);
         return Jwts.builder()
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
+                .setIssuer("fresh")
+                .setSubject("TEST")
+                .claim("result", true)
                 .claim("userVo", userVo)
                 .setIssuedAt(now)
                 .setExpiration(ext)
