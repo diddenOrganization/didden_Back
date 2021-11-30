@@ -14,13 +14,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class LoginCheckInterceptor implements HandlerInterceptor {
 
-    @Autowired
-    JwtTokenProvider jwtTokenProvider;
-
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
 
+        JwtTokenProvider jwtTokenProvider = new JwtTokenProvider();
         boolean result = false;
         String requestAccToken = request.getParameter("token_acc");
         String requestRefToken = request.getParameter("token_ref");
@@ -30,9 +28,8 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         requestToken.setRefreshJwsToken(requestRefToken);
         System.out.println("Acc : " + requestAccToken);
         System.out.println("Ref : " + requestRefToken);
-        Claims claims;
         try {
-            claims = jwtTokenProvider.parseJwtToken(requestToken);
+            Claims claims = jwtTokenProvider.parseJwtToken(requestToken);
             System.out.println("claims : " + claims);
             result = (boolean) claims.get("result");
         } catch (Exception e) {
