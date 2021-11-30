@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.diden.config.JwtTokenUtil;
+import com.diden.config.vo.TokenVo;
 import com.diden.user.service.UserService;
 import com.diden.user.vo.UserVo;
 import com.diden.utils.ParsingFromURL;
@@ -96,10 +97,10 @@ public class UserApiController {
 
             if (Objects.toString(userVo.getUserId(), "").equals(userVoData.getUserId())) {
                 if (Objects.toString(userVo.getUserPassword(), "").equals(userVoData.getUserPassword())) {
-                    String token = jwtTokenUtil.makeJwtToken(userVo);
-
+                    TokenVo token = jwtTokenUtil.makeJwtToken(userVo);
                     userResult.addProperty("result", true);
-                    userResult.addProperty("token", token);
+                    userResult.addProperty("token_acc", token.getAccessJwsToken());
+                    userResult.addProperty("token_ref", token.getRefreshJwsToken());
 
                     return new ResponseEntity<>(userResult.toString(), HttpStatus.OK);
                 } else {
