@@ -19,7 +19,7 @@ import com.google.gson.GsonBuilder;
 import org.junit.jupiter.api.Test;
 
 public class TourApiControllerTest {
-    @Test
+    // @Test
     public void 관광정보_이미지() {
         String url = new String(
                 "http://api.visitkorea.or.kr/openapi/service/rest/PhotoGalleryService/galleryList?serviceKey=96EIT1koaTBt2OfbhSFR9PyKGOKS%2FAMqgeugwN1XT2QwjnE97ZiG1uszeNCPJquN2y2XIYC8GX8BlAcpvUcusw%3D%3D&pageNo=1&numOfRows=10&MobileOS=ETC&MobileApp=AppTest&arrange=A");
@@ -27,7 +27,7 @@ public class TourApiControllerTest {
         System.out.println(parsingFromURL.getParsingURL(url));
     }
 
-    @Test
+    // @Test
     public void 관광공사_얘제소스() throws UnsupportedEncodingException, IOException {
         // XmlMapper xml = new XmlMapper();
 
@@ -60,7 +60,7 @@ public class TourApiControllerTest {
 
     }
 
-    @Test
+    // @Test
     public void 외국포럼_xml_to_json() throws UnsupportedEncodingException, IOException {
         URL url = new URL(
                 "http://api.visitkorea.or.kr/openapi/service/rest/PhotoGalleryService/galleryList?serviceKey=96EIT1koaTBt2OfbhSFR9PyKGOKS%2FAMqgeugwN1XT2QwjnE97ZiG1uszeNCPJquN2y2XIYC8GX8BlAcpvUcusw%3D%3D&pageNo=1&numOfRows=10&MobileOS=ETC&MobileApp=AppTest&arrange=A");

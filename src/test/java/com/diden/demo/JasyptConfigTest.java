@@ -11,7 +11,7 @@ public class JasyptConfigTest {
 
     private String password = "Tourproject123!";
 
-    @Test
+    // @Test
     // @Bean("jasyptStringEncryptor")
     public void Test() {
         PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();

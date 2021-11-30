@@ -35,7 +35,7 @@ public class FileControllerTest {
     @Mock
     FileService fileService;
 
-    @Test
+    // @Test
     public void 관광_이미지_호출() {
         String url = "http://api.visitkorea.or.kr/openapi/service/rest/PhotoGalleryService/galleryList?serviceKey=96EIT1koaTBt2OfbhSFR9PyKGOKS%2FAMqgeugwN1XT2QwjnE97ZiG1uszeNCPJquN2y2XIYC8GX8BlAcpvUcusw%3D%3D&pageNo=1&numOfRows=10&MobileOS=ETC&MobileApp=AppTest&arrange=A";
         ParsingFromURL parsingFromURL = new ParsingFromURL();
