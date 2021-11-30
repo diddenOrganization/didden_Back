@@ -17,23 +17,19 @@ public class JwtTokenProvider {
     private static String REFRESH_KEY = "refreshTokenKey";
 
     public Claims parseJwtToken(TokenVo tokenVo) {
-        System.out.println("111111111111111============================================= ");
         validationAuthorizationHeader(tokenVo.getAccessJwsToken());
         validationAuthorizationHeader(tokenVo.getRefreshJwsToken());
-        String token = null;
 
+        String token = null;
         Claims accessClaims = null;
         Claims refreshClaims = null;
 
         try {
-            System.out.println("============================================= ");
             token = extractToken(tokenVo.getAccessJwsToken());
-            System.out.println("token : " + token);
             accessClaims = Jwts.parser()
                     .setSigningKey(ACCESS_KEY)
                     .parseClaimsJws(token)
                     .getBody();
-            System.out.println("accessClaims : " + accessClaims);
             return accessClaims;
         } catch (Exception e) {
             token = extractToken(tokenVo.getRefreshJwsToken());
@@ -68,14 +64,12 @@ public class JwtTokenProvider {
     }
 
     private void validationAuthorizationHeader(String header) {
-        System.out.println("2222222222222============================================= ");
         if (header == null || !header.startsWith("Bearer ")) {
             throw new IllegalArgumentException();
         }
     }
 
     private String extractToken(String authorizationHeader) {
-        System.out.println("3333333333333============================================= ");
         return authorizationHeader.substring("Bearer ".length());
     }
 }
