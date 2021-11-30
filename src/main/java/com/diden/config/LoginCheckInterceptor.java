@@ -14,8 +14,11 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
+        System.out.println(request);
+        System.out.println(response);
+        System.out.println(handler);
         // String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        // Claims claims = jwtTokenProvider.parseJwtToken(authorizationHeader);
+        // Claims claims = jwtTokenProvider.parseJwtToken("");
 
         return true;
     }

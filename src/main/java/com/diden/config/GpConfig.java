@@ -26,7 +26,6 @@ public class GpConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/img/**").addResourceLocations("classpath:/static/img/");
         registry.addResourceHandler("/fonts/**").addResourceLocations("classpath:/static/fonts/");
         registry.addResourceHandler("/data/**").addResourceLocations("classpath:/static/data/");
-        registry.addResourceHandler("/").addResourceLocations("classpath:/static/index.html");
         // 업로드 이미지용 외부 폴더 추가 registry.addResourceHandler("/upload/**")
         // .addResourceLocations("file:///"+uploadImagePath) // 웹에서 이미지 호출시 'file:///'
         // 설정됨 .setCachePeriod(3600) .resourceChain(true) .addResolver(new
@@ -48,9 +47,9 @@ public class GpConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        // registry.addInterceptor(new LoginCheckInterceptor()).order(1) // 인터셉터 체인 순서
-        // .addPathPatterns("/**") // 모든 requestURL에 대해 적용
-        // .excludePathPatterns("/" // 제외하고 싶은 whitelist
-        // , "/**/login", "/**/logout", "/**/error");
+        registry.addInterceptor(new LoginCheckInterceptor()).order(1) // 인터셉터 체인 순서
+                .addPathPatterns("/**") // 모든 requestURL에 대해 적용
+                .excludePathPatterns("/" // 제외하고 싶은 whitelist
+                        , "/**/login", "/**/logout", "/**/error");
     }
 }
