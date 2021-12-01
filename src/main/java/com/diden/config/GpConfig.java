@@ -50,6 +50,6 @@ public class GpConfig implements WebMvcConfigurer {
         registry.addInterceptor(new LoginCheckInterceptor()).order(1) // 인터셉터 체인 순서
                 .addPathPatterns("/**") // 모든 requestURL에 대해 적용
                 .excludePathPatterns("/" // 제외하고 싶은 whitelist
-                        , "/**/login", "/**/logout", "/**/error");
+                        , "/**/login", "/**/logout", "/**/error", "/**/tour/api/image", "/**/tour/api/file/test");
     }
 }
