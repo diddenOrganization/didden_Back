@@ -3,8 +3,10 @@ package com.diden.config;
 import java.util.Map;
 
 import com.diden.config.vo.TokenVo;
+import com.diden.user.service.UserService;
 import com.diden.user.vo.UserVo;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
@@ -13,25 +15,30 @@ import io.jsonwebtoken.Jwts;
 @Component
 public class JwtTokenProvider {
 
+    @Autowired
+    private UserService userService;
+
     private static String ACCESS_KEY = "accessTokenKey";
     private static String REFRESH_KEY = "refreshTokenKey";
 
     public Claims parseJwtToken(TokenVo tokenVo) {
-        validationAuthorizationHeader(tokenVo.getAccessJwsToken());
-        validationAuthorizationHeader(tokenVo.getRefreshJwsToken());
-
         String token = null;
         Claims accessClaims = null;
         Claims refreshClaims = null;
 
         try {
+            validationAuthorizationHeader(tokenVo.getAccessJwsToken());
+
             token = extractToken(tokenVo.getAccessJwsToken());
             accessClaims = Jwts.parser()
                     .setSigningKey(ACCESS_KEY)
                     .parseClaimsJws(token)
                     .getBody();
+
             return accessClaims;
         } catch (Exception e) {
+            //userService.userInfo(userVo);
+            validationAuthorizationHeader(tokenVo.getRefreshJwsToken());
             token = extractToken(tokenVo.getRefreshJwsToken());
             refreshClaims = Jwts.parser()
                     .setSigningKey(REFRESH_KEY)

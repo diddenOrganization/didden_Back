@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.diden.config.vo.TokenVo;
 
+import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import io.jsonwebtoken.Claims;
@@ -19,12 +20,11 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 
         JwtTokenProvider jwtTokenProvider = new JwtTokenProvider();
         boolean result = false;
-        String requestAccToken = request.getHeader("token_acc");
-        String requestRefToken = request.getHeader("token_ref");
+        String requestAccToken = request.getHeader("Authorization");
 
         TokenVo requestToken = new TokenVo();
         requestToken.setAccessJwsToken(requestAccToken);
-        requestToken.setRefreshJwsToken(requestRefToken);
+        // requestToken.setRefreshJwsToken(requestRefToken);
         try {
             Claims claims = jwtTokenProvider.parseJwtToken(requestToken);
             result = (boolean) claims.get("result");

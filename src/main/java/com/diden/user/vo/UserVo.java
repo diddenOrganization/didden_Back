@@ -20,4 +20,5 @@ public class UserVo {
     private String userUpdateDate = null;
     private String userPrivacyConsent = null;
     private String userSocialLoginType = null;
+    private String userRefreshToken = null;
 }
