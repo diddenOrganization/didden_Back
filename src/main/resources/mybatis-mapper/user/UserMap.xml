@@ -16,6 +16,7 @@
              , USER_UPDATE_DATE
              , USER_PRIVACY_CONSENT 
              , USER_SOCIAL_LOGIN_TYPE
+             , USER_REFRESH_TOKEN
           FROM TB_USER
   </select>
 
@@ -32,6 +33,7 @@
              , USER_UPDATE_DATE
              , USER_PRIVACY_CONSENT 
              , USER_SOCIAL_LOGIN_TYPE
+             , USER_REFRESH_TOKEN
           FROM TB_USER
          WHERE USER_ID = #{userId}
            AND USER_PASSWORD = #{userPassword}
@@ -49,6 +51,7 @@
           , USER_PHONE_NUMBER
           , USER_PRIVACY_CONSENT 
           , USER_SOCIAL_LOGIN_TYPE
+          , USER_REFRESH_TOKEN
         ) VALUES (
             #{userId}
           , #{userName}
@@ -60,6 +63,7 @@
           , #{userPhoneNumber}
           , #{userPrivacyConsent}
           , #{userSocialLoginType}
+          , #{userRefreshToken}
         )
   </insert>
 
