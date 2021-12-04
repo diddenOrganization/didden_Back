@@ -1,17 +1,14 @@
 package com.diden.user.controller;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
-import com.diden.config.JwtTokenUtil;
 import com.diden.config.vo.TokenVo;
 import com.diden.user.service.UserService;
 import com.diden.user.vo.UserVo;
-import com.diden.utils.ParsingFromURL;
+import com.diden.utils.JwtTokenUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -28,10 +25,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import lombok.extern.slf4j.Slf4j;
-
 @RestController
-@Slf4j
 public class UserApiController {
 
     @Autowired
@@ -39,13 +33,6 @@ public class UserApiController {
 
     @Autowired
     JwtTokenUtil jwtTokenUtil;
-
-    @GetMapping(value = "/user/test", produces = "application/json; charset=UTF-8")
-    public String test() throws IOException {
-        ParsingFromURL parsingJSONFromURL = new ParsingFromURL();
-        return parsingJSONFromURL.getParsingURL(
-                "https://api.odcloud.kr/api/15003416/v1/uddi:a635e6c7-82cf-4714-b002-c7cf4cb20121_201609071527?page=1&perPage=10&serviceKey=96EIT1koaTBt2OfbhSFR9PyKGOKS%2FAMqgeugwN1XT2QwjnE97ZiG1uszeNCPJquN2y2XIYC8GX8BlAcpvUcusw%3D%3D");
-    }
 
     @GetMapping(value = "/user/list", produces = "application/json; charset=UTF-8")
     public String userList() {
@@ -63,28 +50,14 @@ public class UserApiController {
         return userJsonList.toString();
     }
 
-    @GetMapping(value = "/user/tokentest")
-    public void TokenTest(HttpServletRequest request) {
-        // String token = request.getParameter("token");
-        // log.info(Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody(););
-        // log.info("================================ {}",
-        // jwtTokenUtil.getUsernameFromToken(token));
-        // log.info("================================ {}",
-        // jwtTokenUtil.getExpirationDateFromToken(token));
-        // <T> T test = jwtTokenUtil.getExpirationDateFromToken(token);
-        // log.info("================================ {}",
-        // jwtTokenUtil.getAllClaimsFromToken(token).().toString());
-    }
-
     // Exception 어노테이션.
     // Json Exception 공통.
     // View Exception 공통.
     @PostMapping(value = "/user/login")
-    public ResponseEntity<String> userData(@RequestBody(required = false) UserVo userVo, HttpServletRequest request,
-            HttpSession session) throws Exception {
+    public ResponseEntity<String> userLogin(@RequestBody(required = false) UserVo userVo, HttpServletRequest request)
+            throws Exception {
         try {
             JsonObject userResult = new JsonObject();
-            log.info("Session Check ============================== {}", request.getSession());
 
             if (Objects.isNull(userVo)) {
                 throw new Exception("파라미터 null");
@@ -97,10 +70,16 @@ public class UserApiController {
 
             if (Objects.toString(userVo.getUserId(), "").equals(userVoData.getUserId())) {
                 if (Objects.toString(userVo.getUserPassword(), "").equals(userVoData.getUserPassword())) {
-                    TokenVo token = jwtTokenUtil.makeJwtToken(userVo);
+                    TokenVo token = new TokenVo();
+                    token.setAccessJwsToken(jwtTokenUtil.makeJwtAccToken(userVo).getAccessJwsToken());
+                    token.setAccessJwsToken(jwtTokenUtil.makeJwtRefToken(userVo).getRefreshJwsToken());
+
                     userResult.addProperty("result", true);
                     userResult.addProperty("token_acc", token.getAccessJwsToken());
                     userResult.addProperty("token_ref", token.getRefreshJwsToken());
+
+                    userVo.setUserRefreshToken(token.getRefreshJwsToken());
+                    userService.userRefTokenUpdate(userVo);
 
                     return new ResponseEntity<>(userResult.toString(), HttpStatus.OK);
                 } else {
@@ -119,21 +98,19 @@ public class UserApiController {
     public ResponseEntity<String> userLogout(@RequestBody(required = false) UserVo userVo, HttpServletRequest request)
             throws Exception {
         try {
-            JsonObject userResult = new JsonObject();
-            log.info("Session Check ============================== {}", request.getSession());
+            if (!Objects.toString(userVo.getUserId(), "").equals("")
+                    && !Objects.toString(userVo.getUserPassword(), "").equals("")) {
+                UserVo getUserVo = userService.userInfo(userVo);
+                getUserVo.setUserRefreshToken("");
+                userService.userUpdate(getUserVo);
 
-            if (request.getSession() != null) {
-                HttpSession session = request.getSession();
-                session.invalidate();
-
-                userResult.addProperty("result", true);
-                return new ResponseEntity<>(userResult.toString(), HttpStatus.OK);
+                return new ResponseEntity<>("", HttpStatus.OK);
             } else {
                 throw new Exception("잘못된 접근.");
             }
 
         } catch (Exception e) {
-            return new ResponseEntity<>(errorMethod("", e), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(errorMethod("", e), HttpStatus.OK);
         }
     }
 

@@ -70,6 +70,10 @@ dependencies {
 	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
 	implementation 'com.fasterxml.jackson.core:jackson-core:2.13.0'
 
+	// https://mvnrepository.com/artifact/org.json/json
+	implementation 'org.json:json:20210307'
+
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testCompileOnly 'org.projectlombok:lombok:1.18.22'
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'

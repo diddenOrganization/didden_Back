@@ -13,5 +13,7 @@ public interface UserService {
 
     public void userUpdate(UserVo userVo);
 
+    public void userRefTokenUpdate(UserVo userVo);
+
     public void userDelete(UserVo userVo);
 }

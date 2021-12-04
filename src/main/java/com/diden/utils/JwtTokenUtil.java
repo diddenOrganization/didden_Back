@@ -1,4 +1,4 @@
-package com.diden.config;
+package com.diden.utils;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -18,40 +18,39 @@ public class JwtTokenUtil implements Serializable {
     private static String ACCESS_KEY = "accessTokenKey";
     private static String REFRESH_KEY = "refreshTokenKey";
 
-    public TokenVo makeJwtToken(UserVo userVo) {
+    public TokenVo makeJwtAccToken(UserVo userVo) {
         TokenVo tokenVo = new TokenVo();
         String accessToken = createToken(ACCESS_KEY, userVo, 2L);
-        String refreshToken = createToken(REFRESH_KEY, userVo, 168L);
 
         tokenVo.setAccessJwsToken(accessToken);
+        return tokenVo;
+    }
+
+    public TokenVo makeJwtRefToken(UserVo userVo) {
+        TokenVo tokenVo = new TokenVo();
+        String refreshToken = createToken(REFRESH_KEY, userVo, 168L);
+
         tokenVo.setRefreshJwsToken(refreshToken);
         return tokenVo;
     }
 
     private String createToken(String tokenKey, UserVo userVo, Long expHours) {
         Date now = new Date();
-
-        Long expiredTime = 1000 * 60L * 60L * expHours;
         Date ext = new Date(); // 토큰 만료 시간
+        Long expiredTime = 1000 * 60L * 60L * expHours;
+        String issuer = "";
+
+        if (ACCESS_KEY.equals(tokenKey)) {
+            issuer = "acc";
+        } else if (REFRESH_KEY.equals(tokenKey)) {
+            issuer = "ref";
+        }
 
         ext.setTime(ext.getTime() + expiredTime);
-        // UserVo userTestVo = new UserVo();
-        // userTestVo.setUserId("test");
-        // userTestVo.setUserName("test");
-        // userTestVo.setUserPassword("test");
-        // userTestVo.setUserNickname("test");
-        // userTestVo.setUserBirthday("test");
-        // userTestVo.setUserGender("test");
-        // userTestVo.setUserEmail("test");
-        // userTestVo.setUserPhoneNumber("test");
-        // userTestVo.setUserCreateDate("20211102061731");
-        // userTestVo.setUserUpdateDate("20211102061731");
-        // userTestVo.setUserPrivacyConsent("1");
 
-        System.out.println("=========================" + userVo);
         return Jwts.builder()
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
-                .setIssuer("fresh")
+                .setIssuer(issuer)
                 .setSubject("TEST")
                 .claim("result", true)
                 .claim("userVo", userVo)

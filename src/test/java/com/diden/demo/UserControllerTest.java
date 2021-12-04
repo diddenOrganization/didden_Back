@@ -1,16 +1,20 @@
 package com.diden.demo;
 
+import java.util.Base64;
+import java.util.List;
+
 import com.diden.config.JwtTokenProvider;
-import com.diden.config.JwtTokenUtil;
 import com.diden.config.vo.TokenVo;
 import com.diden.user.service.UserService;
 import com.diden.user.vo.UserVo;
+import com.diden.utils.JwtTokenUtil;
+import com.diden.utils.ParsingJson;
 
+import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.transaction.annotation.Transactional;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -27,7 +31,25 @@ public class UserControllerTest {
     @Spy
     JwtTokenProvider jwtTokenProvider;
 
-    // @Test
+    @Test
+    public void 토큰해제() {
+        ParsingJson parsingJson = new ParsingJson();
+        String accToken = "eeyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJhY2MiLCJzdWIiOiJURVNUIiwicmVzdWx0Ijp0cnVlLCJpYXQiOjE2Mzg1NDExOTksImV4cCI6MTYzODU0ODM5OX0.pkq_V2OQDIS5YUCN5EAjA7of4LMzUJcEdJsHCmJbL47vfE_A9um6H1ECQ-FGj8stszFoXW_0nQFmgJK7eIT6Dg";
+        List<Object> payLoad = Arrays.asList(accToken.split("\\."));
+        String payload = (String) payLoad.get(1);
+
+        byte[] decodedBytes = Base64.getDecoder().decode(payload);
+        String jsonPayload = new String(decodedBytes);
+        String iss = parsingJson.stringToJsonObject(jsonPayload).get("iss").toString();
+
+        System.out.println("\"iss\"");
+        System.out.println("\"acc\"".equals(iss));
+        System.out.println("acc".equals(iss));
+
+        System.out.println(parsingJson.stringToJsonObject(jsonPayload));
+    }
+
+    @Test
     // @Transactional
     public void 토큰생성() {
         UserVo userVo = new UserVo();
@@ -35,10 +57,11 @@ public class UserControllerTest {
         userVo.setUserPassword("test");
 
         UserVo resultUserVo = userService.userInfo(userVo);
-        TokenVo tokenVo = jwtTokenUtil.makeJwtToken(resultUserVo);
+        TokenVo tokenVo = new TokenVo();
+        tokenVo.setAccessJwsToken(jwtTokenUtil.makeJwtAccToken(resultUserVo).getAccessJwsToken());
+        tokenVo.setRefreshJwsToken(jwtTokenUtil.makeJwtRefToken(resultUserVo).getRefreshJwsToken());
 
-        System.out.println(tokenVo.getAccessJwsToken());
-        System.out.println(tokenVo.getRefreshJwsToken());
+        System.out.println(tokenVo);
 
         토큰체크(tokenVo.getAccessJwsToken(), tokenVo.getRefreshJwsToken());
     }
@@ -59,9 +82,9 @@ public class UserControllerTest {
             responseTokenVo.setAccessJwsToken("Bearer " + tokenVo.getAccessJwsToken());
             responseTokenVo.setRefreshJwsToken("Bearer " + tokenVo.getRefreshJwsToken());
 
-            Claims claims = jwtTokenProvider.parseJwtToken(responseTokenVo);
-            System.out.println(JwsClaims);
-            System.out.println(claims);
+            // Claims claims = jwtTokenProvider.parseJwtToken(responseTokenVo);
+            // System.out.println(JwsClaims);
+            // System.out.println(claims);
         } catch (Exception e) {
             e.printStackTrace();
         }

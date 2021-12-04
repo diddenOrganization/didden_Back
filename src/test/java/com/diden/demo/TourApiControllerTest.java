@@ -16,8 +16,6 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.junit.jupiter.api.Test;
-
 public class TourApiControllerTest {
     // @Test
     public void 관광정보_이미지() {

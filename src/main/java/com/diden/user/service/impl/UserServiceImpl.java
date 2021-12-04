@@ -36,8 +36,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void userRefTokenUpdate(UserVo userVo) {
+        userMapper.userRefTokenUpdate(userVo);
+    }
+
+    @Override
     public void userDelete(UserVo userVo) {
         userMapper.userDelete(userVo);
     }
-
 }

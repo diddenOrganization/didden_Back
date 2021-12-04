@@ -81,6 +81,11 @@
        WHERE USER_ID = #{userId}
   </update>
 
+  <update id="userRefTokenUpdate" parameterType="com.diden.user.vo.UserVo">
+      UPDATE tb_user 
+         SET USER_REFRESH_TOKEN = #{userRefreshToken}
+       WHERE USER_ID = #{userId}
+  </update>
 
   <delete id="userDelete" parameterType="com.diden.user.vo.UserVo">
       DELETE 

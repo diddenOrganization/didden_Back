@@ -33,4 +33,15 @@ public class ParsingJson {
         rootobj.addProperty("result", true);
         return rootobj.toString();
     }
+
+    public JsonObject stringToJsonObject(String stringJson) {
+        JsonParser jsonParser = new JsonParser();
+        JsonObject jsonObject = new JsonObject();
+        JsonElement jsonElement;
+
+        jsonElement = jsonParser.parse(stringJson);
+        jsonObject = jsonElement.getAsJsonObject();
+
+        return jsonObject;
+    }
 }
