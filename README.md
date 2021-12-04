@@ -2,29 +2,70 @@
 
 This is didden projects for Back-End
 
-# 2021-10-30(토) 현재 진행상황
+# 2021-12-04(토) 현재 진행상황
+
+## 1. 관광 데이터
 
 ```java
-RequestMapping(/user/list)
+관광정보목록 URL 변경.
+@GetMapping(value = "/user/test") -> @GetMapping(value = "/tour/api/info")
+
+관광이미지 목록 URL 변경.
+@GetMapping(value = "/tour/api/image") -> @GetMapping(value = "/tour/api/info/image")
 ```
 
-```sql
-SELECT USER_ID
-     , USER_NAME
-     , USER_PASSWORD
-     , USER_NICKNAME
-     , USER_BIRTHDAY
-     , USER_GENDER
-     , USER_EMAIL
-     , USER_PHONE_NUMBER
-     , USER_CREATE_DATE
-     , USER_UPDATE_DATE
-     , USER_PRIVACY_CONSENT
-  FROM TB_USER
+## 2. 로그인/로그아웃 토큰 기능 추가
+
+```java
+2.1. 로그인시 파라미터 전달.
+@PostMapping(value = "/user/login")
+
+userResult.addProperty("result", true);
+userResult.addProperty("token_acc", token.getAccessJwsToken());   // 억세스 토큰 발급.
+userResult.addProperty("token_ref", token.getRefreshJwsToken());  // 리프레쉬 토큰 발급.
+
+userVo.setUserRefreshToken(token.getRefreshJwsToken());
+userService.userRefTokenUpdate(userVo);                           // 계정별 리프레쉬 토큰 저장.
+
+2.2. 로그아웃시 리프레쉬 토큰 삭제.
+// 아이디와 패스워드 값을 전달받아 해당 계정의 리프레쉬 토큰 값을 가져옴.
+@PostMapping(value = "/user/logout")
+
+if (!Objects.toString(userVo.getUserId(), "").equals("") && !Objects.toString(userVo.getUserPassword(), "").equals("")) {
+
+UserVo getUserVo = userService.userInfo(userVo);
+getUserVo.setUserRefreshToken("");                                // 리프레쉬 토큰 공백처리.
+userService.userUpdate(getUserVo);
+
 ```
 
-> 데이터가 정상 출력되는지만 작업해놓은 상태.  
-> API(Json) 형식으로 데이터를 전달하느 부분은 미완료.
+## 3. 토큰.
+
+## 4. 파싱.
+
+# 2021-11-04(목) 현재 진행상황
+
+## 1. 관광 데이터 테스트 URL
+
+```java
+@GetMapping(value = "/user/test")
+```
+
+> 관광 데이터 10건 호출.
+
+```java
+rootobj = root.getAsJsonObject(); // 관광데이터
+rootobj.addProperty("result", true);
+```
+
+> URL 호출 성공시
+
+```java
+userResult.addProperty("result", false);
+userResult.addProperty("error", e.getMessage());
+```
+
+> URL 호출 실패시
 
 # 2021-11-02(화) 현재 진행상황
 
@@ -168,26 +209,26 @@ userResult.addProperty("error", e.getMessage());
 
 ---
 
-# 2021-11-04(목) 현재 진행상황
-
-## 1. 관광 데이터 테스트 URL
+# 2021-10-30(토) 현재 진행상황
 
 ```java
-@GetMapping(value = "/user/test")
+RequestMapping(/user/list)
 ```
 
-> 관광 데이터 10건 호출.
-
-```java
-rootobj = root.getAsJsonObject(); // 관광데이터
-rootobj.addProperty("result", true);
+```sql
+SELECT USER_ID
+     , USER_NAME
+     , USER_PASSWORD
+     , USER_NICKNAME
+     , USER_BIRTHDAY
+     , USER_GENDER
+     , USER_EMAIL
+     , USER_PHONE_NUMBER
+     , USER_CREATE_DATE
+     , USER_UPDATE_DATE
+     , USER_PRIVACY_CONSENT
+  FROM TB_USER
 ```
 
-> URL 호출 성공시
-
-```java
-userResult.addProperty("result", false);
-userResult.addProperty("error", e.getMessage());
-```
-
-> URL 호출 실패시
+> 데이터가 정상 출력되는지만 작업해놓은 상태.  
+> API(Json) 형식으로 데이터를 전달하느 부분은 미완료.
