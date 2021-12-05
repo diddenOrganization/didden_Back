@@ -72,7 +72,7 @@ public class UserApiController {
                 if (Objects.toString(userVo.getUserPassword(), "").equals(userVoData.getUserPassword())) {
                     TokenVo token = new TokenVo();
                     token.setAccessJwsToken(jwtTokenUtil.makeJwtAccToken(userVo).getAccessJwsToken());
-                    token.setAccessJwsToken(jwtTokenUtil.makeJwtRefToken(userVo).getRefreshJwsToken());
+                    token.setRefreshJwsToken(jwtTokenUtil.makeJwtRefToken(userVo).getRefreshJwsToken());
 
                     userResult.addProperty("result", true);
                     userResult.addProperty("token_acc", token.getAccessJwsToken());
