@@ -39,8 +39,34 @@
            AND USER_PASSWORD = #{userPassword}
   </select>
 
+  <select id="userRefreshTokenInfo" parameterType="com.diden.user.vo.UserVo" resultType="com.diden.user.vo.UserVo">
+        SELECT USER_ID
+             , USER_NAME
+             , USER_PASSWORD
+             , USER_NICKNAME
+             , USER_BIRTHDAY
+             , USER_GENDER
+             , USER_EMAIL
+             , USER_PHONE_NUMBER
+             , USER_CREATE_DATE
+             , USER_UPDATE_DATE
+             , USER_PRIVACY_CONSENT 
+             , USER_SOCIAL_LOGIN_TYPE
+             , USER_REFRESH_TOKEN
+          FROM TB_USER
+         WHERE USER_REFRESH_TOKEN = #{userRefreshToken}
+  </select>
+
+  <select id="userCount" parameterType="com.diden.user.vo.UserVo" resultType="_integer">
+    SELECT COUNT(*)
+      FROM TB_USER
+    <where>
+       AND USER_REFRESH_TOKEN = #{userRefreshToken}
+    </where>
+  </select>
+
   <insert id="userInsert" parameterType="com.diden.user.vo.UserVo">
-        INSERT INTO TB_USER (
+     INSERT INTO TB_USER (
             USER_ID
           , USER_NAME
           , USER_PASSWORD

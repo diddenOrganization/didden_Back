@@ -15,10 +15,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class LoginCheckInterceptor implements HandlerInterceptor {
-
-    // @Autowired
-    // private UserService userService;
+public class Interceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)

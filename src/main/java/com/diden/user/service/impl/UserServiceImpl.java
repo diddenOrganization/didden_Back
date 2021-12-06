@@ -16,6 +16,11 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
+    public int userCount(UserVo userVo) {
+        return userMapper.userCount(userVo);
+    }
+
+    @Override
     public List<UserVo> userList() {
         return userMapper.userList();
     }
@@ -43,5 +48,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void userDelete(UserVo userVo) {
         userMapper.userDelete(userVo);
+    }
+
+    @Override
+    public UserVo userRefreshTokenInfo(UserVo userVo) {
+        return userMapper.userRefreshTokenInfo(userVo);
     }
 }

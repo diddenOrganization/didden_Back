@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface UserMapper {
+    public int userCount(UserVo userVo);
+
     public List<UserVo> userList();
 
     public UserVo userInfo(UserVo userVo);
@@ -21,4 +23,6 @@ public interface UserMapper {
     public void userRefTokenUpdate(UserVo userVo);
 
     public void userDelete(UserVo userVo);
+
+    public UserVo userRefreshTokenInfo(UserVo userVo);
 }
