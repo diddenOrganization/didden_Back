@@ -45,9 +45,9 @@ public class Interceptor implements HandlerInterceptor {
         log.debug("{}", requestToken);
 
         if ("\"acc\"".equals(tokenName)) {
-            result = jwtTokenProvider.jwtTokenCheck(requestTokenVo);
+            result = jwtTokenProvider.jwtAccTokenCheck(requestTokenVo);
         } else if ("\"ref\"".equals(tokenName)) {
-            result = jwtTokenProvider.jwtTokenCheck(requestTokenVo);
+            result = jwtTokenProvider.jwtRefTokenCheck(requestTokenVo);
         }
 
         return result;
