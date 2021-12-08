@@ -14,7 +14,7 @@ public class JwtTokenProvider {
     private static String REFRESH_KEY = "refreshTokenKey";
 
     public boolean jwtAccTokenCheck(TokenVo tokenVo) {
-        String token = null;
+        String token = tokenVo.getAccessJwsToken();
         Claims accessClaims = null;
         validationAuthorizationHeader(tokenVo.getAccessJwsToken());
 
@@ -32,7 +32,7 @@ public class JwtTokenProvider {
     }
 
     public boolean jwtRefTokenCheck(TokenVo tokenVo) {
-        String token = null;
+        String token = tokenVo.getRefreshJwsToken();
         Claims refreshClaims = null;
         validationAuthorizationHeader(tokenVo.getRefreshJwsToken());
 

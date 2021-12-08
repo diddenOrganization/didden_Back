@@ -97,14 +97,18 @@ public class UserApiController {
     @PostMapping(value = "/user/logout")
     public ResponseEntity<String> userLogout(@RequestBody(required = false) UserVo userVo, HttpServletRequest request)
             throws Exception {
+        JsonObject userResult = new JsonObject();
+
         try {
             if (!Objects.toString(userVo.getUserId(), "").equals("")
                     && !Objects.toString(userVo.getUserPassword(), "").equals("")) {
                 UserVo getUserVo = userService.userInfo(userVo);
+
                 getUserVo.setUserRefreshToken("");
                 userService.userUpdate(getUserVo);
+                userResult.addProperty("result", true);
 
-                return new ResponseEntity<>("", HttpStatus.OK);
+                return new ResponseEntity<>(userResult.toString(), HttpStatus.OK);
             } else {
                 throw new Exception("잘못된 접근.");
             }

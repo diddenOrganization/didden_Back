@@ -28,7 +28,7 @@ public class TokenApiController {
             HttpServletRequest request) {
         TokenVo token = new TokenVo();
         UserVo pmUserVo = new UserVo();
-        JsonObject userResult = new JsonObject();
+        JsonObject tokenResult = new JsonObject();
 
         pmUserVo.setUserRefreshToken(userVo.getUserRefreshToken());
         int getUserCount = userService.userCount(pmUserVo);
@@ -37,14 +37,14 @@ public class TokenApiController {
             UserVo newUserVo = userService.userRefreshTokenInfo(pmUserVo);
 
             token.setAccessJwsToken(jwtTokenUtil.makeJwtAccToken(newUserVo).getAccessJwsToken());
-            userResult.addProperty("result", true);
-            userResult.addProperty("token_acc", token.getAccessJwsToken());
+            tokenResult.addProperty("result", true);
+            tokenResult.addProperty("token_acc", token.getAccessJwsToken());
         } else {
-            userResult.addProperty("result", false);
-            userResult.addProperty("error", "재 로그인 필요.");
+            tokenResult.addProperty("result", false);
+            tokenResult.addProperty("error", "재 로그인 필요.");
         }
 
-        return new ResponseEntity<>(userResult.toString(), HttpStatus.OK);
+        return new ResponseEntity<>(tokenResult.toString(), HttpStatus.OK);
     }
 
     @PostMapping("")
