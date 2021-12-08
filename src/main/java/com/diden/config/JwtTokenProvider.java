@@ -14,7 +14,7 @@ public class JwtTokenProvider {
     private static String REFRESH_KEY = "refreshTokenKey";
 
     public boolean jwtAccTokenCheck(TokenVo tokenVo) {
-        String token = tokenVo.getAccessJwsToken();
+        String token = null;
         Claims accessClaims = null;
         validationAuthorizationHeader(tokenVo.getAccessJwsToken());
 
@@ -24,7 +24,7 @@ public class JwtTokenProvider {
                 .parseClaimsJws(token)
                 .getBody();
 
-        if ((boolean) accessClaims.get("claim")) {
+        if ((boolean) accessClaims.get("result")) {
             return true;
         } else {
             return false;
@@ -32,7 +32,7 @@ public class JwtTokenProvider {
     }
 
     public boolean jwtRefTokenCheck(TokenVo tokenVo) {
-        String token = tokenVo.getRefreshJwsToken();
+        String token = null;
         Claims refreshClaims = null;
         validationAuthorizationHeader(tokenVo.getRefreshJwsToken());
 
@@ -42,7 +42,7 @@ public class JwtTokenProvider {
                 .parseClaimsJws(token)
                 .getBody();
 
-        if ((boolean) refreshClaims.get("claim")) {
+        if ((boolean) refreshClaims.get("result")) {
             return true;
         } else {
             return false;
