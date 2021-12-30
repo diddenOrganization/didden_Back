@@ -6,6 +6,7 @@ import com.diden.tour.vo.TourApiVo;
 import com.diden.utils.ParsingFromURL;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,7 +39,7 @@ public class TourApiController {
         return parsingFromURL.getParsingURL(url);
     }
 
-    @GetMapping(value = "/tour/api/info/detail", produces = "application/json;application/xml; charset=UTF-8")
+    @PostMapping(value = "/tour/api/info/detail", produces = "application/json;application/xml; charset=UTF-8")
     public String korServiceDetailCommon(@RequestBody(required = false) TourApiVo tourApiVo) {
         String url = new String(
                 "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon"
