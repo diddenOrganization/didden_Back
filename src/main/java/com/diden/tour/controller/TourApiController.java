@@ -39,7 +39,7 @@ public class TourApiController {
         return parsingFromURL.getParsingURL(url);
     }
 
-    @PostMapping(value = "/tour/api/info/detail", produces = "application/json;application/xml; charset=UTF-8")
+    @GetMapping(value = "/tour/api/info/detail", produces = "application/json;application/xml; charset=UTF-8")
     public String korServiceDetailCommon(@RequestBody(required = false) TourApiVo tourApiVo) {
         String url = new String(
                 "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon"
