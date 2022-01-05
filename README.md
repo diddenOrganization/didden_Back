@@ -1,29 +1,3 @@
-<style>
-     b {
-         color: #ED1C24;
-         font-weight: 500;
-     }
-
-     #list {
-         position: fixed;
-         right: 0;
-         bottom: 0;
-         margin: 15px;
-         border: 1px solid white;
-         border-radius: 1000px;
-         padding: 10px;
-         background-color: white;
-     }
-
-     #list > span {
-         color: black;
-     }
-</style>
-
-<article id="list">
-    <span><a href="#">목차로</a></span>
-</article>
-
 # didden_Back
 
 This is didden projects for Back-End
@@ -105,10 +79,10 @@ public class 클래스Vo {
 해당 파라미터는 필수로 설정해야 함으로 참고.
 | 번호 | 컬럼 | 컬럽타입 | 크기 | 컬럼 명 | 컬럼정보 |
 | ---- | ------------------ | -------- | ---- | -------- | ----------------- |
-| 1 | numOfRows<b>\*</b> | String | 4 | 한 페이지 결과 수 |한 페이지 결과 수 |
-| 2 | pageNo <b>\*</b> | String | 4 | 페이지 번호 | 현재 페이지 번호|
-| 3 | MobileOS <b>\*</b> | String | 30 | OS 구분 | IOS (아이폰), AND (안드로이드),WIN (윈도우폰), ETC|
-| 4 | MobileApp<b>\*</b> | String | 60 | 서비스명 | 서비스명=어플명|
+| 1 | numOfRows<b style="color: #ED1C24; font-weight: 500">\*</b> | String | 4 | 한 페이지 결과 수 |한 페이지 결과 수 |
+| 2 | pageNo <b style="color: #ED1C24; font-weight: 500">\*</b> | String | 4 | 페이지 번호 | 현재 페이지 번호|
+| 3 | MobileOS <b style="color: #ED1C24; font-weight: 500">\*</b> | String | 30 | OS 구분 | IOS (아이폰), AND (안드로이드),WIN (윈도우폰), ETC|
+| 4 | MobileApp<b style="color: #ED1C24; font-weight: 500">\*</b> | String | 60 | 서비스명 | 서비스명=어플명|
 
 ---
 
@@ -189,8 +163,8 @@ _serviceKey 파라미터는 static String SERVICE_DEV_KEY = **<하드코딩>** �
 | ---- | ----------------------------- | -------- | ----------- | ---------------------------------- |
 | 1 | [contentTypeId](#관광타입) | String | 관광타입 ID | 관광타입(관광지, 숙박 등) ID |
 | 2 | [cat1](#대분류) | String | 대분류 | 대분류 코드 |
-| 3 | [cat2](#중분류) | String | 중분류 | 중분류 코드(<b>cat1</b> 필수) |
-| 4 | [cat3](#소분류) | String | 소분류 | 소분류 코드(<b>cat1,cat2</b> 필수) |
+| 3 | [cat2](#중분류) | String | 중분류 | 중분류 코드(<b style="color: #ED1C24; font-weight: 500">cat1</b> 필수) |
+| 4 | [cat3](#소분류) | String | 소분류 | 소분류 코드(<b style="color: #ED1C24; font-weight: 500">cat1,cat2</b> 필수) |
 
 _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
 
@@ -292,15 +266,15 @@ public String tourLocationBasedList(
 
 _serviceKey 파라미터는 static String SERVICE_DEV_KEY = **<하드코딩>** 처리되어있음을 알림._
 
-| 번호 | 컬럼                       | 컬럽타입 | 크기 | 컬럼 명     | 컬럼정보                             |
-| ---- | -------------------------- | -------- | ---- | ----------- | ------------------------------------ |
-| 1    | listYN                     | String   | 1    | 목록 구분   | 목록 구분 (Y=목록, N=개수)           |
-| 2    | arrange                    | String   | 1    | 정렬 구분   | 상세정보 참조                        |
-| 3    | [contentTypeId](#관광타입) | String   | 12   | 관광타입 ID | 관광타입(관광지, 숙박 등) ID         |
-| 4    | mapX <b>\*</b>             | String   | 10   | X좌표       | GPS X좌표(WGS84 경도 좌표)           |
-| 5    | mapY <b>\*</b>             | String   | 10   | Y좌표       | GPS Y좌표(WGS84 위도 좌표)           |
-| 6    | radius <b>\*</b>           | String   | 6    | 거리 반경   | 거리 반경(단위:m), Max값 20000m=20Km |
-| 7    | modifiedtime               | String   | 8    | 수정일      | 콘텐츠 수정일                        |
+| 번호 | 컬럼                                                      | 컬럽타입 | 크기 | 컬럼 명     | 컬럼정보                             |
+| ---- | --------------------------------------------------------- | -------- | ---- | ----------- | ------------------------------------ |
+| 1    | listYN                                                    | String   | 1    | 목록 구분   | 목록 구분 (Y=목록, N=개수)           |
+| 2    | arrange                                                   | String   | 1    | 정렬 구분   | 상세정보 참조                        |
+| 3    | [contentTypeId](#관광타입)                                | String   | 12   | 관광타입 ID | 관광타입(관광지, 숙박 등) ID         |
+| 4    | mapX <b style="color: #ED1C24; font-weight: 500">\*</b>   | String   | 10   | X좌표       | GPS X좌표(WGS84 경도 좌표)           |
+| 5    | mapY <b style="color: #ED1C24; font-weight: 500">\*</b>   | String   | 10   | Y좌표       | GPS Y좌표(WGS84 위도 좌표)           |
+| 6    | radius <b style="color: #ED1C24; font-weight: 500">\*</b> | String   | 6    | 거리 반경   | 거리 반경(단위:m), Max값 20000m=20Km |
+| 7    | modifiedtime                                              | String   | 8    | 수정일      | 콘텐츠 수정일                        |
 
 _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
 
@@ -347,17 +321,17 @@ public String tourSearchKeyword(@RequestBody(required = false) TourSearchKeyword
 
 _serviceKey 파라미터는 static String SERVICE_DEV_KEY = **<하드코딩>** 처리되어있음을 알림._
 
-| 번호 | 컬럼                       | 컬럽타입 | 크기 | 컬럼 명     | 컬럼정보                              |
-| ---- | -------------------------- | -------- | ---- | ----------- | ------------------------------------- |
-| 1    | listYN                     | String   | 1    | 목록 구분   | 목록 구분 (Y=목록, N=개수)            |
-| 2    | arrange                    | String   | 1    | 정렬 구분   | 상세내용 참조.                        |
-| 3    | [contentTypeId](#관광타입) | String   | 12   | 관광타입 ID | 관광타입(관광지, 숙박 등) ID          |
-| 4    | [areaCode](#지역코드조회)  | String   | 10   | 지역코드    | 지역코드                              |
-| 5    | sigunguCode                | String   | 10   | 시군구코드  | 시군구코드(areaCode 필수)             |
-| 6    | [cat1](#대분류)            | String   | 12   | 대분류      | 대분류 코드                           |
-| 7    | [cat2](#중분류)            | String   | 12   | 중분류      | 중분류 코드(cat1필수)                 |
-| 8    | [cat3](#소분류)            | String   | 12   | 소분류      | 소분류 코드(cat1,cat2필수)            |
-| 9    | keyword <b>\*</b>          | String   | 30   | 요청 키워드 | 검색 요청할 키워드 (국문=인코딩 필요) |
+| 번호 | 컬럼                                                       | 컬럽타입 | 크기 | 컬럼 명     | 컬럼정보                              |
+| ---- | ---------------------------------------------------------- | -------- | ---- | ----------- | ------------------------------------- |
+| 1    | listYN                                                     | String   | 1    | 목록 구분   | 목록 구분 (Y=목록, N=개수)            |
+| 2    | arrange                                                    | String   | 1    | 정렬 구분   | 상세내용 참조.                        |
+| 3    | [contentTypeId](#관광타입)                                 | String   | 12   | 관광타입 ID | 관광타입(관광지, 숙박 등) ID          |
+| 4    | [areaCode](#지역코드조회)                                  | String   | 10   | 지역코드    | 지역코드                              |
+| 5    | sigunguCode                                                | String   | 10   | 시군구코드  | 시군구코드(areaCode 필수)             |
+| 6    | [cat1](#대분류)                                            | String   | 12   | 대분류      | 대분류 코드                           |
+| 7    | [cat2](#중분류)                                            | String   | 12   | 중분류      | 중분류 코드(cat1필수)                 |
+| 8    | [cat3](#소분류)                                            | String   | 12   | 소분류      | 소분류 코드(cat1,cat2필수)            |
+| 9    | keyword <b style="color: #ED1C24; font-weight: 500">\*</b> | String   | 30   | 요청 키워드 | 검색 요청할 키워드 (국문=인코딩 필요) |
 
 _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
 
@@ -402,15 +376,15 @@ public String tourSearchFestival(@RequestBody(required = false) TourSearchFestiv
 
 _serviceKey 파라미터는 static String SERVICE_DEV_KEY = **<하드코딩>** 처리되어있음을 알림._
 
-| 번호 | 컬럼                      | 컬럽타입 | 크기 | 컬럼 명     | 컬럼정보                      |
-| ---- | ------------------------- | -------- | ---- | ----------- | ----------------------------- |
-| 1    | listYN                    | String   | 1    | 목록 구분   | 목록 구분 (Y=목록, N=개수)    |
-| 2    | arrange                   | String   | 1    | 정렬 구분   | 상세내용 참조.                |
-| 3    | [areaCode](#지역코드조회) | String   | 10   | 지역코드    | 지역코드                      |
-| 4    | sigunguCode               | String   | 10   | 시군구코드  | 시군구코드(areaCode 필수)     |
-| 5    | eventStartDate <b>\*</b>  | String   | 8    | 행사 시작일 | 행사 시작일 (형식 : YYYYMMDD) |
-| 6    | eventEndDate              | String   | 8    | 행사 종료일 | 행사 종료일 (형식 : YYYYMMDD) |
-| 7    | modifiedtime              | String   | 8    | 수정일      | 콘텐츠 수정일                 |
+| 번호 | 컬럼                                                              | 컬럽타입 | 크기 | 컬럼 명     | 컬럼정보                      |
+| ---- | ----------------------------------------------------------------- | -------- | ---- | ----------- | ----------------------------- |
+| 1    | listYN                                                            | String   | 1    | 목록 구분   | 목록 구분 (Y=목록, N=개수)    |
+| 2    | arrange                                                           | String   | 1    | 정렬 구분   | 상세내용 참조.                |
+| 3    | [areaCode](#지역코드조회)                                         | String   | 10   | 지역코드    | 지역코드                      |
+| 4    | sigunguCode                                                       | String   | 10   | 시군구코드  | 시군구코드(areaCode 필수)     |
+| 5    | eventStartDate <b style="color: #ED1C24; font-weight: 500">\*</b> | String   | 8    | 행사 시작일 | 행사 시작일 (형식 : YYYYMMDD) |
+| 6    | eventEndDate                                                      | String   | 8    | 행사 종료일 | 행사 종료일 (형식 : YYYYMMDD) |
+| 7    | modifiedtime                                                      | String   | 8    | 수정일      | 콘텐츠 수정일                 |
 
 _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
 
@@ -458,17 +432,17 @@ public String tourDetailCommon(@RequestBody(required = false) TourDetailCommonVo
 
 _serviceKey 파라미터는 static String SERVICE_DEV_KEY = **<하드코딩>** 처리되어있음을 알림._
 
-| 번호 | 컬럼                       | 컬럽타입 | 크기 | 컬럼 명       | 컬럼정보                         |
-| ---- | -------------------------- | -------- | ---- | ------------- | -------------------------------- |
-| 1    | contentId <b>\*</b>        | String   | 12   | 목록 구분     | 콘텐츠ID                         |
-| 2    | [contentTypeId](#관광타입) | String   | 12   | 정렬 구분     | 관광타입(관광지, 숙박 등) ID     |
-| 3    | defaultYN                  | String   | 1    | 지역코드      | 기본정보 조회여부                |
-| 4    | firstImageYN               | String   | 1    | 시군구코드    | 원본, 썸네일 대표이미지 조회여부 |
-| 5    | areacodeYN                 | String   | 1    | 한옥 여부     | 지역코드, 시군구코드 조회여부    |
-| 6    | catcodeYN                  | String   | 1    | 베니키아 여부 | 대,중,소분류코드 조회여부        |
-| 7    | addrinfoYN                 | String   | 1    | 굿스테이 여부 | 주소, 상세주소 조회여부          |
-| 8    | mapinfoYN                  | String   | 1    | 수정일        | 좌표X, Y 조회여부                |
-| 9    | overviewYN                 | String   | 1    | 수정일        | 콘텐츠 개요 조회여부             |
+| 번호 | 컬럼                                                         | 컬럽타입 | 크기 | 컬럼 명       | 컬럼정보                         |
+| ---- | ------------------------------------------------------------ | -------- | ---- | ------------- | -------------------------------- |
+| 1    | contentId <b style="color: #ED1C24; font-weight: 500">\*</b> | String   | 12   | 목록 구분     | 콘텐츠ID                         |
+| 2    | [contentTypeId](#관광타입)                                   | String   | 12   | 정렬 구분     | 관광타입(관광지, 숙박 등) ID     |
+| 3    | defaultYN                                                    | String   | 1    | 지역코드      | 기본정보 조회여부                |
+| 4    | firstImageYN                                                 | String   | 1    | 시군구코드    | 원본, 썸네일 대표이미지 조회여부 |
+| 5    | areacodeYN                                                   | String   | 1    | 한옥 여부     | 지역코드, 시군구코드 조회여부    |
+| 6    | catcodeYN                                                    | String   | 1    | 베니키아 여부 | 대,중,소분류코드 조회여부        |
+| 7    | addrinfoYN                                                   | String   | 1    | 굿스테이 여부 | 주소, 상세주소 조회여부          |
+| 8    | mapinfoYN                                                    | String   | 1    | 수정일        | 좌표X, Y 조회여부                |
+| 9    | overviewYN                                                   | String   | 1    | 수정일        | 콘텐츠 개요 조회여부             |
 
 _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
 
@@ -509,10 +483,10 @@ public String tourDetailInfo(@RequestBody(required = false) TourDetailInfoVo tou
 
 _serviceKey 파라미터는 static String SERVICE_DEV_KEY = **<하드코딩>** 처리되어있음을 알림._
 
-| 번호 | 컬럼                                 | 컬럽타입 | 크기 | 컬럼 명   | 컬럼정보                     |
-| ---- | ------------------------------------ | -------- | ---- | --------- | ---------------------------- |
-| 1    | contentId <b>\*</b>                  | String   | 12   | 목록 구분 | 콘텐츠ID                     |
-| 2    | [contentTypeId](#관광타입) <b>\*</b> | String   | 12   | 정렬 구분 | 관광타입(관광지, 숙박 등) ID |
+| 번호 | 컬럼                                                                          | 컬럽타입 | 크기 | 컬럼 명   | 컬럼정보                     |
+| ---- | ----------------------------------------------------------------------------- | -------- | ---- | --------- | ---------------------------- |
+| 1    | contentId <b style="color: #ED1C24; font-weight: 500">\*</b>                  | String   | 12   | 목록 구분 | 콘텐츠ID                     |
+| 2    | [contentTypeId](#관광타입) <b style="color: #ED1C24; font-weight: 500">\*</b> | String   | 12   | 정렬 구분 | 관광타입(관광지, 숙박 등) ID |
 
 _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
 
@@ -553,11 +527,11 @@ public String tourDetailImage(@RequestBody(required = false) TourDetailImageVo t
 
 _serviceKey 파라미터는 static String SERVICE_DEV_KEY = **<하드코딩>** 처리되어있음을 알림._
 
-| 번호 | 컬럼                | 컬럽타입 | 크기 | 컬럼 명   | 컬럼정보                                              |
-| ---- | ------------------- | -------- | ---- | --------- | ----------------------------------------------------- |
-| 1    | contentId <b>\*</b> | String   | 12   | 목록 구분 | 콘텐츠ID                                              |
-| 2    | imageYN             | String   | 1    | 정렬 구분 | Y=콘텐츠 이미지 조회 N=”음식점”타입의 음식메뉴 이미지 |
-| 3    | subImageYN          | String   | 1    | 정렬 구분 | Y=원본,썸네일 이미지 조회 N=Null                      |
+| 번호 | 컬럼                                                         | 컬럽타입 | 크기 | 컬럼 명   | 컬럼정보                                              |
+| ---- | ------------------------------------------------------------ | -------- | ---- | --------- | ----------------------------------------------------- |
+| 1    | contentId <b style="color: #ED1C24; font-weight: 500">\*</b> | String   | 12   | 목록 구분 | 콘텐츠ID                                              |
+| 2    | imageYN                                                      | String   | 1    | 정렬 구분 | Y=콘텐츠 이미지 조회 N=”음식점”타입의 음식메뉴 이미지 |
+| 3    | subImageYN                                                   | String   | 1    | 정렬 구분 | Y=원본,썸네일 이미지 조회 N=Null                      |
 
 _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
 
