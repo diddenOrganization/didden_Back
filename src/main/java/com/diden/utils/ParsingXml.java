@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,11 +19,13 @@ import org.springframework.stereotype.Component;
 public class ParsingXml {
     public String getParsingXmlFromURL(HttpURLConnection conn) {
         try {
-            BufferedReader bf = new BufferedReader(new InputStreamReader((InputStream) conn.getContent(), "UTF-8"));
-            String result = bf.readLine();
+
+            InputStreamReader inputStreamReader = new InputStreamReader((InputStream) conn.getContent(), "UTF-8");
+            Stream<String> streamOfString = new BufferedReader(inputStreamReader).lines();
+            String streamToString = streamOfString.collect(Collectors.joining());
 
             XmlMapper xmlMapper = new XmlMapper();
-            JsonNode node = xmlMapper.readTree(result.getBytes());
+            JsonNode node = xmlMapper.readTree(streamToString.getBytes());
 
             ObjectMapper jsonMapper = new ObjectMapper();
             return jsonMapper.writeValueAsString(node);
