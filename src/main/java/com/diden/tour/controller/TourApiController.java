@@ -86,6 +86,10 @@ public class TourApiController {
      */
     @GetMapping(value = "/tour/api/info/areacode", produces = "application/json;application/xml; charset=UTF-8")
     public String tourAreaCode(@RequestBody(required = false) TourAreaCodeVo tourAreaCodeVo) {
+        if (tourAreaCodeVo == null) {
+            tourAreaCodeVo = new TourAreaCodeVo();
+        }
+
         String tourAreaCodeUrl = new String(
                 KOR_SERVICE_URL + "areaCode"
                         + "?serviceKey=" + SERVICE_DEV_KEY
@@ -110,6 +114,9 @@ public class TourApiController {
      */
     @GetMapping(value = "/tour/api/info/categorycode", produces = "application/json;application/xml; charset=UTF-8")
     public String tourCategoryCode(@RequestBody(required = false) TourCategoryCodeVo tourCategoryCodeVo) {
+        if (tourCategoryCodeVo == null) {
+            tourCategoryCodeVo = new TourCategoryCodeVo();
+        }
         String tourCategoryCodeUrl = new String(
                 KOR_SERVICE_URL + "categoryCode"
                         + "?serviceKey=" + SERVICE_DEV_KEY
@@ -137,6 +144,9 @@ public class TourApiController {
      */
     @GetMapping(value = "/tour/api/info/areabasedlist", produces = "application/json;application/xml; charset=UTF-8")
     public String tourAreaBasedList(@RequestBody(required = false) TourAreaBasedListVo tourAreaBasedListVo) {
+        if (tourAreaBasedListVo == null) {
+            tourAreaBasedListVo = new TourAreaBasedListVo();
+        }
         String tourAreaBasedListUrl = new String(
                 KOR_SERVICE_URL + "areaBasedList"
                         + "?serviceKey=" + SERVICE_DEV_KEY
@@ -170,6 +180,9 @@ public class TourApiController {
     @GetMapping(value = "/tour/api/info/locationbasedlist", produces = "application/json;application/xml; charset=UTF-8")
     public String tourLocationBasedList(
             @RequestBody(required = false) TourLocationBasedListVo tourLocationBasedListVo) {
+        if (tourLocationBasedListVo == null) {
+            tourLocationBasedListVo = new TourLocationBasedListVo();
+        }
         String tourLocationBasedListUrl = new String(
                 KOR_SERVICE_URL + "locationBasedList"
                         + "?serviceKey=" + SERVICE_DEV_KEY
@@ -200,6 +213,9 @@ public class TourApiController {
      */
     @GetMapping(value = "/tour/api/info/searchkeyword", produces = "application/json;application/xml; charset=UTF-8")
     public String tourSearchKeyword(@RequestBody(required = false) TourSearchKeywordVo tourSearchKeywordVo) {
+        if (tourSearchKeywordVo == null) {
+            tourSearchKeywordVo = new TourSearchKeywordVo();
+        }
         String tourSearchKeywordUrl = new String(
                 KOR_SERVICE_URL + "searchKeyword"
                         + "?serviceKey=" + SERVICE_DEV_KEY
@@ -232,6 +248,9 @@ public class TourApiController {
      */
     @GetMapping(value = "/tour/api/info/searchfestival", produces = "application/json;application/xml; charset=UTF-8")
     public String tourSearchFestival(@RequestBody(required = false) TourSearchFestivalVo tourSearchFestivalVo) {
+        if (tourSearchFestivalVo == null) {
+            tourSearchFestivalVo = new TourSearchFestivalVo();
+        }
         String tourSearchFestivalUrl = new String(
                 KOR_SERVICE_URL + "searchFestival"
                         + "?serviceKey=" + SERVICE_DEV_KEY
@@ -262,6 +281,9 @@ public class TourApiController {
      */
     @GetMapping(value = "/tour/api/info/searchstay", produces = "application/json;application/xml; charset=UTF-8")
     public String tourSearchStay(@RequestBody(required = false) TourSearchStayVo tourSearchStayVo) {
+        if (tourSearchStayVo == null) {
+            tourSearchStayVo = new TourSearchStayVo();
+        }
         String tourSearchStayUrl = new String(
                 KOR_SERVICE_URL + "searchStay"
                         + "?serviceKey=" + SERVICE_DEV_KEY
@@ -293,6 +315,9 @@ public class TourApiController {
      */
     @GetMapping(value = "/tour/api/info/detailcommon", produces = "application/json;application/xml; charset=UTF-8")
     public String tourDetailCommon(@RequestBody(required = false) TourDetailCommonVo tourDetailCommonVo) {
+        if (tourDetailCommonVo == null) {
+            tourDetailCommonVo = new TourDetailCommonVo();
+        }
         String tourDetailCommonUrl = new String(
                 KOR_SERVICE_URL + "detailCommon"
                         + "?serviceKey=" + SERVICE_DEV_KEY
@@ -317,8 +342,17 @@ public class TourApiController {
         return parsingFromURL.getParsingURL(tourDetailCommonUrl);
     }
 
+    /**
+     * 소개정보 조회
+     * 
+     * @param "/tour/api/info/detailintro"
+     * @param tourDetailIntroVo
+     */
     @GetMapping(value = "/tour/api/info/detailintro", produces = "application/json;application/xml; charset=UTF-8")
     public String tourDetailIntro(@RequestBody(required = false) TourDetailIntroVo tourDetailIntroVo) {
+        if (tourDetailIntroVo == null) {
+            tourDetailIntroVo = new TourDetailIntroVo();
+        }
         String tourDetailIntroUrl = new String(
                 KOR_SERVICE_URL + "detailIntro"
                         + "?serviceKey=" + SERVICE_DEV_KEY
@@ -344,6 +378,9 @@ public class TourApiController {
      */
     @GetMapping(value = "/tour/api/info/detailinfo", produces = "application/json;application/xml; charset=UTF-8")
     public String tourDetailInfo(@RequestBody(required = false) TourDetailInfoVo tourDetailInfoVo) {
+        if (tourDetailInfoVo == null) {
+            tourDetailInfoVo = new TourDetailInfoVo();
+        }
         String tourDetailInfoUrl = new String(
                 KOR_SERVICE_URL + "detailInfo"
                         + "?serviceKey=" + SERVICE_DEV_KEY
@@ -369,6 +406,9 @@ public class TourApiController {
      */
     @GetMapping(value = "/tour/api/info/detailimage", produces = "application/json;application/xml; charset=UTF-8")
     public String tourDetailImage(@RequestBody(required = false) TourDetailImageVo tourDetailImageVo) {
+        if (tourDetailImageVo == null) {
+            tourDetailImageVo = new TourDetailImageVo();
+        }
         String tourDetailImageUrl = new String(
                 KOR_SERVICE_URL + "detailImage"
                         + "?serviceKey=" + SERVICE_DEV_KEY

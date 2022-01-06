@@ -1,5 +1,7 @@
 package com.diden.tour.vo.korservicevo;
 
+import com.google.gson.annotations.SerializedName;
+
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,10 +23,15 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TourAreaCodeVo {
+    @SerializedName("numOfRows")
     private String numOfRows = "";
+    @SerializedName("pageNo")
     private String pageNo = "";
+    @SerializedName("mobileOS")
     private String mobileOS = "";
+    @SerializedName("mobileApp")
     private String mobileApp = "";
+    @SerializedName("areaCode")
     private String areaCode = "";
 
     public TourAreaCodeVo() {
