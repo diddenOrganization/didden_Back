@@ -83,7 +83,7 @@ public class 클래스Vo {
 | ---- | ------------------ | -------- | ---- | -------- | ----------------- |
 | 1 | numOfRows<span style="color: red;">\*</span> | String | 4 | 한 페이지 결과 수 |한 페이지 결과 수 |
 | 2 | pageNo <span style="color: red;">\*</span> | String | 4 | 페이지 번호 | 현재 페이지 번호|
-| 3 | MobileOS <span style="color: red;">\*</span> | String | 30 | OS 구분 | IOS (아이폰), AND (안드로이드),WIN (윈도우폰), ETC|
+| 3 | MobileOS <span style="color: red;">\*</span> | String | 30 | OS 구분 | IOS (아이폰)<br>AND (안드로이드)<br>WIN (윈도우폰)<br>ETC (기타)|
 | 4 | MobileApp<span style="color: red;">\*</span> | String | 60 | 서비스명 | 서비스명=어플명|
 
 ---
