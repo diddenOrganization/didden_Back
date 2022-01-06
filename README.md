@@ -33,7 +33,7 @@ This is didden projects for Back-End
   - [5. 사용자 정보 삭제](#5-사용자-정보-삭제)
 - [2021-10-30(토) 현재 진행상황](#2021-10-30토-현재-진행상황)
 
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/' target="_blank">Table of contents generated with markdown-toc</a></i></small>
 
 # 2022-01-03(월) 현재 진행상황
 
