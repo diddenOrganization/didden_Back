@@ -643,25 +643,25 @@ _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
 
 ## 지역코드조회
 
-| 번호 | NAME           | TYPE   | CODE | TYPE        |
-| ---- | -------------- | ------ | ---- | ----------- |
-| 1    | 서울           | String | 1    | int, String |
-| 2    | 인천           | String | 2    | int, String |
-| 3    | 대전           | String | 3    | int, String |
-| 4    | 대구           | String | 4    | int, String |
-| 5    | 광주           | String | 5    | int, String |
-| 6    | 부산           | String | 6    | int, String |
-| 7    | 울산           | String | 7    | int, String |
-| 8    | 세종특별자치시 | String | 8    | int, String |
-| 9    | 경기도         | String | 31   | int, String |
-| 10   | 강원도         | String | 32   | int, String |
-| 11   | 충청북도       | String | 33   | int, String |
-| 12   | 충청남도       | String | 34   | int, String |
-| 13   | 경상북도       | String | 35   | int, String |
-| 14   | 경상남도       | String | 36   | int, String |
-| 15   | 전라북도       | String | 37   | int, String |
-| 16   | 전라남도       | String | 38   | int, String |
-| 17   | 제주도         | String | 39   | int, String |
+| 번호 | NAME           | TYPE   | CODE | TYPE   |
+| ---- | -------------- | ------ | ---- | ------ |
+| 1    | 서울           | String | 1    | String |
+| 2    | 인천           | String | 2    | String |
+| 3    | 대전           | String | 3    | String |
+| 4    | 대구           | String | 4    | String |
+| 5    | 광주           | String | 5    | String |
+| 6    | 부산           | String | 6    | String |
+| 7    | 울산           | String | 7    | String |
+| 8    | 세종특별자치시 | String | 8    | String |
+| 9    | 경기도         | String | 31   | String |
+| 10   | 강원도         | String | 32   | String |
+| 11   | 충청북도       | String | 33   | String |
+| 12   | 충청남도       | String | 34   | String |
+| 13   | 경상북도       | String | 35   | String |
+| 14   | 경상남도       | String | 36   | String |
+| 15   | 전라북도       | String | 37   | String |
+| 16   | 전라남도       | String | 38   | String |
+| 17   | 제주도         | String | 39   | String |
 
 <br>
 <br>
@@ -670,16 +670,16 @@ _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
 
 ## 관광타입
 
-| 번호 | NAME           | CODE | TYPE        |
-| ---- | -------------- | ---- | ----------- |
-| 1    | 관광지         | 12   | int, String |
-| 2    | 문화시설       | 14   | int, String |
-| 3    | 행사/공연/축제 | 15   | int, String |
-| 4    | 여행코스       | 25   | int, String |
-| 5    | 레포츠         | 28   | int, String |
-| 6    | 숙박           | 32   | int, String |
-| 7    | 쇼핑           | 38   | int, String |
-| 8    | 음식점         | 39   | int, String |
+| 번호 | NAME           | CODE | TYPE   |
+| ---- | -------------- | ---- | ------ |
+| 1    | 관광지         | 12   | String |
+| 2    | 문화시설       | 14   | String |
+| 3    | 행사/공연/축제 | 15   | String |
+| 4    | 여행코스       | 25   | String |
+| 5    | 레포츠         | 28   | String |
+| 6    | 숙박           | 32   | String |
+| 7    | 쇼핑           | 38   | String |
+| 8    | 음식점         | 39   | String |
 
 <br>
 <br>
@@ -715,16 +715,16 @@ _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
 
 ## 시군구코드
 
-| 번호 | NAME           | CODE | TYPE        |
-| ---- | -------------- | ---- | ----------- |
-| 1    | 관광지         | 12   | int, String |
-| 2    | 문화시설       | 14   | int, String |
-| 3    | 행사/공연/축제 | 15   | int, String |
-| 4    | 여행코스       | 25   | int, String |
-| 5    | 레포츠         | 28   | int, String |
-| 6    | 숙박           | 32   | int, String |
-| 7    | 쇼핑           | 38   | int, String |
-| 8    | 음식점         | 39   | int, String |
+| 번호 | NAME           | CODE | TYPE   |
+| ---- | -------------- | ---- | ------ |
+| 1    | 관광지         | 12   | String |
+| 2    | 문화시설       | 14   | String |
+| 3    | 행사/공연/축제 | 15   | String |
+| 4    | 여행코스       | 25   | String |
+| 5    | 레포츠         | 28   | String |
+| 6    | 숙박           | 32   | String |
+| 7    | 쇼핑           | 38   | String |
+| 8    | 음식점         | 39   | String |
 
 <br>
 <br>
