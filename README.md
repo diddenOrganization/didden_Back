@@ -109,7 +109,7 @@ public class 클래스Vo {
  * @param "/tour/api/info/areacode"
  * @param tourAreaCodeVo
  */
-@GetMapping(value = "/tour/api/info/areacode", produces = "application/json;application/xml; charset=UTF-8")
+@PostMapping(value = "/tour/api/info/areacode", produces = "application/json;application/xml; charset=UTF-8")
 public String tourAreaCode(@RequestBody(required = false) TourAreaCodeVo tourAreaCodeVo) {
     String tourAreaCodeUrl = new String(
             KOR_SERVICE_URL + "areaCode"
@@ -155,7 +155,7 @@ _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
  * @param "/tour/api/info/categorycode"
  * @param tourCategoryCodeVo
  */
-@GetMapping(value = "/tour/api/info/categorycode", produces = "application/json;application/xml; charset=UTF-8")
+@PostMapping(value = "/tour/api/info/categorycode", produces = "application/json;application/xml; charset=UTF-8")
 public String tourCategoryCode(@RequestBody(required = false) TourCategoryCodeVo tourCategoryCodeVo) {
     String tourCategoryCodeUrl = new String(
             KOR_SERVICE_URL + "categoryCode"
@@ -206,7 +206,7 @@ _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
  * @param "/tour/api/info/areabasedlist"
  * @param tourAreaBasedListVo
  */
-@GetMapping(value = "/tour/api/info/areabasedlist", produces = "application/json;application/xml; charset=UTF-8")
+@PostMapping(value = "/tour/api/info/areabasedlist", produces = "application/json;application/xml; charset=UTF-8")
 public String tourAreaBasedList(@RequestBody(required = false) TourAreaBasedListVo tourAreaBasedListVo) {
     String tourAreaBasedListUrl = new String(
             KOR_SERVICE_URL + "areaBasedList"
@@ -268,7 +268,7 @@ _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
  * @param "/tour/api/info/locationbasedlist"
  * @param tourLocationBasedListVo
  */
-@GetMapping(value = "/tour/api/info/locationbasedlist", produces = "application/json;application/xml; charset=UTF-8")
+@PostMapping(value = "/tour/api/info/locationbasedlist", produces = "application/json;application/xml; charset=UTF-8")
 public String tourLocationBasedList(
         @RequestBody(required = false) TourLocationBasedListVo tourLocationBasedListVo) {
     String tourLocationBasedListUrl = new String(
@@ -327,7 +327,7 @@ _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
  * @param "/tour/api/info/searchkeyword"
  * @param tourSearchKeywordVo
  */
-@GetMapping(value = "/tour/api/info/searchkeyword", produces = "application/json;application/xml; charset=UTF-8")
+@PostMapping(value = "/tour/api/info/searchkeyword", produces = "application/json;application/xml; charset=UTF-8")
 public String tourSearchKeyword(@RequestBody(required = false) TourSearchKeywordVo tourSearchKeywordVo) {
     String tourSearchKeywordUrl = new String(
             KOR_SERVICE_URL + "searchKeyword"
@@ -389,7 +389,7 @@ _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
  * @param "/tour/api/info/searchstay"
  * @param tourSearchStayVo
  */
-@GetMapping(value = "/tour/api/info/searchstay", produces = "application/json;application/xml; charset=UTF-8")
+@PostMapping(value = "/tour/api/info/searchstay", produces = "application/json;application/xml; charset=UTF-8")
 public String tourSearchStay(@RequestBody(required = false) TourSearchStayVo tourSearchStayVo) {
     String tourSearchStayUrl = new String(
             KOR_SERVICE_URL + "searchStay"
@@ -449,7 +449,7 @@ _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
  * @param "/tour/api/info/searchfestival"
  * @param tourSearchFestivalVo
  */
-@GetMapping(value = "/tour/api/info/searchfestival", produces = "application/json;application/xml; charset=UTF-8")
+@PostMapping(value = "/tour/api/info/searchfestival", produces = "application/json;application/xml; charset=UTF-8")
 public String tourSearchFestival(@RequestBody(required = false) TourSearchFestivalVo tourSearchFestivalVo) {
     String tourSearchFestivalUrl = new String(
             KOR_SERVICE_URL + "searchFestival"
@@ -508,7 +508,7 @@ _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
  * @param "/tour/api/info/detailcommon"
  * @param tourDetailCommonVo
  */
-@GetMapping(value = "/tour/api/info/detailcommon", produces = "application/json;application/xml; charset=UTF-8")
+@PostMapping(value = "/tour/api/info/detailcommon", produces = "application/json;application/xml; charset=UTF-8")
 public String tourDetailCommon(@RequestBody(required = false) TourDetailCommonVo tourDetailCommonVo) {
     String tourDetailCommonUrl = new String(
             KOR_SERVICE_URL + "detailCommon"
@@ -571,7 +571,7 @@ _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
  * @param "/tour/api/info/detailintro"
  * @param tourDetailIntroVo
  */
-@GetMapping(value = "/tour/api/info/detailintro", produces = "application/json;application/xml; charset=UTF-8")
+@PostMapping(value = "/tour/api/info/detailintro", produces = "application/json;application/xml; charset=UTF-8")
 public String tourDetailIntro(@RequestBody(required = false) TourDetailIntroVo tourDetailIntroVo) {
     String tourDetailIntroUrl = new String(
             KOR_SERVICE_URL + "detailIntro"
@@ -620,7 +620,7 @@ _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
  * @param "/tour/api/info/detailinfo"
  * @param tourDetailInfoVo
  */
-@GetMapping(value = "/tour/api/info/detailinfo", produces = "application/json;application/xml; charset=UTF-8")
+@PostMapping(value = "/tour/api/info/detailinfo", produces = "application/json;application/xml; charset=UTF-8")
 public String tourDetailInfo(@RequestBody(required = false) TourDetailInfoVo tourDetailInfoVo) {
     String tourDetailInfoUrl = new String(
             KOR_SERVICE_URL + "detailInfo"
@@ -668,7 +668,7 @@ _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
  * @param "/tour/api/info/detailimage"
  * @param tourDetailImageVo
  */
-@GetMapping(value = "/tour/api/info/detailimage", produces = "application/json;application/xml; charset=UTF-8")
+@PostMapping(value = "/tour/api/info/detailimage", produces = "application/json;application/xml; charset=UTF-8")
 public String tourDetailImage(@RequestBody(required = false) TourDetailImageVo tourDetailImageVo) {
     String tourDetailImageUrl = new String(
             KOR_SERVICE_URL + "detailImage"
