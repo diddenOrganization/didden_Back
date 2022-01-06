@@ -12,10 +12,12 @@ This is didden projects for Back-End
   * [003. 지역기반 관광정보 조회](#003-지역기반-관광정보-조회)
   * [004. 위치기반 관광정보 조회](#004-위치기반-관광정보-조회)
   * [005. 키워드 검색 조회](#005-키워드-검색-조회)
+  * [006. 숙방정보 조회](#006-숙박정보-조회)
   * [007. 행사정보 조회](#007-행사정보-조회)
   * [008. 공통정보 조회](#008-공통정보-조회)
-  * [009. 반복정보 조회](#009-반복정보-조회)
-  * [010. 이미지정보 조회](#010-이미지정보-조회)
+  * [009. 소개정보 조회](#009-소개정보-조회)
+  * [010. 반복정보 조회](#010-반복정보-조회)
+  * [011. 이미지정보 조회](#011-이미지정보-조회)
 - [2021-12-04(토) 현재 진행상황](#2021-12-04토-현재-진행상황)
   - [1. 관광 데이터](#1-관광-데이터)
   - [2. 로그인/로그아웃 토큰 기능 추가](#2-로그인로그아웃-토큰-기능-추가)
@@ -46,12 +48,12 @@ PATH 클릭하면 상세정보를 확인할 수 있습니다.
 | 3    | [지역기반 관광정보 조회 ](#003-지역기반-관광정보-조회) | /tour/api/info/areabasedlist     |
 | 4    | [위치기반 관광정보 조회 ](#004-위치기반-관광정보-조회) | /tour/api/info/locationbasedlist |
 | 5    | [키워드 검색 조회 ](#005-키워드-검색-조회)             | /tour/api/info/searchkeyword     |
-| 6    | [행사정보 조회 ](#007-행사정보-조회)                   | /tour/api/info/searchfestival    |
-| 7    | 숙박정보 조회                                          | /tour/api/info/searchstay        |
+| 6    | [숙박정보 조회](#006-숙박정보-조회)                    | /tour/api/info/searchstay        |
+| 7    | [행사정보 조회 ](#007-행사정보-조회)                   | /tour/api/info/searchfestival    |
 | 8    | [공통정보 조회 (상세정보1) ](#008-공통정보-조회)       | /tour/api/info/detailcommon      |
-| 9    | 소개정보 조회 (상세정보2)                              | /tour/api/info/detailintro       |
-| 10   | [반복정보 조회 (상세정보3) ](##009-반복정보-조회)      | /tour/api/info/detailinfo        |
-| 11   | [이미지정보 조회 (상세정보4)](#010-이미지정보-조회)    | /tour/api/info/detailimage       |
+| 9    | [소개정보 조회 (상세정보2)](#009-소개정보-조회)        | /tour/api/info/detailintro       |
+| 10   | [반복정보 조회 (상세정보3) ](#010-반복정보-조회)       | /tour/api/info/detailinfo        |
+| 11   | [이미지정보 조회 (상세정보4)](#011-이미지정보-조회)    | /tour/api/info/detailimage       |
 
 ---
 
@@ -122,8 +124,8 @@ _serviceKey 파라미터는 static String SERVICE_DEV_KEY = **<하드코딩>** �
 
 _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
 
-<spanr>
-<spanr>
+<br>
+<br>
 
 ---
 
@@ -168,8 +170,8 @@ _serviceKey 파라미터는 static String SERVICE_DEV_KEY = **<하드코딩>** �
 
 _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
 
-<spanr>
-<spanr>
+<br>
+<br>
 ---
 
 ## 003. 지역기반 관광정보 조회
@@ -224,8 +226,8 @@ _serviceKey 파라미터는 static String SERVICE_DEV_KEY = **<하드코딩>** �
 
 _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
 
-<spanr>
-<spanr>
+<br>
+<br>
 
 ---
 
@@ -278,8 +280,8 @@ _serviceKey 파라미터는 static String SERVICE_DEV_KEY = **<하드코딩>** �
 
 _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
 
-<spanr>
-<spanr>
+<br>
+<br>
 
 ---
 
@@ -335,8 +337,63 @@ _serviceKey 파라미터는 static String SERVICE_DEV_KEY = **<하드코딩>** �
 
 _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
 
-<spanr>
-<spanr>
+<br>
+<br>
+
+---
+
+## 006. 숙박정보 조회
+
+```java
+/**
+ * 숙박정보 조회
+ *
+ * @param "/tour/api/info/searchstay"
+ * @param tourSearchStayVo
+ */
+@GetMapping(value = "/tour/api/info/searchstay", produces = "application/json;application/xml; charset=UTF-8")
+public String tourSearchStay(@RequestBody(required = false) TourSearchStayVo tourSearchStayVo) {
+    String tourSearchStayUrl = new String(
+            KOR_SERVICE_URL + "searchStay"
+                    + "?serviceKey=" + SERVICE_DEV_KEY
+                    + "&numOfRows=" + tourSearchStayVo.getNumOfRows()
+                    + "&pageNo=" + tourSearchStayVo.getPageNo()
+                    + "&MobileOS=" + tourSearchStayVo.getMobileOS()
+                    + "&MobileApp=" + tourSearchStayVo.getMobileApp()
+                    + "&listYN=" + tourSearchStayVo.getListYN()
+                    + "&arrange=" + tourSearchStayVo.getArrange()
+                    + "&areaCode=" + tourSearchStayVo.getAreaCode()
+                    + "&sigunguCode=" + tourSearchStayVo.getSigunguCode()
+                    + "&hanOk=" + tourSearchStayVo.getHanOk()
+                    + "&benikia=" + tourSearchStayVo.getBenikia()
+                    + "&goodStay=" + tourSearchStayVo.getGoodStay()
+                    + "&modifiedtime=" + tourSearchStayVo.getModifiedtime()
+                    + "&_type=json"
+
+    );
+    ParsingFromURL parsingFromURL = new ParsingFromURL();
+    System.out.println("URL => " + tourSearchStayUrl);
+    return parsingFromURL.getParsingURL(tourSearchStayUrl);
+}
+```
+
+_serviceKey 파라미터는 static String SERVICE_DEV_KEY = **<하드코딩>** 처리되어있음을 알림._
+
+| 번호 | 컬럼          | 컬럽타입 | 크기 | 컬럼 명     | 컬럼정보                                                                                                                |
+| ---- | ------------- | -------- | ---- | ----------- | ----------------------------------------------------------------------------------------------------------------------- |
+| 1    | llistYN       | String   | 1    | 목록 구분   | 목록 구분 (Y=목록, N=개수)                                                                                              |
+| 2    | aarrange      | String   | 1    | 정렬 구분   | (A=제목순, B=조회순, C=수정일순, D=생성일순) 대표이미지가 반드시 있는 정렬 (O=제목순, P=조회순, Q=수정일순, R=생성일순) |
+| 3    | areaCode      | String   | 10   | 지역코드    | 지역코드                                                                                                                |
+| 4    | ssigunguCode  | String   | 10   | 시군구코드  | 시군구코드(areaCode 필수)                                                                                               |
+| 5    | ehanOk        | String   | 1    | 행사 시작일 | 한옥 여부                                                                                                               |
+| 6    | ebenikia      | String   | 1    | 행사 종료일 | 베니키아 여부                                                                                                           |
+| 7    | mgoodStay     | String   | 1    | 수정일      | 굿스테이 여부                                                                                                           |
+| 7    | mmodifiedtime | String   | 8    | 수정일      | 콘텐츠 수정일                                                                                                           |
+
+_컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
+
+<br>
+<br>
 
 ---
 
@@ -388,8 +445,8 @@ _serviceKey 파라미터는 static String SERVICE_DEV_KEY = **<하드코딩>** �
 
 _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
 
-<spanr>
-<spanr>
+<br>
+<br>
 
 ---
 
@@ -446,12 +503,56 @@ _serviceKey 파라미터는 static String SERVICE_DEV_KEY = **<하드코딩>** �
 
 _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
 
-<spanr>
-<spanr>
+<br>
+<br>
 
 ---
 
-## 009. 반복정보 조회
+## 009. 소개정보 조회
+
+```java
+
+/**
+ * 소개정보 조회
+ *
+ * @param "/tour/api/info/detailintro"
+ * @param tourDetailIntroVo
+ */
+@GetMapping(value = "/tour/api/info/detailintro", produces = "application/json;application/xml; charset=UTF-8")
+public String tourDetailIntro(@RequestBody(required = false) TourDetailIntroVo tourDetailIntroVo) {
+    String tourDetailIntroUrl = new String(
+            KOR_SERVICE_URL + "detailIntro"
+                    + "?serviceKey=" + SERVICE_DEV_KEY
+                    + "&numOfRows=" + tourDetailIntroVo.getNumOfRows()
+                    + "&pageNo=" + tourDetailIntroVo.getPageNo()
+                    + "&MobileOS=" + tourDetailIntroVo.getMobileOS()
+                    + "&MobileApp=" + tourDetailIntroVo.getMobileApp()
+                    + "&contentId=" + tourDetailIntroVo.getContentId()
+                    + "&contentTypeId=" + tourDetailIntroVo.getContentTypeId()
+                    + "&_type=json"
+
+    );
+    ParsingFromURL parsingFromURL = new ParsingFromURL();
+    System.out.println("URL => " + tourDetailIntroUrl);
+    return parsingFromURL.getParsingURL(tourDetailIntroUrl);
+}
+```
+
+_serviceKey 파라미터는 static String SERVICE_DEV_KEY = **<하드코딩>** 처리되어있음을 알림._
+
+| 번호 | 컬럼                       | 컬럽타입 | 크기 | 컬럼 명   | 컬럼정보                     |
+| ---- | -------------------------- | -------- | ---- | --------- | ---------------------------- |
+| 1    | contentId \*               | String   | 12   | 목록 구분 | 콘텐츠ID                     |
+| 2    | [contentTypeId](#관광타입) | String   | 12   | 정렬 구분 | 관광타입(관광지, 숙박 등) ID |
+
+_컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
+
+<br>
+<br>
+
+---
+
+## 010. 반복정보 조회
 
 ```java
 
@@ -490,12 +591,12 @@ _serviceKey 파라미터는 static String SERVICE_DEV_KEY = **<하드코딩>** �
 
 _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
 
-<spanr>
-<spanr>
+<br>
+<br>
 
 ---
 
-## 010. 이미지정보 조회
+## 011. 이미지정보 조회
 
 ```java
 /**
@@ -535,8 +636,8 @@ _serviceKey 파라미터는 static String SERVICE_DEV_KEY = **<하드코딩>** �
 
 _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
 
-<spanr>
-<spanr>
+<br>
+<br>
 
 ---
 
@@ -562,8 +663,8 @@ _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
 | 16   | 전라남도       | String | 38   | int, String |
 | 17   | 제주도         | String | 39   | int, String |
 
-<spanr>
-<spanr>
+<br>
+<br>
 
 ---
 
@@ -580,8 +681,8 @@ _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
 | 7    | 쇼핑           | 38   | int, String |
 | 8    | 음식점         | 39   | int, String |
 
-<spanr>
-<spanr>
+<br>
+<br>
 
 ---
 
@@ -589,8 +690,8 @@ _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
 
 첨부파일 참조.
 
-<spanr>
-<spanr>
+<br>
+<br>
 
 ---
 
@@ -598,8 +699,8 @@ _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
 
 첨부파일 참조.
 
-<spanr>
-<spanr>
+<br>
+<br>
 
 ---
 
@@ -607,8 +708,8 @@ _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
 
 첨부파일 참조.
 
-<spanr>
-<spanr>
+<br>
+<br>
 
 ---
 
@@ -625,8 +726,8 @@ _컬럼을 선택하면 샘플데이터를 확인 할 수 있음._
 | 7    | 쇼핑           | 38   | int, String |
 | 8    | 음식점         | 39   | int, String |
 
-<spanr>
-<spanr>
+<br>
+<br>
 
 ---
 
