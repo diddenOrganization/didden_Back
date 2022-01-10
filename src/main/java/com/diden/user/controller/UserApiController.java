@@ -118,7 +118,7 @@ public class UserApiController {
         }
     }
 
-    @PutMapping(value = "/user")
+    @PutMapping(value = "/user/insert")
     public ResponseEntity<String> userInsert(@RequestBody(required = false) UserVo userVo) {
         JsonObject userResult = new JsonObject();
         try {
@@ -135,7 +135,30 @@ public class UserApiController {
                 userService.userInsert(userVo);
                 userResult.addProperty("result", true);
                 userResult.addProperty("put", "insert");
-            } else {
+            }
+
+        } catch (Exception e) {
+            userResult.addProperty("result", false);
+            userResult.addProperty("error", e.getMessage());
+            return new ResponseEntity<>(userResult.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(userResult.toString(), HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/user/update")
+    public ResponseEntity<String> userUpdate(@RequestBody(required = false) UserVo userVo) {
+        JsonObject userResult = new JsonObject();
+        try {
+            if (Objects.isNull(userVo)) {
+                throw new Exception("파라미터 null");
+            }
+
+            UserVo userCheck = new UserVo();
+            userCheck.setUserId(userVo.getUserId());
+            userCheck.setUserPassword(userVo.getUserPassword());
+
+            userCheck = userService.userInfo(userCheck);
+            if (!Objects.isNull(userCheck)) {
                 userService.userUpdate(userVo);
                 userResult.addProperty("result", true);
                 userResult.addProperty("put", "update");
