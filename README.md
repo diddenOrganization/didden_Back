@@ -4,6 +4,8 @@ This is didden projects for Back-End
 
 # [목차](#목차)
 
+- [2022-01-10(월) 현재 진행상황](#2022-01-10월-현재-진행상황)
+  - [1. 사용자 등록/수정 변경내용.](#1-사용자-등록수정-변경내용)
 - [2022-01-03(월) 현재 진행상황](#2022-01-03월-현재-진행상황)
   - [국문 관광정보 서비스.](#국문-관광정보-서비스)
   * [000. 공통 부분](#000-공통-부분)
@@ -33,7 +35,44 @@ This is didden projects for Back-End
   - [5. 사용자 정보 삭제](#5-사용자-정보-삭제)
 - [2021-10-30(토) 현재 진행상황](#2021-10-30토-현재-진행상황)
 
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/' target="_blank">Table of contents generated with markdown-toc</a></i></small>
+# 2022-01-10(월) 현재 진행상황
+
+## 1. 사용자 등록/수정 변경내용.
+
+```JAVA
+//회원정보 등록 및 수정 URL 변경.
+@PutMapping(value = "/user/insert") // 등록
+@PutMapping(value = "/user/update") // 수정
+```
+
+```JAVA
+// 등록성공 결과 값
+userResult.addProperty("result", true);
+userResult.addProperty("put", "insert");
+
+// 수정성공 결과 값
+userResult.addProperty("result", true);
+userResult.addProperty("put", "update");
+
+// 등록/수정 실패 결과 값
+userResult.addProperty("result", false);
+userResult.addProperty("error", e.getMessage());
+```
+
+### 확인내용
+
+사용자 등록시 세션체크를 하면서 사용자 등록 컨트롤러에 접근도 하지 못하는 상황.  
+따라서 해당 예외처리를 하려 했으나, 사용자 등록과 수정 컨트롤러 자체가 하나로 묶여있음.
+
+### 처리내용
+
+등록과 수정 컨트롤러를 분할하여 처리.  
+등록과 수정시 예외처리.
+<br>
+<br>
+<br>
+
+[맨 위로](#목차)
 
 # 2022-01-03(월) 현재 진행상황
 
