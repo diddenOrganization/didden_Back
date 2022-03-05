@@ -50,9 +50,22 @@ public class UserApiController {
         return userJsonList.toString();
     }
 
+    @PostMapping(value = "/user", produces = "application/json; charset=UTF-8")
+    public ResponseEntity<String> userInfo(@RequestBody(required = false) UserVo userVo, HttpServletRequest request) {
+        UserVo userInfo = userService.userInfo(userVo);
+        JsonObject userResult = new JsonObject();
+        if (userInfo.getUserId().isEmpty()) {
+            userResult.addProperty("result", false);
+        } else {
+            userResult.addProperty("result", true);
+        }
+        return new ResponseEntity<>(userResult.toString(), HttpStatus.OK);
+    }
+
     // Exception 어노테이션.
     // Json Exception 공통.
     // View Exception 공통.
+    // UserLogin 시 성공/실패에 따라 회원가입 페이지 또는 메인페이지로 이동 시키는 로직 개발할 것.
     @PostMapping(value = "/user/login")
     public ResponseEntity<String> userLogin(@RequestBody(required = false) UserVo userVo, HttpServletRequest request)
             throws Exception {
