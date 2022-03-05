@@ -54,7 +54,7 @@ public class UserApiController {
     public ResponseEntity<String> userInfo(@RequestBody(required = false) UserVo userVo, HttpServletRequest request) {
         UserVo userInfo = userService.userInfo(userVo);
         JsonObject userResult = new JsonObject();
-        if (userInfo.getUserId().isEmpty()) {
+        if (userInfo == null) {
             userResult.addProperty("result", false);
         } else {
             userResult.addProperty("result", true);
