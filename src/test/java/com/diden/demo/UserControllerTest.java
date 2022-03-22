@@ -1,31 +1,19 @@
 package com.diden.demo;
 
-import java.util.Base64;
-import java.util.List;
-
-import com.diden.config.JwtTokenProvider;
 import com.diden.config.vo.TokenVo;
 import com.diden.user.service.UserService;
-import com.diden.user.service.impl.UserServiceImpl;
 import com.diden.user.vo.UserVo;
-import com.diden.utils.JwtTokenUtil;
 import com.diden.utils.ParsingJson;
-
-import org.apache.catalina.User;
-import org.assertj.core.util.Arrays;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
-import org.mockito.junit.jupiter.MockitoExtension;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
+import org.assertj.core.util.Arrays;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.Base64;
+import java.util.List;
 
 @SpringBootTest
 public class UserControllerTest {
