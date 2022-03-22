@@ -16,16 +16,15 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan
 public class ParsingFromURL {
 
-    private ParsingJson parsingJson = new ParsingJson();
-    private ParsingXml parsingXml = new ParsingXml();
+    private final ParsingJson parsingJson = new ParsingJson();
+    private final ParsingXml parsingXml = new ParsingXml();
 
     public String getParsingURL(String paramUrl) {
         try {
-            String sURL = paramUrl;
-            URL url = new URL(sURL);
+            URL url = new URL(paramUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
             conn.setRequestMethod("GET");
+            conn.setRequestProperty("Content-type", "application/json");
             String ContentType = conn.getContentType();
 
             System.out.println("Response code: " + conn.getResponseCode());
