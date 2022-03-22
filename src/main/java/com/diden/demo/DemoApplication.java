@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan("com.diden")
-@MapperScan("com.diden.*.mapper*")
+@ComponentScan(value = "com.diden")
+@MapperScan(value = "com.diden.*.mapper*")
 public class DemoApplication {
 
 	public static void main(String[] args) {

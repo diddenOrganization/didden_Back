@@ -18,8 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 public class Interceptor implements HandlerInterceptor {
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-            throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 
         JwtTokenProvider jwtTokenProvider = new JwtTokenProvider();
         ParsingJson parsingJson = new ParsingJson();

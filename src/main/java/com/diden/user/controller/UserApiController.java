@@ -1,29 +1,17 @@
 package com.diden.user.controller;
 
-import java.util.List;
-import java.util.Objects;
-
-import javax.servlet.http.HttpServletRequest;
-
 import com.diden.config.vo.TokenVo;
 import com.diden.user.service.UserService;
 import com.diden.user.vo.UserVo;
 import com.diden.utils.JwtTokenUtil;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
+import com.google.gson.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Objects;
 
 @RestController
 public class UserApiController {
@@ -35,12 +23,13 @@ public class UserApiController {
     JwtTokenUtil jwtTokenUtil;
 
     @GetMapping(value = "/user/list", produces = "application/json; charset=UTF-8")
+    @ResponseBody
     public String userList() {
         List<UserVo> userVoList = userService.userList();
         JsonObject userJsonList = new JsonObject();
         JsonArray jsonArray = new JsonArray();
 
-        userVoList.stream().forEach(userVoData -> {
+        userVoList.forEach(userVoData -> {
             Gson gson = new Gson();
             JsonElement userJsonData = new JsonParser().parse(gson.toJson(userVoData));
             jsonArray.add(userJsonData);
@@ -51,7 +40,7 @@ public class UserApiController {
     }
 
     @PostMapping(value = "/user", produces = "application/json; charset=UTF-8")
-    public ResponseEntity<String> userInfo(@RequestBody(required = false) UserVo userVo, HttpServletRequest request) {
+    public ResponseEntity<String> userInfo(@RequestBody(required = false) UserVo userVo) {
         UserVo userInfo = userService.userInfo(userVo);
         JsonObject userResult = new JsonObject();
         if (userInfo == null) {
@@ -67,8 +56,7 @@ public class UserApiController {
     // View Exception 공통.
     // UserLogin 시 성공/실패에 따라 회원가입 페이지 또는 메인페이지로 이동 시키는 로직 개발할 것.
     @PostMapping(value = "/user/login")
-    public ResponseEntity<String> userLogin(@RequestBody(required = false) UserVo userVo, HttpServletRequest request)
-            throws Exception {
+    public ResponseEntity<String> userLogin(@RequestBody(required = false) UserVo userVo) {
         try {
             JsonObject userResult = new JsonObject();
 
@@ -108,8 +96,7 @@ public class UserApiController {
     }
 
     @PostMapping(value = "/user/logout")
-    public ResponseEntity<String> userLogout(@RequestBody(required = false) UserVo userVo, HttpServletRequest request)
-            throws Exception {
+    public ResponseEntity<String> userLogout(@RequestBody(required = false) UserVo userVo) {
         JsonObject userResult = new JsonObject();
 
         try {
