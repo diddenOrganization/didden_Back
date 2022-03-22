@@ -1,8 +1,5 @@
 package com.diden.config;
 
-import com.diden.announcement.mapper.Announcement2Mapper;
-import com.diden.announcement.service.impl.AnnouncementServiceImpl;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
