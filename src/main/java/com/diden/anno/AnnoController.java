@@ -23,7 +23,7 @@ public class AnnoController {
 
     @GetMapping(value = "/anno/{id}", produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public ResponseEntity<String> findOne(@RequestBody(required = false) AnnoVo annoVo, @PathVariable(value="id") String paramId) {
+    public ResponseEntity<String> findOne(@RequestBody(required = false) AnnoVo annoVo, @PathVariable("id") String paramId) {
         try{
             annoVo.setAnnoId(paramId);
             return new ResponseEntity<>(annoService.findOne(annoVo), HttpStatus.OK);
@@ -60,9 +60,9 @@ public class AnnoController {
 
     @DeleteMapping(value = "/anno/{id}", produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public ResponseEntity<String> delete(@RequestBody(required = false) AnnoVo annoVo, @PathVariable(value="id") String paramId) {
+    public ResponseEntity<String> delete(@PathVariable(value="id") String paramId) {
         try{
-            annoVo.setAnnoId(paramId);
+            AnnoVo annoVo = new AnnoVo(paramId, null, null, null);
             annoService.delete(annoVo);
             return new ResponseEntity<>("", HttpStatus.OK);
         } catch (Exception e){

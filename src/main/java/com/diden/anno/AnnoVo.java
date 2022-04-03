@@ -12,4 +12,14 @@ public class AnnoVo {
     private String annoTitle;
     private String annoContent;
     private String annoCreateDate;
+
+    public AnnoVo() {
+    }
+
+    public AnnoVo(String annoId, String annoTitle, String annoContent, String annoCreateDate) {
+        this.annoId = annoId;
+        this.annoTitle = annoTitle;
+        this.annoContent = annoContent;
+        this.annoCreateDate = annoCreateDate;
+    }
 }
