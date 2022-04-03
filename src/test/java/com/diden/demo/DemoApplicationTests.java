@@ -1,12 +1,13 @@
 package com.diden.demo;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+@SpringBootTest
 class DemoApplicationTests {
 
-	// @Test
-	// void contextLoads() {
-	// }
+	 @Test
+	 void contextLoads() {
+	 }
 
 }

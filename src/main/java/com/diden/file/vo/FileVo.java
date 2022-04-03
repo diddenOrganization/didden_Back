@@ -7,6 +7,7 @@ import lombok.Setter;
 @Data
 @Getter
 @Setter
+@Deprecated
 public class FileVo {
     private String fileId = null;
     private String fileName = null;

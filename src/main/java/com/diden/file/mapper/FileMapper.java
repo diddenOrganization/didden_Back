@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Mapper
+@Deprecated
 public interface FileMapper {
     public void fileInsert(FileVo fileVo);
 

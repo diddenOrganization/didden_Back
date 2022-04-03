@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.diden.file.vo.FileVo;
 
+@Deprecated
 public interface FileService {
     public void fileInsert(FileVo fileVo);
 

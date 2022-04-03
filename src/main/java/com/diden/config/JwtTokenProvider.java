@@ -10,8 +10,8 @@ import io.jsonwebtoken.Jwts;
 @Component
 public class JwtTokenProvider {
 
-    private static String ACCESS_KEY = "accessTokenKey";
-    private static String REFRESH_KEY = "refreshTokenKey";
+    private static final String ACCESS_KEY = "accessTokenKey";
+    private static final String REFRESH_KEY = "refreshTokenKey";
 
     public boolean jwtAccTokenCheck(TokenVo tokenVo) {
         String token = null;
@@ -32,12 +32,10 @@ public class JwtTokenProvider {
     }
 
     public boolean jwtRefTokenCheck(TokenVo tokenVo) {
-        String token = null;
-        Claims refreshClaims = null;
         validationAuthorizationHeader(tokenVo.getRefreshJwsToken());
 
-        token = extractToken(tokenVo.getRefreshJwsToken());
-        refreshClaims = Jwts.parser()
+        String token = extractToken(tokenVo.getRefreshJwsToken());
+        Claims refreshClaims = Jwts.parser()
                 .setSigningKey(REFRESH_KEY)
                 .parseClaimsJws(token)
                 .getBody();
