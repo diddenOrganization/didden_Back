@@ -9,6 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @SpringBootTest
 @Transactional
 class AnnoControllerTest {
@@ -22,7 +24,7 @@ class AnnoControllerTest {
         Gson gson = new Gson();
 
         //when
-        String findAll = annoService.findAll();
+        List<AnnoVo> findAll = annoService.findAll();
 
         //then
         System.out.println(findAll);
@@ -35,7 +37,7 @@ class AnnoControllerTest {
         annoVo.setAnnoId("1");
 
         //when
-        String findOne = annoService.findOne(annoVo);
+        AnnoVo findOne = annoService.findOne(annoVo);
 
         //then
         System.out.println(findOne);

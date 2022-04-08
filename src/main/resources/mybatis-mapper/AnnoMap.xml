@@ -27,17 +27,16 @@
               FROM TB_ANNOUNCEMENT
         </selectKey>
         INSERT INTO TB_ANNOUNCEMENT(
-             ANNO_ID
-           , ANNO_TITLE
-           , ANNO_CONTENT
-           , ANNO_CREATEDATE
-        ) VALUES (
-             #{annoId}
-           , #{annoTitle}
-           , #{annoContent}
-           , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
-        )
-
+                    ANNO_ID
+                  , ANNO_TITLE
+                  , ANNO_CONTENT
+                  , ANNO_CREATEDATE
+           ) VALUES (
+                   #{annoId}
+                 , #{annoTitle}
+                 , #{annoContent}
+                 , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+           )
     </insert>
     <update id="update" parameterType="com.diden.anno.AnnoVo">
         UPDATE TB_ANNOUNCEMENT

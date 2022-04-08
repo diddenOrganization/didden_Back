@@ -19,6 +19,9 @@ public class Interceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        if(request.getServerName().startsWith("127") || request.getServerName().startsWith("local")){
+            return true;
+        }
 
         JwtTokenProvider jwtTokenProvider = new JwtTokenProvider();
         ParsingJson parsingJson = new ParsingJson();

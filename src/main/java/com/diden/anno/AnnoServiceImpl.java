@@ -1,10 +1,10 @@
 package com.diden.anno;
 
 import com.diden.anno.mapper.AnnoMapper;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
@@ -12,12 +12,12 @@ public class AnnoServiceImpl implements AnnoService {
     @Autowired
     AnnoMapper annoMapper;
 
-    public String findAll() {
-        return new Gson().toJson(annoMapper.findAll());
+    public List<AnnoVo> findAll() {
+        return annoMapper.findAll();
     }
 
-    public String findOne(AnnoVo annoVo) {
-        return new Gson().toJson(annoMapper.findOne(annoVo));
+    public AnnoVo findOne(AnnoVo annoVo) {
+        return annoMapper.findOne(annoVo);
     }
 
     public void save(AnnoVo annoVo) {
