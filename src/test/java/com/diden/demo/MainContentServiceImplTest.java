@@ -46,7 +46,6 @@ class MainContentServiceImplTest {
     }
 
     @Test
-    @Commit
     void 여행_이미지_처리() {
         int max = 999999999;
         int min = 100000000;

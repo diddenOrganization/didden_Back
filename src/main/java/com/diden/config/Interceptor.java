@@ -22,36 +22,43 @@ public class Interceptor implements HandlerInterceptor {
         if(request.getServerName().startsWith("127") || request.getServerName().startsWith("local")){
             return true;
         }
+        try {
+            JwtTokenProvider jwtTokenProvider = new JwtTokenProvider();
+            ParsingJson parsingJson = new ParsingJson();
 
-        JwtTokenProvider jwtTokenProvider = new JwtTokenProvider();
-        ParsingJson parsingJson = new ParsingJson();
+            boolean result = false;
+            String requestToken = request.getHeader("Authorization");
+            if(requestToken == null || requestToken.isEmpty()){
+                throw new Exception("토큰값이 존재하지 않습니다.");
+            }
 
-        boolean result = false;
-        String requestToken = request.getHeader("Authorization");
+            List<Object> payLoad = Arrays.asList(requestToken.split("\\."));
+            String body = (String) payLoad.get(1);
+            byte[] decodedBytes = Base64.getDecoder().decode(body);
+            String jsonPayload = new String(decodedBytes);
+            String tokenName = parsingJson.stringToJsonObject(jsonPayload).get("iss").toString();
 
-        List<Object> payLoad = Arrays.asList(requestToken.split("\\."));
-        String body = (String) payLoad.get(1);
-        byte[] decodedBytes = Base64.getDecoder().decode(body);
-        String jsonPayload = new String(decodedBytes);
-        String tokenName = parsingJson.stringToJsonObject(jsonPayload).get("iss").toString();
+            TokenVo requestTokenVo = new TokenVo();
+            if ("\"acc\"".equals(tokenName)) {
+                requestTokenVo.setAccessJwsToken(requestToken);
+            } else if ("\"ref\"".equals(tokenName)) {
+                requestTokenVo.setRefreshJwsToken(requestToken);
+            }
 
-        TokenVo requestTokenVo = new TokenVo();
-        if ("\"acc\"".equals(tokenName)) {
-            requestTokenVo.setAccessJwsToken(requestToken);
-        } else if ("\"ref\"".equals(tokenName)) {
-            requestTokenVo.setRefreshJwsToken(requestToken);
+            System.out.println("==================== : " + requestToken);
+            log.info("{}", requestToken);
+            log.debug("{}", requestToken);
+
+            if ("\"acc\"".equals(tokenName)) {
+                result = jwtTokenProvider.jwtAccTokenCheck(requestTokenVo);
+            } else if ("\"ref\"".equals(tokenName)) {
+                result = jwtTokenProvider.jwtRefTokenCheck(requestTokenVo);
+            }
+
+            return result;
+        } catch (Exception e){
+            e.printStackTrace();
+            return false;
         }
-
-        System.out.println("==================== : " + requestToken);
-        log.info("{}", requestToken);
-        log.debug("{}", requestToken);
-
-        if ("\"acc\"".equals(tokenName)) {
-            result = jwtTokenProvider.jwtAccTokenCheck(requestTokenVo);
-        } else if ("\"ref\"".equals(tokenName)) {
-            result = jwtTokenProvider.jwtRefTokenCheck(requestTokenVo);
-        }
-
-        return result;
     }
 }
