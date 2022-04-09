@@ -15,8 +15,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class JwtTokenUtil implements Serializable {
 
-    private static String ACCESS_KEY = "accessTokenKey";
-    private static String REFRESH_KEY = "refreshTokenKey";
+    private static final String ACCESS_KEY = "accessTokenKey";
+    private static final String REFRESH_KEY = "refreshTokenKey";
 
     public TokenVo makeJwtAccToken(UserVo userVo) {
         TokenVo tokenVo = new TokenVo();
@@ -40,11 +40,8 @@ public class JwtTokenUtil implements Serializable {
         Long expiredTime = 1000 * 60L * 60L * expHours;
         String issuer = "";
 
-        if (ACCESS_KEY.equals(tokenKey)) {
-            issuer = "acc";
-        } else if (REFRESH_KEY.equals(tokenKey)) {
-            issuer = "ref";
-        }
+        if (ACCESS_KEY.equals(tokenKey)) issuer = "acc";
+        else if (REFRESH_KEY.equals(tokenKey)) issuer = "ref";
 
         ext.setTime(ext.getTime() + expiredTime);
 

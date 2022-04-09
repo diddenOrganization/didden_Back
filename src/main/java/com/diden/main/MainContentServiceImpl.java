@@ -21,7 +21,8 @@ public class MainContentServiceImpl implements MainContentService{
                 StringBuilder sb = new StringBuilder()
                         .append("data:image/")
                         .append(data.getContentExtension())
-                        .append(";base64,").append(encodedString);
+                        .append(";base64,")
+                        .append(encodedString);
                 data.setContentUrl(sb.toString());
                 data.setContentImageByte(null);
             }

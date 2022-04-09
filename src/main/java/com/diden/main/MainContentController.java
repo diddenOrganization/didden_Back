@@ -17,10 +17,10 @@ public class MainContentController {
     @GetMapping(value = "main/content/images", produces = "application/json; charset=UTF-8")
     public ResponseEntity<String> imageAll(){
         try {
-            return new ResponseEntity<String>(gson.toJson(mainContentService.findMainContentImageAll()), HttpStatus.OK);
+            return new ResponseEntity<>(gson.toJson(mainContentService.findMainContentImageAll()), HttpStatus.OK);
         } catch(Exception e){
             e.printStackTrace();
-            return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

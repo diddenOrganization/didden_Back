@@ -4,13 +4,13 @@ import com.diden.config.vo.TokenVo;
 import com.diden.user.service.UserService;
 import com.diden.user.vo.UserVo;
 import com.diden.utils.JwtTokenUtil;
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -24,30 +24,16 @@ public class UserApiController {
 
     @GetMapping(value = "/user/list", produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public String userList() {
-        List<UserVo> userVoList = userService.userList();
-        JsonObject userJsonList = new JsonObject();
-        JsonArray jsonArray = new JsonArray();
-
-        userVoList.forEach(userVoData -> {
-            Gson gson = new Gson();
-            JsonElement userJsonData = new JsonParser().parse(gson.toJson(userVoData));
-            jsonArray.add(userJsonData);
-        });
-
-        userJsonList.add("data", jsonArray);
-        return userJsonList.toString();
+    public ResponseEntity<String> userList() {
+        Gson gson = new Gson();
+        return new ResponseEntity<>(gson.toJson(userService.userList()), HttpStatus.OK);
     }
 
     @PostMapping(value = "/user", produces = "application/json; charset=UTF-8")
     public ResponseEntity<String> userInfo(@RequestBody(required = false) UserVo userVo) {
         UserVo userInfo = userService.userInfo(userVo);
         JsonObject userResult = new JsonObject();
-        if (userInfo == null) {
-            userResult.addProperty("result", false);
-        } else {
-            userResult.addProperty("result", true);
-        }
+        userResult.addProperty("result", userInfo != null);
         return new ResponseEntity<>(userResult.toString(), HttpStatus.OK);
     }
 
@@ -138,6 +124,7 @@ public class UserApiController {
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
             userResult.addProperty("result", false);
             userResult.addProperty("error", e.getMessage());
             return new ResponseEntity<>(userResult.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -165,6 +152,7 @@ public class UserApiController {
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
             userResult.addProperty("result", false);
             userResult.addProperty("error", e.getMessage());
             return new ResponseEntity<>(userResult.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -193,6 +181,7 @@ public class UserApiController {
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
             userResult.addProperty("result", false);
             userResult.addProperty("error", e.getMessage());
             return new ResponseEntity<>(userResult.toString(), HttpStatus.INTERNAL_SERVER_ERROR);

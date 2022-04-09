@@ -14,6 +14,7 @@ import org.springframework.context.annotation.ComponentScan;
  * Retrofit 찾아보기
  */
 @ComponentScan
+@Deprecated
 public class ParsingFromURL {
 
     private final ParsingJson parsingJson = new ParsingJson();

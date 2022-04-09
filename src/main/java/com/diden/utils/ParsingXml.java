@@ -16,6 +16,7 @@ import com.google.gson.JsonObject;
 import org.springframework.stereotype.Component;
 
 @Component
+@Deprecated
 public class ParsingXml {
     public String getParsingXmlFromURL(HttpURLConnection conn) {
         try {

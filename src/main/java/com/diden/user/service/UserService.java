@@ -5,19 +5,19 @@ import java.util.List;
 import com.diden.user.vo.UserVo;
 
 public interface UserService {
-    public int userCount(UserVo userVo);
+    int userCount(UserVo userVo);
 
-    public List<UserVo> userList();
+    List<UserVo> userList();
 
-    public UserVo userInfo(UserVo userVo);
+    UserVo userInfo(UserVo userVo);
 
-    public void userInsert(UserVo userVo);
+    void userInsert(UserVo userVo);
 
-    public void userUpdate(UserVo userVo);
+    void userUpdate(UserVo userVo);
 
-    public void userRefTokenUpdate(UserVo userVo);
+    void userRefTokenUpdate(UserVo userVo);
 
-    public void userDelete(UserVo userVo);
+    void userDelete(UserVo userVo);
 
-    public UserVo userRefreshTokenInfo(UserVo userVo);
+    UserVo userRefreshTokenInfo(UserVo userVo);
 }

@@ -13,6 +13,7 @@ import com.google.gson.JsonSyntaxException;
 import org.springframework.stereotype.Component;
 
 @Component
+@Deprecated
 public class ParsingJson {
     public String getParsingJsonFromURL(HttpURLConnection conn) {
         JsonParser jp = new JsonParser();
