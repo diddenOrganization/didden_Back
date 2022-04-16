@@ -14,7 +14,7 @@ public class MainContentController {
 
     Gson gson = new Gson();
 
-    @GetMapping(value = "main/content/images", produces = "application/json; charset=UTF-8")
+    @GetMapping(value = "/main/content/images", produces = "application/json; charset=UTF-8")
     public ResponseEntity<String> imageAll(){
         try {
             return new ResponseEntity<>(gson.toJson(mainContentService.findMainContentImageAll()), HttpStatus.OK);
