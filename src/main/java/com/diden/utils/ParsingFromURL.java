@@ -1,11 +1,12 @@
 package com.diden.utils;
 
+import com.google.gson.JsonObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.ComponentScan;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import com.google.gson.JsonObject;
-
-import org.springframework.context.annotation.ComponentScan;
 
 /**
  * MalformedJsonException이 발생한 이유는 gson에서 Json을 처리할 때 Json형식의 RFC 4627을 엄격하게 지키지
@@ -19,6 +20,7 @@ public class ParsingFromURL {
 
     private final ParsingJson parsingJson = new ParsingJson();
     private final ParsingXml parsingXml = new ParsingXml();
+    final static Logger logger = LoggerFactory.getLogger(ParsingFromURL.class);
 
     public String getParsingURL(String paramUrl) {
         try {
@@ -28,7 +30,7 @@ public class ParsingFromURL {
             conn.setRequestProperty("Content-type", "application/json");
             String ContentType = conn.getContentType();
 
-            System.out.println("Response code: " + conn.getResponseCode());
+            logger.info("Response code: {}", conn.getResponseCode());
             if (ContentType.indexOf("json") > 0) {
                 return parsingJson.getParsingJsonFromURL(conn);
             } else if (ContentType.indexOf("xml") > 0) {

@@ -9,11 +9,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.*;
 
 @Configuration
 @EnableWebMvc
@@ -41,6 +37,7 @@ public class GpConfig implements WebMvcConfigurer {
         chain.doFilter(request, res);
     }
 
+    @Override
     public void addCorsMappings(CorsRegistry cr) {
         cr.addMapping("/**").allowedOrigins("*").allowedMethods("*");
     }
