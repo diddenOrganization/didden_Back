@@ -33,7 +33,6 @@ public class MainContentServiceImpl implements MainContentService{
                             .append(";base64,")
                             .append(encodedString);
                     data.setContentUrl(sb.toString());
-                    data.setContentImageByte(null);
                 }
             }
             logger.info("{}", LocalDateTime.now());

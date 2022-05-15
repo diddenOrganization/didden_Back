@@ -2,6 +2,8 @@ package com.diden.demo;
 
 import com.diden.main.MainContentService;
 import com.diden.main.MainContentVo;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.junit.jupiter.api.Test;
@@ -24,12 +26,15 @@ class MainContentServiceImplTest {
     @Test
     public void 여행_이미지_조회() throws Exception {
         //given
-
-        //when
         List<MainContentVo> imageAll = mainContentService.findMainContentImageAll();
+        Gson gson = new Gson();
+        JsonObject jsonObject = new JsonObject();
+        //when
+        jsonObject.addProperty("data", gson.toJson(imageAll));
+        jsonObject.addProperty("count", imageAll.size());
 
         //then
-        System.out.println(imageAll);
+        System.out.println(jsonObject.get("count"));
     }
 
     @Test
