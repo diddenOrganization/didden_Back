@@ -1,18 +1,59 @@
 package com.diden.tour.controller;
 
+import com.diden.tour.service.TourService;
 import com.diden.tour.vo.TourApiVo;
 import com.diden.tour.vo.korservicevo.*;
 import com.diden.utils.ParsingFromURL;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 public class TourApiController {
 
     private static final String SERVICE_DEV_KEY = "96EIT1koaTBt2OfbhSFR9PyKGOKS%2FAMqgeugwN1XT2QwjnE97ZiG1uszeNCPJquN2y2XIYC8GX8BlAcpvUcusw%3D%3D";
     private static final String KOR_SERVICE_URL = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/";
+
+    @Autowired
+    TourService tourService;
+    /**
+     * 상세정보조회
+     *
+     * @param "/tour/api/info/detailCommon"
+     * @param contentId
+     */
+    @GetMapping(value = "/tour/api/info/detailCommon", produces = "application/json;application/xml; charset=UTF-8")
+    public String tourDetailCommon(@RequestParam String contentId){
+        String tourDetailCommonUrl = KOR_SERVICE_URL + "detailCommon"
+                + "?serviceKey=" + SERVICE_DEV_KEY
+                + "&contentId=" + contentId
+                + "&defaultYN=Y&addrinfoYN=Y&overviewYN=Y&MobileOS=ETC&MobileApp=AppTesting";
+        ParsingFromURL parsingFromURL = new ParsingFromURL();
+        System.out.println("URL => " + tourDetailCommonUrl);
+        return parsingFromURL.getParsingURL(tourDetailCommonUrl);
+    }
+
+    /**
+     * 키워드 검색 조회
+     *
+     * @param "/tour/api/info/searchKeyword"
+     * @param cat1, cat2, cat3, keyword
+     */
+    @GetMapping(value = "/tour/api/info/searchKeyword", produces = "application/json;application/xml; charset=UTF-8")
+    public List<Map<String, Object>> searchKeyword(@RequestParam String cat1, @RequestParam String cat2, @RequestParam String cat3, @RequestParam String keyword){
+        Map<String, Object> tourInfoParam = new HashMap<>();
+        tourInfoParam.put("cat1",cat1);
+        tourInfoParam.put("cat2",cat2);
+        tourInfoParam.put("cat3",cat3);
+        tourInfoParam.put("keyword",keyword);
+
+        return tourService.tourInfoList(tourInfoParam);
+    }
 
     /**
      * 지역코드조회
