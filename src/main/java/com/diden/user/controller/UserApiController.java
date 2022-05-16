@@ -22,12 +22,20 @@ public class UserApiController {
     @Autowired
     JwtTokenUtil jwtTokenUtil;
 
-    @GetMapping(value = "/user/list", produces = "application/json; charset=UTF-8")
+    @GetMapping(value = "/user/list", produces = "application/json;application/xml; charset=UTF-8")
     @ResponseBody
     public ResponseEntity<String> userList() {
         Gson gson = new Gson();
         return new ResponseEntity<>(gson.toJson(userService.userList()), HttpStatus.OK);
     }
+
+    @GetMapping(value = "/user/list2")
+    @ResponseBody
+    public ResponseEntity<String> userList2() {
+        Gson gson = new Gson();
+        return new ResponseEntity<>(gson.toJson(userService.userList()), HttpStatus.OK);
+    }
+
 
     @PostMapping(value = "/user", produces = "application/json; charset=UTF-8")
     public ResponseEntity<String> userInfo(@RequestBody(required = false) UserVo userVo) {
