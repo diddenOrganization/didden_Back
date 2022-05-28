@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 public class AnnoController {
     private final AnnoService annoService;
@@ -39,6 +41,8 @@ public class AnnoController {
     @ResponseBody
     public ResponseEntity<String> findOne(@RequestBody(required = false) AnnoVo annoVo, @PathVariable("id") String paramId) {
         try{
+            if(Optional.ofNullable(annoVo.getAnnoId()).isEmpty())
+                annoVo.setAnnoId(Optional.ofNullable(paramId).orElseThrow());
             return new ResponseEntity<>(new Gson().toJson(annoService.findOne(annoVo)), HttpStatus.OK);
         } catch(Exception e){
             e.printStackTrace();
