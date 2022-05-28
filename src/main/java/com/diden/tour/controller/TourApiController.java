@@ -5,7 +5,10 @@ import com.diden.utils.ParsingFromURL;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URLEncoder;
 
@@ -16,41 +19,41 @@ public class TourApiController {
     private static final String KOR_SERVICE_URL = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/";
     final static Logger logger = LoggerFactory.getLogger(TourApiController.class);
 
-    @Autowired
-    TourService tourService;
-    /**
-     * 상세정보조회
-     *
-     * @param "/tour/api/info/detailCommon"
-     * @param contentId
-     */
-    @GetMapping(value = "/tour/api/info/detailCommon", produces = "application/json;application/xml; charset=UTF-8")
-    public String tourDetailCommon(@RequestParam String contentId){
-        String tourDetailCommonUrl = KOR_SERVICE_URL + "detailCommon"
-                + "?serviceKey=" + SERVICE_DEV_KEY
-                + "&contentId=" + contentId
-                + "&defaultYN=Y&addrinfoYN=Y&overviewYN=Y&MobileOS=ETC&MobileApp=AppTesting";
-        ParsingFromURL parsingFromURL = new ParsingFromURL();
-        System.out.println("URL => " + tourDetailCommonUrl);
-        return parsingFromURL.getParsingURL(tourDetailCommonUrl);
-    }
-
-    /**
-     * 키워드 검색 조회
-     *
-     * @param "/tour/api/info/searchKeyword"
-     * @param cat1, cat2, cat3, keyword
-     */
-    @GetMapping(value = "/tour/api/info/searchKeyword", produces = "application/json;application/xml; charset=UTF-8")
-    public List<Map<String, Object>> searchKeyword(@RequestParam String cat1, @RequestParam String cat2, @RequestParam String cat3, @RequestParam String keyword){
-        Map<String, Object> tourInfoParam = new HashMap<>();
-        tourInfoParam.put("cat1",cat1);
-        tourInfoParam.put("cat2",cat2);
-        tourInfoParam.put("cat3",cat3);
-        tourInfoParam.put("keyword",keyword);
-
-        return tourService.tourInfoList(tourInfoParam);
-    }
+//    @Autowired
+//    TourService tourService;
+//    /**
+//     * 상세정보조회
+//     *
+//     * @param "/tour/api/info/detailCommon"
+//     * @param contentId
+//     */
+//    @GetMapping(value = "/tour/api/info/detailCommon", produces = "application/json;application/xml; charset=UTF-8")
+//    public String tourDetailCommon(@RequestParam String contentId){
+//        String tourDetailCommonUrl = KOR_SERVICE_URL + "detailCommon"
+//                + "?serviceKey=" + SERVICE_DEV_KEY
+//                + "&contentId=" + contentId
+//                + "&defaultYN=Y&addrinfoYN=Y&overviewYN=Y&MobileOS=ETC&MobileApp=AppTesting";
+//        ParsingFromURL parsingFromURL = new ParsingFromURL();
+//        System.out.println("URL => " + tourDetailCommonUrl);
+//        return parsingFromURL.getParsingURL(tourDetailCommonUrl);
+//    }
+//
+//    /**
+//     * 키워드 검색 조회
+//     *
+//     * @param "/tour/api/info/searchKeyword"
+//     * @param cat1, cat2, cat3, keyword
+//     */
+//    @GetMapping(value = "/tour/api/info/searchKeyword", produces = "application/json;application/xml; charset=UTF-8")
+//    public List<Map<String, Object>> searchKeyword(@RequestParam String cat1, @RequestParam String cat2, @RequestParam String cat3, @RequestParam String keyword){
+//        Map<String, Object> tourInfoParam = new HashMap<>();
+//        tourInfoParam.put("cat1",cat1);
+//        tourInfoParam.put("cat2",cat2);
+//        tourInfoParam.put("cat3",cat3);
+//        tourInfoParam.put("keyword",keyword);
+//
+//        return tourService.tourInfoList(tourInfoParam);
+//    }
 
     /**
      * 지역코드조회
