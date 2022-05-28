@@ -8,7 +8,6 @@ import com.diden.main.MainContentServiceImpl;
 import com.diden.main.mapper.MainContentMapper;
 import com.diden.token.TokenApiController;
 import com.diden.user.controller.UserApiController;
-import com.diden.user.controller.UserApiControllerUpdate;
 import com.diden.user.mapper.UserMapper;
 import com.diden.user.service.impl.UserServiceImpl;
 import com.diden.utils.JwtTokenUtil;
@@ -57,10 +56,10 @@ public class SpringConfig {
         return new UserServiceImpl(userMapper);
     }
 
-    @Bean
-    public UserApiControllerUpdate userApiControllerUpdate() {
-        return new UserApiControllerUpdate(userServiceImpl, jwtTokenUtil);
-    }
+//    @Bean
+//    public UserApiControllerUpdate userApiControllerUpdate() {
+//        return new UserApiControllerUpdate(userServiceImpl, jwtTokenUtil);
+//    }
 
     //////////////////////////////////////////////////////////////////////////// 토큰
     @Bean
