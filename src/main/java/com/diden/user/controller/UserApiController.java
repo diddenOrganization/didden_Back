@@ -6,8 +6,8 @@ import com.diden.user.vo.UserVo;
 import com.diden.utils.JwtTokenUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,17 +16,20 @@ import java.util.Objects;
 @RestController
 public class UserApiController {
 
-    @Autowired
-    UserService userService;
+    private final UserService userService;
+    private final JwtTokenUtil jwtTokenUtil;
 
-    @Autowired
-    JwtTokenUtil jwtTokenUtil;
+    public UserApiController(UserService userService, JwtTokenUtil jwtTokenUtil) {
+        this.userService = userService;
+        this.jwtTokenUtil = jwtTokenUtil;
+    }
 
-    @GetMapping(value = "/user/list", produces = "application/json; charset=UTF-8")
+    @GetMapping(value = "/user/list")
     @ResponseBody
     public ResponseEntity<String> userList() {
-        Gson gson = new Gson();
-        return new ResponseEntity<>(gson.toJson(userService.userList()), HttpStatus.OK);
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new Gson().toJson(userService.userList()));
     }
 
     @PostMapping(value = "/user", produces = "application/json; charset=UTF-8")

@@ -1,27 +1,29 @@
 package com.diden.token;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.diden.config.vo.TokenVo;
 import com.diden.user.service.UserService;
+import com.diden.user.service.impl.UserServiceImpl;
 import com.diden.user.vo.UserVo;
 import com.diden.utils.JwtTokenUtil;
 import com.google.gson.JsonObject;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 public class TokenApiController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+    private final JwtTokenUtil jwtTokenUtil;
 
-    private JwtTokenUtil jwtTokenUtil;
+    public TokenApiController(UserServiceImpl userServiceImpl, JwtTokenUtil jwtTokenUtil) {
+        this.userService = userServiceImpl;
+        this.jwtTokenUtil = jwtTokenUtil;
+    }
 
     @PostMapping("/token/api/acc")
     public ResponseEntity<String> accessTokenApi(@RequestBody(required = false) UserVo userVo,

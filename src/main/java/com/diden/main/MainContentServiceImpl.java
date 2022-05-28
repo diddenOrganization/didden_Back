@@ -3,7 +3,6 @@ package com.diden.main;
 import com.diden.main.mapper.MainContentMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -15,8 +14,11 @@ import java.util.List;
 public class MainContentServiceImpl implements MainContentService{
     final static Logger logger = LoggerFactory.getLogger(MainContentServiceImpl.class);
 
-    @Autowired
-    MainContentMapper mainContentMapper;
+    private final MainContentMapper mainContentMapper;
+
+    public MainContentServiceImpl(MainContentMapper mainContentMapper) {
+        this.mainContentMapper = mainContentMapper;
+    }
 
     static List<MainContentVo> cache = new ArrayList<>();
 
