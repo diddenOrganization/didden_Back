@@ -1,7 +1,7 @@
 package com.diden.demo;
 
-import com.diden.main.MainContentService;
-import com.diden.main.MainContentVo;
+import com.diden.demo.main.MainContentService;
+import com.diden.demo.main.MainContentVo;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.apache.commons.io.FileUtils;
@@ -9,7 +9,6 @@ import org.apache.commons.io.FilenameUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
