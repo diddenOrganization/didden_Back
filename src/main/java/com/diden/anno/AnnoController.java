@@ -1,16 +1,20 @@
 package com.diden.anno;
 
 import com.google.gson.Gson;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 public class AnnoController {
-    @Autowired
-    AnnoService annoService;
-    Gson gson = new Gson();
+    private final AnnoService annoService;
+
+    public AnnoController(AnnoServiceImpl annoService) {
+        this.annoService = annoService;
+    }
+
     /**
      *
      * 공지사항 목록
@@ -20,7 +24,7 @@ public class AnnoController {
     @ResponseBody
     public ResponseEntity<String> findAll() {
         try {
-            return new ResponseEntity<>(gson.toJson(annoService.findAll()), HttpStatus.OK);
+            return new ResponseEntity<>(new Gson().toJson(annoService.findAll()), HttpStatus.OK);
         } catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -37,7 +41,9 @@ public class AnnoController {
     @ResponseBody
     public ResponseEntity<String> findOne(@RequestBody(required = false) AnnoVo annoVo, @PathVariable("id") String paramId) {
         try{
-            return new ResponseEntity<>(gson.toJson(annoService.findOne(annoVo)), HttpStatus.OK);
+            if(Optional.ofNullable(annoVo.getAnnoId()).isEmpty())
+                annoVo.setAnnoId(Optional.ofNullable(paramId).orElseThrow());
+            return new ResponseEntity<>(new Gson().toJson(annoService.findOne(annoVo)), HttpStatus.OK);
         } catch(Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -54,7 +60,7 @@ public class AnnoController {
     public ResponseEntity<String> save(@RequestBody(required = false) AnnoVo annoVo) {
         try{
             annoService.save(annoVo);
-            return new ResponseEntity<>(gson.toJson(annoService.findOne(annoVo)), HttpStatus.OK);
+            return new ResponseEntity<>(new Gson().toJson(annoService.findOne(annoVo)), HttpStatus.OK);
         } catch(Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -73,7 +79,7 @@ public class AnnoController {
         try{
             annoVo.setAnnoId(paramId);
             annoService.update(annoVo);
-            return new ResponseEntity<>(gson.toJson(annoService.findOne(annoVo)), HttpStatus.OK);
+            return new ResponseEntity<>(new Gson().toJson(annoService.findOne(annoVo)), HttpStatus.OK);
         } catch(Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

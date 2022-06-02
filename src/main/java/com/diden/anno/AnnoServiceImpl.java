@@ -1,16 +1,17 @@
 package com.diden.anno;
 
 import com.diden.anno.mapper.AnnoMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
 @Service
 public class AnnoServiceImpl implements AnnoService {
-    @Autowired
-    AnnoMapper annoMapper;
+    private final AnnoMapper annoMapper;
+
+    public AnnoServiceImpl(AnnoMapper annoMapper) {
+        this.annoMapper = annoMapper;
+    }
 
     public List<AnnoVo> findAll() {
         return annoMapper.findAll();

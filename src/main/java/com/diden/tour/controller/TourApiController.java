@@ -1,26 +1,69 @@
 package com.diden.tour.controller;
 
-import com.diden.tour.vo.TourApiVo;
+import com.diden.tour.service.TourService;
 import com.diden.tour.vo.korservicevo.*;
 import com.diden.utils.ParsingFromURL;
 import lombok.SneakyThrows;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 public class TourApiController {
 
     private static final String SERVICE_DEV_KEY = "96EIT1koaTBt2OfbhSFR9PyKGOKS%2FAMqgeugwN1XT2QwjnE97ZiG1uszeNCPJquN2y2XIYC8GX8BlAcpvUcusw%3D%3D";
     private static final String KOR_SERVICE_URL = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/";
+    final static Logger logger = LoggerFactory.getLogger(TourApiController.class);
+
+    @Autowired
+    TourService tourService;
+    /**
+     * 상세정보조회
+     *
+     * @param "/tour/api/info/detailCommon"
+     * @param contentId
+     */
+    @GetMapping(value = "/tour/api/info/detailCommon", produces = "application/json;application/xml; charset=UTF-8")
+    public String tourDetailCommon(@RequestParam String contentId){
+        String tourDetailCommonUrl = KOR_SERVICE_URL + "detailCommon"
+                + "?serviceKey=" + SERVICE_DEV_KEY
+                + "&contentId=" + contentId
+                + "&defaultYN=Y&addrinfoYN=Y&overviewYN=Y&MobileOS=ETC&MobileApp=AppTesting";
+        ParsingFromURL parsingFromURL = new ParsingFromURL();
+        System.out.println("URL => " + tourDetailCommonUrl);
+        return parsingFromURL.getParsingURL(tourDetailCommonUrl);
+    }
+
+    /**
+     * 키워드 검색 조회
+     *
+     * @param "/tour/api/info/searchKeyword"
+     * @param cat1, cat2, cat3, keyword
+     */
+    @GetMapping(value = "/tour/api/info/searchKeyword", produces = "application/json;application/xml; charset=UTF-8")
+    public List<Map<String, Object>> searchKeyword(@RequestParam String cat1, @RequestParam String cat2, @RequestParam String cat3, @RequestParam String keyword){
+        Map<String, Object> tourInfoParam = new HashMap<>();
+        tourInfoParam.put("cat1",cat1);
+        tourInfoParam.put("cat2",cat2);
+        tourInfoParam.put("cat3",cat3);
+        tourInfoParam.put("keyword",keyword);
+
+        return tourService.tourInfoList(tourInfoParam);
+    }
 
     /**
      * 지역코드조회
-     * 
+     *
      * @param "/tour/api/info/areacode"
      * @param tourAreaCodeVo
      */
-    @PostMapping(value = "/tour/api/info/areacode", produces = "application/json;application/xml; charset=UTF-8")
+    @GetMapping(value = "/tour/api/info/areacode", produces = "application/json;application/xml; charset=UTF-8")
     @ResponseBody
     public String tourAreaCode(@RequestBody(required = false) TourAreaCodeVo tourAreaCodeVo) {
         String tourAreaCodeUrl = KOR_SERVICE_URL + "areaCode"
@@ -32,17 +75,17 @@ public class TourApiController {
                 + "&areaCode=" + tourAreaCodeVo.getAreaCode()
                 + "&_type=json";
         ParsingFromURL parsingFromURL = new ParsingFromURL();
-        System.out.println("URL => " + tourAreaCodeUrl);
+        logger.info(tourAreaCodeUrl);
         return parsingFromURL.getParsingURL(tourAreaCodeUrl);
     }
 
     /**
      * 서비스 분류코드 조회
-     * 
+     *
      * @param "/tour/api/info/categorycode"
      * @param tourCategoryCodeVo
      */
-    @PostMapping(value = "/tour/api/info/categorycode", produces = "application/json;application/xml; charset=UTF-8")
+    @GetMapping(value = "/tour/api/info/categorycode", produces = "application/json;application/xml; charset=UTF-8")
     @ResponseBody
     public String tourCategoryCode(@RequestBody(required = false) TourCategoryCodeVo tourCategoryCodeVo) {
         String tourCategoryCodeUrl = KOR_SERVICE_URL + "categoryCode"
@@ -57,17 +100,17 @@ public class TourApiController {
                 + "&cat3=" + tourCategoryCodeVo.getCat3()
                 + "&_type=json";
         ParsingFromURL parsingFromURL = new ParsingFromURL();
-        System.out.println("URL => " + tourCategoryCodeUrl);
+        logger.info(tourCategoryCodeUrl);
         return parsingFromURL.getParsingURL(tourCategoryCodeUrl);
     }
 
     /**
      * 지역기반 관광정보 조회
-     * 
+     *
      * @param "/tour/api/info/areabasedlist"
      * @param tourAreaBasedListVo
      */
-    @PostMapping(value = "/tour/api/info/areabasedlist", produces = "application/json;application/xml; charset=UTF-8")
+    @GetMapping(value = "/tour/api/info/areabasedlist", produces = "application/json;application/xml; charset=UTF-8")
     @ResponseBody
     public String tourAreaBasedList(@RequestBody(required = false) TourAreaBasedListVo tourAreaBasedListVo) {
         String tourAreaBasedListUrl = KOR_SERVICE_URL + "areaBasedList"
@@ -87,17 +130,17 @@ public class TourApiController {
                 + "&modifiedtime=" + tourAreaBasedListVo.getModifiedtime()
                 + "&_type=json";
         ParsingFromURL parsingFromURL = new ParsingFromURL();
-        System.out.println("URL => " + tourAreaBasedListUrl);
+        logger.info(tourAreaBasedListUrl);
         return parsingFromURL.getParsingURL(tourAreaBasedListUrl);
     }
 
     /**
      * 위치기반 관광정보 조회
-     * 
+     *
      * @param "/tour/api/info/locationbasedlist"
      * @param tourLocationBasedListVo
      */
-    @PostMapping(value = "/tour/api/info/locationbasedlist", produces = "application/json;application/xml; charset=UTF-8")
+    @GetMapping(value = "/tour/api/info/locationbasedlist", produces = "application/json;application/xml; charset=UTF-8")
     @ResponseBody
     public String tourLocationBasedList(
             @RequestBody(required = false) TourLocationBasedListVo tourLocationBasedListVo) {
@@ -116,18 +159,18 @@ public class TourApiController {
                 + "&modifiedtime=" + tourLocationBasedListVo.getModifiedtime()
                 + "&_type=json";
         ParsingFromURL parsingFromURL = new ParsingFromURL();
-        System.out.println("URL => " + tourLocationBasedListUrl);
+        logger.info(tourLocationBasedListUrl);
         return parsingFromURL.getParsingURL(tourLocationBasedListUrl);
     }
 
     /**
      * 키워드 검색 조회
-     * 
+     *
      * @param "/tour/api/info/searchkeyword"
      * @param tourSearchKeywordVo
      */
     @SneakyThrows
-    @PostMapping(value = "/tour/api/info/searchkeyword", produces = "application/json;application/xml; charset=UTF-8")
+    @GetMapping(value = "/tour/api/info/searchkeyword", produces = "application/json;application/xml; charset=UTF-8")
     @ResponseBody
     public String tourSearchKeyword(@RequestBody(required = false) TourSearchKeywordVo tourSearchKeywordVo) {
         String tourSearchKeywordUrl = KOR_SERVICE_URL + "searchKeyword"
@@ -147,17 +190,17 @@ public class TourApiController {
                 + "&keyword=" + URLEncoder.encode(tourSearchKeywordVo.getKeyword(), "UTF-8")
                 + "&_type=json";
         ParsingFromURL parsingFromURL = new ParsingFromURL();
-        System.out.println("URL => " + tourSearchKeywordUrl);
+        logger.info(tourSearchKeywordUrl);
         return parsingFromURL.getParsingURL(tourSearchKeywordUrl);
     }
 
     /**
      * 행사정보 조회
-     * 
+     *
      * @param "/tour/api/info/searchfestival"
      * @param tourSearchFestivalVo
      */
-    @PostMapping(value = "/tour/api/info/searchfestival", produces = "application/json;application/xml; charset=UTF-8")
+    @GetMapping(value = "/tour/api/info/searchfestival", produces = "application/json;application/xml; charset=UTF-8")
     @ResponseBody
     public String tourSearchFestival(@RequestBody(required = false) TourSearchFestivalVo tourSearchFestivalVo) {
         String tourSearchFestivalUrl = KOR_SERVICE_URL + "searchFestival"
@@ -175,17 +218,17 @@ public class TourApiController {
                 + "&modifiedtime=" + tourSearchFestivalVo.getModifiedtime()
                 + "&_type=json";
         ParsingFromURL parsingFromURL = new ParsingFromURL();
-        System.out.println("URL => " + tourSearchFestivalUrl);
+        logger.info(tourSearchFestivalUrl);
         return parsingFromURL.getParsingURL(tourSearchFestivalUrl);
     }
 
     /**
      * 숙박정보 조회
-     * 
+     *
      * @param "/tour/api/info/searchstay"
      * @param tourSearchStayVo
      */
-    @PostMapping(value = "/tour/api/info/searchstay", produces = "application/json;application/xml; charset=UTF-8")
+    @GetMapping(value = "/tour/api/info/searchstay", produces = "application/json;application/xml; charset=UTF-8")
     @ResponseBody
     public String tourSearchStay(@RequestBody(required = false) TourSearchStayVo tourSearchStayVo) {
         String tourSearchStayUrl = KOR_SERVICE_URL + "searchStay"
@@ -204,17 +247,17 @@ public class TourApiController {
                 + "&modifiedtime=" + tourSearchStayVo.getModifiedtime()
                 + "&_type=json";
         ParsingFromURL parsingFromURL = new ParsingFromURL();
-        System.out.println("URL => " + tourSearchStayUrl);
+        logger.info(tourSearchStayUrl);
         return parsingFromURL.getParsingURL(tourSearchStayUrl);
     }
 
     /**
      * 공통정보 조회
-     * 
+     *
      * @param "/tour/api/info/detailcommon"
      * @param tourDetailCommonVo
      */
-    @PostMapping(value = "/tour/api/info/detailcommon", produces = "application/json;application/xml; charset=UTF-8")
+    @GetMapping(value = "/tour/api/info/detailcommon", produces = "application/json;application/xml; charset=UTF-8")
     @ResponseBody
     public String tourDetailCommon(@RequestBody(required = false) TourDetailCommonVo tourDetailCommonVo) {
         String tourDetailCommonUrl = KOR_SERVICE_URL + "detailCommon"
@@ -234,17 +277,17 @@ public class TourApiController {
                 + "&overviewYN=" + tourDetailCommonVo.getOverviewYN()
                 + "&_type=json";
         ParsingFromURL parsingFromURL = new ParsingFromURL();
-        System.out.println("URL => " + tourDetailCommonUrl);
+        logger.info(tourDetailCommonUrl);
         return parsingFromURL.getParsingURL(tourDetailCommonUrl);
     }
 
     /**
      * 소개정보 조회
-     * 
+     *
      * @param "/tour/api/info/detailintro"
      * @param tourDetailIntroVo
      */
-    @PostMapping(value = "/tour/api/info/detailintro", produces = "application/json;application/xml; charset=UTF-8")
+    @GetMapping(value = "/tour/api/info/detailintro", produces = "application/json;application/xml; charset=UTF-8")
     @ResponseBody
     public String tourDetailIntro(@RequestBody(required = false) TourDetailIntroVo tourDetailIntroVo) {
         String tourDetailIntroUrl = KOR_SERVICE_URL + "detailIntro"
@@ -257,7 +300,7 @@ public class TourApiController {
                 + "&contentTypeId=" + tourDetailIntroVo.getContentTypeId()
                 + "&_type=json";
         ParsingFromURL parsingFromURL = new ParsingFromURL();
-        System.out.println("URL => " + tourDetailIntroUrl);
+        logger.info(tourDetailIntroUrl);
         return parsingFromURL.getParsingURL(tourDetailIntroUrl);
     }
 
@@ -266,7 +309,7 @@ public class TourApiController {
      * @param tourDetailInfoVo
      * @return tourDetailInfoUrl json 형식
      */
-    @PostMapping(value = "/tour/api/info/detailinfo", produces = "application/json;application/xml; charset=UTF-8")
+    @GetMapping(value = "/tour/api/info/detailinfo", produces = "application/json;application/xml; charset=UTF-8")
     @ResponseBody
     public String tourDetailInfo(@RequestBody(required = false) TourDetailInfoVo tourDetailInfoVo) {
         String tourDetailInfoUrl = KOR_SERVICE_URL + "detailInfo"
@@ -279,17 +322,17 @@ public class TourApiController {
                 + "&contentTypeId=" + tourDetailInfoVo.getContentTypeId()
                 + "&_type=json";
         ParsingFromURL parsingFromURL = new ParsingFromURL();
-        System.out.println("URL => " + tourDetailInfoUrl);
+        logger.info(tourDetailInfoUrl);
         return parsingFromURL.getParsingURL(tourDetailInfoUrl);
     }
 
     /**
      * 이미지정보 조회
-     * 
+     *
      * @param "/tour/api/info/detailimage"
      * @param tourDetailImageVo
      */
-    @PostMapping(value = "/tour/api/info/detailimage", produces = "application/json;application/xml; charset=UTF-8")
+    @GetMapping(value = "/tour/api/info/detailimage", produces = "application/json;application/xml; charset=UTF-8")
     @ResponseBody
     public String tourDetailImage(@RequestBody(required = false) TourDetailImageVo tourDetailImageVo) {
         String tourDetailImageUrl = KOR_SERVICE_URL + "detailImage"
@@ -303,7 +346,7 @@ public class TourApiController {
                 + "&subImageYN=" + tourDetailImageVo.getSubImageYN()
                 + "&_type=json";
         ParsingFromURL parsingFromURL = new ParsingFromURL();
-        System.out.println("URL => " + tourDetailImageUrl);
+        logger.info(tourDetailImageUrl);
         return parsingFromURL.getParsingURL(tourDetailImageUrl);
     }
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.diden.tour.mapper.TourMapper">
+    <select id="tourInfoList" resultType="map">
+        SELECT *
+          FROM TB_AREA_TOUR_INFO
+         WHERE 1=1
+        <if test="cat1 != null and cat1 !=''">
+            AND CAT1 = #{cat1}
+        </if>
+        <if test="cat2 != null and cat2 !=''">
+            AND CAT2 = #{cat2}
+        </if>
+        <if test="cat3 != null and cat3 !=''">
+            AND CAT3 = #{cat3}
+        </if>
+        <if test="keyword != null and keyword !=''">
+            AND TITLE LIKE '%' || #{keyword} || '%'
+        </if>
+    </select>
+</mapper>
