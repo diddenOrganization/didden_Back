@@ -1,7 +1,7 @@
 package com.diden.demo;
 
-import com.diden.anno.AnnoService;
-import com.diden.anno.AnnoVo;
+import com.diden.demo.anno.AnnoService;
+import com.diden.demo.anno.AnnoVo;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

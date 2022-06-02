@@ -2,8 +2,8 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.diden.main.mapper.MainContentMapper">
-    <select id="findMainContentImageAll" resultType="com.diden.main.MainContentVo">
+<mapper namespace="com.diden.demo.main.mapper.MainContentMapper">
+    <select id="findMainContentImageAll" resultType="com.diden.demo.main.MainContentVo">
         SELECT CONTENT_ID
              , CONTENT_NAME
              , CONTENT_IMAGE_BYTE
@@ -15,7 +15,7 @@
         ORDER BY CONTENT_CREATE_DATE DESC
     </select>
 
-    <select id="findMainContentImageOne" parameterType="com.diden.main.MainContentVo" resultType="com.diden.main.MainContentVo">
+    <select id="findMainContentImageOne" parameterType="com.diden.demo.main.MainContentVo" resultType="com.diden.demo.main.MainContentVo">
 
     </select>
 
@@ -24,7 +24,7 @@
           FROM TB_MAINCONTENT
     </select>
 
-    <insert id="saveMainContentImages" parameterType="com.diden.main.MainContentVo">
+    <insert id="saveMainContentImages" parameterType="com.diden.demo.main.MainContentVo">
         INSERT INTO TB_MAINCONTENT (
                     CONTENT_ID
                   , CONTENT_NAME

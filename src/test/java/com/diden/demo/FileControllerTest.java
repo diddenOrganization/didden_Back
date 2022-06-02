@@ -13,10 +13,10 @@ import java.util.Objects;
 
 import com.diden.demo.vo.TourItemVo;
 import com.diden.demo.vo.TourVo;
-import com.diden.file.service.FileService;
-import com.diden.file.service.impl.FileServiceImpl;
-import com.diden.file.vo.FileVo;
-import com.diden.utils.ParsingFromURL;
+import com.diden.demo.file.service.FileService;
+import com.diden.demo.file.service.impl.FileServiceImpl;
+import com.diden.demo.file.vo.FileVo;
+import com.diden.demo.utils.ParsingFromURL;
 import com.google.gson.Gson;
 
 import org.apache.commons.io.FileUtils;

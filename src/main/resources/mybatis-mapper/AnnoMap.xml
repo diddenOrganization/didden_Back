@@ -2,8 +2,8 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.diden.anno.mapper.AnnoMapper">
-    <select id="findAll" resultType="com.diden.anno.AnnoVo">
+<mapper namespace="com.diden.demo.anno.mapper.AnnoMapper">
+    <select id="findAll" resultType="com.diden.demo.anno.AnnoVo">
         SELECT ANNO_ID
              , ANNO_TITLE
              , ANNO_CONTENT
@@ -12,7 +12,7 @@
         ORDER BY ANNO_CREATEDATE DESC
     </select>
 
-    <select id="findOne" parameterType="com.diden.anno.AnnoVo" resultType="com.diden.anno.AnnoVo">
+    <select id="findOne" parameterType="com.diden.demo.anno.AnnoVo" resultType="com.diden.demo.anno.AnnoVo">
         SELECT ANNO_ID
              , ANNO_TITLE
              , ANNO_CONTENT
@@ -21,7 +21,7 @@
        WHERE ANNO_ID = #{annoId}
     </select>
 
-    <insert id="save" parameterType="com.diden.anno.AnnoVo">
+    <insert id="save" parameterType="com.diden.demo.anno.AnnoVo">
         <selectKey keyProperty="annoId" resultType="String" order="BEFORE">
             SELECT CASE WHEN MAX(ANNO_ID) IS NULL THEN 1 ELSE MAX(ANNO_ID)+1 END AS ANNO_ID
               FROM TB_ANNOUNCEMENT
@@ -38,14 +38,14 @@
                  , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
            )
     </insert>
-    <update id="update" parameterType="com.diden.anno.AnnoVo">
+    <update id="update" parameterType="com.diden.demo.anno.AnnoVo">
         UPDATE TB_ANNOUNCEMENT
            SET ANNO_TITLE = #{annoTitle}
              , ANNO_CONTENT = #{annoContent}
          WHERE ANNO_ID = #{annoId}
     </update>
 
-    <delete id="delete" parameterType="com.diden.anno.AnnoVo">
+    <delete id="delete" parameterType="com.diden.demo.anno.AnnoVo">
         DELETE
           FROM TB_ANNOUNCEMENT
          WHERE ANNO_ID = #{annoId}
