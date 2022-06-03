@@ -6,18 +6,22 @@ import com.diden.demo.user.vo.UserVo;
 import com.diden.demo.utils.JwtTokenUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
 public class UserApiController {
 
     private final UserService userService;
     private final JwtTokenUtil jwtTokenUtil = new JwtTokenUtil();
+    private final static Logger logger = LoggerFactory.getLogger(UserApiController.class);
 
     public UserApiController(UserService userService) {
         this.userService = userService;
@@ -37,6 +41,13 @@ public class UserApiController {
         JsonObject userResult = new JsonObject();
         userResult.addProperty("result", userInfo != null);
         return new ResponseEntity<>(userResult.toString(), HttpStatus.OK);
+    }
+
+    @PostMapping("/user/api/social/login")
+    public void socialLoginLogic(@RequestBody ConcurrentHashMap<String, Object> param){
+        for(ConcurrentHashMap.Entry<String, Object> entry : param.entrySet()){
+            logger.info("{} : {} =========================================== {} : {}", entry.getKey(), entry.getValue(), entry.getKey().getClass(), entry.getValue().getClass());
+        }
     }
 
     // Exception 어노테이션.

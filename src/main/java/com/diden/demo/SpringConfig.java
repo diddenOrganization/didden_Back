@@ -15,12 +15,9 @@ import com.diden.demo.tour.service.impl.TourServiceImpl;
 import com.diden.demo.user.mapper.UserMapper;
 import com.diden.demo.user.service.UserService;
 import com.diden.demo.user.service.impl.UserServiceImpl;
-import com.diden.demo.user.service.impl.UserServiceImplTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.net.FileNameMap;
 
 @Configuration
 public class SpringConfig {
@@ -45,18 +42,20 @@ public class SpringConfig {
         return new AnnoServiceImpl(annoMapper);
     }
 
-    /*public FileService fileService(){
+    @Bean
+    public FileService fileService(){
         return new FileServiceImpl(fileMapper);
-    }*/
+    }
 
     @Bean
     public MainContentService mainContentService(){
         return new MainContentServiceImpl(mainContentMapper);
     }
 
-    /*public TourService tourService(){
+    @Bean
+    public TourService tourService(){
         return new TourServiceImpl(tourMapper);
-    }*/
+    }
 
     @Bean
     public UserService userService(){

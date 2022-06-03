@@ -1,20 +1,19 @@
 package com.diden.demo.file.service.impl;
 
-import java.util.List;
-
 import com.diden.demo.file.mapper.FileMapper;
 import com.diden.demo.file.service.FileService;
 import com.diden.demo.file.vo.FileVo;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Deprecated
 public class FileServiceImpl implements FileService {
-
-    @Autowired
-    FileMapper fileMapper;
+    private final FileMapper fileMapper;
+    public FileServiceImpl(FileMapper fileMapper) {
+        this.fileMapper = fileMapper;
+    }
 
     @Override
     public void fileInsert(FileVo fileVo) {

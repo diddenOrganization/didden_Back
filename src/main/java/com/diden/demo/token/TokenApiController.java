@@ -1,10 +1,10 @@
 package com.diden.demo.token;
 
 import com.diden.demo.config.vo.TokenVo;
-import com.diden.demo.utils.JwtTokenUtil;
 import com.diden.demo.user.service.UserService;
 import com.diden.demo.user.service.impl.UserServiceImpl;
 import com.diden.demo.user.vo.UserVo;
+import com.diden.demo.utils.JwtTokenUtil;
 import com.google.gson.JsonObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +18,10 @@ import javax.servlet.http.HttpServletRequest;
 public class TokenApiController {
 
     private final UserService userService;
-    private final JwtTokenUtil jwtTokenUtil;
+    private final JwtTokenUtil jwtTokenUtil = new JwtTokenUtil();
 
-    public TokenApiController(UserServiceImpl userServiceImpl, JwtTokenUtil jwtTokenUtil) {
+    public TokenApiController(UserServiceImpl userServiceImpl) {
         this.userService = userServiceImpl;
-        this.jwtTokenUtil = jwtTokenUtil;
     }
 
     @PostMapping("/token/api/acc")
