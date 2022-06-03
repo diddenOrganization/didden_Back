@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 @RestController
 public class UserApiController {
@@ -44,9 +45,9 @@ public class UserApiController {
     }
 
     @PostMapping("/user/api/social/login")
-    public void socialLoginLogic(@RequestBody ConcurrentHashMap<String, Object> param){
+    public void socialLoginLogic(@RequestBody ConcurrentMap<String, Object> param){
         for(ConcurrentHashMap.Entry<String, Object> entry : param.entrySet()){
-            logger.info("{} : {} =========================================== {} : {}", entry.getKey(), entry.getValue(), entry.getKey().getClass(), entry.getValue().getClass());
+            logger.debug("{} : {} =========================================== {} : {}", entry.getKey(), entry.getValue(), entry.getKey().getClass(), entry.getValue().getClass());
         }
     }
 
