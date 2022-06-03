@@ -1,9 +1,9 @@
 package com.diden.demo;
 
-import com.diden.config.vo.TokenVo;
-import com.diden.user.service.UserService;
-import com.diden.user.vo.UserVo;
-import com.diden.utils.ParsingJson;
+import com.diden.demo.config.vo.TokenVo;
+import com.diden.demo.user.service.UserService;
+import com.diden.demo.user.vo.UserVo;
+import com.diden.demo.utils.ParsingJson;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
