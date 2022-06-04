@@ -1,7 +1,7 @@
 jasypt:
   encryptor:
     password: "${password}" # 암호화에 사용할 Passowrd 설정
-    bean: jasyptStringEncryptor # Bean 이름
+    #bean: jasyptStringEncryptor # Bean 이름
 
 spring:
   datasource:
