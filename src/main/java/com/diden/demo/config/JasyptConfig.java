@@ -8,12 +8,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class JasyptStringEncryptor {
+public class JasyptConfig {
 
     @Value("${jasypt.encryptor.password}")
     private String password;
-
-    public JasyptStringEncryptor() {
+    @Bean("jasyptStringEncryptor")
+    public StringEncryptor stringEncryptor() {
         PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
         SimpleStringPBEConfig config = new SimpleStringPBEConfig();
         config.setPassword(password);
@@ -25,5 +25,7 @@ public class JasyptStringEncryptor {
         config.setIvGeneratorClassName("org.jasypt.iv.NoIvGenerator");
         config.setStringOutputType("base64");
         encryptor.setConfig(config);
+
+        return encryptor;
     }
 }
