@@ -13,8 +13,7 @@ public class JasyptStringEncryptor {
     @Value("${jasypt.encryptor.password}")
     private String password;
 
-    @Bean
-    public StringEncryptor JasyptStringEncryptor() {
+    public JasyptStringEncryptor() {
         PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
         SimpleStringPBEConfig config = new SimpleStringPBEConfig();
         config.setPassword(password);
@@ -26,7 +25,5 @@ public class JasyptStringEncryptor {
         config.setIvGeneratorClassName("org.jasypt.iv.NoIvGenerator");
         config.setStringOutputType("base64");
         encryptor.setConfig(config);
-
-        return encryptor;
     }
 }
