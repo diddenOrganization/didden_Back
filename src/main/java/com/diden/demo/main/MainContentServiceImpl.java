@@ -1,8 +1,7 @@
 package com.diden.demo.main;
 
 import com.diden.demo.main.mapper.MainContentMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -11,9 +10,8 @@ import java.util.Base64;
 import java.util.List;
 
 @Service
+@Slf4j
 public class MainContentServiceImpl implements MainContentService{
-    final static Logger logger = LoggerFactory.getLogger(MainContentServiceImpl.class);
-
     private final MainContentMapper mainContentMapper;
 
     public MainContentServiceImpl(MainContentMapper mainContentMapper) {
@@ -37,9 +35,9 @@ public class MainContentServiceImpl implements MainContentService{
                     data.setContentUrl(sb.toString());
                 }
             }
-            logger.info("{}", LocalDateTime.now());
-            logger.info("{}", cache.get(0).getDataCreateTime().plusHours(1));
-            logger.info("{}", LocalDateTime.now().isAfter(cache.get(0).getDataCreateTime().plusHours(1)));
+            log.info("{}", LocalDateTime.now());
+            log.info("{}", cache.get(0).getDataCreateTime().plusHours(1));
+            log.info("{}", LocalDateTime.now().isAfter(cache.get(0).getDataCreateTime().plusHours(1)));
         } catch (Exception e) {
             e.printStackTrace();
         }
