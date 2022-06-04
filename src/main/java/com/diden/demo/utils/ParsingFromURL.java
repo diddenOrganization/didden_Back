@@ -1,6 +1,7 @@
 package com.diden.demo.utils;
 
 import com.google.gson.JsonObject;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.ComponentScan;
@@ -15,12 +16,12 @@ import java.net.URL;
  * Retrofit 찾아보기
  */
 @ComponentScan
+@Slf4j
 @Deprecated
 public class ParsingFromURL {
 
     private final ParsingJson parsingJson = new ParsingJson();
     private final ParsingXml parsingXml = new ParsingXml();
-    final static Logger logger = LoggerFactory.getLogger(ParsingFromURL.class);
 
     public String getParsingURL(String paramUrl) {
         try {
@@ -30,7 +31,7 @@ public class ParsingFromURL {
             conn.setRequestProperty("Content-type", "application/json");
             String ContentType = conn.getContentType();
 
-            logger.info("Response code: {}", conn.getResponseCode());
+            log.info("Response code: {}", conn.getResponseCode());
             if (ContentType.indexOf("json") > 0) {
                 return parsingJson.getParsingJsonFromURL(conn);
             } else if (ContentType.indexOf("xml") > 0) {
