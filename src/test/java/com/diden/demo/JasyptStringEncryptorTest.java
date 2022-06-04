@@ -4,15 +4,15 @@ import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
 
 @Slf4j
-public class JasyptConfigTest {
+public class JasyptStringEncryptorTest {
 
     private String password = "Tourproject123!";
 
-    // @Test
-    // @Bean("jasyptStringEncryptor")
-    public void Test() {
+    @Test
+    public void JasyptStringEncryptor() {
         PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
         SimpleStringPBEConfig config = new SimpleStringPBEConfig();
         config.setPassword(password);
@@ -30,12 +30,18 @@ public class JasyptConfigTest {
         // driver-class-name: oracle.jdbc.OracleDriver
         // username: admin
         // password: Tourproject123!
-        log.error("===================================================== {}",
+
+        log.error("{}", encryptor.encrypt("jdbc:log4jdbc:oracle:thin:@tourdev_medium?TNS_ADMIN=/key/Wallet_tourdev"));
+        log.error("{}", encryptor.encrypt("oracle.jdbc.OracleDriver"));
+        log.error("{}", encryptor.encrypt("admin"));
+        log.error("{}", encryptor.encrypt("Tourproject123!"));
+
+        log.info("===================================================== {}",
                 encryptor.encrypt(
                         "jdbc:log4jdbc:oracle:thin:@tourdev_medium?TNS_ADMIN=/Users/ohjeung/key/Wallet_tourdev"));
-        log.error("===================================================== {}",
+        log.info("===================================================== {}",
                 encryptor.encrypt("net.sf.log4jdbc.sql.jdbcapi.DriverSpy"));
-        log.error("===================================================== {}", encryptor.encrypt("admin"));
-        log.error("===================================================== {}", encryptor.encrypt("Tourproject123!"));
+        log.info("===================================================== {}", encryptor.encrypt("admin"));
+        log.info("===================================================== {}", encryptor.encrypt("Tourproject123!"));
     }
 }
