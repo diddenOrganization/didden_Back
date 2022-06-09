@@ -44,7 +44,6 @@ public class Interceptor implements HandlerInterceptor {
                 requestTokenVo.setRefreshJwsToken(requestToken);
             }
 
-            System.out.println("==================== : " + requestToken);
             log.info("{}", requestToken);
             log.debug("{}", requestToken);
 

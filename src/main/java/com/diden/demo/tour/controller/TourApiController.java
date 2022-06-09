@@ -63,7 +63,6 @@ public class TourApiController {
      * @param tourAreaCodeVo
      */
     @GetMapping(value = "/tour/api/info/areacode", produces = "application/json;application/xml; charset=UTF-8")
-    @ResponseBody
     public String tourAreaCode(@RequestBody(required = false) TourAreaCodeVo tourAreaCodeVo) {
         String tourAreaCodeUrl = KOR_SERVICE_URL + "areaCode"
                 + "?serviceKey=" + SERVICE_DEV_KEY
@@ -85,7 +84,6 @@ public class TourApiController {
      * @param tourCategoryCodeVo
      */
     @GetMapping(value = "/tour/api/info/categorycode", produces = "application/json;application/xml; charset=UTF-8")
-    @ResponseBody
     public String tourCategoryCode(@RequestBody(required = false) TourCategoryCodeVo tourCategoryCodeVo) {
         String tourCategoryCodeUrl = KOR_SERVICE_URL + "categoryCode"
                 + "?serviceKey=" + SERVICE_DEV_KEY
@@ -110,7 +108,6 @@ public class TourApiController {
      * @param tourAreaBasedListVo
      */
     @GetMapping(value = "/tour/api/info/areabasedlist", produces = "application/json;application/xml; charset=UTF-8")
-    @ResponseBody
     public String tourAreaBasedList(@RequestBody(required = false) TourAreaBasedListVo tourAreaBasedListVo) {
         String tourAreaBasedListUrl = KOR_SERVICE_URL + "areaBasedList"
                 + "?serviceKey=" + SERVICE_DEV_KEY
@@ -140,7 +137,6 @@ public class TourApiController {
      * @param tourLocationBasedListVo
      */
     @GetMapping(value = "/tour/api/info/locationbasedlist", produces = "application/json;application/xml; charset=UTF-8")
-    @ResponseBody
     public String tourLocationBasedList(
             @RequestBody(required = false) TourLocationBasedListVo tourLocationBasedListVo) {
         String tourLocationBasedListUrl = KOR_SERVICE_URL + "locationBasedList"
@@ -170,7 +166,6 @@ public class TourApiController {
      */
     @SneakyThrows
     @GetMapping(value = "/tour/api/info/searchkeyword", produces = "application/json;application/xml; charset=UTF-8")
-    @ResponseBody
     public String tourSearchKeyword(@RequestBody(required = false) TourSearchKeywordVo tourSearchKeywordVo) {
         String tourSearchKeywordUrl = KOR_SERVICE_URL + "searchKeyword"
                 + "?serviceKey=" + SERVICE_DEV_KEY
@@ -200,7 +195,6 @@ public class TourApiController {
      * @param tourSearchFestivalVo
      */
     @GetMapping(value = "/tour/api/info/searchfestival", produces = "application/json;application/xml; charset=UTF-8")
-    @ResponseBody
     public String tourSearchFestival(@RequestBody(required = false) TourSearchFestivalVo tourSearchFestivalVo) {
         String tourSearchFestivalUrl = KOR_SERVICE_URL + "searchFestival"
                 + "?serviceKey=" + SERVICE_DEV_KEY
@@ -228,7 +222,6 @@ public class TourApiController {
      * @param tourSearchStayVo
      */
     @GetMapping(value = "/tour/api/info/searchstay", produces = "application/json;application/xml; charset=UTF-8")
-    @ResponseBody
     public String tourSearchStay(@RequestBody(required = false) TourSearchStayVo tourSearchStayVo) {
         String tourSearchStayUrl = KOR_SERVICE_URL + "searchStay"
                 + "?serviceKey=" + SERVICE_DEV_KEY
@@ -257,7 +250,6 @@ public class TourApiController {
      * @param tourDetailCommonVo
      */
     @GetMapping(value = "/tour/api/info/detailcommon", produces = "application/json;application/xml; charset=UTF-8")
-    @ResponseBody
     public String tourDetailCommon(@RequestBody(required = false) TourDetailCommonVo tourDetailCommonVo) {
         String tourDetailCommonUrl = KOR_SERVICE_URL + "detailCommon"
                 + "?serviceKey=" + SERVICE_DEV_KEY
@@ -287,7 +279,6 @@ public class TourApiController {
      * @param tourDetailIntroVo
      */
     @GetMapping(value = "/tour/api/info/detailintro", produces = "application/json;application/xml; charset=UTF-8")
-    @ResponseBody
     public String tourDetailIntro(@RequestBody(required = false) TourDetailIntroVo tourDetailIntroVo) {
         String tourDetailIntroUrl = KOR_SERVICE_URL + "detailIntro"
                 + "?serviceKey=" + SERVICE_DEV_KEY
@@ -309,7 +300,6 @@ public class TourApiController {
      * @return tourDetailInfoUrl json 형식
      */
     @GetMapping(value = "/tour/api/info/detailinfo", produces = "application/json;application/xml; charset=UTF-8")
-    @ResponseBody
     public String tourDetailInfo(@RequestBody(required = false) TourDetailInfoVo tourDetailInfoVo) {
         String tourDetailInfoUrl = KOR_SERVICE_URL + "detailInfo"
                 + "?serviceKey=" + SERVICE_DEV_KEY
@@ -332,7 +322,6 @@ public class TourApiController {
      * @param tourDetailImageVo
      */
     @GetMapping(value = "/tour/api/info/detailimage", produces = "application/json;application/xml; charset=UTF-8")
-    @ResponseBody
     public String tourDetailImage(@RequestBody(required = false) TourDetailImageVo tourDetailImageVo) {
         String tourDetailImageUrl = KOR_SERVICE_URL + "detailImage"
                 + "?serviceKey=" + SERVICE_DEV_KEY
