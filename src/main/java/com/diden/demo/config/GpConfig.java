@@ -40,7 +40,7 @@ public class GpConfig implements WebMvcConfigurer {
                         , "/**/anno/**"
                         , "/**/main/content/images"
                         , "/**/info"
-                        , "/**/img"
+                        , "/**/img/**"
                 );
     }
 }
