@@ -39,6 +39,7 @@ public class GpConfig implements WebMvcConfigurer {
                         , "/**/user/api/social/login"
                         , "/**/anno/**"
                         , "/**/main/content/images"
+                        , "/**/info"
                 );
     }
 }

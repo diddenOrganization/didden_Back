@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<style>
+    img {
+        width: 200px;
+        height: auto;
+    }
+
+    th {
+        border: 1px solid black;
+    }
+
+    table {
+        border: 1px solid black;
+    }
+
+    tr {
+        border: 1px solid black;
+    }
+
+    td {
+        border: 1px solid black;
+    }
+</style>
+
+<body>
+    <h1>이미지 목록</h1>
+    <table>
+        <tr>
+            <th>이미지</th>
+            <th>경로</th>
+        </tr>
+        <tr>
+            <td colspan="2">로고</td>
+        </tr>
+        <tr th:each="logo: ${logo}">
+            <td><img th:src="'http://'+${logo}"/></td>
+            <td th:text="${logo}"></td>
+        </tr>
+        <tr>
+            <td colspan="2">메인 여행 이미지</td>
+        </tr>
+        <tr th:each="main_tour: ${main_tour}">
+            <td><img th:src="'http://'+${main_tour}"/></td>
+            <td th:text="${main_tour}"></td>
+        </tr>
+    </table>
+</body>
+</html>
