@@ -10,6 +10,8 @@ import org.apache.ibatis.annotations.Mapper;
 public interface UserMapper {
     int userCount(UserVo userVo);
 
+    int userCheck(UserVo userVo);
+
     List<UserVo> userList();
 
     UserVo userInfo(UserVo userVo);

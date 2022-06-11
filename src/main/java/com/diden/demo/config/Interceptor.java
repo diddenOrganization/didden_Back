@@ -8,8 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.diden.demo.config.vo.TokenVo;
+import com.diden.demo.user.controller.UserApiController;
+import com.diden.demo.utils.JwtSocialKakaoTokenUtils;
+import com.diden.demo.utils.JwtSocialTokenCheckInterface;
 import com.diden.demo.utils.ParsingJson;
 
+import com.google.gson.JsonObject;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import lombok.extern.slf4j.Slf4j;
@@ -18,16 +22,25 @@ import lombok.extern.slf4j.Slf4j;
 public class Interceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        if(request.getServerName().startsWith("127") || request.getServerName().startsWith("local")){
+        if (request.getServerName().startsWith("127") || request.getServerName().startsWith("local")) {
             return true;
         }
+
         try {
+            if ("kakao".equals(request.getHeader("login_type"))) {
+                JwtSocialTokenCheckInterface kakao = new JwtSocialKakaoTokenUtils();
+                JsonObject obj = kakao.socialAccessToken(request.getHeader("Authorization"));
+
+                return !obj.isJsonNull();
+            }
+
+
             JwtTokenProvider jwtTokenProvider = new JwtTokenProvider();
             ParsingJson parsingJson = new ParsingJson();
 
             boolean result = false;
             String requestToken = request.getHeader("Authorization");
-            if(requestToken == null || requestToken.isEmpty()){
+            if (requestToken == null || requestToken.isEmpty()) {
                 throw new Exception("토큰값이 존재하지 않습니다.");
             }
 
@@ -54,7 +67,7 @@ public class Interceptor implements HandlerInterceptor {
             }
 
             return result;
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }

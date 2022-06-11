@@ -3,7 +3,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.diden.demo.user.mapper.UserMapper">
-  <select id="userList" resultType="com.diden.demo.user.vo.UserVo">
+    <select id="userList" resultType="com.diden.demo.user.vo.UserVo">
         SELECT USER_ID
              , USER_NAME
              , USER_PASSWORD
@@ -14,13 +14,14 @@
              , USER_PHONE_NUMBER
              , USER_CREATE_DATE
              , USER_UPDATE_DATE
-             , USER_PRIVACY_CONSENT 
+             , USER_PRIVACY_CONSENT
              , USER_SOCIAL_LOGIN_TYPE
              , USER_REFRESH_TOKEN
-          FROM TB_USER
-  </select>
+             , USER_ACCESS_TOKEN
+        FROM TB_USER
+    </select>
 
-  <select id="userInfo" parameterType="com.diden.demo.user.vo.UserVo" resultType="com.diden.demo.user.vo.UserVo">
+    <select id="userInfo" parameterType="com.diden.demo.user.vo.UserVo" resultType="com.diden.demo.user.vo.UserVo">
         SELECT USER_ID
              , USER_NAME
              , USER_PASSWORD
@@ -31,15 +32,17 @@
              , USER_PHONE_NUMBER
              , USER_CREATE_DATE
              , USER_UPDATE_DATE
-             , USER_PRIVACY_CONSENT 
+             , USER_PRIVACY_CONSENT
              , USER_SOCIAL_LOGIN_TYPE
              , USER_REFRESH_TOKEN
-          FROM TB_USER
-         WHERE USER_ID = #{userId}
-           AND USER_PASSWORD = #{userPassword}
-  </select>
+             , USER_ACCESS_TOKEN
+        FROM TB_USER
+        WHERE USER_EMAIL = #{userEmail}
+          AND USER_PASSWORD = #{userPassword}
+    </select>
 
-  <select id="userRefreshTokenInfo" parameterType="com.diden.demo.user.vo.UserVo" resultType="com.diden.demo.user.vo.UserVo">
+    <select id="userRefreshTokenInfo" parameterType="com.diden.demo.user.vo.UserVo"
+            resultType="com.diden.demo.user.vo.UserVo">
         SELECT USER_ID
              , USER_NAME
              , USER_PASSWORD
@@ -50,74 +53,81 @@
              , USER_PHONE_NUMBER
              , USER_CREATE_DATE
              , USER_UPDATE_DATE
-             , USER_PRIVACY_CONSENT 
+             , USER_PRIVACY_CONSENT
              , USER_SOCIAL_LOGIN_TYPE
              , USER_REFRESH_TOKEN
-          FROM TB_USER
-         WHERE USER_REFRESH_TOKEN = #{userRefreshToken}
-  </select>
+             , USER_ACCESS_TOKEN
+        FROM TB_USER
+        WHERE USER_REFRESH_TOKEN = #{userRefreshToken}
+    </select>
 
-  <select id="userCount" parameterType="com.diden.demo.user.vo.UserVo" resultType="_integer">
-    SELECT COUNT(*)
-      FROM TB_USER
-    <where>
-       AND USER_REFRESH_TOKEN = #{userRefreshToken}
-    </where>
-  </select>
+    <select id="userCount" parameterType="com.diden.demo.user.vo.UserVo" resultType="_integer">
+        SELECT COUNT(*)
+        FROM TB_USER
+        <where>
+            AND USER_REFRESH_TOKEN = #{userRefreshToken}
+        </where>
+    </select>
 
-  <insert id="userInsert" parameterType="com.diden.demo.user.vo.UserVo">
-     INSERT INTO TB_USER (
-            USER_ID
-          , USER_NAME
-          , USER_PASSWORD
-          , USER_NICKNAME
-          , USER_BIRTHDAY
-          , USER_GENDER
-          , USER_EMAIL
-          , USER_PHONE_NUMBER
-          , USER_PRIVACY_CONSENT 
-          , USER_SOCIAL_LOGIN_TYPE
-          , USER_REFRESH_TOKEN
-        ) VALUES (
-            #{userId}
-          , #{userName}
-          , #{userPassword}
-          , #{userNickname}
-          , #{userBirthday}
-          , #{userGender}
-          , #{userEmail}
-          , #{userPhoneNumber}
-          , #{userPrivacyConsent}
-          , #{userSocialLoginType}
-          , #{userRefreshToken}
-        )
-  </insert>
+    <select id="userCheck" parameterType="com.diden.demo.user.vo.UserVo" resultType="_integer">
+        SELECT COUNT(*)
+        FROM TB_USER
+        WHERE USER_EMAIL = #{userEmail}
+          AND USER_PASSWORD = #{userPassword}
+    </select>
 
-  <update id="userUpdate" parameterType="com.diden.demo.user.vo.UserVo">
-      UPDATE tb_user 
-         SET USER_NAME = #{userName}
-           , USER_PASSWORD = #{userPassword}
-           , USER_NICKNAME = #{userNickname}
-           , USER_BIRTHDAY = #{userBirthday}
-           , USER_GENDER = #{userGender}
-           , USER_EMAIL = #{userEmail}
-           , USER_PHONE_NUMBER = #{userPhoneNumber}
-           , USER_PRIVACY_CONSENT  = #{userPrivacyConsent}
-           , USER_UPDATE_DATE = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
-       WHERE USER_ID = #{userId}
-  </update>
+    <insert id="userInsert" parameterType="com.diden.demo.user.vo.UserVo">
+        INSERT INTO TB_USER ( USER_ID
+                            , USER_NAME
+                            , USER_PASSWORD
+                            , USER_NICKNAME
+                            , USER_BIRTHDAY
+                            , USER_GENDER
+                            , USER_EMAIL
+                            , USER_PHONE_NUMBER
+                            , USER_PRIVACY_CONSENT
+                            , USER_SOCIAL_LOGIN_TYPE
+                            , USER_REFRESH_TOKEN
+                            , USER_ACCESS_TOKEN)
+        VALUES ( #{userId}
+               , #{userName}
+               , #{userPassword}
+               , #{userNickname}
+               , #{userBirthday}
+               , #{userGender}
+               , #{userEmail}
+               , #{userPhoneNumber}
+               , #{userPrivacyConsent}
+               , #{userSocialLoginType}
+               , #{userRefreshToken}
+               , #{userAccessToken})
+    </insert>
 
-  <update id="userRefTokenUpdate" parameterType="com.diden.demo.user.vo.UserVo">
-      UPDATE tb_user 
-         SET USER_REFRESH_TOKEN = #{userRefreshToken}
-       WHERE USER_ID = #{userId}
-  </update>
+    <update id="userUpdate" parameterType="com.diden.demo.user.vo.UserVo">
+        UPDATE tb_user
+        SET USER_NAME            = #{userName}
+          , USER_PASSWORD        = #{userPassword}
+          , USER_NICKNAME        = #{userNickname}
+          , USER_BIRTHDAY        = #{userBirthday}
+          , USER_GENDER          = #{userGender}
+          , USER_EMAIL           = #{userEmail}
+          , USER_PHONE_NUMBER    = #{userPhoneNumber}
+          , USER_PRIVACY_CONSENT = #{userPrivacyConsent}
+          , USER_UPDATE_DATE     = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+        WHERE USER_EMAIL = #{userEmail}
+    </update>
 
-  <delete id="userDelete" parameterType="com.diden.demo.user.vo.UserVo">
-      DELETE 
-        FROM TB_USER 
-       WHERE USER_ID = #{userId}
-         AND USER_PASSWORD = #{userPassword}
-  </delete>
+    <update id="userRefTokenUpdate" parameterType="com.diden.demo.user.vo.UserVo">
+        UPDATE tb_user
+        SET USER_REFRESH_TOKEN = #{userRefreshToken}
+        WHERE USER_EMAIL = #{userEmail}
+    </update>
+
+    <delete id="userDelete" parameterType="com.diden.demo.user.vo.UserVo">
+        DELETE
+        FROM TB_USER
+        WHERE USER_EMAIL = #{userId}
+          AND USER_PASSWORD = #{userPassword}
+    </delete>
 
 </mapper>
