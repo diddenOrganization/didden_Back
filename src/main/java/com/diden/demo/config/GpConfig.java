@@ -21,10 +21,10 @@ public class GpConfig implements WebMvcConfigurer {
                         , "/**/tour/api/**"
                         , "/**/user/insert"
                         , "/**/user/list"
-                        , "/**/user/api/social/login"
+                        , "/user/api/social/json"
                         , "/**/anno/**"
                         , "/**/main/content/images"
-                        , "/**/info"
+                        , "/user"
                         , "/**/img/**"
                 );
     }

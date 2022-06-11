@@ -11,6 +11,7 @@ mybatis:
   mapper-locations: mybatis-mapper/**/*.xml
   configuration:
     map-underscore-to-camel-case: true
+    jdbc-type-for-null: VARCHAR
 
 spring:
   aop:
