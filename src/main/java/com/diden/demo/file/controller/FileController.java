@@ -1,5 +1,18 @@
 package com.diden.demo.file.controller;
 
+import com.diden.demo.file.service.FileService;
+import com.diden.demo.file.vo.FileVo;
+import com.diden.demo.tour.vo.TourItemVo;
+import com.diden.demo.tour.vo.TourVo;
+import com.diden.demo.utils.ParsingFromURL;
+import com.google.gson.*;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -7,37 +20,15 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-
-import com.diden.demo.file.service.FileService;
-import com.diden.demo.file.vo.FileVo;
-import com.diden.demo.tour.vo.TourItemVo;
-import com.diden.demo.tour.vo.TourVo;
-import com.diden.demo.utils.ParsingFromURL;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import java.util.*;
 
 @RestController
 @Deprecated
 public class FileController {
-
-    @Autowired
-    FileService fileService;
+    private final FileService fileService;
+    public FileController(FileService fileService) {
+        this.fileService = fileService;
+    }
 
     @GetMapping(value = "/file/image/put")
     public void fileInsert() {

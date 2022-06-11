@@ -1,14 +1,14 @@
 jasypt:
   encryptor:
     password: "${password}" # 암호화에 사용할 Passowrd 설정
-    bean: jasyptStringEncryptor # Bean 이름
+    #bean: jasyptStringEncryptor # Bean 이름
 
 spring:
   datasource:
-    url: ENC(AU/dk5T4m6DVlLhY4K2gff/2PzN6OCcnIFttUohlG1yFehbeE6NEzr9ZRelPDsq29l8pzXcRQyJU1ovglC0WGeMxQmqGXkR8)
-    driver-class-name: ENC(fdbiVGhMKIHnOr3iboiZfuQYp7YKiX7ZXXBG42SzpaDAIRrJY1DNXg==)
-    username: ENC(zR1a2jzGz/EwAfIUcz6v4Q==)
-    password: ENC(OxXErUtM9pUhD+bO5Pi2PFNDEz+KuveX)
+    url: ENC(4fajitVO/aSGy9ZGdi3XRjFMvZ305O0R9E+7rbWyVselYj7EjfPF4tNWPZHPW68YXRLE2HI4QA8514WuToCHNoKi54F0ekKfYjLKdtKNeHU=)
+    driver-class-name: ENC(AKaNZGwQG6u2E7LYXcwK3aZZ6toeD7cLUb0CAcK+tUJFkJwaPp0Usg==)
+    username: ENC(ltNBgjsUTTEvaF7NbpeSzA==)
+    password: ENC(2B0W6xZVB0HrPS8bv42upZv2IBwW5Wza)
 
 logging:
   config: classpath:log4j2-dev.xml

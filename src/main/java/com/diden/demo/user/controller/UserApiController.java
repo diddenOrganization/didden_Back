@@ -6,14 +6,18 @@ import com.diden.demo.user.vo.UserVo;
 import com.diden.demo.utils.JwtTokenUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 @RestController
+@Slf4j
 public class UserApiController {
 
     private final UserService userService;
@@ -37,6 +41,15 @@ public class UserApiController {
         JsonObject userResult = new JsonObject();
         userResult.addProperty("result", userInfo != null);
         return new ResponseEntity<>(userResult.toString(), HttpStatus.OK);
+    }
+
+    @PostMapping("/user/api/social/login")
+    public void socialLoginLogic(@RequestBody ConcurrentMap<String, Object> param){
+        //var requestParamData = new HashMap<String, Object>();
+        for(ConcurrentHashMap.Entry<String, Object> entry : param.entrySet()){
+            log.info("{} : {} =========================================== {} : {}", entry.getKey(), entry.getValue(), entry.getKey().getClass(), entry.getValue().getClass());
+        }
+        log.info(param.toString());
     }
 
     // Exception 어노테이션.

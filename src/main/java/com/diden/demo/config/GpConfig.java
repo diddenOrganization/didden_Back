@@ -1,13 +1,5 @@
 package com.diden.demo.config;
 
-import java.io.IOException;
-
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.*;
 
@@ -28,15 +20,6 @@ public class GpConfig implements WebMvcConfigurer {
         // PathResourceResolver());
     }
 
-    public void addCorsMappings(ServletRequest request, ServletResponse response, FilterChain chain)
-            throws IOException, ServletException {
-        HttpServletResponse res = (HttpServletResponse) response;
-
-        res.setContentType("application/json; charset=UTF-8");
-        res.setCharacterEncoding("UTF-8");
-        chain.doFilter(request, res);
-    }
-
     @Override
     public void addCorsMappings(CorsRegistry cr) {
         cr.addMapping("/**").allowedOrigins("*").allowedMethods("*");
@@ -47,6 +30,17 @@ public class GpConfig implements WebMvcConfigurer {
         registry.addInterceptor(new Interceptor()).order(1) // 인터셉터 체인 순서
                 .addPathPatterns("/**") // 모든 requestURL에 대해 적용
                 .excludePathPatterns("/" // 제외하고 싶은 whitelist
-                        , "/**/login", "/**/logout", "/**/error", "/**/tour/api/**", "/**/user/insert", "/**/user/list", "/**/anno/**", "/**/main/content/images");
+                        , "/**/login"
+                        , "/**/logout"
+                        , "/**/error"
+                        , "/**/tour/api/**"
+                        , "/**/user/insert"
+                        , "/**/user/list"
+                        , "/**/user/api/social/login"
+                        , "/**/anno/**"
+                        , "/**/main/content/images"
+                        , "/**/info"
+                        , "/**/img/**"
+                );
     }
 }

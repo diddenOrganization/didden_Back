@@ -21,7 +21,6 @@ public class AnnoController {
      * @return type = Array, Json, String
      */
     @GetMapping(value = "/anno", produces = "application/json; charset=UTF-8")
-    @ResponseBody
     public ResponseEntity<String> findAll() {
         try {
             return new ResponseEntity<>(new Gson().toJson(annoService.findAll()), HttpStatus.OK);
@@ -38,7 +37,6 @@ public class AnnoController {
      * @return type = Json, String
      */
     @GetMapping(value = "/anno/{id}", produces = "application/json; charset=UTF-8")
-    @ResponseBody
     public ResponseEntity<String> findOne(@RequestBody(required = false) AnnoVo annoVo, @PathVariable("id") String paramId) {
         try{
             if(Optional.ofNullable(annoVo.getAnnoId()).isEmpty())
@@ -56,7 +54,6 @@ public class AnnoController {
      * @return 등록된 공지사항 내용 조회 (1건), Json, String
      */
     @PutMapping(value = "/anno", produces = "application/json; charset=UTF-8")
-    @ResponseBody
     public ResponseEntity<String> save(@RequestBody(required = false) AnnoVo annoVo) {
         try{
             annoService.save(annoVo);
@@ -74,7 +71,6 @@ public class AnnoController {
      * @return 수정된 공지사항 내용 조회 (1건), Json, String
      */
     @PutMapping(value = "/anno/{id}", produces = "application/json; charset=UTF-8")
-    @ResponseBody
     public ResponseEntity<String> update(@RequestBody(required = false) AnnoVo annoVo, @PathVariable(value="id") String paramId) {
         try{
             annoVo.setAnnoId(paramId);
@@ -92,7 +88,6 @@ public class AnnoController {
      * @return 공지사항 삭제, 공백 값 반환
      */
     @DeleteMapping(value = "/anno/{id}", produces = "application/json; charset=UTF-8")
-    @ResponseBody
     public ResponseEntity<String> delete(@PathVariable(value="id") String paramId) {
         try{
             AnnoVo annoVo = new AnnoVo(paramId, null, null, null);
