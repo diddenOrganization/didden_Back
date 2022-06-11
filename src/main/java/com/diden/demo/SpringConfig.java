@@ -36,7 +36,6 @@ public class SpringConfig {
         this.userMapper = userMapper;
     }
 
-
     @Bean
     public AnnoService annoService(){
         return new AnnoServiceImpl(annoMapper);
