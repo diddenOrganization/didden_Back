@@ -20,6 +20,7 @@ import java.util.concurrent.ConcurrentMap;
 
 @RestController
 @Slf4j
+@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserApiController {
 
     private final UserService userService;
@@ -31,9 +32,11 @@ public class UserApiController {
         this.userSocialService = userSocialService;
     }
 
-    @GetMapping(value = "/user/info")
+    @GetMapping(value = "/user/info", produces = MediaType.TEXT_PLAIN_VALUE)
     public String loginCheck(){
-        return "check";
+        JsonObject obj = new JsonObject();
+        obj.addProperty("process", "check");
+        return obj.toString();
     }
 
     @GetMapping(value = "/user/list")
@@ -96,7 +99,7 @@ public class UserApiController {
                 return new ResponseEntity<>(errorMethod("login", null), HttpStatus.OK);
             }
 
-            if (Objects.toString(userVo.getUserId(), "").equals(userVoData.getUserId())) {
+            if (Objects.toString(userVo.getUserEmail(), "").equals(userVoData.getUserEmail())) {
                 if (Objects.toString(userVo.getUserPassword(), "").equals(userVoData.getUserPassword())) {
                     TokenVo token = new TokenVo();
                     token.setAccessJwsToken(jwtTokenUtil.makeJwtAccToken(userVo).getAccessJwsToken());
