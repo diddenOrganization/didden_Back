@@ -2,17 +2,19 @@ package com.diden.demo.user.controller;
 
 import com.diden.demo.config.vo.TokenVo;
 import com.diden.demo.user.service.UserService;
+import com.diden.demo.user.service.UserSocialService;
 import com.diden.demo.user.vo.UserVo;
 import com.diden.demo.utils.JwtTokenUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -21,17 +23,24 @@ import java.util.concurrent.ConcurrentMap;
 public class UserApiController {
 
     private final UserService userService;
+    private final UserSocialService userSocialService;
     private final JwtTokenUtil jwtTokenUtil = new JwtTokenUtil();
 
-    public UserApiController(UserService userService) {
+    public UserApiController(UserService userService, UserSocialService userSocialService) {
         this.userService = userService;
+        this.userSocialService = userSocialService;
+    }
+
+    @GetMapping(value = "/user/info")
+    public String loginCheck(){
+        return "check";
     }
 
     @GetMapping(value = "/user/list")
-    @ResponseBody
     public ResponseEntity<String> userList() {
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
                 .body(new Gson().toJson(userService.userList()));
     }
 
@@ -43,14 +52,31 @@ public class UserApiController {
         return new ResponseEntity<>(userResult.toString(), HttpStatus.OK);
     }
 
-    @PostMapping("/user/api/social/login")
-    public void socialLoginLogic(@RequestBody ConcurrentMap<String, Object> param){
-        //var requestParamData = new HashMap<String, Object>();
-        for(ConcurrentHashMap.Entry<String, Object> entry : param.entrySet()){
-            log.info("{} : {} =========================================== {} : {}", entry.getKey(), entry.getValue(), entry.getKey().getClass(), entry.getValue().getClass());
-        }
-        log.info(param.toString());
+    @PostMapping("/user/api/social/json")
+    public ResponseEntity<JsonObject> socialLoginLogic(@RequestBody JsonObject param){
+        log.info("{}", param);
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(param)
+                ;
     }
+
+    @PostMapping("/user/social/login")
+    public ResponseEntity<String> userSocialLogin(@RequestBody JsonObject param){
+        boolean result = false;
+
+        if("kakao".equals("kakao")){
+            result = userSocialService.signup(param.getAsJsonObject("loginParam"));
+        }
+
+        JsonObject obj = new JsonObject();
+        obj.addProperty("result", result);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(obj.toString());
+    }
+
 
     // Exception 어노테이션.
     // Json Exception 공통.

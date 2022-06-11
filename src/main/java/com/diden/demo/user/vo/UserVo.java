@@ -1,12 +1,13 @@
 package com.diden.demo.user.vo;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Data
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserVo {
     private String userId = null;
     private String userName = null;
@@ -20,5 +21,6 @@ public class UserVo {
     private String userUpdateDate = null;
     private String userPrivacyConsent = null;
     private String userSocialLoginType = null;
+    private String userAccessToken = null;
     private String userRefreshToken = null;
 }
