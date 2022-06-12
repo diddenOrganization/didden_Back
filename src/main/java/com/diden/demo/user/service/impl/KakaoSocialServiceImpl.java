@@ -19,32 +19,28 @@ public class KakaoSocialServiceImpl implements UserSocialService {
     private final JwtSocialTokenCheckInterface jwtSocialKakaoTokenUtils = new JwtSocialKakaoTokenUtils();
 
     @Override
-    public boolean signup(JsonObject param) {
+    public boolean signup(final JsonObject param) {
         try {
-            String accessToken = param.get("accessToken").getAsString();
-            String refreshToken = param.get("refreshToken").getAsString();
+            final String accessToken = param.get("accessToken").getAsString();
+            final String refreshToken = param.get("refreshToken").getAsString();
 
-            JsonObject jsonObject = jwtSocialKakaoTokenUtils.socialAccessToken(accessToken);
-            JsonObject kakao_account = jsonObject.getAsJsonObject("kakao_account");
+            final JsonObject jsonObject = jwtSocialKakaoTokenUtils.socialAccessToken(accessToken);
+            final JsonObject kakaoAccount = jsonObject.getAsJsonObject("kakao_account");
 
-            UserVo userVo = UserVo
-                    .builder()
+            final UserVo userVo = UserVo.builder()
                     .userId(param.get("id").getAsString())
                     .userPassword(accessToken)
-                    .userEmail(kakao_account.get("email").getAsString())
-                    .userName(kakao_account.getAsJsonObject("profile").get("nickname").getAsString())
-                    .userNickname(kakao_account.getAsJsonObject("profile").get("nickname").getAsString())
+                    .userEmail(kakaoAccount.get("email").getAsString())
+                    .userName(kakaoAccount.getAsJsonObject("profile").get("nickname").getAsString())
+                    .userNickname(kakaoAccount.getAsJsonObject("profile").get("nickname").getAsString())
                     .userPrivacyConsent("Y")
-                    .userSocialLoginType("카카오")
+                    .userSocialLoginType("kakao")
                     .userRefreshToken(refreshToken)
                     .userAccessToken(accessToken)
                     .build();
 
-            if(userMapper.userCheck(userVo) > 0){
-                userMapper.userUpdate(userVo);
-            } else {
-                userMapper.userInsert(userVo);
-            }
+            if (userMapper.userCheck(userVo) > 0) userMapper.userUpdate(userVo);
+            else userMapper.userInsert(userVo);
 
             return true;
         } catch (Exception e) {
