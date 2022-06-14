@@ -2,7 +2,6 @@ package com.diden.demo.user.controller;
 
 import com.diden.demo.config.vo.TokenVo;
 import com.diden.demo.user.service.UserService;
-import com.diden.demo.user.service.UserSocialService;
 import com.diden.demo.user.vo.UserVo;
 import com.diden.demo.utils.JwtTokenUtil;
 import com.google.gson.Gson;
@@ -14,9 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
+import java.util.Objects;
 
 @RestController
 @Slf4j
@@ -24,15 +21,13 @@ import java.util.concurrent.ConcurrentMap;
 public class UserApiController {
 
     private final UserService userService;
-    private final UserSocialService userSocialService;
     private final JwtTokenUtil jwtTokenUtil = new JwtTokenUtil();
 
-    public UserApiController(UserService userService, UserSocialService userSocialService) {
+    public UserApiController(UserService userService) {
         this.userService = userService;
-        this.userSocialService = userSocialService;
     }
 
-    @GetMapping(value = "/user/info", produces = MediaType.TEXT_PLAIN_VALUE)
+    @GetMapping(value = "/user/info")
     public String loginCheck(){
         JsonObject obj = new JsonObject();
         obj.addProperty("process", "check");
@@ -42,12 +37,11 @@ public class UserApiController {
     @GetMapping(value = "/user/list")
     public ResponseEntity<String> userList() {
         return ResponseEntity.ok()
-                .contentType(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
                 .body(new Gson().toJson(userService.userList()));
     }
 
-    @PostMapping(value = "/user", produces = "application/json; charset=UTF-8")
+    @PostMapping(value = "/user")
     public ResponseEntity<String> userInfo(@RequestBody(required = false) UserVo userVo) {
         UserVo userInfo = userService.userInfo(userVo);
         JsonObject userResult = new JsonObject();
@@ -58,26 +52,17 @@ public class UserApiController {
     @PostMapping("/user/api/social/json")
     public ResponseEntity<JsonObject> socialLoginLogic(@RequestBody JsonObject param){
         log.info("{}", param);
-        return ResponseEntity.ok()
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(param)
-                ;
+        return ResponseEntity.ok(param);
     }
 
     @PostMapping("/user/social/login")
     public ResponseEntity<String> userSocialLogin(@RequestBody JsonObject param){
-        boolean result = false;
+        final boolean result = userService.socialSignup(param);
 
-        if("kakao".equals("kakao")){
-            result = userSocialService.signup(param.getAsJsonObject("loginParam"));
-        }
-
-        JsonObject obj = new JsonObject();
+        final JsonObject obj = new JsonObject();
         obj.addProperty("result", result);
 
-        return ResponseEntity.ok()
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(obj.toString());
+        return ResponseEntity.ok(obj.toString());
     }
 
 

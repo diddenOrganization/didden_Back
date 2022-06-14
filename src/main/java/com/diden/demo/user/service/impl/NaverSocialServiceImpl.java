@@ -3,10 +3,10 @@ package com.diden.demo.user.service.impl;
 import com.diden.demo.user.vo.UserVo;
 import com.google.gson.JsonObject;
 
-public class AppleSocialServiceImpl implements SocialAdepter {
+public class NaverSocialServiceImpl implements SocialAdepter {
     @Override
     public boolean supports(String handler) {
-        return ("apple".equals(handler));
+        return ("naver".equals(handler));
     }
 
     @Override
