@@ -14,8 +14,6 @@ import com.diden.demo.tour.service.TourService;
 import com.diden.demo.tour.service.impl.TourServiceImpl;
 import com.diden.demo.user.mapper.UserMapper;
 import com.diden.demo.user.service.UserService;
-import com.diden.demo.user.service.UserSocialService;
-import com.diden.demo.user.service.impl.KakaoSocialServiceImpl;
 import com.diden.demo.user.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -61,10 +59,5 @@ public class SpringConfig {
     @Bean
     public UserService userService(){
         return new UserServiceImpl(userMapper);
-    }
-
-    @Bean
-    public UserSocialService userSocialService(){
-        return new KakaoSocialServiceImpl(userMapper);
     }
 }
