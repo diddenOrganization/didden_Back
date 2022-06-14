@@ -22,9 +22,9 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl(UserMapper userMapper) {
         this.userMapper = userMapper;
 
-        this.socialAdepterList.add(new AppleSocialServiceImpl());
-        this.socialAdepterList.add(new KakaoSocialServiceImpl());
-        this.socialAdepterList.add(new NaverSocialServiceImpl());
+        this.socialAdepterList.add(new AppleSocialAdepterImpl());
+        this.socialAdepterList.add(new KakaoSocialAdepterImpl());
+        this.socialAdepterList.add(new NaverSocialAdepterImpl());
     }
 
     @Override
