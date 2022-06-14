@@ -7,7 +7,7 @@ import com.google.gson.JsonObject;
 import org.springframework.stereotype.Service;
 
 @Service
-public class KakaoSocialServiceImpl implements SocialAdepter {
+public class KakaoSocialAdepterImpl implements SocialAdepter {
     private final JwtSocialTokenCheckInterface jwtSocialKakaoTokenUtils = new JwtSocialKakaoTokenUtils();
 
     @Override
