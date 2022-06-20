@@ -2,11 +2,11 @@ package com.diden.demo.user.service.impl;
 
 import com.diden.demo.user.vo.UserVo;
 import com.google.gson.JsonObject;
-
+import static com.diden.demo.utils.AccountTypeEnum.*;
 public class AppleSocialAdepterImpl implements SocialAdepter {
     @Override
     public boolean supports(String handler) {
-        return ("apple".equals(handler));
+        return (APPLE.getAccountType().equals(handler));
     }
 
     @Override

@@ -4,12 +4,13 @@ import com.diden.demo.utils.JwtSocialKakaoTokenUtils;
 import com.diden.demo.utils.JwtSocialTokenCheckInterface;
 import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
+import static com.diden.demo.utils.AccountTypeEnum.*;
 
 @Slf4j
 public class LoginKakao implements LoginAdepter{
     @Override
     public boolean supports(String handler) {
-        return ("kakao".equals(handler));
+        return (KAKAO.getAccountType().equals(handler));
     }
 
     @Override

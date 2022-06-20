@@ -10,12 +10,12 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
-
+import static com.diden.demo.utils.AccountTypeEnum.*;
 @Slf4j
 public class LoginDefault implements LoginAdepter{
     @Override
     public boolean supports(String handler) {
-        return ("default".equals(handler));
+        return (DEFAULT.getAccountType().equals(handler));
     }
 
     @Override
