@@ -38,8 +38,16 @@ public class InfoController {
                     .map(o -> request.getServerName() + ":" + request.getServerPort() + "/" + o.substring(26))
                     .collect(Collectors.toList());
 
+            List<String> icon = Files
+                    .list(Path.of("src/main/resources/static/img/icon"))
+                    .filter(o -> o.toFile().isFile())
+                    .map(Path::toString)
+                    .map(o -> request.getServerName() + ":" + request.getServerPort() + "/" + o.substring(26))
+                    .collect(Collectors.toList());
+
             model.addAttribute("logo", logo);
             model.addAttribute("main_tour", mainTour);
+            model.addAttribute("icon", icon);
         } catch (IOException ioe) {
             ioe.printStackTrace();
         } catch (Exception e){

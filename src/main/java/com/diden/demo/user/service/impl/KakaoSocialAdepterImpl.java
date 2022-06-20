@@ -6,13 +6,15 @@ import com.diden.demo.utils.JwtSocialTokenCheckInterface;
 import com.google.gson.JsonObject;
 import org.springframework.stereotype.Service;
 
+import static com.diden.demo.utils.AccountTypeEnum.*;
+
 @Service
 public class KakaoSocialAdepterImpl implements SocialAdepter {
     private final JwtSocialTokenCheckInterface jwtSocialKakaoTokenUtils = new JwtSocialKakaoTokenUtils();
 
     @Override
     public boolean supports(String handler) {
-        return ("kakao".equals(handler));
+        return (KAKAO.getAccountType().equals(handler));
     }
 
     @Override
