@@ -49,6 +49,14 @@
             <td><img th:src="'http://'+${main_tour}"/></td>
             <td th:text="${main_tour}"></td>
         </tr>
+
+        <tr>
+            <td colspan="2">아이콘</td>
+        </tr>
+        <tr th:each="icon: ${icon}">
+            <td><img th:src="'http://'+${icon}"/></td>
+            <td th:text="${icon}"></td>
+        </tr>
     </table>
 </body>
 </html>
