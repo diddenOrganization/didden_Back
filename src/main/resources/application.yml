@@ -30,3 +30,17 @@ spring:
 spring:
   profiles:
     active: local
+
+---
+spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: tnsqja012@gmail.com
+    password: gdbfiuukveuucjte
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
