@@ -20,7 +20,7 @@ public class TokenCheckAdepter implements TokenAdepterInterface {
     final String loginType = request.getHeader(JwtProperties.LOGIN_TYPE);
     final String Authorization = request.getHeader(JwtProperties.HEADER_STRING);
 
-    if (isNoTokenCheckPath(request.getServletPath())) {
+    if (isNoTokenCheckPath(request.getRequestURI())) {
       return jsonObjectResult(true);
     }
 
@@ -35,7 +35,7 @@ public class TokenCheckAdepter implements TokenAdepterInterface {
   }
 
   private boolean isNoTokenCheckPath(final String path) {
-    return path.startsWith("/info") || path.startsWith("/img");
+    return path.startsWith("/info") || path.startsWith("/img") || path.startsWith("/user/email-check");
   }
 
   private JsonObject jsonObjectResult(final boolean result) {

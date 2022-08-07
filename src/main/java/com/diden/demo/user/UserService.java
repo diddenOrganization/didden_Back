@@ -7,6 +7,8 @@ import java.util.List;
 public interface UserService {
   boolean existsUserEmail(final String userEmail);
 
+  boolean emailDuplicateCheck(final String userEmail);
+
   int userCheck(UserVo userVo);
 
   int userCount(UserVo userVo);

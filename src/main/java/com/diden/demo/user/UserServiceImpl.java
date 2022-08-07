@@ -4,10 +4,10 @@ import com.diden.demo.error.exception.BadRequestException;
 import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Slf4j
@@ -18,14 +18,23 @@ public class UserServiceImpl implements UserService {
   private final List<SocialAdepter> socialAdepterList;
 
   public boolean existsUserEmail(final String userEmail) {
-    Optional.ofNullable(userEmail)
-        .filter(v -> v.length() != 0)
-        .orElseThrow(
-            () -> {
-              throw new BadRequestException("이메일을 잘못입력했거나 존재하지 않습니다.");
-            });
+    if(StringUtils.isBlank(userEmail)){
+      throw new BadRequestException("이메일을 잘못입력했거나 존재하지 않습니다.");
+    }
 
     return userMapper.existsUserEmail(userEmail);
+  }
+
+  public boolean emailDuplicateCheck(final String userEmail){
+    if(StringUtils.isBlank(userEmail)){
+      throw new BadRequestException("이메일을 입력해주세요.");
+    }
+
+    if(userMapper.emailDuplicateCheck(userEmail)){
+      throw new BadRequestException("이미 존재하는 이메일입니다.");
+    } else {
+      return true;
+    }
   }
 
   public int userCheck(UserVo userVo) {

@@ -7,6 +7,7 @@ import java.util.List;
 
 @Mapper
 public interface UserMapper {
+  boolean emailDuplicateCheck(final String userEmail);
 
   boolean existsUserEmail(@Param("userEmail") final String userEmail);
 

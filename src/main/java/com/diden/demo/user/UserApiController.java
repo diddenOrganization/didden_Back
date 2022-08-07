@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
 
+import static com.diden.demo.utils.HttpResponses.RESPONSE_OK;
+
 @Slf4j
 @RestController
 @RequestMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -28,6 +30,12 @@ public class UserApiController {
   @GetMapping(value = "/list")
   public ResponseEntity<String> userList() {
     return ResponseEntity.ok().body(LazyHolderObject.getGson().toJson(userService.userList()));
+  }
+
+  @GetMapping("/email-check")
+  public ResponseEntity emailDuplicateCheck(final String userEmail){
+    userService.emailDuplicateCheck(userEmail);
+    return RESPONSE_OK;
   }
 
   @PostMapping
@@ -133,7 +141,7 @@ public class UserApiController {
     return new ResponseEntity<>(userResult.toString(), HttpStatus.OK);
   }
 
-  @DeleteMapping(value = "")
+  @DeleteMapping
   public ResponseEntity<String> userDelete(@RequestBody(required = false) UserVo userVo) {
     JsonObject userResult = new JsonObject();
     try {
