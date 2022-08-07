@@ -1,7 +1,6 @@
 package com.diden.demo.tour.vo;
 
 import com.google.gson.annotations.SerializedName;
-
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,8 +9,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TourHeaderVo {
-    @SerializedName("resultCode")
-    private String resultCode = null;
-    @SerializedName("resultMsg")
-    private String resultMsg = null;
+  @SerializedName("resultCode")
+  private String resultCode = null;
+
+  @SerializedName("resultMsg")
+  private String resultMsg = null;
 }

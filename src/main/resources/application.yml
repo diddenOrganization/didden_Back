@@ -22,6 +22,7 @@ spring:
       suffix: .jsp
     converters:
       preferred-json-mapper: gson
+
 ---
 spring:
   profiles:

@@ -1,15 +1,15 @@
 package com.diden.demo.config.adepter;
 
-import static com.diden.demo.utils.AccountTypeEnum.*;
+import static com.diden.demo.utils.AccountTypeEnum.APPLE;
 
-public class LoginApple implements LoginAdepter{
-    @Override
-    public boolean supports(String handler) {
-        return (APPLE.getAccountType().equals(handler));
-    }
+public class LoginApple implements LoginAdepter {
+  @Override
+  public boolean supports(String handler) {
+    return (APPLE.getAccountType().equals(handler));
+  }
 
-    @Override
-    public boolean process(String temp) {
-        return false;
-    }
+  @Override
+  public boolean process(String temp) {
+    return false;
+  }
 }

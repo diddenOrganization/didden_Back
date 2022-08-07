@@ -5,8 +5,8 @@
 <mapper namespace="com.diden.demo.tour.mapper.TourMapper">
     <select id="tourInfoList" resultType="map">
         SELECT *
-          FROM TB_AREA_TOUR_INFO
-         WHERE 1=1
+        FROM TB_AREA_TOUR_INFO
+        WHERE 1=1
         <if test="cat1 != null and cat1 !=''">
             AND CAT1 = #{cat1}
         </if>

@@ -29,34 +29,34 @@
 </style>
 
 <body>
-    <h1>이미지 목록</h1>
-    <table>
-        <tr>
-            <th>이미지</th>
-            <th>경로</th>
-        </tr>
-        <tr>
-            <td colspan="2">로고</td>
-        </tr>
-        <tr th:each="logo: ${logo}">
-            <td><img th:src="'http://'+${logo}"/></td>
-            <td th:text="${logo}"></td>
-        </tr>
-        <tr>
-            <td colspan="2">메인 여행 이미지</td>
-        </tr>
-        <tr th:each="main_tour: ${main_tour}">
-            <td><img th:src="'http://'+${main_tour}"/></td>
-            <td th:text="${main_tour}"></td>
-        </tr>
+<h1>이미지 목록</h1>
+<table>
+    <tr>
+        <th>이미지</th>
+        <th>경로</th>
+    </tr>
+    <tr>
+        <td colspan="2">로고</td>
+    </tr>
+    <tr th:each="logo: ${logo}">
+        <td><img th:src="'http://'+${logo}"/></td>
+        <td th:text="${logo}"></td>
+    </tr>
+    <tr>
+        <td colspan="2">메인 여행 이미지</td>
+    </tr>
+    <tr th:each="main_tour: ${main_tour}">
+        <td><img th:src="'http://'+${main_tour}"/></td>
+        <td th:text="${main_tour}"></td>
+    </tr>
 
-        <tr>
-            <td colspan="2">아이콘</td>
-        </tr>
-        <tr th:each="icon: ${icon}">
-            <td><img th:src="'http://'+${icon}"/></td>
-            <td th:text="${icon}"></td>
-        </tr>
-    </table>
+    <tr>
+        <td colspan="2">아이콘</td>
+    </tr>
+    <tr th:each="icon: ${icon}">
+        <td><img th:src="'http://'+${icon}"/></td>
+        <td th:text="${icon}"></td>
+    </tr>
+</table>
 </body>
 </html>

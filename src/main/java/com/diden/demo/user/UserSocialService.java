@@ -1,7 +1,7 @@
-package com.diden.demo.user.service;
+package com.diden.demo.user;
 
 import com.google.gson.JsonObject;
 
 public interface UserSocialService {
-    boolean process(JsonObject param);
+  boolean process(JsonObject param);
 }

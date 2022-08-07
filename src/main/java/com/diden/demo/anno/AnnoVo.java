@@ -1,25 +1,17 @@
 package com.diden.demo.anno;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
-@Data
 @Getter
-@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class AnnoVo {
-    private String annoId;
-    private String annoTitle;
-    private String annoContent;
-    private String annoCreateDate;
-
-    public AnnoVo() {
-    }
-
-    public AnnoVo(String annoId, String annoTitle, String annoContent, String annoCreateDate) {
-        this.annoId = annoId;
-        this.annoTitle = annoTitle;
-        this.annoContent = annoContent;
-        this.annoCreateDate = annoCreateDate;
-    }
+  private String annoId;
+  private String annoTitle;
+  private String annoContent;
+  private String annoCreateDate;
 }

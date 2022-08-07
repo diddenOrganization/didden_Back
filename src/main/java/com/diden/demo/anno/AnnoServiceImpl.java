@@ -1,52 +1,81 @@
 package com.diden.demo.anno;
 
-import com.diden.demo.anno.mapper.AnnoMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.diden.demo.error.exception.BadRequestException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class AnnoServiceImpl implements AnnoService {
-    private final AnnoMapper annoMapper;
+  private final AnnoMapper annoMapper;
 
-    @Autowired
-    public AnnoServiceImpl(AnnoMapper annoMapper) {
-        this.annoMapper = annoMapper;
-    }
+  public List<AnnoVo> findAll() {
+    return annoMapper.findAll();
+  }
 
-    public List<AnnoVo> findAll() {
-        return annoMapper.findAll();
-    }
+  public AnnoVo findOne(AnnoVo annoVo) {
+    Optional.ofNullable(annoVo)
+        .map(AnnoVo::getAnnoId)
+        .filter(v -> v.length() != 0)
+        .orElseThrow(
+            () -> {
+              throw new BadRequestException("");
+            });
 
-    public AnnoVo findOne(AnnoVo annoVo) {
-        return annoMapper.findOne(annoVo);
-    }
+    return annoMapper.findOne(annoVo);
+  }
 
-    public void save(AnnoVo annoVo) {
-        try{
-            if(annoVo.getAnnoTitle().isEmpty() || annoVo.getAnnoContent().isEmpty()) throw new NullPointerException("제목 또는 내용을 입력하지 않았습니다.");
-            else annoMapper.save(annoVo);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
+  public void save(AnnoVo annoVo) {
+    Optional.ofNullable(annoVo)
+        .map(AnnoVo::getAnnoTitle)
+        .filter(s -> s.length() != 0)
+        .orElseThrow(
+            () -> {
+              throw new BadRequestException("제목을 입력하지 않았습니다.");
+            });
 
-    public void update(AnnoVo annoVo) {
-        try{
-            if(annoVo.getAnnoTitle().isEmpty() || annoVo.getAnnoContent().isEmpty()) throw new NullPointerException("제목 또는 내용을 입력하지 않았습니다.");
-            else annoMapper.update(annoVo);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
+    Optional.ofNullable(annoVo)
+        .map(AnnoVo::getAnnoContent)
+        .filter(s -> s.length() != 0)
+        .orElseThrow(
+            () -> {
+              throw new BadRequestException("내용을 입력하지 않았습니다.");
+            });
 
-    public void delete(AnnoVo annoVo) {
-        try{
-            if(annoVo.getAnnoId().isEmpty()) throw new NullPointerException("아이디 미 입력.");
-            else annoMapper.delete(annoVo);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
+    annoMapper.save(annoVo);
+  }
+
+  public void update(AnnoVo annoVo) {
+    Optional.ofNullable(annoVo)
+        .map(AnnoVo::getAnnoTitle)
+        .filter(s -> s.length() != 0)
+        .orElseThrow(
+            () -> {
+              throw new BadRequestException("제목을 입력하지 않았습니다.");
+            });
+
+    Optional.ofNullable(annoVo)
+        .map(AnnoVo::getAnnoContent)
+        .filter(s -> s.length() != 0)
+        .orElseThrow(
+            () -> {
+              throw new BadRequestException("내용을 입력하지 않았습니다.");
+            });
+
+    annoMapper.update(annoVo);
+  }
+
+  public void delete(final String annoId) {
+    Optional.ofNullable(annoId)
+        .filter(v -> v.length() != 0)
+        .orElseThrow(
+            () -> {
+              throw new BadRequestException("게시글 아이디가 존재하지 않습니다.");
+            });
+
+    annoMapper.delete(annoId);
+  }
 }
