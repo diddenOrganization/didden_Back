@@ -26,15 +26,7 @@ public class UserServiceImpl implements UserService {
   }
 
   public boolean emailDuplicateCheck(final String userEmail){
-    if(StringUtils.isBlank(userEmail)){
-      throw new BadRequestException("이메일을 입력해주세요.");
-    }
-
-    if(userMapper.emailDuplicateCheck(userEmail)){
-      throw new BadRequestException("이미 존재하는 이메일입니다.");
-    } else {
-      return true;
-    }
+    return userMapper.emailDuplicateCheck(userEmail);
   }
 
   public int userCheck(UserVo userVo) {

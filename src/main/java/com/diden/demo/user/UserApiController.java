@@ -1,19 +1,21 @@
 package com.diden.demo.user;
 
 import com.diden.demo.config.LazyHolderObject;
+import com.diden.demo.utils.HttpResponse;
 import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
-import static com.diden.demo.utils.HttpResponses.RESPONSE_OK;
-
 @Slf4j
+@Validated
 @RestController
 @RequestMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
@@ -33,9 +35,13 @@ public class UserApiController {
   }
 
   @GetMapping("/email-check")
-  public ResponseEntity emailDuplicateCheck(final String userEmail){
-    userService.emailDuplicateCheck(userEmail);
-    return RESPONSE_OK;
+  public HttpResponse<Void> emailDuplicateCheck(
+      @NotBlank(message = "이메일이 존재하지 않습니다.") final String userEmail) {
+    if(userService.emailDuplicateCheck(userEmail)){
+      return HttpResponse.toResponse(HttpStatus.OK, "이미 가입된 이메일 입니다.");
+    } else {
+      return HttpResponse.toResponse(HttpStatus.ACCEPTED, "가입 가능한 이메일 입니다.");
+    }
   }
 
   @PostMapping
