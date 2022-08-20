@@ -24,14 +24,18 @@ public class GeneralExceptionHandler {
   @ExceptionHandler({NullPointerException.class})
   public ExceptionVo nullPointer(final NullPointerException e) {
     e.printStackTrace();
-    return ExceptionVo.builder().message(e.getMessage()).build();
+    return ExceptionVo.builder().status(HttpStatus.BAD_REQUEST).message(e.getMessage()).build();
   }
 
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  @ExceptionHandler({BadRequestException.class, TokenException.class})
+  @ExceptionHandler({
+    BadRequestException.class,
+    TokenException.class,
+    IllegalArgumentException.class
+  })
   public ExceptionVo badRequest(final RuntimeException e) {
     e.printStackTrace();
-    return ExceptionVo.builder().message(e.getMessage()).build();
+    return ExceptionVo.builder().status(HttpStatus.BAD_REQUEST).message(e.getMessage()).build();
   }
 
   @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -40,12 +44,12 @@ public class GeneralExceptionHandler {
     log.error(e.toString());
     e.printStackTrace();
     return ExceptionVo.builder()
-            .message(
-                    e.getConstraintViolations().stream()
-                            .map(ConstraintViolation::getMessage)
-                            .collect(Collectors.joining()))
-            .status(HttpStatus.BAD_REQUEST)
-            .build();
+        .message(
+            e.getConstraintViolations().stream()
+                .map(ConstraintViolation::getMessage)
+                .collect(Collectors.joining()))
+        .status(HttpStatus.BAD_REQUEST)
+        .build();
   }
 
   @Getter
