@@ -32,7 +32,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
           LazyHolderObject.getGson()
               .fromJson(new InputStreamReader(request.getInputStream()), UserVo.class);
 
-      if (userService.existsUserEmail(userVo.getUserEmail())) {
+      if (userService.userCheck(userVo) > 0) {
         return new UsernamePasswordAuthenticationToken(
             userVo.getUserEmail(), userVo.getUserPassword());
       } else {
