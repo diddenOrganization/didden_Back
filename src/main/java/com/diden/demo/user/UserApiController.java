@@ -37,7 +37,7 @@ public class UserApiController {
 
   @GetMapping("/email-check")
   public HttpResponse<Void> emailDuplicateCheck(
-      @RequestBody @NotNull(message = "이메일이 존재하지 않습니다.") @Email(message = "이메일 형식이 아닙니다.")
+      @NotNull(message = "이메일이 존재하지 않습니다.") @Email(message = "이메일 형식이 아닙니다.")
           final String userEmail) {
     if (userService.emailDuplicateCheck(userEmail)) {
       return HttpResponse.toResponse(HttpStatus.OK, "이미 가입된 이메일 입니다.");
