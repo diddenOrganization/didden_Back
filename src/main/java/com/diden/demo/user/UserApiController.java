@@ -11,7 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Slf4j
@@ -36,8 +37,9 @@ public class UserApiController {
 
   @GetMapping("/email-check")
   public HttpResponse<Void> emailDuplicateCheck(
-      @NotBlank(message = "이메일이 존재하지 않습니다.") final String userEmail) {
-    if(userService.emailDuplicateCheck(userEmail)){
+      @RequestBody @NotNull(message = "이메일이 존재하지 않습니다.") @Email(message = "이메일 형식이 아닙니다.")
+          final String userEmail) {
+    if (userService.emailDuplicateCheck(userEmail)) {
       return HttpResponse.toResponse(HttpStatus.OK, "이미 가입된 이메일 입니다.");
     } else {
       return HttpResponse.toResponse(HttpStatus.ACCEPTED, "가입 가능한 이메일 입니다.");
