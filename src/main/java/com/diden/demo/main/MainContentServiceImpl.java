@@ -9,11 +9,10 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
-@Service
 @Slf4j
+@Service
 @RequiredArgsConstructor
 public class MainContentServiceImpl implements MainContentService {
-  static List<MainContentVo> cache = new ArrayList<>();
   private final MainContentMapper mainContentMapper;
 
   @Override

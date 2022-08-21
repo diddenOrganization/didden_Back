@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
 
   public boolean existsUserEmail(final String userEmail) {
     if(StringUtils.isBlank(userEmail)){
-      throw new BadRequestException("이메일을 잘못입력했거나 존재하지 않습니다.");
+      throw new BadRequestException("이메일이 존재하지 않습니다.");
     }
 
     return userMapper.existsUserEmail(userEmail);

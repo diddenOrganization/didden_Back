@@ -5,11 +5,11 @@ import java.util.List;
 public interface AnnoService {
   List<AnnoVo> findAll();
 
-  AnnoVo findOne(AnnoVo annoVo);
+  AnnoVo findOne(final AnnoVo annoVo);
 
-  void save(AnnoVo annoVo);
+  int save(final AnnoVo annoVo);
 
-  void update(AnnoVo annoVo);
+  int update(final AnnoVo annoVo);
 
-  void delete(final String annoId);
+  int delete(final String annoId);
 }

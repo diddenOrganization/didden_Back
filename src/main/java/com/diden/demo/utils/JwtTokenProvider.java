@@ -39,9 +39,6 @@ public final class JwtTokenProvider {
     } catch (ExpiredJwtException exp) {
       exp.printStackTrace();
       return false;
-    } catch (Exception e) {
-      e.printStackTrace();
-      throw new TokenException("토큰이 잘못됐거나, 존재하지 않습니다.");
     }
   }
 

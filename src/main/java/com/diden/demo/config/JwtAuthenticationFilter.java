@@ -32,17 +32,15 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
           LazyHolderObject.getGson()
               .fromJson(new InputStreamReader(request.getInputStream()), UserVo.class);
 
-      if (userService.userCheck(userVo) > 0) {
-        return new UsernamePasswordAuthenticationToken(
-            userVo.getUserEmail(), userVo.getUserPassword());
-      } else {
+      if (userService.userCheck(userVo) == 0) {
         throw new TokenException("계정이 존재하지 않습니다.");
       }
-
+      return new UsernamePasswordAuthenticationToken(
+          userVo.getUserEmail(), userVo.getUserPassword());
     } catch (IOException io) {
       io.printStackTrace();
+      throw new RuntimeException("request.getInputStream() IO 에러");
     }
-    throw new TokenException("로그인이 실패하였습니다.");
   }
 
   @Override

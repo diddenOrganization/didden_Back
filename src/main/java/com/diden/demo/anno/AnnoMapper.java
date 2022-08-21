@@ -11,9 +11,9 @@ public interface AnnoMapper {
 
   AnnoVo findOne(AnnoVo annoVo);
 
-  void save(AnnoVo annoVo);
+  int save(AnnoVo annoVo);
 
-  void update(AnnoVo annoVo);
+  int update(AnnoVo annoVo);
 
-  void delete(@Param("annoId") String annoId);
+  int delete(@Param("annoId") String annoId);
 }
