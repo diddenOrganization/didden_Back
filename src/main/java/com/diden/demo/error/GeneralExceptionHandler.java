@@ -26,6 +26,7 @@ public class GeneralExceptionHandler {
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   @ExceptionHandler({DataNotProcessExceptions.class})
   public ExceptionVo dataNotProcessExceptions(final DataNotProcessExceptions e) {
+    log.error(e.toString());
     e.printStackTrace();
     return ExceptionVo.builder()
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -36,7 +37,8 @@ public class GeneralExceptionHandler {
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   @ExceptionHandler({NullPointerException.class})
   public ExceptionVo nullPointer(final NullPointerException e) {
-    e.printStackTrace();
+    log.error(e.toString());
+
     return ExceptionVo.builder().status(HttpStatus.BAD_REQUEST).message(e.getMessage()).build();
   }
 
@@ -47,7 +49,8 @@ public class GeneralExceptionHandler {
     IllegalArgumentException.class,
   })
   public ExceptionVo badRequest(final RuntimeException e) {
-    e.printStackTrace();
+    log.error(e.toString());
+
     return ExceptionVo.builder().status(HttpStatus.BAD_REQUEST).message(e.getMessage()).build();
   }
 
@@ -55,7 +58,7 @@ public class GeneralExceptionHandler {
   @ExceptionHandler({ConstraintViolationException.class})
   public ExceptionVo constraintViolation(final ConstraintViolationException e) {
     log.error(e.toString());
-    e.printStackTrace();
+
     return ExceptionVo.builder()
         .message(
             e.getConstraintViolations().stream()
@@ -69,7 +72,6 @@ public class GeneralExceptionHandler {
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public ExceptionVo processValidationError(final MethodArgumentNotValidException e) {
     log.error(e.toString());
-    e.printStackTrace();
 
     return ExceptionVo.builder()
         .message(
@@ -86,7 +88,6 @@ public class GeneralExceptionHandler {
   @ExceptionHandler({HttpMessageNotReadableException.class})
   public ExceptionVo notReadable(final HttpMessageNotReadableException e) {
     log.error(e.toString());
-    e.printStackTrace();
 
     return ExceptionVo.builder()
         .message(e.getLocalizedMessage())
