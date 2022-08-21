@@ -30,11 +30,14 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
     try {
       filterChain.doFilter(request, response);
     } catch (BadRequestException | TokenException | IllegalArgumentException e) {
-      e.printStackTrace();
       log.debug(":: ExceptionHandlerFilter.doFilterInternal.BAD_REQUEST ::");
+
+      log.error(e.toString());
       setExceptionResponse(HttpStatus.BAD_REQUEST, response, e);
     } catch (RuntimeException e) {
       log.debug(":: ExceptionHandlerFilter.doFilterInternal.INTERNAL_SERVER_ERROR ::");
+
+      e.printStackTrace();
       setExceptionResponse(HttpStatus.INTERNAL_SERVER_ERROR, response, e);
     }
   }
