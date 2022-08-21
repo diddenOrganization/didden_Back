@@ -4,7 +4,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @ToString
@@ -21,7 +23,8 @@ public class UserVo {
   @NotBlank(message = "사용자 성별이 존재하지 않습니다.")
   private final String userGender;
 
-  @NotBlank(message = "사용자 이메일이 존재하지 않습니다.")
+  @NotNull(message = "사용자 이메일이 존재하지 않습니다.")
+  @Email(message = "이메일 형식이 아닙니다.")
   private final String userEmail;
 
   @NotBlank(message = "사용자 휴대폰 번호가 존재하지 않습니다.")
