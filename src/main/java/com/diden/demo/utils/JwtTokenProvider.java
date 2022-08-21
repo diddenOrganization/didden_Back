@@ -1,14 +1,18 @@
 package com.diden.demo.utils;
 
+import com.diden.demo.error.exception.BadRequestException;
 import com.diden.demo.error.exception.TokenException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import static com.diden.demo.utils.JwtProperties.SECRET;
 import static com.diden.demo.utils.JwtProperties.TOKEN_PREFIX;
 
+@Slf4j
 @Component
 public final class JwtTokenProvider {
 
@@ -17,14 +21,19 @@ public final class JwtTokenProvider {
 
   public static boolean checkAccessToken(String Authorization) {
     try {
-      if (Authorization == null || !Authorization.startsWith(TOKEN_PREFIX)) {
-        throw new TokenException("토큰이 잘못됐거나, 존재하지 않습니다.");
+      log.debug(":: JwtTokenProvider.checkAccessToken = {} ::", Authorization);
+
+      if (StringUtils.isBlank(Authorization)) {
+        throw new BadRequestException("토큰이 존재하지 않습니다.");
+      }
+
+      if (!Authorization.startsWith(TOKEN_PREFIX)) {
+        throw new TokenException("토큰 형식이 맞지 않습니다.");
       }
 
       final String token = Authorization.replace(TOKEN_PREFIX, "");
 
       final Claims body = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody();
-      System.out.println(body.getExpiration());
       return "whySoSerious".equals(body.getSubject());
 
     } catch (ExpiredJwtException exp) {
