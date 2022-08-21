@@ -26,7 +26,7 @@ public class TokenCheckAdepter implements TokenAdepterInterface {
     }
 
     for (LoginAdepter adepter : loginAdepterList) {
-      if (adepter.supports(loginType)) {
+      if (adepter.supports("default")) {
         final boolean result = adepter.process(Authorization);
         return jsonObjectResult(result);
       }
