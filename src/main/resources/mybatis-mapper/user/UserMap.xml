@@ -108,9 +108,7 @@
     </select>
 
     <insert id="userInsert" parameterType="com.diden.demo.user.UserVo">
-        INSERT INTO TB_USER ( USER_ID
-                            , USER_NAME
-                            , USER_PASSWORD
+        INSERT INTO TB_USER ( USER_PASSWORD
                             , USER_NICKNAME
                             , USER_BIRTHDAY
                             , USER_GENDER
@@ -120,9 +118,7 @@
                             , USER_SOCIAL_LOGIN_TYPE
                             , USER_REFRESH_TOKEN
                             , USER_ACCESS_TOKEN)
-        VALUES ( #{userId}
-               , #{userName}
-               , #{userPassword}
+        VALUES ( #{userPassword}
                , #{userNickname}
                , #{userBirthday}
                , #{userGender}
