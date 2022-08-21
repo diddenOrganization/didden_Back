@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
       userMapper.userInsert(userVo);
     } catch (Exception e) {
       e.printStackTrace();
-      throw new RuntimeException("회원가입 실패");
+      throw new IllegalArgumentException("회원가입 실패");
     }
 
   }
@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
       userMapper.userUpdate(userVo);
     } catch (Exception e) {
       e.printStackTrace();
-      throw new RuntimeException("수정 실패");
+      throw new IllegalArgumentException("수정 실패");
     }
   }
 

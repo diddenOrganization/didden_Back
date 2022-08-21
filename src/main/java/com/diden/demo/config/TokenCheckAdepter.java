@@ -39,6 +39,7 @@ public class TokenCheckAdepter implements TokenAdepterInterface {
         || path.startsWith("/img")
         || path.startsWith("/user/email-check")
         || path.startsWith("/main/content")
+        || path.startsWith("/send")
         || path.startsWith("/user");
   }
 
