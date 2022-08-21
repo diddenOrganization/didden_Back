@@ -14,6 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
   private final UserService userService;
   private final TokenAdepterInterface tokenAdepterInterface;
+  private final ExceptionHandlerFilter exceptionHandlerFilter;
 
   @Bean
   public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -35,6 +36,7 @@ public class SecurityConfig {
         .sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
+        .addFilterBefore(exceptionHandlerFilter, JwtAuthorizationFilter.class)
         .build();
   }
 }
