@@ -6,11 +6,11 @@
     <select id="findMainContentImageAll" resultType="com.diden.demo.main.MainContentVo">
         SELECT CONTENT_ID
              , CONTENT_NAME
-             , CONTENT_IMAGE_BYTE
              , CONTENT_SIZE
              , CONTENT_CREATE_DATE
              , CONTENT_UPDATE_DATE
              , CONTENT_EXTENSION
+             , CONTENT_IMAGE_URI
         FROM TB_MAINCONTENT
         ORDER BY CONTENT_CREATE_DATE DESC
     </select>

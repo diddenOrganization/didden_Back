@@ -18,28 +18,7 @@ public class MainContentServiceImpl implements MainContentService {
 
   @Override
   public List<MainContentVo> findMainContentImageAll() {
-    try {
-      if (cache.isEmpty()
-          || LocalDateTime.now().isAfter(cache.get(0).getDataCreateTime().plusHours(1))) {
-        cache = mainContentMapper.findMainContentImageAll();
-        for (MainContentVo data : cache) {
-          String encodedString = Base64.getEncoder().encodeToString(data.getContentImageByte());
-          StringBuilder sb =
-              new StringBuilder()
-                  .append("data:image/")
-                  .append(data.getContentExtension())
-                  .append(";base64,")
-                  .append(encodedString);
-          data.setContentUrl(sb.toString());
-        }
-      }
-      log.info("{}", LocalDateTime.now());
-      log.info("{}", cache.get(0).getDataCreateTime().plusHours(1));
-      log.info("{}", LocalDateTime.now().isAfter(cache.get(0).getDataCreateTime().plusHours(1)));
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return cache;
+    return mainContentMapper.findMainContentImageAll();
   }
 
   @Override
