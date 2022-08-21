@@ -21,6 +21,7 @@ public class TokenCheckAdepter implements TokenAdepterInterface {
     final String Authorization = request.getHeader(JwtProperties.HEADER_STRING);
 
     if (isNoTokenCheckPath(request.getRequestURI())) {
+      log.debug(":: TokenCheckAdepter.tokenCheckMethod = {} ::", request.getRequestURI());
       return jsonObjectResult(true);
     }
 
