@@ -11,30 +11,27 @@ import static com.diden.demo.utils.JwtProperties.EXPIRATION_TIME;
 import static com.diden.demo.utils.JwtProperties.SECRET;
 
 public class JwtTokenUtil implements Serializable {
-  public String createAccessToken(Authentication authResult) {
-    final String accessToken =
-        Jwts.builder()
-            .setSubject("whySoSerious")
-            .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-            .claim("type", JwtProperties.ACCESS_TOKEN)
-            .claim("userEmail", authResult.getPrincipal().toString())
-            .signWith(SignatureAlgorithm.HS512, SECRET)
-            .compact();
 
-    return accessToken;
+  public String createAccessToken(Authentication authResult) {
+
+    return Jwts.builder()
+        .setSubject("whySoSerious")
+        .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+        .claim("type", JwtProperties.ACCESS_TOKEN)
+        .claim("userEmail", authResult.getPrincipal().toString())
+        .signWith(SignatureAlgorithm.HS512, SECRET)
+        .compact();
   }
 
   public String createRefreshToken(Authentication authResult) {
-    final String refreshToken =
-        Jwts.builder()
-            .setSubject("whySoSerious")
-            .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME * 10L))
-            .claim("type", JwtProperties.REFRESH_TOKEN)
-            .claim("userEmail", authResult.getPrincipal().toString())
-            .signWith(SignatureAlgorithm.HS512, SECRET)
-            .compact();
 
-    return refreshToken;
+    return Jwts.builder()
+        .setSubject("whySoSerious")
+        .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME * 10L))
+        .claim("type", JwtProperties.REFRESH_TOKEN)
+        .claim("userEmail", authResult.getPrincipal().toString())
+        .signWith(SignatureAlgorithm.HS512, SECRET)
+        .compact();
   }
 
   /*public TokenVo makeJwtAccToken(UserVo userVo) {

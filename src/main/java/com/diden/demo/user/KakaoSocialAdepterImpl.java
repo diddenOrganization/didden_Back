@@ -29,10 +29,8 @@ public class KakaoSocialAdepterImpl implements SocialAdepter {
       final JsonObject kakaoAccount = jsonObject.getAsJsonObject("kakao_account");
 
       return UserVo.builder()
-          .userId(param.get("id").getAsString())
           .userPassword(accessToken)
           .userEmail(kakaoAccount.get("email").getAsString())
-          .userName(kakaoAccount.getAsJsonObject("profile").get("nickname").getAsString())
           .userNickname(kakaoAccount.getAsJsonObject("profile").get("nickname").getAsString())
           .userPrivacyConsent("Y")
           .userSocialLoginType("kakao")

@@ -12,6 +12,6 @@ public class NaverSocialAdepterImpl implements SocialAdepter {
 
   @Override
   public UserVo process(JsonObject param) {
-    return new UserVo();
+    return null;
   }
 }

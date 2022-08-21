@@ -1,6 +1,7 @@
 package com.diden.demo.user;
 
 import com.google.gson.JsonObject;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,6 +17,8 @@ public interface UserService {
   List<UserVo> userList();
 
   UserVo userInfo(UserVo userVo);
+
+  UserVo findEmailByUser(final String userEmail);
 
   void userInsert(UserVo userVo);
 

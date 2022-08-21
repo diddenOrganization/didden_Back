@@ -1,26 +1,64 @@
 package com.diden.demo.user;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.ToString;
 
-@Data
+import javax.validation.constraints.NotBlank;
+
 @Getter
-@Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@ToString
 public class UserVo {
-  private String userId = null;
-  private String userName = null;
-  private String userPassword = null;
-  private String userNickname = null;
-  private String userBirthday = null;
-  private String userGender = null;
-  private String userEmail = null;
-  private String userPhoneNumber = null;
-  private String userCreateDate = null;
-  private String userUpdateDate = null;
-  private String userPrivacyConsent = null;
-  private String userSocialLoginType = null;
-  private String userAccessToken = null;
-  private String userRefreshToken = null;
+  @NotBlank(message = "사용자 비밀번호가 존재하지 않습니다.")
+  private final String userPassword;
+
+  @NotBlank(message = "사용자 닉네임이 존재하지 않습니다.")
+  private final String userNickname;
+
+  @NotBlank(message = "사용자 생년월일이 존재하지 않습니다.")
+  private final String userBirthday;
+
+  @NotBlank(message = "사용자 성별이 존재하지 않습니다.")
+  private final String userGender;
+
+  @NotBlank(message = "사용자 이메일이 존재하지 않습니다.")
+  private final String userEmail;
+
+  @NotBlank(message = "사용자 휴대폰 번호가 존재하지 않습니다.")
+  private final String userPhoneNumber;
+
+  private final String userCreateDate;
+  private final String userUpdateDate;
+  private final String userPrivacyConsent;
+  private final String userSocialLoginType;
+  private final String userAccessToken;
+  private final String userRefreshToken;
+
+  @Builder
+  public UserVo(
+      String userPassword,
+      String userNickname,
+      String userBirthday,
+      String userGender,
+      String userEmail,
+      String userPhoneNumber,
+      String userCreateDate,
+      String userUpdateDate,
+      String userPrivacyConsent,
+      String userSocialLoginType,
+      String userAccessToken,
+      String userRefreshToken) {
+    this.userPassword = userPassword;
+    this.userNickname = userNickname;
+    this.userBirthday = userBirthday;
+    this.userGender = userGender;
+    this.userEmail = userEmail;
+    this.userPhoneNumber = userPhoneNumber;
+    this.userCreateDate = userCreateDate;
+    this.userUpdateDate = userUpdateDate;
+    this.userPrivacyConsent = userPrivacyConsent;
+    this.userSocialLoginType = userSocialLoginType;
+    this.userAccessToken = userAccessToken;
+    this.userRefreshToken = userRefreshToken;
+  }
 }

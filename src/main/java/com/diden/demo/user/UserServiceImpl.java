@@ -49,13 +49,29 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
+  public UserVo findEmailByUser(final String userEmail) {
+    return userMapper.findEmailByUser(userEmail);
+  }
+
+  @Override
   public void userInsert(UserVo userVo) {
-    userMapper.userInsert(userVo);
+    try {
+      userMapper.userInsert(userVo);
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw new RuntimeException("회원가입 실패");
+    }
+
   }
 
   @Override
   public void userUpdate(UserVo userVo) {
-    userMapper.userUpdate(userVo);
+    try {
+      userMapper.userUpdate(userVo);
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw new RuntimeException("수정 실패");
+    }
   }
 
   @Override

@@ -53,6 +53,25 @@
           AND USER_PASSWORD = #{userPassword}
     </select>
 
+    <select id="findEmailByUser" resultType="com.diden.demo.user.UserVo">
+        SELECT USER_ID
+             , USER_NAME
+             , USER_PASSWORD
+             , USER_NICKNAME
+             , USER_BIRTHDAY
+             , USER_GENDER
+             , USER_EMAIL
+             , USER_PHONE_NUMBER
+             , USER_CREATE_DATE
+             , USER_UPDATE_DATE
+             , USER_PRIVACY_CONSENT
+             , USER_SOCIAL_LOGIN_TYPE
+             , USER_REFRESH_TOKEN
+             , USER_ACCESS_TOKEN
+        FROM TB_USER
+        WHERE USER_EMAIL = #{userEmail}
+    </select>
+
     <select id="userRefreshTokenInfo" parameterType="com.diden.demo.user.UserVo"
             resultType="com.diden.demo.user.UserVo">
         SELECT USER_ID
@@ -131,7 +150,8 @@
 
     <update id="userRefTokenUpdate" parameterType="com.diden.demo.user.UserVo">
         UPDATE tb_user
-        SET USER_REFRESH_TOKEN = #{userRefreshToken}
+        SET USER_REFRESH_TOKEN     = #{userRefreshToken},
+            USER_SOCIAL_LOGIN_TYPE = #{USER_SOCIAL_LOGIN_TYPE}
         WHERE USER_EMAIL = #{userEmail}
     </update>
 

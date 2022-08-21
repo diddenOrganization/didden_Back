@@ -19,6 +19,8 @@ public interface UserMapper {
 
   UserVo userInfo(UserVo userVo);
 
+  UserVo findEmailByUser(@Param("userEmail") String userEmail);
+
   void userInsert(UserVo userVo);
 
   void userUpdate(UserVo userVo);
