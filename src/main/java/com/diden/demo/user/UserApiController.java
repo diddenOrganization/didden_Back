@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -60,7 +61,7 @@ public class UserApiController {
 
   @PostMapping
   public HttpResponse<Void> userInsert(
-      @RequestBody @NotNull(message = "사용자 정보가 존재하지 않습니다.") final UserVo userVo) {
+      @RequestBody @Valid @NotNull(message = "사용자 정보가 존재하지 않습니다.") final UserVo userVo) {
     userService.userInsert(userVo);
     return HttpResponse.toResponse(HttpStatus.CREATED, "회원가입이 되었습니다.");
   }
