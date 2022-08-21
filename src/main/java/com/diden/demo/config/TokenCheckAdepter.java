@@ -38,7 +38,8 @@ public class TokenCheckAdepter implements TokenAdepterInterface {
     return path.startsWith("/info")
         || path.startsWith("/img")
         || path.startsWith("/user/email-check")
-        || path.startsWith("/main/content");
+        || path.startsWith("/main/content")
+        || path.startsWith("/user");
   }
 
   private JsonObject jsonObjectResult(final boolean result) {
