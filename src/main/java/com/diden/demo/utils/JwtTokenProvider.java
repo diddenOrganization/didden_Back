@@ -45,9 +45,17 @@ public final class JwtTokenProvider {
     }
   }
 
-  public static void checkRefreshToken(String accessToken) {
+  public static boolean checkRefreshToken(String accessToken) {
+    log.debug(":: JwtTokenProvider.checkRefreshToken = {} ::", accessToken);
 
-    Jwts.parser().setSigningKey(SECRET).parseClaimsJws(accessToken);
+    final String token = accessToken.replace(TOKEN_PREFIX, "");
+    try {
+      Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token);
+      return true;
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw new TokenException("리프레쉬 토큰이 잘못됐습니다.");
+    }
   }
 
   private void validationAuthorizationHeader(String header) {

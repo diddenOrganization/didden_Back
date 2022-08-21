@@ -7,7 +7,6 @@ import static com.diden.demo.utils.AccountTypeEnum.DEFAULT;
 
 @Slf4j
 public class LoginDefault implements LoginAdepter {
-  private final JwtTokenProvider jwtTokenProvider = new JwtTokenProvider();
 
   @Override
   public boolean supports(String handler) {
@@ -16,10 +15,10 @@ public class LoginDefault implements LoginAdepter {
 
   @Override
   public boolean process(String Authorization) {
-    boolean isToken = JwtTokenProvider.checkAccessToken(Authorization);
-    if (isToken) {
-      jwtTokenProvider.checkRefreshToken(Authorization);
+    if(JwtTokenProvider.checkAccessToken(Authorization)){
+      return JwtTokenProvider.checkRefreshToken(Authorization);
+    } else {
+      return false;
     }
-    return false;
   }
 }
