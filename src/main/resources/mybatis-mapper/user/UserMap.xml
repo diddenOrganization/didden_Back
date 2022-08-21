@@ -146,7 +146,7 @@
 
     <update id="userRefTokenUpdate" parameterType="com.diden.demo.user.UserVo">
         UPDATE tb_user
-        SET USER_REFRESH_TOKEN     = #{userRefreshToken},
+        SET USER_REFRESH_TOKEN     = #{userRefreshToken}
         WHERE USER_EMAIL = #{userEmail}
     </update>
 
