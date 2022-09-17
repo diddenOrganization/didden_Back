@@ -5,12 +5,16 @@ import com.diden.demo.utils.JwtProperties;
 import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 
 @Slf4j
+@Primary
 @Component
 @RequiredArgsConstructor
 public class TokenCheckAdepter implements TokenAdepterInterface {
@@ -43,6 +47,7 @@ public class TokenCheckAdepter implements TokenAdepterInterface {
         || path.startsWith("/main/content/images")
         || path.startsWith("/send")
         || path.startsWith("/mail")
+        || path.startsWith("/certification")
         || path.startsWith("/user");
   }
 
