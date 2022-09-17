@@ -104,14 +104,19 @@ public class MailApiController {
    * @param
    */
   @GetMapping(value = "/certification")
-  public boolean Certification(
-      HttpServletRequest request, @RequestParam String userEmail, @RequestParam String code)
+  public HttpResponse<Void> Certification(
+      HttpServletRequest request,
+      @RequestParam @NotBlank(message = "이메일이 존재하지 않습니다.") String userEmail,
+      @RequestParam @NotBlank(message = "인증코드가 존재하지 않습니다.") String code)
       throws MessagingException, UnsupportedEncodingException {
 
     HttpSession session = request.getSession();
 
-    boolean result = mailApiService.emailCertification(session, userEmail, Integer.parseInt(code));
+    if(mailApiService.emailCertification(session, userEmail, Integer.parseInt(code))) {
+      return HttpResponse.toResponse(HttpStatus.ACCEPTED, "인증이 완료됐습니다.");
+    } else {
+      return HttpResponse.toResponse(HttpStatus.BAD_REQUEST, "인증코드가 일치하지 않습니다.");
+    }
 
-    return result;
   }
 }
