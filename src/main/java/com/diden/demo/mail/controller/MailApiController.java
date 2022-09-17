@@ -1,12 +1,15 @@
 package com.diden.demo.mail.controller;
 
 import com.diden.demo.mail.service.MailApiService;
+import com.diden.demo.utils.HttpResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,9 +19,11 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.NotBlank;
 import java.io.UnsupportedEncodingException;
 
 @Slf4j
+@Validated
 @RestController
 @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
@@ -79,14 +84,17 @@ public class MailApiController {
    * @param
    */
   @GetMapping(value = "/mail")
-  public String Mail(HttpServletRequest request, @RequestParam String to, @RequestParam String from)
+  public HttpResponse<Void> Mail(
+      HttpServletRequest request,
+      @RequestParam @NotBlank(message = "이메일이 존재하지 않습니다.") final String to,
+      @RequestParam @NotBlank(message = "발신자 이메일이 존재하지 않습니다. 관리자에게 문의하세요.") final String from)
       throws MessagingException, UnsupportedEncodingException {
 
     HttpSession session = request.getSession();
 
     mailApiService.authEmail(session, to, from);
 
-    return "";
+    return HttpResponse.toResponse(HttpStatus.OK, "메일이 발송됐습니다.");
   }
 
   /**
