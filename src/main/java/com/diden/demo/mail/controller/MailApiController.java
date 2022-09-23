@@ -38,7 +38,7 @@ public class MailApiController {
      * @param "/sendmail"
      * @param
      */
-    @GetMapping(value = "/sendmail")
+    @PostMapping(value = "/sendmail")
     public String SendMail(@RequestBody(required = false) SendMailVo sendMailVo)
             throws MessagingException, UnsupportedEncodingException {
 
