@@ -2,8 +2,20 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.diden.demo.user.mapper.UserMapper">
-    <select id="userList" resultType="com.diden.demo.user.vo.UserVo">
+<mapper namespace="com.diden.demo.user.UserMapper">
+    <select id="emailDuplicateCheck" resultType="boolean">
+        SELECT COUNT(*)
+        FROM TB_USER
+        WHERE USER_EMAIL = #{userEmail}
+    </select>
+
+    <select id="existsUserEmail" resultType="boolean">
+        SELECT COUNT(*)
+        FROM TB_USER
+        WHERE USER_EMAIL = #{userEmail}
+    </select>
+
+    <select id="userList" resultType="com.diden.demo.user.UserVo">
         SELECT USER_ID
              , USER_NAME
              , USER_PASSWORD
@@ -21,7 +33,7 @@
         FROM TB_USER
     </select>
 
-    <select id="userInfo" parameterType="com.diden.demo.user.vo.UserVo" resultType="com.diden.demo.user.vo.UserVo">
+    <select id="userInfo" parameterType="com.diden.demo.user.UserVo" resultType="com.diden.demo.user.UserVo">
         SELECT USER_ID
              , USER_NAME
              , USER_PASSWORD
@@ -41,8 +53,27 @@
           AND USER_PASSWORD = #{userPassword}
     </select>
 
-    <select id="userRefreshTokenInfo" parameterType="com.diden.demo.user.vo.UserVo"
-            resultType="com.diden.demo.user.vo.UserVo">
+    <select id="findEmailByUser" resultType="com.diden.demo.user.UserVo">
+        SELECT USER_ID
+             , USER_NAME
+             , USER_PASSWORD
+             , USER_NICKNAME
+             , USER_BIRTHDAY
+             , USER_GENDER
+             , USER_EMAIL
+             , USER_PHONE_NUMBER
+             , USER_CREATE_DATE
+             , USER_UPDATE_DATE
+             , USER_PRIVACY_CONSENT
+             , USER_SOCIAL_LOGIN_TYPE
+             , USER_REFRESH_TOKEN
+             , USER_ACCESS_TOKEN
+        FROM TB_USER
+        WHERE USER_EMAIL = #{userEmail}
+    </select>
+
+    <select id="userRefreshTokenInfo" parameterType="com.diden.demo.user.UserVo"
+            resultType="com.diden.demo.user.UserVo">
         SELECT USER_ID
              , USER_NAME
              , USER_PASSWORD
@@ -61,7 +92,7 @@
         WHERE USER_REFRESH_TOKEN = #{userRefreshToken}
     </select>
 
-    <select id="userCount" parameterType="com.diden.demo.user.vo.UserVo" resultType="_integer">
+    <select id="userCount" parameterType="com.diden.demo.user.UserVo" resultType="_integer">
         SELECT COUNT(*)
         FROM TB_USER
         <where>
@@ -69,17 +100,15 @@
         </where>
     </select>
 
-    <select id="userCheck" parameterType="com.diden.demo.user.vo.UserVo" resultType="_integer">
+    <select id="userCheck" parameterType="com.diden.demo.user.UserVo" resultType="_integer">
         SELECT COUNT(*)
         FROM TB_USER
         WHERE USER_EMAIL = #{userEmail}
           AND USER_PASSWORD = #{userPassword}
     </select>
 
-    <insert id="userInsert" parameterType="com.diden.demo.user.vo.UserVo">
-        INSERT INTO TB_USER ( USER_ID
-                            , USER_NAME
-                            , USER_PASSWORD
+    <insert id="userInsert" parameterType="com.diden.demo.user.UserVo">
+        INSERT INTO TB_USER ( USER_PASSWORD
                             , USER_NICKNAME
                             , USER_BIRTHDAY
                             , USER_GENDER
@@ -89,9 +118,7 @@
                             , USER_SOCIAL_LOGIN_TYPE
                             , USER_REFRESH_TOKEN
                             , USER_ACCESS_TOKEN)
-        VALUES ( #{userId}
-               , #{userName}
-               , #{userPassword}
+        VALUES ( #{userPassword}
                , #{userNickname}
                , #{userBirthday}
                , #{userGender}
@@ -103,7 +130,7 @@
                , #{userAccessToken})
     </insert>
 
-    <update id="userUpdate" parameterType="com.diden.demo.user.vo.UserVo">
+    <update id="userUpdate" parameterType="com.diden.demo.user.UserVo">
         UPDATE tb_user
         SET USER_NAME            = #{userName}
           , USER_PASSWORD        = #{userPassword}
@@ -117,13 +144,13 @@
         WHERE USER_EMAIL = #{userEmail}
     </update>
 
-    <update id="userRefTokenUpdate" parameterType="com.diden.demo.user.vo.UserVo">
+    <update id="userRefTokenUpdate" parameterType="com.diden.demo.user.UserVo">
         UPDATE tb_user
-        SET USER_REFRESH_TOKEN = #{userRefreshToken}
+        SET USER_REFRESH_TOKEN     = #{userRefreshToken}
         WHERE USER_EMAIL = #{userEmail}
     </update>
 
-    <delete id="userDelete" parameterType="com.diden.demo.user.vo.UserVo">
+    <delete id="userDelete" parameterType="com.diden.demo.user.UserVo">
         DELETE
         FROM TB_USER
         WHERE USER_EMAIL = #{userId}

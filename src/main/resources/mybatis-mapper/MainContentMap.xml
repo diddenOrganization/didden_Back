@@ -2,48 +2,15 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.diden.demo.main.mapper.MainContentMapper">
+<mapper namespace="com.diden.demo.main.MainContentMapper">
     <select id="findMainContentImageAll" resultType="com.diden.demo.main.MainContentVo">
         SELECT CONTENT_ID
              , CONTENT_NAME
-             , CONTENT_IMAGE_BYTE
-             , CONTENT_SIZE
              , CONTENT_CREATE_DATE
              , CONTENT_UPDATE_DATE
              , CONTENT_EXTENSION
-         FROM TB_MAINCONTENT
+             , CONTENT_IMAGE_URI
+        FROM TB_MAINCONTENT
         ORDER BY CONTENT_CREATE_DATE DESC
     </select>
-
-    <select id="findMainContentImageOne" parameterType="com.diden.demo.main.MainContentVo" resultType="com.diden.demo.main.MainContentVo">
-
-    </select>
-
-    <select id="findMainContentImageCount" resultType="java.lang.Long">
-        SELECT COUNT(*)
-          FROM TB_MAINCONTENT
-    </select>
-
-    <insert id="saveMainContentImages" parameterType="com.diden.demo.main.MainContentVo">
-        INSERT INTO TB_MAINCONTENT (
-                    CONTENT_ID
-                  , CONTENT_NAME
-                  , CONTENT_IMAGE_BYTE
-                  , CONTENT_SIZE
-                  , CONTENT_CREATE_DATE
-                  , CONTENT_UPDATE_DATE
-                  , CONTENT_EXTENSION
-                  ) VALUES (
-                    #{contentId}
-                  , #{contentName,jdbcType=VARCHAR}
-                  , #{contentImageByte}
-                  , #{contentSize}
-                  , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
-                  , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
-                  , #{contentExtension}
-                  )
-    </insert>
-
-
-
 </mapper>

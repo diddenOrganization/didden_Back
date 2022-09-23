@@ -5,49 +5,45 @@
 
 <mapper namespace="com.diden.demo.file.mapper.FileMapper">
 
-  <select id="fileList" resultType="com.diden.demo.file.vo.FileVo">
-    SELECT FILE_ID
-         , FILE_NAME
-         , FILE_SIZE
-         , FILE_CREATE_DATE
-         , FILE_UPDATE_DATE
-         , FILE_CONTENT
-         , FILE_EXTENSION 
-      FROM TB_FILE
-  </select>
+    <select id="fileList" resultType="com.diden.demo.file.vo.FileVo">
+        SELECT FILE_ID
+             , FILE_NAME
+             , FILE_SIZE
+             , FILE_CREATE_DATE
+             , FILE_UPDATE_DATE
+             , FILE_CONTENT
+             , FILE_EXTENSION
+        FROM TB_FILE
+    </select>
 
-  <select id="fileRead" parameterType="com.diden.demo.file.vo.FileVo" resultType="com.diden.demo.file.vo.FileVo">
-    SELECT * 
-      FROM (SELECT FILE_ID
-                 , FILE_NAME
-                 , FILE_SIZE
-                 , FILE_CREATE_DATE
-                 , FILE_UPDATE_DATE
-                 , FILE_CONTENT
-                 , FILE_EXTENSION 
-               FROM TB_FILE
-               ORDER BY FILE_CREATE_DATE DESC
-            ) 
-     WHERE ROWNUM = 1  
-  </select>
+    <select id="fileRead" parameterType="com.diden.demo.file.vo.FileVo" resultType="com.diden.demo.file.vo.FileVo">
+        SELECT *
+        FROM (SELECT FILE_ID
+                   , FILE_NAME
+                   , FILE_SIZE
+                   , FILE_CREATE_DATE
+                   , FILE_UPDATE_DATE
+                   , FILE_CONTENT
+                   , FILE_EXTENSION
+              FROM TB_FILE
+              ORDER BY FILE_CREATE_DATE DESC)
+        WHERE ROWNUM = 1
+    </select>
 
-  <insert id="fileInsert" parameterType="com.diden.demo.file.vo.FileVo">
-    INSERT INTO TB_FILE (
-      FILE_ID
-    , FILE_NAME
-    , FILE_SIZE
-    , FILE_CREATE_DATE
-    , FILE_UPDATE_DATE
-    , FILE_CONTENT
-    , FILE_EXTENSION
-    ) VALUES (
-      #{fileId}
-    , #{fileName}
-    , #{fileSize}
-    , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
-    , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
-    , #{fileContent}
-    , #{fileExtension}
-    )
-  </insert>
+    <insert id="fileInsert" parameterType="com.diden.demo.file.vo.FileVo">
+        INSERT INTO TB_FILE ( FILE_ID
+                            , FILE_NAME
+                            , FILE_SIZE
+                            , FILE_CREATE_DATE
+                            , FILE_UPDATE_DATE
+                            , FILE_CONTENT
+                            , FILE_EXTENSION)
+        VALUES ( #{fileId}
+               , #{fileName}
+               , #{fileSize}
+               , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+               , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+               , #{fileContent}
+               , #{fileExtension})
+    </insert>
 </mapper>

@@ -10,24 +10,24 @@ import java.util.List;
 @Service
 @Deprecated
 public class FileServiceImpl implements FileService {
-    private final FileMapper fileMapper;
-    public FileServiceImpl(FileMapper fileMapper) {
-        this.fileMapper = fileMapper;
-    }
+  private final FileMapper fileMapper;
 
-    @Override
-    public void fileInsert(FileVo fileVo) {
-        fileMapper.fileInsert(fileVo);
-    }
+  public FileServiceImpl(FileMapper fileMapper) {
+    this.fileMapper = fileMapper;
+  }
 
-    @Override
-    public FileVo fileRead(FileVo fileVo) {
-        return fileMapper.fileRead(fileVo);
-    }
+  @Override
+  public void fileInsert(FileVo fileVo) {
+    fileMapper.fileInsert(fileVo);
+  }
 
-    @Override
-    public List<FileVo> fileList(FileVo fileVo) {
-        return fileMapper.fileList(fileVo);
-    }
+  @Override
+  public FileVo fileRead(FileVo fileVo) {
+    return fileMapper.fileRead(fileVo);
+  }
 
+  @Override
+  public List<FileVo> fileList(FileVo fileVo) {
+    return fileMapper.fileList(fileVo);
+  }
 }
