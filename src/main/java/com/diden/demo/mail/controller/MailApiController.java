@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotBlank;
 import java.io.UnsupportedEncodingException;
-import java.net.http.HttpResponse;
 
 @Slf4j
 @Validated
