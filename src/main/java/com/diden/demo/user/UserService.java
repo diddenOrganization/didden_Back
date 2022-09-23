@@ -1,8 +1,5 @@
 package com.diden.demo.user;
 
-import com.google.gson.JsonObject;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
 
 public interface UserService {
@@ -24,11 +21,13 @@ public interface UserService {
 
   void userUpdate(UserVo userVo);
 
-  void userRefTokenUpdate(UserVo userVo);
+  void userTokenUpdate(UserVo userVo);
 
   void userDelete(UserVo userVo);
 
   UserVo userRefreshTokenInfo(UserVo userVo);
 
-  boolean socialSignup(JsonObject param);
+  void socialSignup(String loginType, String accessToken);
+
+  String findByLoginType(String authorization);
 }

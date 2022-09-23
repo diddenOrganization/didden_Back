@@ -1,13 +1,13 @@
 package com.diden.demo.utils;
 
-import com.diden.demo.error.exception.BadRequestException;
 import com.diden.demo.error.exception.TokenException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
+
+import javax.validation.constraints.NotBlank;
 
 import static com.diden.demo.utils.JwtProperties.SECRET;
 import static com.diden.demo.utils.JwtProperties.TOKEN_PREFIX;
@@ -16,23 +16,16 @@ import static com.diden.demo.utils.JwtProperties.TOKEN_PREFIX;
 @Component
 public final class JwtTokenProvider {
 
-  private static final String ACCESS_KEY = "accessTokenKey";
-  private static final String REFRESH_KEY = "refreshTokenKey";
-
-  public static boolean checkAccessToken(String Authorization) {
+  public static boolean checkAccessToken(
+      @NotBlank(message = "토큰이 존재하지 않습니다.") final String authorization) {
     try {
-      log.debug(":: JwtTokenProvider.checkAccessToken = {} ::", Authorization);
+      log.debug(":: JwtTokenProvider.checkAccessToken = {} ::", authorization);
 
-      if (StringUtils.isBlank(Authorization)) {
-        throw new BadRequestException("토큰이 존재하지 않습니다.");
-      }
-
-      if (!Authorization.startsWith(TOKEN_PREFIX)) {
+      if (!authorization.startsWith(TOKEN_PREFIX)) {
         throw new TokenException("토큰 형식이 맞지 않습니다.");
       }
 
-      final String token = Authorization.replace(TOKEN_PREFIX, "");
-
+      final String token = authorization.replace(TOKEN_PREFIX, "");
       final Claims body = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody();
       return "whySoSerious".equals(body.getSubject());
 
@@ -42,7 +35,8 @@ public final class JwtTokenProvider {
     }
   }
 
-  public static boolean checkRefreshToken(String accessToken) {
+  public static boolean checkRefreshToken(
+      @NotBlank(message = "토큰이 존재하지 않습니다.") String accessToken) {
     log.debug(":: JwtTokenProvider.checkRefreshToken = {} ::", accessToken);
 
     final String token = accessToken.replace(TOKEN_PREFIX, "");
@@ -55,13 +49,16 @@ public final class JwtTokenProvider {
     }
   }
 
-  private void validationAuthorizationHeader(String header) {
-    if (header == null || !header.startsWith(TOKEN_PREFIX)) {
-      throw new IllegalArgumentException();
-    }
-  }
+  public static String releaseTokenGetClaims(
+      @NotBlank(message = "토큰이 정상적이지 않습니다.") String authorization,
+      @NotBlank(message = "토큰이 정상적이지 않습니다.") String claim) {
+    log.debug(":: JwtTokenProvider.releaseTokenEmail = {} ::", authorization);
 
-  private String extractToken(String authorizationHeader) {
-    return authorizationHeader.substring(TOKEN_PREFIX.length());
+    return Jwts.parser()
+        .setSigningKey(SECRET)
+        .parseClaimsJws(authorization.replace(TOKEN_PREFIX, ""))
+        .getBody()
+        .get(claim)
+        .toString();
   }
 }

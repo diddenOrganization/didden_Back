@@ -1,6 +1,5 @@
 package com.diden.demo.config;
 
-import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -20,9 +19,9 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
   protected void doFilterInternal(
       final HttpServletRequest request, final HttpServletResponse response, final FilterChain chain)
       throws ServletException, IOException {
-    final JsonObject resultObject = this.tokenAdepterInterface.tokenCheckMethod(request);
-
-    if (resultObject.get("result").getAsBoolean()) {
+    // 토큰 검증
+    log.info(":: JwtAuthorizationFilter.doFilterInternal.tokenCheckMethod  ==  토큰 검증 시작 ::");
+    if (this.tokenAdepterInterface.tokenCheckMethod(request)) {
       chain.doFilter(request, response);
     }
   }

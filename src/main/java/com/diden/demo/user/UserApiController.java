@@ -1,12 +1,12 @@
 package com.diden.demo.user;
 
+import com.diden.demo.error.exception.BadRequestException;
 import com.diden.demo.utils.HttpResponse;
-import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,8 +30,11 @@ public class UserApiController {
 
   @GetMapping("/email-check")
   public HttpResponse<Void> emailDuplicateCheck(
-      @NotNull(message = "이메일이 존재하지 않습니다.") @Email(message = "이메일 형식이 아닙니다.")
-          final String userEmail) {
+      @Email(message = "이메일 형식이 아닙니다.") final String userEmail) {
+    if (StringUtils.isBlank(userEmail)) {
+      throw new BadRequestException("이메일이 존재하지 않습니다.");
+    }
+
     if (userService.emailDuplicateCheck(userEmail)) {
       return HttpResponse.toResponse(HttpStatus.OK, "이미 가입된 이메일 입니다.");
     } else {
@@ -49,20 +52,32 @@ public class UserApiController {
     }
   }
 
-  @PostMapping("/social/login")
-  public ResponseEntity<String> userSocialLogin(@RequestBody final JsonObject param) {
-    final boolean result = userService.socialSignup(param);
-
-    final JsonObject obj = new JsonObject();
-    obj.addProperty("result", result);
-
-    return ResponseEntity.ok(obj.toString());
-  }
-
   @PostMapping
   public HttpResponse<Void> userInsert(
       @RequestBody @Valid @NotNull(message = "사용자 정보가 존재하지 않습니다.") final UserVo userVo) {
+    if (StringUtils.equals(
+        userVo.getUserPrivacyConsent(), UserVo.PrivacyConsent.PRIVACY_DISAGREEABLE.getChoice())) {
+      return HttpResponse.toResponse(HttpStatus.OK, "개인정보수집에 동의하지 않으면 회원가입을 할 수 없습니다.");
+    }
+
     userService.userInsert(userVo);
+    return HttpResponse.toResponse(HttpStatus.CREATED, "회원가입이 되었습니다.");
+  }
+
+  @PostMapping("/social")
+  public HttpResponse<Void> userSocialInsert(
+      @RequestBody @NotNull(message = "소셜 정보가 존재하지 않습니다.")
+          final UserSocialSignUpDTO userSocialSignUpDTO) {
+    // TODO :: 소셜 리프레쉬 토큰 저장 기능 구현해야 함.
+    if (StringUtils.isBlank(userSocialSignUpDTO.getLoginType())) {
+      throw new BadRequestException("로그인 타입이 존재하지 않습니다.");
+    }
+    if (StringUtils.isBlank(userSocialSignUpDTO.getAccessToken())) {
+      throw new BadRequestException("소셜 엑세스 토큰이 존재하지 않습니다.");
+    }
+
+    userService.socialSignup(
+        userSocialSignUpDTO.getLoginType(), userSocialSignUpDTO.getAccessToken());
     return HttpResponse.toResponse(HttpStatus.CREATED, "회원가입이 되었습니다.");
   }
 

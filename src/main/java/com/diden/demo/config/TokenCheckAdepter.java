@@ -1,59 +1,42 @@
 package com.diden.demo.config;
 
 import com.diden.demo.config.adepter.LoginAdepter;
+import com.diden.demo.user.UserService;
 import com.diden.demo.utils.JwtProperties;
-import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Primary;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.List;
 
+import static com.diden.demo.utils.JwtTokenUtil.tokenReplacePrefix;
+
 @Slf4j
-@Primary
 @Component
 @RequiredArgsConstructor
 public class TokenCheckAdepter implements TokenAdepterInterface {
+  private final UserService userService;
   private final List<LoginAdepter> loginAdepterList;
 
-  public JsonObject tokenCheckMethod(final HttpServletRequest request) {
-    final String loginType = request.getHeader(JwtProperties.LOGIN_TYPE);
-    final String Authorization = request.getHeader(JwtProperties.HEADER_STRING);
+  public boolean tokenCheckMethod(final HttpServletRequest request) throws IOException {
+    final String authorization = request.getHeader(JwtProperties.HEADER_STRING);
 
-    if (isNoTokenCheckPath(request.getRequestURI())) {
-      log.debug(":: TokenCheckAdepter.tokenCheckMethod = {} ::", request.getRequestURI());
-      return jsonObjectResult(true);
+    // 토큰이 없으면 pass
+    if(StringUtils.isBlank(authorization)) {
+      log.info(":: TokenCheckAdepter.tokenCheckMethod  ==  Authorization 존재하지 않아 TRUE 반환 ::");
+      return true;
     }
 
+    final String byLoginType = userService.findByLoginType(tokenReplacePrefix(authorization));
     for (LoginAdepter adepter : loginAdepterList) {
-      if (adepter.supports("default")) {
-        final boolean result = adepter.process(Authorization);
-        return jsonObjectResult(result);
+      if (adepter.supports(byLoginType)) {
+        return adepter.process(authorization);
       }
     }
 
-    throw new IllegalArgumentException("로그인 타입을 설정하지 않았거나 잘못 설정하였습니다. 다시 설정해주세요.");
-  }
-
-  private boolean isNoTokenCheckPath(final String path) {
-    return path.startsWith("/info")
-        || path.startsWith("/img")
-        || path.startsWith("/user/email-check")
-        || path.startsWith("/main/content")
-        || path.startsWith("/main/content/images")
-        || path.startsWith("/send")
-        || path.startsWith("/mail")
-        || path.startsWith("/certification")
-        || path.startsWith("/user");
-  }
-
-  private JsonObject jsonObjectResult(final boolean result) {
-    JsonObject obj = new JsonObject();
-    obj.addProperty("result", result);
-    return obj;
+    throw new IllegalArgumentException("로그인 타입이 존재하지 않습니다.");
   }
 }

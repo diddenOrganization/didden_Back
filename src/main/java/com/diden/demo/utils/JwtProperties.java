@@ -8,4 +8,5 @@ public final class JwtProperties {
   public static final String ACCESS_TOKEN = "accessToken";
   public static final String REFRESH_TOKEN = "refreshToken";
   public static final String LOGIN_TYPE = "login_type";
+  public static final String USER_EMAIL = "userEmail";
 }

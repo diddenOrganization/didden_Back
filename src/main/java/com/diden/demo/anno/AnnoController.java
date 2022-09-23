@@ -75,7 +75,7 @@ public class AnnoController {
             .annoContent(annoVo.getAnnoContent())
             .build();
 
-    if(annoService.save(newAnnoVo) > 0) {
+    if (annoService.save(newAnnoVo) > 0) {
       return HttpResponse.toResponse(HttpStatus.CREATED, "공지사항이 생성되었습니다.");
     } else {
       throw new DataNotProcessExceptions("공지사항이 저장되지 않았습니다.");

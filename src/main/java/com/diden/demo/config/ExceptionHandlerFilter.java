@@ -45,11 +45,14 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
   public void setExceptionResponse(HttpStatus status, HttpServletResponse response, Throwable ex) {
     response.setStatus(status.value());
     response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-    ExceptionVo exceptionVo = ExceptionVo.builder().status(status).message(ex.getMessage()).build();
+    final ExceptionVo<Object> exceptionVo =
+        ExceptionVo.builder().status(status).message(ex.getMessage()).build();
+
     try {
       log.debug(":: ExceptionHandlerFilter.setExceptionResponse = {} ::", exceptionVo);
       response.getWriter().write(gson.toJson(exceptionVo));
     } catch (IOException e) {
+      log.error("{}", e.toString());
       e.printStackTrace();
     }
   }

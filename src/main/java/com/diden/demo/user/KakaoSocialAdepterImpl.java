@@ -1,13 +1,12 @@
 package com.diden.demo.user;
 
 import com.diden.demo.error.exception.SocialProcessException;
-import com.diden.demo.utils.JwtProperties;
+import com.diden.demo.utils.AccountTypeEnum;
 import com.diden.demo.utils.JwtSocialKakaoTokenUtils;
 import com.diden.demo.utils.JwtSocialTokenCheckInterface;
+import com.diden.demo.utils.SocialJwtProperties;
 import com.google.gson.JsonObject;
 import org.springframework.stereotype.Service;
-
-import static com.diden.demo.utils.AccountTypeEnum.KAKAO;
 
 @Service
 public class KakaoSocialAdepterImpl implements SocialAdepter {
@@ -16,25 +15,24 @@ public class KakaoSocialAdepterImpl implements SocialAdepter {
 
   @Override
   public boolean supports(String handler) {
-    return (KAKAO.getAccountType().equals(handler));
+    return (AccountTypeEnum.KAKAO.getAccountType().equals(handler));
   }
 
   @Override
-  public UserVo process(final JsonObject param) {
+  public UserVo process(final String accessToken) {
     try {
-      final String accessToken = param.get(JwtProperties.ACCESS_TOKEN).getAsString();
-      final String refreshToken = param.get(JwtProperties.REFRESH_TOKEN).getAsString();
-
-      final JsonObject jsonObject = jwtSocialKakaoTokenUtils.socialAccessToken(accessToken);
-      final JsonObject kakaoAccount = jsonObject.getAsJsonObject("kakao_account");
+      // TODO :: 소셜 리프레쉬 토큰 작업
+      final JsonObject response = jwtSocialKakaoTokenUtils.socialAccessToken(accessToken);
+      final JsonObject responseKakaoAccount =
+          response.getAsJsonObject(SocialJwtProperties.RESPONSE_KAKAO_ACCOUNT);
 
       return UserVo.builder()
           .userPassword(accessToken)
-          .userEmail(kakaoAccount.get("email").getAsString())
-          .userNickname(kakaoAccount.getAsJsonObject("profile").get("nickname").getAsString())
-          .userPrivacyConsent("Y")
-          .userSocialLoginType("kakao")
-          .userRefreshToken(refreshToken)
+          .userEmail(responseKakaoAccount.get("email").getAsString())
+          .userNickname(
+              responseKakaoAccount.getAsJsonObject("profile").get("nickname").getAsString())
+          .userPrivacyConsent(UserVo.PrivacyConsent.PRIVACY_AGREED.getChoice())
+          .userLoginType(AccountTypeEnum.KAKAO.getAccountType())
           .userAccessToken(accessToken)
           .build();
     } catch (Exception e) {

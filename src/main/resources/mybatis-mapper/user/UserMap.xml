@@ -27,7 +27,7 @@
              , USER_CREATE_DATE
              , USER_UPDATE_DATE
              , USER_PRIVACY_CONSENT
-             , USER_SOCIAL_LOGIN_TYPE
+             , USER_LOGIN_TYPE
              , USER_REFRESH_TOKEN
              , USER_ACCESS_TOKEN
         FROM TB_USER
@@ -45,7 +45,7 @@
              , USER_CREATE_DATE
              , USER_UPDATE_DATE
              , USER_PRIVACY_CONSENT
-             , USER_SOCIAL_LOGIN_TYPE
+             , USER_LOGIN_TYPE
              , USER_REFRESH_TOKEN
              , USER_ACCESS_TOKEN
         FROM TB_USER
@@ -65,7 +65,7 @@
              , USER_CREATE_DATE
              , USER_UPDATE_DATE
              , USER_PRIVACY_CONSENT
-             , USER_SOCIAL_LOGIN_TYPE
+             , USER_LOGIN_TYPE
              , USER_REFRESH_TOKEN
              , USER_ACCESS_TOKEN
         FROM TB_USER
@@ -85,7 +85,7 @@
              , USER_CREATE_DATE
              , USER_UPDATE_DATE
              , USER_PRIVACY_CONSENT
-             , USER_SOCIAL_LOGIN_TYPE
+             , USER_LOGIN_TYPE
              , USER_REFRESH_TOKEN
              , USER_ACCESS_TOKEN
         FROM TB_USER
@@ -115,7 +115,7 @@
                             , USER_EMAIL
                             , USER_PHONE_NUMBER
                             , USER_PRIVACY_CONSENT
-                            , USER_SOCIAL_LOGIN_TYPE
+                            , USER_LOGIN_TYPE
                             , USER_REFRESH_TOKEN
                             , USER_ACCESS_TOKEN)
         VALUES ( #{userPassword}
@@ -125,7 +125,7 @@
                , #{userEmail}
                , #{userPhoneNumber}
                , #{userPrivacyConsent}
-               , #{userSocialLoginType}
+               , #{userLoginType}
                , #{userRefreshToken}
                , #{userAccessToken})
     </insert>
@@ -144,9 +144,10 @@
         WHERE USER_EMAIL = #{userEmail}
     </update>
 
-    <update id="userRefTokenUpdate" parameterType="com.diden.demo.user.UserVo">
+    <update id="userTokenUpdate" parameterType="com.diden.demo.user.UserVo">
         UPDATE tb_user
-        SET USER_REFRESH_TOKEN     = #{userRefreshToken}
+        SET USER_REFRESH_TOKEN = #{userRefreshToken},
+            USER_ACCESS_TOKEN  = #{userAccessToken}
         WHERE USER_EMAIL = #{userEmail}
     </update>
 
@@ -156,5 +157,11 @@
         WHERE USER_EMAIL = #{userId}
           AND USER_PASSWORD = #{userPassword}
     </delete>
+
+    <select id="findByLoginType" resultType="string">
+        SELECT user_login_type
+        FROM tb_user
+        WHERE user_access_token = #{authorization}
+    </select>
 
 </mapper>

@@ -1,7 +1,6 @@
 package com.diden.demo.user;
 
 import com.diden.demo.error.exception.BadRequestException;
-import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -9,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 @Slf4j
+@Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
@@ -18,14 +17,14 @@ public class UserServiceImpl implements UserService {
   private final List<SocialAdepter> socialAdepterList;
 
   public boolean existsUserEmail(final String userEmail) {
-    if(StringUtils.isBlank(userEmail)){
+    if (StringUtils.isBlank(userEmail)) {
       throw new BadRequestException("이메일이 존재하지 않습니다.");
     }
 
     return userMapper.existsUserEmail(userEmail);
   }
 
-  public boolean emailDuplicateCheck(final String userEmail){
+  public boolean emailDuplicateCheck(final String userEmail) {
     return userMapper.emailDuplicateCheck(userEmail);
   }
 
@@ -61,7 +60,6 @@ public class UserServiceImpl implements UserService {
       e.printStackTrace();
       throw new IllegalArgumentException("회원가입 실패");
     }
-
   }
 
   @Override
@@ -75,8 +73,8 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void userRefTokenUpdate(UserVo userVo) {
-    userMapper.userRefTokenUpdate(userVo);
+  public void userTokenUpdate(UserVo userVo) {
+    userMapper.userTokenUpdate(userVo);
   }
 
   @Override
@@ -90,23 +88,21 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public boolean socialSignup(JsonObject param) {
-    final String loginType = param.get("login_type").getAsString();
-    final JsonObject loginParam = param.getAsJsonObject("loginParam");
-    final SocialAdepter adepter;
+  public void socialSignup(final String loginType, final String accessToken) {
 
     for (SocialAdepter socialAdepter : this.socialAdepterList) {
       if (socialAdepter.supports(loginType)) {
-        adepter = socialAdepter;
-        final UserVo userVo = adepter.process(loginParam);
-
-        if (userMapper.userCheck(userVo) > 0) userMapper.userUpdate(userVo);
-        else userMapper.userInsert(userVo);
-        return true;
+        final UserVo socialUserVo = socialAdepter.process(accessToken);
+        userInsert(socialUserVo);
+        return;
       }
     }
 
-    log.info("소셜 로그인 실패\n로그인 타입에 맞는 어댑터가 존재하지 않습니다.");
-    return false;
+    throw new IllegalArgumentException("소셜 회원가입 실패");
+  }
+
+  @Override
+  public String findByLoginType(final String authorization) {
+    return userMapper.findByLoginType(authorization);
   }
 }

@@ -2,8 +2,10 @@ package com.diden.demo.utils;
 
 import com.google.gson.JsonObject;
 
+import java.io.IOException;
+
 public interface JwtSocialTokenCheckInterface {
-  default JsonObject socialAccessToken(String auth) {
+  default JsonObject socialAccessToken(String authorization) throws IOException {
     return null;
   }
 

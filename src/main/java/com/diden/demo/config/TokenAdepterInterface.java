@@ -1,9 +1,8 @@
 package com.diden.demo.config;
 
-import com.google.gson.JsonObject;
-
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 public interface TokenAdepterInterface {
-  JsonObject tokenCheckMethod(HttpServletRequest request);
+  boolean tokenCheckMethod(HttpServletRequest request) throws IOException;
 }

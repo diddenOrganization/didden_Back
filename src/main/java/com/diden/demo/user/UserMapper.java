@@ -25,9 +25,11 @@ public interface UserMapper {
 
   void userUpdate(UserVo userVo);
 
-  void userRefTokenUpdate(UserVo userVo);
+  void userTokenUpdate(UserVo userVo);
 
   void userDelete(UserVo userVo);
 
   UserVo userRefreshTokenInfo(UserVo userVo);
+
+  String findByLoginType(@Param("authorization") final String authorization);
 }

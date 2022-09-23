@@ -7,6 +7,7 @@ import com.diden.demo.utils.JwtProperties;
 import com.diden.demo.utils.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -35,8 +36,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
       if (userService.userCheck(userVo) == 0) {
         throw new TokenException("계정이 존재하지 않습니다.");
       }
-      return new UsernamePasswordAuthenticationToken(
-          userVo.getUserEmail(), userVo.getUserPassword());
+
+      return new UsernamePasswordAuthenticationToken(userVo.getUserEmail(), userVo.getUserPassword());
     } catch (IOException io) {
       io.printStackTrace();
       throw new RuntimeException("request.getInputStream() IO 에러");
@@ -52,13 +53,18 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     final String accessToken = jwtTokenUtil.createAccessToken(authResult);
     final String refreshToken = jwtTokenUtil.createRefreshToken(authResult);
 
+    if (StringUtils.isBlank(accessToken) && StringUtils.isBlank(refreshToken)) {
+      throw new TokenException("토큰이 생성되지 않았습니다.");
+    }
+
     final UserVo userVo =
         UserVo.builder()
             .userEmail(authResult.getPrincipal().toString())
             .userRefreshToken(refreshToken)
+            .userAccessToken(accessToken)
             .build();
 
-    userService.userRefTokenUpdate(userVo);
+    userService.userTokenUpdate(userVo);
     response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + accessToken);
   }
 }
