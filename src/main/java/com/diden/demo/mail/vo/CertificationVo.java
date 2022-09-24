@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 @Getter
 @Setter
-public class SertificationVo {
+public class CertificationVo {
     @SerializedName("userEmail")
     @NotBlank(message = "이메일이 존재하지 않습니다.")
     private String userEmail = "";

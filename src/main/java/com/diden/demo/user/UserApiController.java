@@ -1,6 +1,7 @@
 package com.diden.demo.user;
 
 import com.diden.demo.error.exception.BadRequestException;
+import com.diden.demo.utils.AccountTypeEnum;
 import com.diden.demo.utils.HttpResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -57,7 +58,7 @@ public class UserApiController {
       @RequestBody @Valid @NotNull(message = "사용자 정보가 존재하지 않습니다.") final UserVo userVo) {
     if (StringUtils.equals(
         userVo.getUserPrivacyConsent(), UserVo.PrivacyConsent.PRIVACY_DISAGREEABLE.getChoice())) {
-      return HttpResponse.toResponse(HttpStatus.OK, "개인정보수집에 동의하지 않으면 회원가입을 할 수 없습니다.");
+      return HttpResponse.toResponse(HttpStatus.BAD_REQUEST, "개인정보수집에 동의하지 않으면 회원가입을 할 수 없습니다.");
     }
 
     userService.userInsert(userVo);
@@ -74,6 +75,10 @@ public class UserApiController {
     }
     if (StringUtils.isBlank(userSocialSignUpDTO.getAccessToken())) {
       throw new BadRequestException("소셜 엑세스 토큰이 존재하지 않습니다.");
+    }
+    if (StringUtils.equals(
+        userSocialSignUpDTO.getLoginType(), AccountTypeEnum.DEFAULT.getAccountType())) {
+      throw new BadRequestException("일반회원 가입은 대상항목이 아닙니다.");
     }
 
     userService.socialSignup(
