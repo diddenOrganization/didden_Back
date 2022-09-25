@@ -121,10 +121,10 @@
         VALUES ( #{userPassword}
                , #{userNickname}
                , #{userBirthday}
-               , #{userGender}
+               , #{userGender.gender}
                , #{userEmail}
                , #{userPhoneNumber}
-               , #{userPrivacyConsent}
+               , #{userPrivacyConsent.choice}
                , #{userLoginType}
                , #{userRefreshToken}
                , #{userAccessToken})
@@ -136,10 +136,10 @@
           , USER_PASSWORD        = #{userPassword}
           , USER_NICKNAME        = #{userNickname}
           , USER_BIRTHDAY        = #{userBirthday}
-          , USER_GENDER          = #{userGender}
+          , USER_GENDER          = #{userGender.gender}
           , USER_EMAIL           = #{userEmail}
           , USER_PHONE_NUMBER    = #{userPhoneNumber}
-          , USER_PRIVACY_CONSENT = #{userPrivacyConsent}
+          , USER_PRIVACY_CONSENT = #{userPrivacyConsent.choice}
           , USER_UPDATE_DATE     = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
         WHERE USER_EMAIL = #{userEmail}
     </update>

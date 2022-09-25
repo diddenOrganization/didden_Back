@@ -25,7 +25,7 @@ public interface UserMapper {
 
   void userUpdate(UserVo userVo);
 
-  void userTokenUpdate(UserVo userVo);
+  int userTokenUpdate(UserVo userVo);
 
   void userDelete(UserVo userVo);
 

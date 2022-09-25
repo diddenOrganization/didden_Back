@@ -34,7 +34,7 @@ public class JwtTokenUtil implements Serializable {
         .compact();
   }
 
-  public static String tokenReplacePrefix(
+  public static String replaceTokenPrefix(
       @NotBlank(message = "토큰이 존재하지 않습니다.") final String authorization) {
     return authorization.replace(TOKEN_PREFIX, "");
   }

@@ -31,7 +31,7 @@ public class KakaoSocialAdepterImpl implements SocialAdepter {
           .userEmail(responseKakaoAccount.get("email").getAsString())
           .userNickname(
               responseKakaoAccount.getAsJsonObject("profile").get("nickname").getAsString())
-          .userPrivacyConsent(UserVo.PrivacyConsent.PRIVACY_AGREED.getChoice())
+          .userPrivacyConsent(UserVo.PrivacyConsent.AGREED)
           .userLoginType(AccountTypeEnum.KAKAO.getAccountType())
           .userAccessToken(accessToken)
           .build();

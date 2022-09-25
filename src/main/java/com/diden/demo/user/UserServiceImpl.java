@@ -73,8 +73,8 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void userTokenUpdate(UserVo userVo) {
-    userMapper.userTokenUpdate(userVo);
+  public int userTokenUpdate(UserVo userVo) {
+    return userMapper.userTokenUpdate(userVo);
   }
 
   @Override

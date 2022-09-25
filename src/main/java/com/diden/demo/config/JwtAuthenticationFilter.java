@@ -1,5 +1,6 @@
 package com.diden.demo.config;
 
+import com.diden.demo.error.exception.BadRequestException;
 import com.diden.demo.error.exception.TokenException;
 import com.diden.demo.user.UserService;
 import com.diden.demo.user.UserVo;
@@ -34,7 +35,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
               .fromJson(new InputStreamReader(request.getInputStream()), UserVo.class);
 
       if (userService.userCheck(userVo) == 0) {
-        throw new TokenException("계정이 존재하지 않습니다.");
+        throw new BadRequestException("계정이 존재하지 않습니다.");
       }
 
       return new UsernamePasswordAuthenticationToken(userVo.getUserEmail(), userVo.getUserPassword());

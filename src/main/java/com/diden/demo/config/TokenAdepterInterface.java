@@ -4,5 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 public interface TokenAdepterInterface {
-  boolean tokenCheckMethod(HttpServletRequest request) throws IOException;
+  boolean loginTokenCheckMethod(HttpServletRequest request) throws IOException;
+  boolean logoutTokenCheckMethod(HttpServletRequest request) throws IOException;
 }

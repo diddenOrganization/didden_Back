@@ -21,8 +21,8 @@ public class UserVo {
   @NotBlank(message = "사용자 생년월일이 존재하지 않습니다.")
   private final String userBirthday;
 
-  @NotBlank(message = "사용자 성별이 존재하지 않습니다.")
-  private final String userGender;
+  @NotNull(message = "사용자 성별이 존재하지 않습니다.")
+  private final Gender userGender;
 
   @NotNull(message = "사용자 이메일이 존재하지 않습니다.")
   @Email(message = "이메일 형식이 아닙니다.")
@@ -34,8 +34,8 @@ public class UserVo {
   private final String userCreateDate;
   private final String userUpdateDate;
 
-  @NotBlank(message = "사용자 개인정보동의가 존재하지 않습니다.")
-  private final String userPrivacyConsent;
+  @NotNull(message = "사용자 개인정보동의가 존재하지 않습니다.")
+  private final PrivacyConsent userPrivacyConsent;
 
   @NotBlank(message = "사용자 로그인 타입이 존재하지 않습니다.")
   private final String userLoginType;
@@ -48,12 +48,12 @@ public class UserVo {
       String userPassword,
       String userNickname,
       String userBirthday,
-      String userGender,
+      Gender userGender,
       String userEmail,
       String userPhoneNumber,
       String userCreateDate,
       String userUpdateDate,
-      String userPrivacyConsent,
+      PrivacyConsent userPrivacyConsent,
       String userLoginType,
       String userAccessToken,
       String userRefreshToken) {
@@ -72,8 +72,8 @@ public class UserVo {
   }
 
   public enum PrivacyConsent {
-    PRIVACY_AGREED("Y"),
-    PRIVACY_DISAGREEABLE("N");
+    AGREED("Y"),
+    DISAGREEABLE("N");
 
     private final String choice;
 

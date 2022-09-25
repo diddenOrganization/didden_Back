@@ -20,8 +20,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
       final HttpServletRequest request, final HttpServletResponse response, final FilterChain chain)
       throws ServletException, IOException {
     // 토큰 검증
-    log.info(":: JwtAuthorizationFilter.doFilterInternal.tokenCheckMethod  ==  토큰 검증 시작 ::");
-    if (this.tokenAdepterInterface.tokenCheckMethod(request)) {
+    log.info(":: JwtAuthorizationFilter.doFilterInternal.loginTokenCheckMethod  ==  토큰 검증 시작 ::");
+    if (this.tokenAdepterInterface.loginTokenCheckMethod(request)) {
       chain.doFilter(request, response);
     }
   }

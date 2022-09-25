@@ -15,16 +15,16 @@ import java.util.List;
 @Configuration
 @RequiredArgsConstructor
 public class SpringConfig {
-  private final List<LoginAdepter> loginAdepterList = new ArrayList<>();
+  private final List<LoginLogoutAdepter> loginLogoutAdepterList = new ArrayList<>();
   private final List<SocialAdepter> socialAdepterList = new ArrayList<>();
 
   @Bean
-  public List<LoginAdepter> loginAdepterList() {
-    this.loginAdepterList.add(new LoginApple());
-    this.loginAdepterList.add(new LoginDefault());
-    this.loginAdepterList.add(new LoginKakao());
-    this.loginAdepterList.add(new LoginNaver());
-    return loginAdepterList;
+  public List<LoginLogoutAdepter> loginAdepterList() {
+    this.loginLogoutAdepterList.add(new LoginLogoutApple());
+    this.loginLogoutAdepterList.add(new LoginLogoutDefault());
+    this.loginLogoutAdepterList.add(new LoginLogoutKakao());
+    this.loginLogoutAdepterList.add(new LoginLogoutNaver());
+    return loginLogoutAdepterList;
   }
 
   @Bean
