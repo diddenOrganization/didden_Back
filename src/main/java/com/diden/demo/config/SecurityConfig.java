@@ -13,6 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -48,7 +49,7 @@ public class SecurityConfig {
         .authenticated()
         .and()
         .addFilter(new JwtAuthenticationFilter(userService))
-        .addFilterAfter(exceptionHandlerFilter, FilterSecurityInterceptor.class)
+        .addFilterAfter(exceptionHandlerFilter, LogoutFilter.class)
         .addFilterAfter(
             new JwtAuthorizationFilter(tokenAdepterInterface), FilterSecurityInterceptor.class)
         .formLogin()
@@ -75,6 +76,7 @@ public class SecurityConfig {
       SecurityContextPersistenceFilter
       HeaderWriterFilter
       LogoutFilter
+      ExceptionHandlerFilter
       JwtAuthenticationFilter
       RequestCacheAwareFilter
       SecurityContextHolderAwareRequestFilter
@@ -82,7 +84,6 @@ public class SecurityConfig {
       SessionManagementFilter
       ExceptionTranslationFilter
       FilterSecurityInterceptor
-      ExceptionHandlerFilter
       JwtAuthorizationFilter
     ]*/
   }
