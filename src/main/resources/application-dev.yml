@@ -7,7 +7,7 @@ spring:
     url: ENC(tmt4LJIxSWxcWrHjgLb6qOSBA+opDb7aM6Pfp29TeGE2q6W02gC+B/AKjMmpRSZdrHRYX0IiiDq6Qgu3jWceGa0rOhnSoW44)
     driver-class-name: ENC(AKaNZGwQG6u2E7LYXcwK3aZZ6toeD7cLUb0CAcK+tUJFkJwaPp0Usg==)
     username: ENC(ltNBgjsUTTEvaF7NbpeSzA==)
-    password: ENC(2B0W6xZVB0HrPS8bv42upZv2IBwW5Wza)
+    password: ENC(wtWsOAlclIGOo0VeudJMXP3QKfmPlDrGTtf6yLa/ehw=)
 
 logging:
   config: classpath:log4j2-dev.xml
