@@ -11,9 +11,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
-import org.springframework.security.web.authentication.logout.LogoutFilter;
+import org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -25,6 +25,7 @@ public class SecurityConfig {
   private final TokenAdepterInterface tokenAdepterInterface;
   private final ExceptionHandlerFilter exceptionHandlerFilter;
   private final JwtLogoutHandlerFilter jwtLogoutHandlerFilter;
+  private final AuthenticationEntryPoint customAuthenticationEntryPoint;
 
   @Bean
   public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -36,22 +37,19 @@ public class SecurityConfig {
     return httpSecurity
         .csrf()
         .disable()
-        .authorizeRequests()
-        .antMatchers("/info/**", "/img/**", "/main/**")
-        .permitAll()
-        .antMatchers("/mail/**")
-        .permitAll()
-        .antMatchers("/user/email-check")
-        .permitAll()
-        .antMatchers(HttpMethod.POST, "/user", "/user/social")
-        .permitAll()
-        .anyRequest()
-        .authenticated()
-        .and()
+        .authorizeRequests(
+            request ->
+                request
+                    .antMatchers("/info/**", "/img/**", "/main/**", "/mail/**", "/user/email-check")
+                    .permitAll()
+                    .antMatchers(HttpMethod.POST, "/user", "/user/social")
+                    .permitAll()
+                    .anyRequest()
+                    .authenticated())
         .addFilter(new JwtAuthenticationFilter(userService))
-        .addFilterAfter(exceptionHandlerFilter, LogoutFilter.class)
+        .addFilterBefore(exceptionHandlerFilter, WebAsyncManagerIntegrationFilter.class)
         .addFilterAfter(
-            new JwtAuthorizationFilter(tokenAdepterInterface), FilterSecurityInterceptor.class)
+            new JwtAuthorizationFilter(tokenAdepterInterface), JwtAuthenticationFilter.class)
         .formLogin()
         .disable()
         .httpBasic()
@@ -68,24 +66,27 @@ public class SecurityConfig {
                         (request, response, authentication) -> {
                           this.responseHandlers(HttpStatus.OK, response, "로그아웃이 되었습니다.");
                         }))
+        .exceptionHandling()
+        .authenticationEntryPoint(customAuthenticationEntryPoint)
+        .and()
         .build();
 
     /*
-        Security filter chain: [
-      WebAsyncManagerIntegrationFilter
-      SecurityContextPersistenceFilter
-      HeaderWriterFilter
-      LogoutFilter
-      ExceptionHandlerFilter
-      JwtAuthenticationFilter
-      RequestCacheAwareFilter
-      SecurityContextHolderAwareRequestFilter
-      AnonymousAuthenticationFilter
-      SessionManagementFilter
-      ExceptionTranslationFilter
-      FilterSecurityInterceptor
-      JwtAuthorizationFilter
-    ]*/
+          Security filter chain: [
+    ExceptionHandlerFilter
+    WebAsyncManagerIntegrationFilter
+    SecurityContextPersistenceFilter
+    HeaderWriterFilter
+    LogoutFilter
+    JwtAuthenticationFilter
+    JwtAuthorizationFilter
+    RequestCacheAwareFilter
+    SecurityContextHolderAwareRequestFilter
+    AnonymousAuthenticationFilter
+    SessionManagementFilter
+    ExceptionTranslationFilter
+    FilterSecurityInterceptor
+      ]*/
   }
 
   private void responseHandlers(HttpStatus status, HttpServletResponse response, String message)

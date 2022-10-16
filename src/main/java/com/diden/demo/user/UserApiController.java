@@ -87,7 +87,7 @@ public class UserApiController {
     return HttpResponse.toResponse(HttpStatus.CREATED, "회원가입이 되었습니다.");
   }
 
-  @PatchMapping
+  @PutMapping
   public HttpResponse<Void> userUpdate(
       @RequestBody(required = false) @NotNull(message = "사용자 정보가 존재하지 않습니다.") final UserVo userVo) {
     userService.userUpdate(userVo);
