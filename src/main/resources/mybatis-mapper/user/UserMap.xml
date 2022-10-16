@@ -132,8 +132,7 @@
 
     <update id="userUpdate" parameterType="com.diden.demo.user.UserVo">
         UPDATE tb_user
-        SET USER_NAME            = #{userName}
-          , USER_PASSWORD        = #{userPassword}
+        SET USER_PASSWORD        = #{userPassword}
           , USER_NICKNAME        = #{userNickname}
           , USER_BIRTHDAY        = #{userBirthday}
           , USER_GENDER          = #{userGender.gender}

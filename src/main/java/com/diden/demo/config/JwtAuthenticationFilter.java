@@ -4,14 +4,18 @@ import com.diden.demo.error.exception.BadRequestException;
 import com.diden.demo.error.exception.TokenException;
 import com.diden.demo.user.UserService;
 import com.diden.demo.user.UserVo;
+import com.diden.demo.utils.HttpResponse;
 import com.diden.demo.utils.JwtProperties;
 import com.diden.demo.utils.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -50,7 +54,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
       HttpServletRequest request,
       HttpServletResponse response,
       FilterChain chain,
-      Authentication authResult) {
+      Authentication authResult) throws IOException {
     final String accessToken = jwtTokenUtil.createAccessToken(authResult);
     final String refreshToken = jwtTokenUtil.createRefreshToken(authResult);
 
@@ -67,5 +71,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     userService.userTokenUpdate(userVo);
     response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + accessToken);
+    response.addHeader(JwtProperties.REFRESH_TOKEN, JwtProperties.TOKEN_PREFIX + refreshToken);
+    response.setStatus(HttpStatus.OK.value());
+    response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+    HttpResponse<Void> httpResponse =
+            HttpResponse.<Void>builder().status(HttpStatus.OK).message("로그인 성공").build();
+    response.getWriter().write(LazyHolderObject.getGson().toJson(httpResponse));
+
   }
 }
