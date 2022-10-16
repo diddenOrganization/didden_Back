@@ -2,6 +2,7 @@ package com.diden.demo.error;
 
 import com.diden.demo.error.exception.BadRequestException;
 import com.diden.demo.error.exception.DataNotProcessExceptions;
+import com.diden.demo.error.exception.NotFoundDataException;
 import com.diden.demo.error.exception.TokenException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,8 +25,8 @@ import java.util.stream.Collectors;
 public class GeneralExceptionHandler {
 
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-  @ExceptionHandler({DataNotProcessExceptions.class})
-  public ExceptionVo dataNotProcessExceptions(final DataNotProcessExceptions e) {
+  @ExceptionHandler({DataNotProcessExceptions.class, NullPointerException.class})
+  public ExceptionVo dataNotProcessExceptions(final RuntimeException e) {
     log.error(e.toString());
     e.printStackTrace();
     return ExceptionVo.builder()
@@ -35,18 +36,12 @@ public class GeneralExceptionHandler {
   }
 
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  @ExceptionHandler({NullPointerException.class})
-  public ExceptionVo nullPointer(final NullPointerException e) {
-    log.error(e.toString());
-
-    return ExceptionVo.builder().status(HttpStatus.BAD_REQUEST).message(e.getMessage()).build();
-  }
-
-  @ResponseStatus(HttpStatus.BAD_REQUEST)
   @ExceptionHandler({
+    NotFoundDataException.class,
     BadRequestException.class,
     TokenException.class,
     IllegalArgumentException.class,
+    HttpMessageNotReadableException.class,
   })
   public ExceptionVo badRequest(final RuntimeException e) {
     log.error(e.toString());
@@ -80,17 +75,6 @@ public class GeneralExceptionHandler {
                 .map(FieldError::getDefaultMessage)
                 .stream()
                 .collect(Collectors.joining()))
-        .status(HttpStatus.BAD_REQUEST)
-        .build();
-  }
-
-  @ResponseStatus(HttpStatus.BAD_REQUEST)
-  @ExceptionHandler({HttpMessageNotReadableException.class})
-  public ExceptionVo notReadable(final HttpMessageNotReadableException e) {
-    log.error(e.toString());
-
-    return ExceptionVo.builder()
-        .message(e.getLocalizedMessage())
         .status(HttpStatus.BAD_REQUEST)
         .build();
   }
