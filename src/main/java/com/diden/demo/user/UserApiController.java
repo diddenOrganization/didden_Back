@@ -29,6 +29,12 @@ public class UserApiController {
     return HttpResponse.toResponse(HttpStatus.OK, "사용자 목록 데이터", userService.userList());
   }
 
+  @GetMapping(value = "/list/pageable")
+  public HttpResponse<List<UserVo>> pageable(@RequestParam Integer rowStartNumber) {
+    List<UserVo> pageable = userService.pageable(rowStartNumber);
+    return HttpResponse.toResponse(HttpStatus.OK, "사용자 목록 데이터 (페이징)", pageable);
+  }
+
   @GetMapping("/email-check")
   public HttpResponse<Void> emailDuplicateCheck(
       @Email(message = "이메일 형식이 아닙니다.") final String userEmail) {

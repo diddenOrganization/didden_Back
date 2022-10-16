@@ -32,4 +32,6 @@ public interface UserMapper {
   UserVo userRefreshTokenInfo(UserVo userVo);
 
   String findByLoginType(@Param("authorization") final String authorization);
+
+  List<UserVo> pageable(@Param("rowStartNumber") final Integer rowStartNumber);
 }

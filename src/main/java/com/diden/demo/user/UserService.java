@@ -30,4 +30,6 @@ public interface UserService {
   void socialSignup(String loginType, String accessToken);
 
   String findByLoginType(String authorization);
+
+  List<UserVo> pageable(Integer rowStartNumber);
 }
