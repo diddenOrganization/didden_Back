@@ -38,8 +38,10 @@ public class MailApiServiceImpl implements MailApiService {
     try {
       sendMail(to, from, authKey);
     } catch (MessagingException e) {
+      e.printStackTrace();
       log.info("[MessagingException] = {}", e.getMessage());
     } catch (UnsupportedEncodingException e) {
+      e.printStackTrace();
       log.info("[UnsupportedEncodingException] = {}", e.getMessage());
     }
   }
@@ -83,8 +85,10 @@ public class MailApiServiceImpl implements MailApiService {
               + " content :"
               + content.toString());
     } catch (MessagingException e) {
+      e.printStackTrace();
       log.info("[MessagingException] = {}", e.getMessage());
     } catch (MailSendException e) {
+      e.printStackTrace();
       log.info("[MailSendException] = {}", e.getMessage());
     }
   }
@@ -99,6 +103,7 @@ public class MailApiServiceImpl implements MailApiService {
         return false;
       }
     } catch (Exception e) {
+      e.printStackTrace();
       throw e;
     }
   }
