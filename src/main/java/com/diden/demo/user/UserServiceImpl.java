@@ -105,4 +105,10 @@ public class UserServiceImpl implements UserService {
   public String findByLoginType(final String authorization) {
     return userMapper.findByLoginType(authorization);
   }
+
+  @Override
+  public List<UserVo> pageable(Integer rowStartNumber) {
+    return userMapper.pageable(rowStartNumber);
+  }
+
 }

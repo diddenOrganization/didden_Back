@@ -3,6 +3,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.diden.demo.user.UserMapper">
+    <resultMap id="userVo" type="com.diden.demo.user.UserVo">
+        <result column="USER_GENDER" property="userGender" typeHandler="com.diden.demo.user.UserGenderConverterHandler"/>
+        <result column="USER_PRIVACY_CONSENT" property="userPrivacyConsent" typeHandler="com.diden.demo.user.UserPrivacyConsentConverterHandler"/>
+    </resultMap>
+
     <select id="emailDuplicateCheck" resultType="boolean">
         SELECT COUNT(*)
         FROM TB_USER
@@ -15,7 +20,32 @@
         WHERE USER_EMAIL = #{userEmail}
     </select>
 
-    <select id="userList" resultType="com.diden.demo.user.UserVo">
+    <select id="pageable" resultMap="userVo">
+        SELECT USER_NAME,
+               USER_PASSWORD,
+               USER_NICKNAME,
+               USER_GENDER,
+               USER_BIRTHDAY,
+               USER_EMAIL,
+               USER_PHONE_NUMBER,
+               USER_CREATE_DATE,
+               USER_UPDATE_DATE,
+               USER_PRIVACY_CONSENT,
+               USER_LOGIN_TYPE,
+               USER_REFRESH_TOKEN,
+               USER_ACCESS_TOKEN,
+               USER_ID,
+               DECODE(
+                       (SELECT 'Y' FROM TB_USER OFFSET #{rowStartNumber} ROWS FETCH NEXT 1 ROWS ONLY),
+                       'Y',
+                       'Y',
+                       'N'
+                   ) AS NEXT_DATA
+        FROM TB_USER
+        OFFSET #{rowStartNumber} ROWS FETCH NEXT 15 ROWS ONLY
+    </select>
+
+    <select id="userList" resultMap="userVo">
         SELECT USER_ID
              , USER_NAME
              , USER_PASSWORD
@@ -33,7 +63,7 @@
         FROM TB_USER
     </select>
 
-    <select id="userInfo" parameterType="com.diden.demo.user.UserVo" resultType="com.diden.demo.user.UserVo">
+    <select id="userInfo" parameterType="com.diden.demo.user.UserVo" resultMap="userVo">
         SELECT USER_ID
              , USER_NAME
              , USER_PASSWORD
@@ -53,7 +83,7 @@
           AND USER_PASSWORD = #{userPassword}
     </select>
 
-    <select id="findEmailByUser" resultType="com.diden.demo.user.UserVo">
+    <select id="findEmailByUser" resultMap="userVo">
         SELECT USER_ID
              , USER_NAME
              , USER_PASSWORD
@@ -73,7 +103,7 @@
     </select>
 
     <select id="userRefreshTokenInfo" parameterType="com.diden.demo.user.UserVo"
-            resultType="com.diden.demo.user.UserVo">
+            resultMap="userVo">
         SELECT USER_ID
              , USER_NAME
              , USER_PASSWORD
