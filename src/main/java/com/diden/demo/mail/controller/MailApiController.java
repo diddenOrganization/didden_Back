@@ -37,54 +37,12 @@ public class MailApiController {
   private final JavaMailSender javaMailSender;
 
   /**
-   * 회원가입 인증번호 메일 발송
+   * 회원가입 인증번호 인증
    *
-   * @param "/sendmail"
+   * @param "/send"
    * @param
    */
   @PostMapping(value = "/send")
-  public String SendMail(
-      @RequestBody(required = false) @Valid @NotNull(message = "메일 발송 정보가 존재하지 않습니다.")
-          SendMailVo sendMailVo)
-      throws MessagingException, UnsupportedEncodingException {
-
-    MimeMessage message = javaMailSender.createMimeMessage();
-
-    try {
-
-      MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, true, "UTF-8");
-
-      mimeMessageHelper.setFrom(sendMailVo.getFrom(), sendMailVo.getFrom());
-      mimeMessageHelper.setTo(sendMailVo.getTo());
-      mimeMessageHelper.setSubject(sendMailVo.getSubject());
-      mimeMessageHelper.setText(sendMailVo.getContent(), true);
-
-      javaMailSender.send(message);
-      log.info(
-          "Email Send to : "
-              + sendMailVo.getTo()
-              + " from :"
-              + sendMailVo.getFrom()
-              + " subject :"
-              + sendMailVo.getSubject()
-              + " content :"
-              + sendMailVo.getContent());
-    } catch (MessagingException e) {
-      log.info("[MessagingException] = {}", e.getMessage());
-    } catch (MailSendException e) {
-      log.info("[MailSendException] = {}", e.getMessage());
-    }
-
-    return "";
-  }
-
-  /**
-   * 회원가입 인증번호 인증
-   *
-   * @param "/sendmail"
-   * @param
-   */
-  @PostMapping
   public HttpResponse<Void> Mail(
       HttpServletRequest request,
       @RequestBody(required = false) @Valid @NotNull(message = "메일 발송 정보가 존재하지 않습니다.")

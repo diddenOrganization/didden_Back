@@ -20,4 +20,74 @@
             AND TITLE LIKE '%' || #{keyword} || '%'
         </if>
     </select>
+
+    <insert id="tourInfoInsert" parameterType="map">
+        INSERT INTO TB_AREA_TOUR_INFO (
+            ADDR1
+            , ADDR2
+            , AREACODE
+            , CAT1
+            , CAT2
+            , CAT3
+            , CONTENTID
+            , CONTENTTYPEID
+            , CREATEDTIME
+            , FIRSTIMAGE
+            , MAPX
+            , MAPY
+            , MLEVEL
+            , MODIFIEDTIME
+            , SIGUNGUCODE
+            , TEL
+            , TITLE
+            , ZIPCODE)
+        VALUES (
+            #{addr1}
+            , #{addr2}
+            , #{areacode}
+            , #{cat1}
+            , #{cat2}
+            , #{cat3}
+            , #{contentid}
+            , #{contenttypeid}
+            , #{createdtime}
+            , #{firstimage}
+            , #{mapx}
+            , #{mapy}
+            , #{mlevel}
+            , #{modifiedtime}
+            , #{sigungucode}
+            , #{tel}
+            , #{title}
+            , #{zipcode}
+        )
+    </insert>
+
+    <update id="tourInfoUpdate" parameterType="map">
+        UPDATE tb_user
+        SET ADDR1            = #{addr1}
+        , ADDR2              = #{addr2}
+        , AREACODE           = #{areacode}
+        , CAT1               = #{cat1}
+        , CAT2               = #{cat2}
+        , CAT3               = #{cat3}
+        , CONTENTID          = #{contentid}
+        , CONTENTTYPEID      = #{contenttypeid}
+        , CREATEDTIME        = #{createdtime}
+        , FIRSTIMAGE         = #{firstimage}
+        , MAPX               = #{mapx}
+        , MAPY               = #{mapy}
+        , MLEVEL             = #{mlevel}
+        , MODIFIEDTIME       = #{modifiedtime}
+        , SIGUNGUCODE        = #{sigungucode}
+        , TEL                = #{tel}
+        , TITLE              = #{title}
+        , ZIPCODE            = #{zipcode}
+        WHERE CONTENTID      = #{contentid}
+    </update>
+
+    <delete id="tourInfoDelete">
+        DELETE
+          FROM TB_AREA_TOUR_INFO
+    </delete>
 </mapper>

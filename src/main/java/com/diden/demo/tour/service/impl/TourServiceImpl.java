@@ -18,4 +18,19 @@ public class TourServiceImpl implements TourService {
     System.out.println("tourInfoParam=" + tourInfoParam);
     return tourMapper.tourInfoList(tourInfoParam);
   }
+
+  @Override
+  public void tourInfoInsert(Map<String, Object> tourInfoParam) {
+    tourMapper.tourInfoInsert(tourInfoParam);
+  }
+
+  @Override
+  public void tourInfoUpdate(Map<String, Object> tourInfoParam) {
+    tourMapper.tourInfoUpdate(tourInfoParam);
+  }
+
+  @Override
+  public void tourInfoDelete() {
+    tourMapper.tourInfoDelete();
+  }
 }
