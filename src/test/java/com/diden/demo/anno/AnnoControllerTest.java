@@ -1,8 +1,8 @@
 package com.diden.demo.anno;
 
 import com.diden.demo.config.LazyHolderObject;
+import com.diden.demo.user.UserVo;
 import com.diden.demo.utils.JwtProperties;
-import com.diden.demo.utils.JwtTokenUtil;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.test.annotation.Commit;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
@@ -35,21 +35,30 @@ class AnnoControllerTest {
   String accessToken;
   Gson gson = LazyHolderObject.getGson();
 
+  @Commit
   @BeforeEach
-  void setup() {
-    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-        new UsernamePasswordAuthenticationToken("test@test", "test");
-    JwtTokenUtil jwtTokenUtil = new JwtTokenUtil();
+  void setup() throws Exception {
+    UserVo userVo = UserVo.builder().userEmail("bioman3238@gmail.com").userPassword("test").build();
+
     accessToken =
-        JwtProperties.TOKEN_PREFIX
-            + jwtTokenUtil.createAccessToken(usernamePasswordAuthenticationToken);
+        mockMvc
+            .perform(
+                post("/login").contentType(MediaType.APPLICATION_JSON).content(gson.toJson(userVo)))
+            .andExpect(status().is2xxSuccessful())
+            .andDo(print())
+            .andReturn()
+            .getResponse()
+            .getHeader(JwtProperties.HEADER_STRING);
   }
 
   @Test
+  @Commit
   @DisplayName("공지사항 전체 조회 - 목록 전체 조회")
   void findAll() throws Exception {
     mockMvc
-        .perform(get("/anno").header(JwtProperties.HEADER_STRING, accessToken))
+        .perform(get("/anno")
+                //.header(JwtProperties.HEADER_STRING, authorization)
+        )
         .andExpect(status().is2xxSuccessful())
         .andExpect(jsonPath("$.status").value("OK"))
         .andExpect(jsonPath("$.message").value("공지사항 목록을 호출합니다."))

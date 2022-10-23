@@ -1,0 +1,35 @@
+{
+  "loginParam": {
+    "accessTokenExpiresAt": "2022-06-05 04:01:16",
+    "refreshToken": "McK4Qmqkd9Qt5Fz1KVlfV5cYlAXSTxl49cDKy7iKCisMqAAAAYEthKeh",
+    "refreshTokenExpiresAt": "2022-08-03 16:01:16",
+    "accessToken": "FkPNDjh0Y0V-qIuWnhD5bTmU7nB0UONOZ71sQ5vGCj1y6gAAAYFiTzvq",
+    "scopes": [
+      "account_email",
+      "profile_nickname"
+    ],
+    "isEmailValid": true,
+    "birthday": "",
+    "emailNeedsAgreement": false,
+    "nickname": "제웅",
+    "birthyearNeedsAgreement": "",
+    "ageRangeNeedsAgreement": true,
+    "ageRange": "",
+    "phoneNumberNeedsAgreement": "",
+    "birthdayNeedsAgreement": "",
+    "isKoreanNeedsAgreement": "",
+    "gender": "",
+    "id": "2108621561",
+    "email": "ohwig1@kakao.com",
+    "birthyear": "",
+    "genderNeedsAgreement": true,
+    "profileImageUrl": "",
+    "profileNeedsAgreement": "",
+    "thumbnailImageUrl": "",
+    "isKorean": "",
+    "isEmailVerified": true,
+    "birthdayType": "",
+    "phoneNumber": ""
+  },
+  "login_type": "kakao"
+}

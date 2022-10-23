@@ -9,13 +9,17 @@ import com.diden.demo.utils.JwtProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
-import static com.diden.demo.utils.JwtTokenProvider.releaseTokenGetClaims;
 import static com.diden.demo.utils.JwtTokenUtil.replaceTokenPrefix;
 
 @Slf4j
@@ -30,14 +34,26 @@ public class TokenCheckAdepter implements TokenAdepterInterface {
 
     // 토큰이 없으면 pass
     if (StringUtils.isBlank(authorization)) {
-      log.info(":: TokenCheckAdepter.loginTokenCheckMethod  ==  Authorization 존재하지 않아 TRUE 반환 ::");
+      log.debug(":: TokenCheckAdepter.loginTokenCheckMethod  ==  Authorization 존재하지 않아 TRUE 반환 ::");
       return true;
     }
 
     final String byLoginType = userService.findByLoginType(replaceTokenPrefix(authorization));
+    if (StringUtils.isBlank(byLoginType)) {
+      throw new BadRequestException("사용자가 존재하지 않습니다.");
+    }
+
     for (LoginLogoutAdepter adepter : loginLogoutAdepterList) {
       if (adepter.supports(byLoginType)) {
-        return adepter.loginProcess(authorization);
+        final boolean loginCheck = adepter.loginProcess(authorization);
+        final Authentication authentication =
+            new UsernamePasswordAuthenticationToken(
+                "인가, 인증 토큰 강제 설정",
+                null,
+                Collections.singleton(new SimpleGrantedAuthority("YesMan")));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return loginCheck;
       }
     }
 
@@ -70,7 +86,6 @@ public class TokenCheckAdepter implements TokenAdepterInterface {
         throw new DataNotProcessExceptions("로그아웃이 처리되지 않았습니다.");
       }
     }
-
     throw new IllegalArgumentException("로그인 타입이 존재하지 않습니다.");
   }
 }

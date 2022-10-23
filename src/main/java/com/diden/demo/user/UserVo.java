@@ -2,7 +2,9 @@ package com.diden.demo.user;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -11,37 +13,39 @@ import java.util.Objects;
 
 @Getter
 @ToString
+@NoArgsConstructor
 public class UserVo {
   @NotBlank(message = "사용자 비밀번호가 존재하지 않습니다.")
-  private final String userPassword;
+  private String userPassword;
 
   @NotBlank(message = "사용자 닉네임이 존재하지 않습니다.")
-  private final String userNickname;
+  private String userNickname;
 
   @NotBlank(message = "사용자 생년월일이 존재하지 않습니다.")
-  private final String userBirthday;
+  private String userBirthday;
 
   @NotNull(message = "사용자 성별이 존재하지 않습니다.")
-  private final Gender userGender;
+  private Gender userGender;
 
   @NotNull(message = "사용자 이메일이 존재하지 않습니다.")
   @Email(message = "이메일 형식이 아닙니다.")
-  private final String userEmail;
+  private String userEmail;
 
   @NotBlank(message = "사용자 휴대폰 번호가 존재하지 않습니다.")
-  private final String userPhoneNumber;
+  private String userPhoneNumber;
 
-  private final String userCreateDate;
-  private final String userUpdateDate;
+  private String userCreateDate;
+  private String userUpdateDate;
 
   @NotNull(message = "사용자 개인정보동의가 존재하지 않습니다.")
-  private final PrivacyConsent userPrivacyConsent;
+  private PrivacyConsent userPrivacyConsent;
 
   @NotBlank(message = "사용자 로그인 타입이 존재하지 않습니다.")
-  private final String userLoginType;
+  private String userLoginType;
 
-  private final String userAccessToken;
-  private final String userRefreshToken;
+  private String userAccessToken;
+  private String userRefreshToken;
+  private String nextData;
 
   @Builder
   public UserVo(
@@ -56,7 +60,8 @@ public class UserVo {
       PrivacyConsent userPrivacyConsent,
       String userLoginType,
       String userAccessToken,
-      String userRefreshToken) {
+      String userRefreshToken,
+      String nextData) {
     this.userPassword = userPassword;
     this.userNickname = userNickname;
     this.userBirthday = userBirthday;
@@ -69,6 +74,7 @@ public class UserVo {
     this.userLoginType = userLoginType;
     this.userAccessToken = userAccessToken;
     this.userRefreshToken = userRefreshToken;
+    this.nextData = nextData;
   }
 
   public enum PrivacyConsent {
@@ -84,6 +90,15 @@ public class UserVo {
     public String getChoice() {
       return choice;
     }
+
+    public static UserVo.PrivacyConsent getPrivacyConsentEnumType(final String privacyConsent) {
+      for (PrivacyConsent value : PrivacyConsent.values()) {
+        if (StringUtils.equals(value.getChoice(), privacyConsent)) {
+          return value;
+        }
+      }
+      throw new IllegalArgumentException("개인정보동의 형식이 맞지 않습니다.");
+    }
   }
 
   public enum Gender {
@@ -98,6 +113,15 @@ public class UserVo {
 
     public String getGender() {
       return gender;
+    }
+
+    public static UserVo.Gender getGenderEnumType(final String gender) {
+      for (Gender value : Gender.values()) {
+        if (StringUtils.equals(value.getGender(), gender)) {
+          return value;
+        }
+      }
+      throw new IllegalArgumentException("성별이 형식에 맞지 않습니다.");
     }
   }
 

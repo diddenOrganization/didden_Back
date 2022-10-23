@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -24,18 +25,22 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
 
   @Override
   protected void doFilterInternal(
-      HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-      throws ServletException, IOException {
+      HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) {
 
     try {
       filterChain.doFilter(request, response);
-    } catch (BadRequestException | TokenException | IllegalArgumentException e) {
+    } catch (BadRequestException | TokenException | IllegalArgumentException | AccessDeniedException e) {
       log.debug(":: ExceptionHandlerFilter.doFilterInternal.BAD_REQUEST ::");
 
       log.error(e.toString());
       setExceptionResponse(HttpStatus.BAD_REQUEST, response, e);
     } catch (RuntimeException e) {
       log.debug(":: ExceptionHandlerFilter.doFilterInternal.INTERNAL_SERVER_ERROR ::");
+
+      e.printStackTrace();
+      setExceptionResponse(HttpStatus.INTERNAL_SERVER_ERROR, response, e);
+    } catch (Exception e){
+      log.debug(":: ExceptionHandlerFilter.doFilterInternal.INTERNAL_SERVER_ERROR.Exception ::");
 
       e.printStackTrace();
       setExceptionResponse(HttpStatus.INTERNAL_SERVER_ERROR, response, e);

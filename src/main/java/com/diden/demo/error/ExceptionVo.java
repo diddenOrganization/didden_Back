@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 @ToString
 public class ExceptionVo<T> {
   private final HttpStatus status;
-  private final String message;
+  private String message;
   private final T data;
 
   @Builder
@@ -17,6 +17,10 @@ public class ExceptionVo<T> {
     this.status = status;
     this.message = message;
     this.data = data;
+  }
+
+  public void setMessage(String message) {
+    this.message = message;
   }
 
   public static <T> ExceptionVo<T> toResponse(HttpStatus status, String message) {
