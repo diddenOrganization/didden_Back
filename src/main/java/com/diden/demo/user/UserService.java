@@ -27,9 +27,7 @@ public interface UserService {
 
   UserVo userRefreshTokenInfo(UserVo userVo);
 
-  void socialSignup(String loginType, String accessToken);
-
   String findByLoginType(String authorization);
 
-  List<UserVo> pageable(Integer rowStartNumber);
+  List<UserVo> pageable(Integer rowStartNumber, Integer rowLimitNumber);
 }

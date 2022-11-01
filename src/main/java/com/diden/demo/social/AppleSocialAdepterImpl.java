@@ -1,9 +1,12 @@
-package com.diden.demo.user;
+package com.diden.demo.social;
 
 import com.diden.demo.error.exception.SocialProcessException;
+import com.diden.demo.user.UserVo;
+import org.springframework.stereotype.Service;
 
 import static com.diden.demo.utils.AccountTypeEnum.APPLE;
 
+@Service
 public class AppleSocialAdepterImpl implements SocialAdepter {
   @Override
   public boolean supports(String handler) {

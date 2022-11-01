@@ -5,6 +5,7 @@ import com.diden.demo.error.exception.BadRequestException;
 import com.diden.demo.error.exception.DataNotProcessExceptions;
 import com.diden.demo.user.UserService;
 import com.diden.demo.user.UserVo;
+import com.diden.demo.utils.AccountTypeEnum;
 import com.diden.demo.utils.JwtProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import static com.diden.demo.utils.JwtTokenUtil.replaceTokenPrefix;
 
@@ -28,6 +30,7 @@ import static com.diden.demo.utils.JwtTokenUtil.replaceTokenPrefix;
 public class TokenCheckAdepter implements TokenAdepterInterface {
   private final UserService userService;
   private final List<LoginLogoutAdepter> loginLogoutAdepterList;
+  private final Map<AccountTypeEnum, LoginLogoutAdepter> loginLogoutAdepterMap;
 
   public boolean loginTokenCheckMethod(final HttpServletRequest request) throws IOException {
     final String authorization = request.getHeader(JwtProperties.HEADER_STRING);
@@ -43,21 +46,20 @@ public class TokenCheckAdepter implements TokenAdepterInterface {
       throw new BadRequestException("사용자가 존재하지 않습니다.");
     }
 
-    for (LoginLogoutAdepter adepter : loginLogoutAdepterList) {
-      if (adepter.supports(byLoginType)) {
-        final boolean loginCheck = adepter.loginProcess(authorization);
-        final Authentication authentication =
-            new UsernamePasswordAuthenticationToken(
-                "인가, 인증 토큰 강제 설정",
-                null,
-                Collections.singleton(new SimpleGrantedAuthority("YesMan")));
+    final LoginLogoutAdepter loginAdepterHandler =
+        loginLogoutAdepterMap.get(AccountTypeEnum.getAccountEnumType(byLoginType));
+    final boolean process = loginAdepterHandler.loginProcess(authorization);
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        return loginCheck;
-      }
+    if (process) {
+      final Authentication authentication =
+          new UsernamePasswordAuthenticationToken(
+              "인가, 인증 토큰 강제 설정", null, Collections.singleton(new SimpleGrantedAuthority("YesMan")));
+
+      SecurityContextHolder.getContext().setAuthentication(authentication);
+      return true;
+    } else {
+      throw new BadRequestException("로그인을 하지 않았거나 토큰이 정상적이지 않습니다.");
     }
-
-    throw new IllegalArgumentException("로그인 타입이 존재하지 않습니다.");
   }
 
   @Override

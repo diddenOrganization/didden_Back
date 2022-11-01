@@ -1,8 +1,10 @@
 package com.diden.demo.anno;
 
+import com.diden.demo.config.LazyHolderObject;
 import com.diden.demo.error.exception.BadRequestException;
 import com.diden.demo.error.exception.DataNotProcessExceptions;
 import com.diden.demo.utils.HttpResponse;
+import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 
 @Slf4j
@@ -23,15 +27,27 @@ import java.util.List;
 @RequestMapping(value = "/anno", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AnnoController {
   private final AnnoService annoService;
+  private final Gson gson = LazyHolderObject.getGson();
 
   /**
    * 공지사항 전체목록
    *
-   * @return List<AnnoVo>
+   * @param findId
+   * @param limit
+   * @return
    */
   @GetMapping
-  public HttpResponse<List<AnnoVo>> findAll() {
-    return HttpResponse.toResponse(HttpStatus.OK, "공지사항 목록을 호출합니다.", annoService.findAll());
+  public HttpResponse<Deque<AnnoVo>> findAll(
+      final Integer findId, @NotNull(message = "출력할 데이터 갯수가 존재하지 않습니다.") final Integer limit) {
+    final Deque<AnnoVo> annoVoList = annoService.findAll(findId, limit);
+
+    Integer nextSeq = null;
+    if (annoVoList.size() > limit) {
+      nextSeq = Integer.valueOf(annoVoList.pollLast().getAnnoId());
+    }
+
+    return HttpResponse.toPageResponse(
+        HttpStatus.OK, "공지사항 목록을 호출합니다.", annoVoList, nextSeq);
   }
 
   /**

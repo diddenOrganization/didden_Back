@@ -1,4 +1,4 @@
-package com.diden.demo.user;
+package com.diden.demo.social;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @ToString
-public class UserSocialSignUpDTO {
+public class UserSocialSignUpDto {
   @NotBlank(message = "로그인 타입이 존재하지 않습니다.")
   private final String loginType;
 
@@ -19,7 +19,7 @@ public class UserSocialSignUpDTO {
   private final String refreshToken;
 
   @Builder
-  public UserSocialSignUpDTO(String loginType, String accessToken, String refreshToken) {
+  public UserSocialSignUpDto(String loginType, String accessToken, String refreshToken) {
     this.loginType = loginType;
     this.accessToken = accessToken;
     this.refreshToken = refreshToken;

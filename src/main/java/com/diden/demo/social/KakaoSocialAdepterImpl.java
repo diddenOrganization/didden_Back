@@ -1,6 +1,7 @@
-package com.diden.demo.user;
+package com.diden.demo.social;
 
 import com.diden.demo.error.exception.SocialProcessException;
+import com.diden.demo.user.UserVo;
 import com.diden.demo.utils.AccountTypeEnum;
 import com.diden.demo.utils.JwtSocialKakaoTokenUtils;
 import com.diden.demo.utils.JwtSocialTokenCheckInterface;
