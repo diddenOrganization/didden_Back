@@ -44,6 +44,8 @@ public class SecurityConfig {
                     .permitAll()
                     .antMatchers(HttpMethod.POST, "/user", "/user/social")
                     .permitAll()
+                    .antMatchers("/social/**")
+                    .permitAll()
                     .anyRequest()
                     .authenticated())
         .addFilter(new JwtAuthenticationFilter(userService))

@@ -1,5 +1,7 @@
 package com.diden.demo.utils;
 
+import com.diden.demo.error.exception.BadRequestException;
+
 public enum AccountTypeEnum {
   DEFAULT("default"),
   KAKAO("kakao"),
@@ -14,5 +16,14 @@ public enum AccountTypeEnum {
 
   public String getAccountType() {
     return signType;
+  }
+
+  public static AccountTypeEnum getAccountEnumType(final String accountType) {
+    for(AccountTypeEnum type : AccountTypeEnum.values()) {
+      if(type.getAccountType().equals(accountType)) {
+        return type;
+      }
+    }
+    throw new BadRequestException("서버에 정의된 로그인 타입이 존재하지 않습니다.");
   }
 }

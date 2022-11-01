@@ -4,8 +4,10 @@
 
 <mapper namespace="com.diden.demo.user.UserMapper">
     <resultMap id="userVo" type="com.diden.demo.user.UserVo">
-        <result column="USER_GENDER" property="userGender" typeHandler="com.diden.demo.user.UserGenderConverterHandler"/>
-        <result column="USER_PRIVACY_CONSENT" property="userPrivacyConsent" typeHandler="com.diden.demo.user.UserPrivacyConsentConverterHandler"/>
+        <result column="USER_GENDER" property="userGender"
+                typeHandler="com.diden.demo.user.UserGenderConverterHandler"/>
+        <result column="USER_PRIVACY_CONSENT" property="userPrivacyConsent"
+                typeHandler="com.diden.demo.user.UserPrivacyConsentConverterHandler"/>
     </resultMap>
 
     <select id="emailDuplicateCheck" resultType="boolean">
@@ -34,15 +36,8 @@
                USER_LOGIN_TYPE,
                USER_REFRESH_TOKEN,
                USER_ACCESS_TOKEN,
-               USER_ID,
-               DECODE(
-                       (SELECT 'Y' FROM TB_USER OFFSET #{rowStartNumber} ROWS FETCH NEXT 1 ROWS ONLY),
-                       'Y',
-                       'Y',
-                       'N'
-                   ) AS NEXT_DATA
-        FROM TB_USER
-        OFFSET #{rowStartNumber} ROWS FETCH NEXT 15 ROWS ONLY
+               USER_ID
+        FROM TB_USER OFFSET #{rowStartNumber} ROWS FETCH NEXT #{rowLimitNumber} + 1 ROWS ONLY
     </select>
 
     <select id="userList" resultMap="userVo">
@@ -187,7 +182,7 @@
           AND USER_PASSWORD = #{userPassword}
     </delete>
 
-    <select id="findByLoginType" resultType="string">
+    <select id="findByLoginType" resultType="String">
         SELECT user_login_type
         FROM tb_user
         WHERE user_access_token = #{authorization}

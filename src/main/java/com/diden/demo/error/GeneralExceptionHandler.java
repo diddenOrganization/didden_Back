@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -42,6 +43,7 @@ public class GeneralExceptionHandler {
     TokenException.class,
     IllegalArgumentException.class,
     HttpMessageNotReadableException.class,
+    MissingServletRequestParameterException.class,
   })
   public ExceptionVo badRequest(final RuntimeException e) {
     log.error(e.toString());
@@ -58,7 +60,8 @@ public class GeneralExceptionHandler {
         .message(
             e.getConstraintViolations().stream()
                 .map(ConstraintViolation::getMessage)
-                .collect(Collectors.joining()))
+                .findFirst()
+                .get())
         .status(HttpStatus.BAD_REQUEST)
         .build();
   }

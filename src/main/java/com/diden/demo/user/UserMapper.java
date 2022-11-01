@@ -33,5 +33,7 @@ public interface UserMapper {
 
   String findByLoginType(@Param("authorization") final String authorization);
 
-  List<UserVo> pageable(@Param("rowStartNumber") final Integer rowStartNumber);
+  List<UserVo> pageable(
+      @Param("rowStartNumber") final Integer rowStartNumber,
+      @Param("rowLimitNumber") final Integer rowLimitNumber);
 }

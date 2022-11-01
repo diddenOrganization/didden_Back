@@ -3,6 +3,8 @@ package com.diden.demo.anno;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 
 @Service
@@ -10,8 +12,9 @@ import java.util.List;
 public class AnnoServiceImpl implements AnnoService {
   private final AnnoMapper annoMapper;
 
-  public List<AnnoVo> findAll() {
-    return annoMapper.findAll();
+  @Override
+  public Deque<AnnoVo> findAll(Integer findId, Integer limit) {
+    return annoMapper.findAll(findId, limit);
   }
 
   public AnnoVo findOne(final AnnoVo annoVo) {

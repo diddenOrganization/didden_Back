@@ -3,6 +3,7 @@ package com.diden.demo.tour.controller;
 import com.diden.demo.tour.service.TourService;
 import com.diden.demo.tour.vo.korservicevo.*;
 import com.diden.demo.utils.ParsingFromURL;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RestController
-@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
+@RestController
+@RequiredArgsConstructor
+@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 public class TourApiController {
 
   private static final String SERVICE_DEV_KEY =
@@ -24,7 +26,7 @@ public class TourApiController {
   private static final String KOR_SERVICE_URL =
       "http://api.visitkorea.or.kr/openapi/service/rest/KorService/";
 
-  @Autowired TourService tourService;
+  private final TourService tourService;
   /**
    * 상세정보조회
    *

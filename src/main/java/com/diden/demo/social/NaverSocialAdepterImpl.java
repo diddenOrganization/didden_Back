@@ -1,12 +1,15 @@
-package com.diden.demo.user;
+package com.diden.demo.social;
 
 import com.diden.demo.error.exception.SocialProcessException;
+import com.diden.demo.user.UserVo;
 import com.diden.demo.utils.AccountTypeEnum;
 import com.diden.demo.utils.JwtSocialNaverTokenUtils;
 import com.diden.demo.utils.JwtSocialTokenCheckInterface;
 import com.diden.demo.utils.SocialJwtProperties;
 import com.google.gson.JsonObject;
+import org.springframework.stereotype.Service;
 
+@Service
 public class NaverSocialAdepterImpl implements SocialAdepter {
 
   private final JwtSocialTokenCheckInterface jwtSocialNaverTokenUtils =
