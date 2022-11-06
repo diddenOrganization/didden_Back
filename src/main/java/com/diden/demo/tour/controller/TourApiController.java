@@ -1,13 +1,16 @@
 package com.diden.demo.tour.controller;
 
+import com.diden.demo.tour.MobileOSType;
+import com.diden.demo.tour.ServiceHighCode;
 import com.diden.demo.tour.service.TourService;
 import com.diden.demo.tour.vo.korservicevo.*;
 import com.diden.demo.utils.ParsingFromURL;
+import com.diden.demo.utils.TourUriUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URLEncoder;
@@ -15,18 +18,44 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.diden.demo.tour.TourProperties.*;
+
 @Slf4j
+@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 public class TourApiController {
-
-  private static final String SERVICE_DEV_KEY =
-      "96EIT1koaTBt2OfbhSFR9PyKGOKS%2FAMqgeugwN1XT2QwjnE97ZiG1uszeNCPJquN2y2XIYC8GX8BlAcpvUcusw%3D%3D";
-  private static final String KOR_SERVICE_URL =
-      "http://api.visitkorea.or.kr/openapi/service/rest/KorService/";
-
   private final TourService tourService;
+  private final ParsingFromURL parsingFromURL;
+
+
+  @GetMapping(value = "/tour/test")
+  public String searchTourInfo(@RequestParam ServiceHighCode serviceHighCode) {
+
+    // http://apis.data.go.kr/B551011/KorService/
+    // areaBasedList?
+    // numOfRows=12
+    // pageNo=1
+    // MobileOS=ETC
+    // MobileApp=AppTest
+    // ServiceKey=인증키
+    // listYN=Y
+    // arrange=A
+    // contentTypeId=
+    // areaCode=
+    // sigunguCode=
+    // cat1=A01
+    // cat2=
+    // cat3=
+
+    String uri =
+        "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?serviceKey=96EIT1koaTBt2OfbhSFR9PyKGOKS%2FAMqgeugwN1XT2QwjnE97ZiG1uszeNCPJquN2y2XIYC8GX8BlAcpvUcusw%3D%3D&numOfRows=999&pageNo=1&MobileOS=ETC&MobileApp=AppTest&listYN=Y&arrange=&contentTypeId=&areaCode=1&sigunguCode=&cat1="
+            + serviceHighCode.getCode()
+            + "&cat2=&cat3=&modifiedtime=&_type=json";
+    return parsingFromURL.getParsingURL(uri);
+  }
+
   /**
    * 상세정보조회
    *
@@ -37,13 +66,11 @@ public class TourApiController {
   public String tourDetailCommon(@RequestParam String contentId) {
     String tourDetailCommonUrl =
         KOR_SERVICE_URL
-            + "detailCommon"
-            + "?serviceKey="
+            + DETAIL_COMMON
             + SERVICE_DEV_KEY
             + "&contentId="
             + contentId
             + "&defaultYN=Y&addrinfoYN=Y&overviewYN=Y&MobileOS=ETC&MobileApp=AppTesting";
-    ParsingFromURL parsingFromURL = new ParsingFromURL();
     System.out.println("URL => " + tourDetailCommonUrl);
     return parsingFromURL.getParsingURL(tourDetailCommonUrl);
   }
@@ -76,26 +103,19 @@ public class TourApiController {
    * @param tourAreaCodeVo
    */
   @GetMapping(value = "/tour/api/info/areacode")
-  public String tourAreaCode(@RequestBody(required = false) TourAreaCodeVo tourAreaCodeVo) {
-    String tourAreaCodeUrl =
-        KOR_SERVICE_URL
-            + "areaCode"
-            + "?serviceKey="
-            + SERVICE_DEV_KEY
-            + "&numOfRows="
-            + tourAreaCodeVo.getNumOfRows()
-            + "&pageNo="
-            + tourAreaCodeVo.getPageNo()
-            + "&MobileOS="
-            + tourAreaCodeVo.getMobileOS()
-            + "&MobileApp="
-            + tourAreaCodeVo.getMobileApp()
-            + "&areaCode="
-            + tourAreaCodeVo.getAreaCode()
-            + "&_type=json";
-    ParsingFromURL parsingFromURL = new ParsingFromURL();
-    log.info(tourAreaCodeUrl);
-    return parsingFromURL.getParsingURL(tourAreaCodeUrl);
+  public String tourAreaCode(
+      @RequestParam final MobileOSType mobileOS, final String mobileApp, final Integer numOfRows) {
+
+    StringBuilder areaResponse =
+        new StringBuilder()
+            .append(KOR_SERVICE_URL)
+            .append(AREA_CODE)
+            .append(SERVICE_DEV_KEY)
+            .append(TourUriUtils.tourInitUri(mobileOS, mobileApp, numOfRows))
+            .append("&_type=json");
+
+    log.info(areaResponse.toString());
+    return parsingFromURL.getParsingURL(areaResponse.toString());
   }
 
   /**
@@ -109,8 +129,7 @@ public class TourApiController {
       @RequestBody(required = false) TourCategoryCodeVo tourCategoryCodeVo) {
     String tourCategoryCodeUrl =
         KOR_SERVICE_URL
-            + "categoryCode"
-            + "?serviceKey="
+            + CATEGORY_CODE
             + SERVICE_DEV_KEY
             + "&numOfRows="
             + tourCategoryCodeVo.getNumOfRows()
@@ -129,7 +148,6 @@ public class TourApiController {
             + "&cat3="
             + tourCategoryCodeVo.getCat3()
             + "&_type=json";
-    ParsingFromURL parsingFromURL = new ParsingFromURL();
     log.info(tourCategoryCodeUrl);
     return parsingFromURL.getParsingURL(tourCategoryCodeUrl);
   }
@@ -145,8 +163,7 @@ public class TourApiController {
       @RequestBody(required = false) TourAreaBasedListVo tourAreaBasedListVo) {
     String tourAreaBasedListUrl =
         KOR_SERVICE_URL
-            + "areaBasedList"
-            + "?serviceKey="
+            + AREA_BASED_LIST
             + SERVICE_DEV_KEY
             + "&numOfRows="
             + tourAreaBasedListVo.getNumOfRows()
@@ -175,7 +192,6 @@ public class TourApiController {
             + "&modifiedtime="
             + tourAreaBasedListVo.getModifiedtime()
             + "&_type=json";
-    ParsingFromURL parsingFromURL = new ParsingFromURL();
     log.info(tourAreaBasedListUrl);
     return parsingFromURL.getParsingURL(tourAreaBasedListUrl);
   }
@@ -191,8 +207,7 @@ public class TourApiController {
       @RequestBody(required = false) TourLocationBasedListVo tourLocationBasedListVo) {
     String tourLocationBasedListUrl =
         KOR_SERVICE_URL
-            + "locationBasedList"
-            + "?serviceKey="
+            + LOCATION_BASED_LIST
             + SERVICE_DEV_KEY
             + "&numOfRows="
             + tourLocationBasedListVo.getNumOfRows()
@@ -217,7 +232,6 @@ public class TourApiController {
             + "&modifiedtime="
             + tourLocationBasedListVo.getModifiedtime()
             + "&_type=json";
-    ParsingFromURL parsingFromURL = new ParsingFromURL();
     log.info(tourLocationBasedListUrl);
     return parsingFromURL.getParsingURL(tourLocationBasedListUrl);
   }
@@ -234,8 +248,7 @@ public class TourApiController {
       @RequestBody(required = false) TourSearchKeywordVo tourSearchKeywordVo) {
     String tourSearchKeywordUrl =
         KOR_SERVICE_URL
-            + "searchKeyword"
-            + "?serviceKey="
+            + SEARCH_KEYWORD
             + SERVICE_DEV_KEY
             + "&numOfRows="
             + tourSearchKeywordVo.getNumOfRows()
@@ -264,7 +277,6 @@ public class TourApiController {
             + "&keyword="
             + URLEncoder.encode(tourSearchKeywordVo.getKeyword(), "UTF-8")
             + "&_type=json";
-    ParsingFromURL parsingFromURL = new ParsingFromURL();
     log.info(tourSearchKeywordUrl);
     return parsingFromURL.getParsingURL(tourSearchKeywordUrl);
   }
@@ -280,8 +292,7 @@ public class TourApiController {
       @RequestBody(required = false) TourSearchFestivalVo tourSearchFestivalVo) {
     String tourSearchFestivalUrl =
         KOR_SERVICE_URL
-            + "searchFestival"
-            + "?serviceKey="
+            + SEARCH_FESTIVAL
             + SERVICE_DEV_KEY
             + "&numOfRows="
             + tourSearchFestivalVo.getNumOfRows()
@@ -306,7 +317,6 @@ public class TourApiController {
             + "&modifiedtime="
             + tourSearchFestivalVo.getModifiedtime()
             + "&_type=json";
-    ParsingFromURL parsingFromURL = new ParsingFromURL();
     log.info(tourSearchFestivalUrl);
     return parsingFromURL.getParsingURL(tourSearchFestivalUrl);
   }
@@ -321,8 +331,7 @@ public class TourApiController {
   public String tourSearchStay(@RequestBody(required = false) TourSearchStayVo tourSearchStayVo) {
     String tourSearchStayUrl =
         KOR_SERVICE_URL
-            + "searchStay"
-            + "?serviceKey="
+            + SEARCH_STAY
             + SERVICE_DEV_KEY
             + "&numOfRows="
             + tourSearchStayVo.getNumOfRows()
@@ -349,7 +358,6 @@ public class TourApiController {
             + "&modifiedtime="
             + tourSearchStayVo.getModifiedtime()
             + "&_type=json";
-    ParsingFromURL parsingFromURL = new ParsingFromURL();
     log.info(tourSearchStayUrl);
     return parsingFromURL.getParsingURL(tourSearchStayUrl);
   }
@@ -365,8 +373,7 @@ public class TourApiController {
       @RequestBody(required = false) TourDetailCommonVo tourDetailCommonVo) {
     String tourDetailCommonUrl =
         KOR_SERVICE_URL
-            + "detailCommon"
-            + "?serviceKey="
+            + DETAIL_COMMON
             + SERVICE_DEV_KEY
             + "&numOfRows="
             + tourDetailCommonVo.getNumOfRows()
@@ -395,7 +402,6 @@ public class TourApiController {
             + "&overviewYN="
             + tourDetailCommonVo.getOverviewYN()
             + "&_type=json";
-    ParsingFromURL parsingFromURL = new ParsingFromURL();
     log.info(tourDetailCommonUrl);
     return parsingFromURL.getParsingURL(tourDetailCommonUrl);
   }
@@ -411,8 +417,7 @@ public class TourApiController {
       @RequestBody(required = false) TourDetailIntroVo tourDetailIntroVo) {
     String tourDetailIntroUrl =
         KOR_SERVICE_URL
-            + "detailIntro"
-            + "?serviceKey="
+            + DETAIL_INTRO
             + SERVICE_DEV_KEY
             + "&numOfRows="
             + tourDetailIntroVo.getNumOfRows()
@@ -427,7 +432,6 @@ public class TourApiController {
             + "&contentTypeId="
             + tourDetailIntroVo.getContentTypeId()
             + "&_type=json";
-    ParsingFromURL parsingFromURL = new ParsingFromURL();
     log.info(tourDetailIntroUrl);
     return parsingFromURL.getParsingURL(tourDetailIntroUrl);
   }
@@ -442,8 +446,7 @@ public class TourApiController {
   public String tourDetailInfo(@RequestBody(required = false) TourDetailInfoVo tourDetailInfoVo) {
     String tourDetailInfoUrl =
         KOR_SERVICE_URL
-            + "detailInfo"
-            + "?serviceKey="
+            + DETAIL_INFO
             + SERVICE_DEV_KEY
             + "&numOfRows="
             + tourDetailInfoVo.getNumOfRows()
@@ -458,7 +461,6 @@ public class TourApiController {
             + "&contentTypeId="
             + tourDetailInfoVo.getContentTypeId()
             + "&_type=json";
-    ParsingFromURL parsingFromURL = new ParsingFromURL();
     log.info(tourDetailInfoUrl);
     return parsingFromURL.getParsingURL(tourDetailInfoUrl);
   }
@@ -474,8 +476,7 @@ public class TourApiController {
       @RequestBody(required = false) TourDetailImageVo tourDetailImageVo) {
     String tourDetailImageUrl =
         KOR_SERVICE_URL
-            + "detailImage"
-            + "?serviceKey="
+            + DETAIL_IMAGE
             + SERVICE_DEV_KEY
             + "&numOfRows="
             + tourDetailImageVo.getNumOfRows()
@@ -492,7 +493,6 @@ public class TourApiController {
             + "&subImageYN="
             + tourDetailImageVo.getSubImageYN()
             + "&_type=json";
-    ParsingFromURL parsingFromURL = new ParsingFromURL();
     log.info(tourDetailImageUrl);
     return parsingFromURL.getParsingURL(tourDetailImageUrl);
   }
