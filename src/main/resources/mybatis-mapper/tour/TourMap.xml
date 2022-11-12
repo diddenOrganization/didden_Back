@@ -13,7 +13,17 @@
         from TB_AREA_CODE
     </select>
 
-    <select id="tourInfoList" resultType="map">
+
+    <select id="findSigunguCodeList" resultType="com.diden.demo.tour.vo.TourSigunguCodeVo">
+        select CODE,
+               NAME,
+               USE,
+               AREA_CODE
+        from TB_SIGUNGU_CODE
+        where AREA_CODE = #{areaCode}
+    </select>
+
+    <select id="tourInfoList" resultType="com.diden.demo.tour.vo.TourAreaInfoResponseDto">
         SELECT *
         FROM TB_AREA_TOUR_INFO
         WHERE 1=1
