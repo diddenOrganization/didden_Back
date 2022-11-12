@@ -3,7 +3,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.diden.demo.tour.mapper.TourMapper">
-    <select id="tourInfoList" resultType="map">
+    <insert id="insertSigunguCode">
+        insert into TB_SIGUNGU_CODE (CODE, NAME, AREA_CODE)
+        values (#{code}, #{name}, #{areaCode})
+    </insert>
+
+    <select id="findAreaCodeList" resultType="com.diden.demo.tour.vo.TourAreaCodeVo">
+        select CODE, NAME, USE
+        from TB_AREA_CODE
+    </select>
+
+
+    <select id="findSigunguCodeList" resultType="com.diden.demo.tour.vo.TourSigunguCodeVo">
+        select CODE,
+               NAME,
+               USE,
+               AREA_CODE
+        from TB_SIGUNGU_CODE
+        where AREA_CODE = #{areaCode}
+    </select>
+
+    <select id="tourInfoList" resultType="com.diden.demo.tour.vo.TourAreaInfoResponseDto">
         SELECT *
         FROM TB_AREA_TOUR_INFO
         WHERE 1=1
@@ -22,72 +42,69 @@
     </select>
 
     <insert id="tourInfoInsert" parameterType="map">
-        INSERT INTO TB_AREA_TOUR_INFO (
-            ADDR1
-            , ADDR2
-            , AREACODE
-            , CAT1
-            , CAT2
-            , CAT3
-            , CONTENTID
-            , CONTENTTYPEID
-            , CREATEDTIME
-            , FIRSTIMAGE
-            , MAPX
-            , MAPY
-            , MLEVEL
-            , MODIFIEDTIME
-            , SIGUNGUCODE
-            , TEL
-            , TITLE
-            , ZIPCODE)
-        VALUES (
-            #{addr1}
-            , #{addr2}
-            , #{areacode}
-            , #{cat1}
-            , #{cat2}
-            , #{cat3}
-            , #{contentid}
-            , #{contenttypeid}
-            , #{createdtime}
-            , #{firstimage}
-            , #{mapx}
-            , #{mapy}
-            , #{mlevel}
-            , #{modifiedtime}
-            , #{sigungucode}
-            , #{tel}
-            , #{title}
-            , #{zipcode}
-        )
+        INSERT INTO TB_AREA_TOUR_INFO ( ADDR1
+                                      , ADDR2
+                                      , AREACODE
+                                      , CAT1
+                                      , CAT2
+                                      , CAT3
+                                      , CONTENTID
+                                      , CONTENTTYPEID
+                                      , CREATEDTIME
+                                      , FIRSTIMAGE
+                                      , MAPX
+                                      , MAPY
+                                      , MLEVEL
+                                      , MODIFIEDTIME
+                                      , SIGUNGUCODE
+                                      , TEL
+                                      , TITLE
+                                      , ZIPCODE)
+        VALUES ( #{addr1}
+               , #{addr2}
+               , #{areacode}
+               , #{cat1}
+               , #{cat2}
+               , #{cat3}
+               , #{contentid}
+               , #{contenttypeid}
+               , #{createdtime}
+               , #{firstimage}
+               , #{mapx}
+               , #{mapy}
+               , #{mlevel}
+               , #{modifiedtime}
+               , #{sigungucode}
+               , #{tel}
+               , #{title}
+               , #{zipcode})
     </insert>
 
     <update id="tourInfoUpdate" parameterType="map">
         UPDATE tb_user
-        SET ADDR1            = #{addr1}
-        , ADDR2              = #{addr2}
-        , AREACODE           = #{areacode}
-        , CAT1               = #{cat1}
-        , CAT2               = #{cat2}
-        , CAT3               = #{cat3}
-        , CONTENTID          = #{contentid}
-        , CONTENTTYPEID      = #{contenttypeid}
-        , CREATEDTIME        = #{createdtime}
-        , FIRSTIMAGE         = #{firstimage}
-        , MAPX               = #{mapx}
-        , MAPY               = #{mapy}
-        , MLEVEL             = #{mlevel}
-        , MODIFIEDTIME       = #{modifiedtime}
-        , SIGUNGUCODE        = #{sigungucode}
-        , TEL                = #{tel}
-        , TITLE              = #{title}
-        , ZIPCODE            = #{zipcode}
-        WHERE CONTENTID      = #{contentid}
+        SET ADDR1         = #{addr1}
+          , ADDR2         = #{addr2}
+          , AREACODE      = #{areacode}
+          , CAT1          = #{cat1}
+          , CAT2          = #{cat2}
+          , CAT3          = #{cat3}
+          , CONTENTID     = #{contentid}
+          , CONTENTTYPEID = #{contenttypeid}
+          , CREATEDTIME   = #{createdtime}
+          , FIRSTIMAGE    = #{firstimage}
+          , MAPX          = #{mapx}
+          , MAPY          = #{mapy}
+          , MLEVEL        = #{mlevel}
+          , MODIFIEDTIME  = #{modifiedtime}
+          , SIGUNGUCODE   = #{sigungucode}
+          , TEL           = #{tel}
+          , TITLE         = #{title}
+          , ZIPCODE       = #{zipcode}
+        WHERE CONTENTID = #{contentid}
     </update>
 
     <delete id="tourInfoDelete">
         DELETE
-          FROM TB_AREA_TOUR_INFO
+        FROM TB_AREA_TOUR_INFO
     </delete>
 </mapper>
