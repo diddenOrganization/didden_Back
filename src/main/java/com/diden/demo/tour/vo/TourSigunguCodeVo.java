@@ -2,19 +2,21 @@ package com.diden.demo.tour.vo;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.ToString;
+import lombok.NoArgsConstructor;
 
 @Getter
-@ToString
-public class TourAreaCodeVo {
+@NoArgsConstructor
+public class TourSigunguCodeVo {
   private Integer code;
   private String name;
   private String use;
+  private Integer areaCode;
 
   @Builder
-  public TourAreaCodeVo(Integer code, String name, String use) {
+  public TourSigunguCodeVo(Integer code, String name, String use, Integer areaCode) {
     this.code = code;
     this.name = name;
     this.use = use;
+    this.areaCode = areaCode;
   }
 }

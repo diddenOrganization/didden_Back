@@ -1,4 +1,4 @@
-package com.diden.demo.tour;
+package com.diden.demo.tour.definition;
 
 public interface MiddleCodeMapperType {
     ServiceHighCode getServiceHighCode();

@@ -1,4 +1,4 @@
-package com.diden.demo.tour;
+package com.diden.demo.tour.definition;
 
 import lombok.Getter;
 

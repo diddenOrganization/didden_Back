@@ -1,4 +1,4 @@
-package com.diden.demo.tour;
+package com.diden.demo.tour.definition;
 
 public enum MobileOSType {
   /**
@@ -10,7 +10,7 @@ public enum MobileOSType {
    */
   AND,
   /**
-   * <h1>윈도우</h1>
+   * <h1>윈도우폰</h1>
    */
   WIN,
   /**

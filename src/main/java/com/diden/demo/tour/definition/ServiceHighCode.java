@@ -1,6 +1,6 @@
-package com.diden.demo.tour;
+package com.diden.demo.tour.definition;
 
-import static com.diden.demo.tour.ServiceContentTypeCode.*;
+import static com.diden.demo.tour.definition.ServiceContentTypeCode.*;
 
 public enum ServiceHighCode implements HighCodeMapperType {
   NATURE("A01", "자연", TOURISM_TYPE),

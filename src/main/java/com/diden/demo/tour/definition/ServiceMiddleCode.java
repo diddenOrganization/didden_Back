@@ -1,6 +1,6 @@
-package com.diden.demo.tour;
+package com.diden.demo.tour.definition;
 
-import static com.diden.demo.tour.ServiceContentTypeCode.*;
+import static com.diden.demo.tour.definition.ServiceContentTypeCode.*;
 
 public enum ServiceMiddleCode implements MiddleCodeMapperType {
   NATURAL_TOURIST(ServiceHighCode.NATURE, "A0101", "자연관광지", TOURISM_TYPE),
