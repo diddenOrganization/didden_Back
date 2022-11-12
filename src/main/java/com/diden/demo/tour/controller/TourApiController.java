@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.diden.demo.tour.TourProperties.*;
 
@@ -112,8 +113,13 @@ public class TourApiController {
   }
 
   @GetMapping(value = "/area")
-  public HttpResponse<List<AreaCode>> findTourAreaInfo() {
-    return HttpResponse.toResponse(HttpStatus.OK, "지역코드 조회", Arrays.asList(AreaCode.values()));
+  public HttpResponse<List<CommonCodeMapperValue>> findTourAreaInfo() {
+    return HttpResponse.toResponse(
+        HttpStatus.OK,
+        "지역코드 조회",
+        Arrays.stream(AreaCode.values())
+            .map(CommonCodeMapperValue::new)
+            .collect(Collectors.toList()));
   }
 
   @GetMapping(value = "/{areaCode}/sigungu")
