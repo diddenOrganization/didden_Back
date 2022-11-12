@@ -1,9 +1,6 @@
 package com.diden.demo.error;
 
-import com.diden.demo.error.exception.BadRequestException;
-import com.diden.demo.error.exception.DataNotProcessExceptions;
-import com.diden.demo.error.exception.NotFoundDataException;
-import com.diden.demo.error.exception.TokenException;
+import com.diden.demo.error.exception.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -44,6 +41,7 @@ public class GeneralExceptionHandler {
     IllegalArgumentException.class,
     HttpMessageNotReadableException.class,
     MissingServletRequestParameterException.class,
+    SocialProcessException.class,
   })
   public ExceptionVo badRequest(final RuntimeException e) {
     log.error(e.toString());

@@ -36,4 +36,7 @@ public interface UserMapper {
   List<UserVo> pageable(
       @Param("rowStartNumber") final Integer rowStartNumber,
       @Param("rowLimitNumber") final Integer rowLimitNumber);
+
+  int userEmailAndLoginTypeFindCount(
+      @Param("userEmail") final String userEmail, @Param("loginType") final String loginType);
 }
