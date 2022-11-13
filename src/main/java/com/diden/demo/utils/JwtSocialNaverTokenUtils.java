@@ -47,7 +47,7 @@ public class JwtSocialNaverTokenUtils implements JwtSocialTokenCheckInterface {
   public JsonObject socialExecuteResponse(String authorization) throws IOException {
     final Response<JsonObject> objectResponse =
         getApiService(SocialJwtProperties.NAVER_BASE_URI)
-            .getJwtKakaoAccessToken(tokenPrefixCheckAndAdd(authorization))
+            .getJwtNaverAccessToken(tokenPrefixCheckAndAdd(authorization))
             .execute();
 
     if (objectResponse.isSuccessful()) {

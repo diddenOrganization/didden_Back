@@ -3,7 +3,7 @@ package com.diden.demo.tour.definition;
 import lombok.Getter;
 
 @Getter
-public enum AreaCode {
+public enum AreaCode implements CommonCodeMapperType{
   SEOUL(1, "서울"),
   INCHEON(2, "인천"),
   DAEJEON(3, "대전"),
@@ -23,10 +23,15 @@ public enum AreaCode {
   JEJU(39, "제주도"),
   ;
   private final Integer code;
-  private final String name;
+  private final String title;
 
-  AreaCode(Integer code, String name) {
+  AreaCode(Integer code, String title) {
     this.code = code;
-    this.name = name;
+    this.title = title;
+  }
+
+  @Override
+  public String getCodeName() {
+    return name();
   }
 }
