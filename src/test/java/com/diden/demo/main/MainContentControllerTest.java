@@ -8,11 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -39,7 +36,7 @@ class MainContentControllerTest extends TestStartConfig {
   @DisplayName("메인이미지컨텐츠 - 메인화면 이미지 호출")
   void imageAll() throws Exception {
     mockMvc
-        .perform(get("/main/content/images").header(JwtProperties.HEADER_STRING, accessToken))
+        .perform(get("/main/content/images").header(JwtProperties.AUTHORIZATION, accessToken))
         .andExpect(status().is4xxClientError())
         .andExpect(jsonPath("$.status").value("BAD_REQUEST"))
         .andDo(print());

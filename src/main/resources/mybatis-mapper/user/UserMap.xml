@@ -188,4 +188,11 @@
         WHERE user_access_token = #{authorization}
     </select>
 
+    <select id="userEmailAndLoginTypeFindCount" resultType="_integer">
+        SELECT COUNT(*)
+        FROM TB_USER
+        WHERE USER_EMAIL = #{userEmail}
+          AND USER_LOGIN_TYPE = #{loginType}
+    </select>
+
 </mapper>

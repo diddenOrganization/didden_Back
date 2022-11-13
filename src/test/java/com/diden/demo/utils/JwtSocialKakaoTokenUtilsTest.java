@@ -1,5 +1,6 @@
 package com.diden.demo.utils;
 
+import com.diden.demo.TestStartConfig;
 import com.diden.demo.config.LazyHolderObject;
 import com.diden.demo.user.UserService;
 import com.diden.demo.user.UserVo;
@@ -18,15 +19,23 @@ import java.io.IOException;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @Slf4j
-@Transactional
-@SpringBootTest
-class JwtSocialKakaoTokenUtilsTest {
+class JwtSocialKakaoTokenUtilsTest extends TestStartConfig {
   @Autowired ResourceLoader resourceLoader;
   @Autowired UserService userService;
   final JwtSocialTokenCheckInterface jwtSocialKakaoTokenUtils = new JwtSocialKakaoTokenUtils();
 
   /** https://developers.kakao.com/tool/rest-api/open/get/v2-user-me 카카오 토큰 발급은 여기서 */
-  private final String kakaoAccessToken = "yaGtWjiTUNDWKkEvMgIMs-1F_C8E-1V-VwFeDtLXCj1y6wAAAYOofQVj";
+  private final String kakaoAccessToken =
+      "GO6ImMJKpQxSUB6XNR_7Bed2yoyXSFx1t1081cxVCilwngAAAYQzXjAH";
+  private final String loginEmail = "ohwig1@kakao.com";
+
+  @Test
+  @Rollback
+  @DisplayName("소셜 - 카카오 로그인")
+  void socialKakaoLogin(){
+
+
+  }
 
   @Test
   @Rollback

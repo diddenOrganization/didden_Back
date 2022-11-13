@@ -10,11 +10,11 @@ import javax.validation.constraints.NotNull;
 public interface JwtSocialTokenRetrofitCallInterface {
   @GET("/v2/user/me")
   Call<JsonObject> getJwtKakaoAccessToken(
-      @NotNull(message = "인증 토큰이 존재하지 않습니다.") @Header(JwtProperties.HEADER_STRING)
+      @NotNull(message = "인증 토큰이 존재하지 않습니다.") @Header(JwtProperties.AUTHORIZATION)
           String authorization);
 
   @GET("/v1/nid/me")
   Call<JsonObject> getJwtNaverAccessToken(
-      @NotNull(message = "인증 토큰이 존재하지 않습니다.") @Header(JwtProperties.HEADER_STRING)
+      @NotNull(message = "인증 토큰이 존재하지 않습니다.") @Header(JwtProperties.AUTHORIZATION)
           String authorization);
 }

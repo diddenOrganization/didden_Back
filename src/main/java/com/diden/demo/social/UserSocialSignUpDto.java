@@ -1,5 +1,6 @@
 package com.diden.demo.social;
 
+import com.diden.demo.utils.AccountTypeEnum;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -10,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 @ToString
 public class UserSocialSignUpDto {
   @NotBlank(message = "로그인 타입이 존재하지 않습니다.")
-  private final String loginType;
+  private final AccountTypeEnum loginType;
 
   @NotBlank(message = "소셜 엑세스 토큰이 존재하지 않습니다.")
   private final String accessToken;
@@ -19,7 +20,7 @@ public class UserSocialSignUpDto {
   private final String refreshToken;
 
   @Builder
-  public UserSocialSignUpDto(String loginType, String accessToken, String refreshToken) {
+  public UserSocialSignUpDto(AccountTypeEnum loginType, String accessToken, String refreshToken) {
     this.loginType = loginType;
     this.accessToken = accessToken;
     this.refreshToken = refreshToken;
