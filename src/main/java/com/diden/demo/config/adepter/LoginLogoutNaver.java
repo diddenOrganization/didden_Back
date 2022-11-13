@@ -31,7 +31,7 @@ public class LoginLogoutNaver implements LoginLogoutAdepter {
     final JsonObject jsonObject =
         jwtSocialNaverTokenUtils.socialExecuteResponse(authorization);
 
-    if(jsonObject.get("error_code").isJsonPrimitive()) {
+    if(jsonObject.get("error_code") != null && jsonObject.get("error_code").isJsonPrimitive()) {
       throw new SocialProcessException(jsonObject.get("message").getAsString());
     }
 
