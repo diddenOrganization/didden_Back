@@ -25,34 +25,17 @@ import java.io.IOException;
 public class SocialApiController {
   private final SocialService socialService;
 
-  @PostMapping
-  public HttpResponse<Void> userSocialInsert(
-      @RequestBody @NotNull(message = "소셜 정보가 존재하지 않습니다.")
-          final UserSocialSignUpDto userSocialSignUpDto) throws IOException {
-    // TODO :: 소셜 리프레쉬 토큰 저장 기능 구현해야 함.
-    if (userSocialSignUpDto.getLoginType() == null) {
-      throw new BadRequestException("로그인 타입이 존재하지 않습니다.");
-    }
-    if (StringUtils.isBlank(userSocialSignUpDto.getAccessToken())) {
-      throw new BadRequestException("소셜 엑세스 토큰이 존재하지 않습니다.");
-    }
-    if (userSocialSignUpDto.getLoginType() == AccountTypeEnum.DEFAULT) {
-      throw new BadRequestException("일반회원 가입은 대상항목이 아닙니다.");
-    }
-
-    socialService.socialSignup(
-        userSocialSignUpDto.getLoginType().getAccountType(), userSocialSignUpDto.getAccessToken());
-    return HttpResponse.toResponse(HttpStatus.CREATED, "회원가입이 되었습니다.");
-  }
-
   @PostMapping("/login")
   public HttpResponse<Void> userSocialLogin(
       @RequestBody @NotNull(message = "로그인 정보가 존재하지 않습니다.")
           final UserSocialSignUpDto userSocialSignUpDto)
       throws IOException {
-
     if (userSocialSignUpDto.getLoginType() == null) {
       throw new BadRequestException("로그인 타입이 존재하지 않습니다.");
+    }
+
+    if (userSocialSignUpDto.getLoginType() == AccountTypeEnum.DEFAULT) {
+      throw new BadRequestException("일반회원 가입은 대상항목이 아닙니다.");
     }
 
     if (StringUtils.isBlank(userSocialSignUpDto.getAccessToken())) {

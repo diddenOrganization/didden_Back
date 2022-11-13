@@ -2,7 +2,6 @@ package com.diden.demo.utils;
 
 import com.diden.demo.error.exception.TokenException;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -18,21 +17,15 @@ public final class JwtTokenProvider {
 
   public static boolean checkAccessToken(
       @NotBlank(message = "토큰이 존재하지 않습니다.") final String authorization) {
-    try {
-      log.debug(":: JwtTokenProvider.checkAccessToken = {} ::", authorization);
+    log.debug(":: JwtTokenProvider.checkAccessToken = {} ::", authorization);
 
-      if (!authorization.startsWith(TOKEN_PREFIX)) {
-        throw new TokenException("토큰 형식이 맞지 않습니다.");
-      }
-
-      final String token = authorization.replace(TOKEN_PREFIX, "");
-      final Claims body = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody();
-      return "whySoSerious".equals(body.getSubject());
-
-    } catch (ExpiredJwtException exp) {
-      exp.printStackTrace();
-      return false;
+    if (!authorization.startsWith(TOKEN_PREFIX)) {
+      throw new TokenException("토큰 형식이 맞지 않습니다.");
     }
+
+    final String token = authorization.replace(TOKEN_PREFIX, "");
+    final Claims body = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody();
+    return "whySoSerious".equals(body.getSubject());
   }
 
   public static boolean checkRefreshToken(
