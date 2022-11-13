@@ -29,7 +29,7 @@ public class NaverSocialAdepterImpl implements SocialAdepter {
     // TODO :: 소셜 리프레쉬 토큰 작업
     final JsonObject jsonObject = jwtSocialNaverTokenUtils.socialExecuteResponse(accessToken);
 
-    if (jsonObject.get("error_code").isJsonPrimitive()) {
+    if (jsonObject.get("error_code") != null && jsonObject.get("error_code").isJsonPrimitive()) {
       throw new SocialProcessException(jsonObject.get("message").getAsString());
     }
 
