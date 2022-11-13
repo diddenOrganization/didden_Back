@@ -38,4 +38,20 @@ public class JwtTokenUtil implements Serializable {
       @NotBlank(message = "토큰이 존재하지 않습니다.") final String authorization) {
     return authorization.replace(TOKEN_PREFIX, "");
   }
+
+  public static String tokenPrefixCheckAndReplace(final String accessToken) {
+    if (accessToken.startsWith(TOKEN_PREFIX)) { // 있으면
+      return accessToken.replace(TOKEN_PREFIX, "");
+    }
+
+    return accessToken;
+  }
+
+  public static String tokenPrefixCheckAndAdd(final String accessToken) {
+    if (!accessToken.startsWith(TOKEN_PREFIX)) { // 없으면
+      return TOKEN_PREFIX + accessToken;
+    }
+
+    return accessToken;
+  }
 }

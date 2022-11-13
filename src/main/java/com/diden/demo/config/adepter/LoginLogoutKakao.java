@@ -4,13 +4,14 @@ import com.diden.demo.error.exception.SocialProcessException;
 import com.diden.demo.utils.AccountTypeEnum;
 import com.diden.demo.utils.JwtSocialKakaoTokenUtils;
 import com.diden.demo.utils.JwtSocialTokenCheckInterface;
-import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 
 @Slf4j
 public class LoginLogoutKakao implements LoginLogoutAdepter {
+  private final JwtSocialTokenCheckInterface jwtSocialKakaoTokenUtils =
+      new JwtSocialKakaoTokenUtils();
 
   @Override
   public boolean supports(final String handler) {
@@ -19,11 +20,7 @@ public class LoginLogoutKakao implements LoginLogoutAdepter {
 
   @Override
   public boolean loginProcess(final String authorization) throws IOException {
-    final JwtSocialTokenCheckInterface kakao = new JwtSocialKakaoTokenUtils();
-    final JsonObject obj = kakao.socialAccessToken(authorization);
-    log.info("login check : {}", obj);
-    log.info("login boolean : {}", obj != null);
-    return obj != null;
+    return jwtSocialKakaoTokenUtils.socialExecuteResponse(authorization).isJsonObject();
   }
 
   @Override

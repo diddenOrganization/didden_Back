@@ -2,9 +2,7 @@ package com.diden.demo.config;
 
 import com.diden.demo.config.adepter.LoginLogoutAdepter;
 import com.diden.demo.error.exception.BadRequestException;
-import com.diden.demo.error.exception.DataNotProcessExceptions;
 import com.diden.demo.user.UserService;
-import com.diden.demo.user.UserVo;
 import com.diden.demo.utils.AccountTypeEnum;
 import com.diden.demo.utils.JwtProperties;
 import lombok.RequiredArgsConstructor;
@@ -19,38 +17,37 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 import static com.diden.demo.utils.JwtTokenUtil.replaceTokenPrefix;
+import static com.diden.demo.utils.JwtTokenUtil.tokenPrefixCheckAndReplace;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class TokenCheckAdepter implements TokenAdepterInterface {
   private final UserService userService;
-  private final List<LoginLogoutAdepter> loginLogoutAdepterList;
   private final Map<AccountTypeEnum, LoginLogoutAdepter> loginLogoutAdepterMap;
 
   public boolean loginTokenCheckMethod(final HttpServletRequest request) throws IOException {
-    final String authorization = request.getHeader(JwtProperties.HEADER_STRING);
+    final String authorization = request.getHeader(JwtProperties.AUTHORIZATION);
 
-    // 토큰이 없으면 pass
-    if (StringUtils.isBlank(authorization)) {
+    if (StringUtils.isBlank(authorization)) { // 토큰이 없으면 pass
       log.debug(":: TokenCheckAdepter.loginTokenCheckMethod  ==  Authorization 존재하지 않아 TRUE 반환 ::");
       return true;
     }
 
-    final String byLoginType = userService.findByLoginType(replaceTokenPrefix(authorization));
+    final String byLoginType =
+        userService.findByLoginType(tokenPrefixCheckAndReplace(authorization)); // 로그인 타입 조회
     if (StringUtils.isBlank(byLoginType)) {
       throw new BadRequestException("사용자가 존재하지 않습니다.");
     }
 
     final LoginLogoutAdepter loginAdepterHandler =
         loginLogoutAdepterMap.get(AccountTypeEnum.getAccountEnumType(byLoginType));
-    final boolean process = loginAdepterHandler.loginProcess(authorization);
+    final boolean process = loginAdepterHandler.loginProcess(authorization); // 토큰 검증
 
-    if (process) {
+    if (process) { // 인가, 인증 토큰 강제 설정
       final Authentication authentication =
           new UsernamePasswordAuthenticationToken(
               "인가, 인증 토큰 강제 설정", null, Collections.singleton(new SimpleGrantedAuthority("YesMan")));
@@ -64,30 +61,17 @@ public class TokenCheckAdepter implements TokenAdepterInterface {
 
   @Override
   public boolean logoutTokenCheckMethod(HttpServletRequest request) throws IOException {
-    final String authorization = request.getHeader(JwtProperties.HEADER_STRING);
+    final String authorization = request.getHeader(JwtProperties.AUTHORIZATION);
 
     if (StringUtils.isBlank(authorization)) {
       throw new BadRequestException("토큰이 존재하지 않습니다.");
     }
 
     final String byLoginType = userService.findByLoginType(replaceTokenPrefix(authorization));
-    for (LoginLogoutAdepter adepter : loginLogoutAdepterList) {
-      if (adepter.supports(byLoginType)) {
-        final String findUserEmail = adepter.findUserEmail(authorization);
-        final UserVo logoutUserData =
-            UserVo.builder()
-                .userEmail(findUserEmail)
-                .userAccessToken(null)
-                .userRefreshToken(null)
-                .build();
+    final LoginLogoutAdepter loginAdepterHandler =
+        loginLogoutAdepterMap.get(AccountTypeEnum.getAccountEnumType(byLoginType));
+    final boolean process = loginAdepterHandler.logoutProcess(authorization); // 토큰 검증
 
-        if (userService.userTokenUpdate(logoutUserData) > 0) {
-          return true;
-        }
-
-        throw new DataNotProcessExceptions("로그아웃이 처리되지 않았습니다.");
-      }
-    }
     throw new IllegalArgumentException("로그인 타입이 존재하지 않습니다.");
   }
 }

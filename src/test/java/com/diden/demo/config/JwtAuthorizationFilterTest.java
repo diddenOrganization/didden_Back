@@ -39,7 +39,7 @@ class JwtAuthorizationFilterTest {
             get("/user/list")
                 .characterEncoding("utf-8")
                 .header(JwtProperties.LOGIN_TYPE, "default")
-                .header(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + accessToken))
+                .header(JwtProperties.AUTHORIZATION, JwtProperties.TOKEN_PREFIX + accessToken))
         .andExpect(status().isOk())
         .andDo(print());
   }

@@ -16,33 +16,13 @@ public class SocialServiceImpl implements SocialService {
   private final Map<AccountTypeEnum, SocialAdepter> socialAdepterMap;
 
   @Override
-  public void socialAccessTokenUpdate(final String accessToken, final String loginType) throws IOException {
-    final SocialAdepter adepterHandler =
-        socialAdepterMap.get(AccountTypeEnum.getAccountEnumType(loginType));
+  public void socialLoginAndSignupProcess(AccountTypeEnum loginType, String accessToken)
+      throws IOException {
+    final SocialAdepter adepterHandler = socialAdepterMap.get(loginType);
     final UserVo userVo = adepterHandler.process(accessToken);
 
-    final UserVo updateUserVo =
-        UserVo.builder().userEmail(userVo.getUserEmail()).userAccessToken(accessToken).build();
-
-    userMapper.userTokenUpdate(updateUserVo);
-  }
-
-  @Override
-  public void socialSignup(final String loginType, final String accessToken) throws IOException {
-    final SocialAdepter adepterHandler =
-        socialAdepterMap.get(AccountTypeEnum.getAccountEnumType(loginType));
-    final UserVo userVo = adepterHandler.process(accessToken);
-
-    userMapper.userInsert(userVo);
-  }
-
-  @Override
-  public void socialLoginAndSignupProcess(AccountTypeEnum loginType, String accessToken) throws IOException {
-    final SocialAdepter adepterHandler =
-            socialAdepterMap.get(loginType);
-    final UserVo userVo = adepterHandler.process(accessToken);
-
-    if(userMapper.userEmailAndLoginTypeFindCount(userVo.getUserEmail(), loginType.getAccountType()) > 0) {
+    if (userMapper.userEmailAndLoginTypeFindCount(userVo.getUserEmail(), loginType.getAccountType())
+        > 0) {
       userMapper.userTokenUpdate(userVo);
     } else {
       userMapper.userInsert(userVo);

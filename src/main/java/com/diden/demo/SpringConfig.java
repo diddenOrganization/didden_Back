@@ -10,26 +10,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Configuration
 @RequiredArgsConstructor
 public class SpringConfig {
-  private final List<LoginLogoutAdepter> loginLogoutAdepterList = new ArrayList<>();
   private final Map<AccountTypeEnum, SocialAdepter> socialAdepterMap = new HashMap<>();
   private final Map<AccountTypeEnum, LoginLogoutAdepter> loginLogoutAdepterMap = new HashMap<>();
-
-  @Bean
-  public List<LoginLogoutAdepter> loginAdepterList() {
-    this.loginLogoutAdepterList.add(new LoginLogoutApple());
-    this.loginLogoutAdepterList.add(new LoginLogoutDefault());
-    this.loginLogoutAdepterList.add(new LoginLogoutKakao());
-    this.loginLogoutAdepterList.add(new LoginLogoutNaver());
-    return loginLogoutAdepterList;
-  }
 
   @Bean
   public Map<AccountTypeEnum, LoginLogoutAdepter> loginLogoutAdepterMap() {
