@@ -47,7 +47,7 @@ public class SecurityConfig {
                     .antMatchers("/social/**")
                     .permitAll()
                     .anyRequest()
-                    .authenticated())
+                    .permitAll())
         .addFilter(new JwtAuthenticationFilter(userService))
         .addFilterBefore(exceptionHandlerFilter, WebAsyncManagerIntegrationFilter.class)
         .addFilterAfter(
