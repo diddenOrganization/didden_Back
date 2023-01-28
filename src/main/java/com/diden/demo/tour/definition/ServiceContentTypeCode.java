@@ -2,6 +2,8 @@ package com.diden.demo.tour.definition;
 
 import lombok.Getter;
 
+import java.util.Arrays;
+
 @Getter
 public enum ServiceContentTypeCode {
   TOURISM_TYPE(12, "관광지"),
@@ -12,14 +14,24 @@ public enum ServiceContentTypeCode {
   HOTEL_TYPE(32, "숙박"),
   SHOPPING_TYPE(38, "쇼핑"),
   FOOD_TYPE(39, "음식점"),
-  NONE(null, null),
   ;
 
   private final Integer code;
-  private final String name;
+  private final String title;
 
-  ServiceContentTypeCode(Integer code, String name) {
+  ServiceContentTypeCode(Integer code, String title) {
     this.code = code;
-    this.name = name;
+    this.title = title;
+  }
+
+  public String getName() {
+    return name();
+  }
+
+  public static ServiceContentTypeCode codeToEnum(Integer code) {
+    return Arrays.stream(ServiceContentTypeCode.values())
+        .filter(v -> v.getCode().equals(code))
+        .findFirst()
+        .orElse(null);
   }
 }

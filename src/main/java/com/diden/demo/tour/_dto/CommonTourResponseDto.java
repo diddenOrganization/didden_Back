@@ -6,31 +6,33 @@ import com.diden.demo.tour.definition.ServiceHighCode;
 import com.diden.demo.tour.definition.ServiceMiddleCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class CommonTourResponseDto {
+  private String contentId;
+  private ServiceContentTypeCode serviceContentTypeCode;
+  private String title;
   private String addr1;
   private String addr2;
-  private AreaCode areaCode;
-  private String booktour;
-  private ServiceHighCode cat1;
-  private ServiceMiddleCode cat2;
-  private String cat3;
-  private String contentId;
-  private ServiceContentTypeCode contentTypeId;
-  private String createdTime;
+  private ServiceHighCode serviceHighCode;
+  private ServiceMiddleCode serviceMiddleCode;
+  private String serviceLowCode;
   private String firstImage;
   private String firstImage2;
   private String mapx;
   private String mapy;
-  private String mlevel;
-  private String modifiedTime;
   private String readcount;
   private String sigungucode;
   private String tel;
-  private String title;
   private String zipcode;
+  private String createdTime;
+  private String modifiedTime;
+  private AreaCode areaCode;
+  private String mlevel;
+  private String overview;
   private String dist;
   private String eventstartdate;
   private String eventenddate;
@@ -38,6 +40,6 @@ public class CommonTourResponseDto {
   private String gdstYN;
   private String trditHanokYN;
   private String hmpg;
+  private String booktour;
   private String telname;
-  private String overview;
 }

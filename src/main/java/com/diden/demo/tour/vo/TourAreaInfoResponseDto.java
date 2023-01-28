@@ -1,11 +1,16 @@
 package com.diden.demo.tour.vo;
 
+import com.diden.demo.tour.definition.ServiceContentTypeCode;
+import com.diden.demo.tour.definition.ServiceHighCode;
+import com.diden.demo.tour.definition.ServiceMiddleCode;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class TourAreaInfoResponseDto {
   private String contentId;
   private String contentTypeId;
@@ -27,6 +32,14 @@ public class TourAreaInfoResponseDto {
   private String modifiedTime;
   private String areaCode;
   private String mLevel;
+
+  private ServiceContentTypeCode serviceContentTypeCode;
+  private ServiceHighCode serviceHighCode;
+  private ServiceMiddleCode serviceMiddleCode;
+
+  private String contentTypeName;
+  private String highCodeName;
+  private String middleCodeName;
 
   @Builder
   public TourAreaInfoResponseDto(
@@ -70,5 +83,37 @@ public class TourAreaInfoResponseDto {
     this.modifiedTime = modifiedTime;
     this.areaCode = areaCode;
     this.mLevel = mLevel;
+  }
+
+  public TourAreaInfoResponseDto serviceTypeCodeByEnumTypeCodeAndTitleSettingConverter(
+      final TourAreaInfoResponseDto tourAreaInfoResponseDto,
+      final String serviceContentTypeCode,
+      final String serviceHighCode,
+      final String serviceMiddleCode) {
+
+    final ServiceContentTypeCode contentTypeCodeConvert =
+        ServiceContentTypeCode.codeToEnum(Integer.parseInt(serviceContentTypeCode));
+    final ServiceHighCode highCodeConvert = ServiceHighCode.codeToEnum(serviceHighCode);
+    final ServiceMiddleCode middleCodeConvert = ServiceMiddleCode.codeToEnum(serviceMiddleCode);
+
+    tourAreaInfoResponseDto.setServiceContentTypeCode(contentTypeCodeConvert);
+    tourAreaInfoResponseDto.setServiceHighCode(highCodeConvert);
+    tourAreaInfoResponseDto.setServiceMiddleCode(middleCodeConvert);
+
+    tourAreaInfoResponseDto.serviceTypeCodeTitleConvert(
+        tourAreaInfoResponseDto, contentTypeCodeConvert, highCodeConvert, middleCodeConvert);
+
+    return tourAreaInfoResponseDto;
+  }
+
+  public void serviceTypeCodeTitleConvert(
+      final TourAreaInfoResponseDto tourAreaInfoResponseDto,
+      final ServiceContentTypeCode serviceContentTypeCode,
+      final ServiceHighCode serviceHighCode,
+      final ServiceMiddleCode serviceMiddleCode) {
+
+    tourAreaInfoResponseDto.setContentTypeName(serviceContentTypeCode.getTitle());
+    tourAreaInfoResponseDto.setHighCodeName(serviceHighCode.getTitle());
+    tourAreaInfoResponseDto.setMiddleCodeName(serviceMiddleCode.getTitle());
   }
 }

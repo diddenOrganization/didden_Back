@@ -1,5 +1,7 @@
 package com.diden.demo.tour.mapper;
 
+import com.diden.demo.tour._dto.CommonTourResponseDto;
+import com.diden.demo.tour._vo.CommonTourInfoVo;
 import com.diden.demo.tour.vo.TourAreaCodeVo;
 import com.diden.demo.tour.vo.TourAreaInfoResponseDto;
 import com.diden.demo.tour.vo.TourSigunguCodeVo;
@@ -28,5 +30,15 @@ public interface TourMapper {
   List<TourAreaCodeVo> findAreaCodeList();
 
   List<TourSigunguCodeVo> findSigunguCodeList(@Param("areaCode") final Integer areaCode);
+
+  List<CommonTourResponseDto> newTourInfoList(CommonTourInfoVo commonTourInfoVo);
+
+  int newTourInfoInsert(List<CommonTourResponseDto> commonTourInfoVoLists);
+
+  int newTourInfoInsertTest(List<Map<String, String>> parameter);
+
+  List<CommonTourResponseDto> newTourInfoListTest(@Param("contentTypeId") Integer contentTypeId, @Param("areaCode") Integer areaCode);
+
+  List<TourSigunguCodeVo> newSigunguCodeList(@Param("areaCode") Integer areaCode);
 
 }

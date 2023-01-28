@@ -1,5 +1,7 @@
 package com.diden.demo.tour.controller;
 
+import com.diden.demo.tour._dto.CommonTourResponseDto;
+import com.diden.demo.tour._vo.CommonTourInfoVo;
 import com.diden.demo.tour.definition.*;
 import com.diden.demo.tour.service.TourService;
 import com.diden.demo.tour.vo.TourAreaInfoResponseDto;
@@ -66,26 +68,43 @@ public class TourApiController {
       @RequestParam String cat1,
       @RequestParam String cat2,
       @RequestParam String cat3,
-      @RequestParam String keyword) {
+      @RequestParam(required = false) String keyword) {
     Map<String, Object> tourInfoParam = new HashMap<>();
     tourInfoParam.put("cat1", cat1);
     tourInfoParam.put("cat2", cat2);
     tourInfoParam.put("cat3", cat3);
     tourInfoParam.put("keyword", keyword);
 
+    List<TourAreaInfoResponseDto> tourAreaInfoResponseDtos =
+        tourService.tourInfoList(tourInfoParam);
+
+    List<TourAreaInfoResponseDto> tourAreaInfoResponsesServiceCodeTypeAndTitleConvert =
+        tourAreaInfoResponseDtos.stream()
+            .map(
+                dto ->
+                    dto.serviceTypeCodeByEnumTypeCodeAndTitleSettingConverter(
+                        dto, dto.getContentTypeId(), dto.getCat1(), dto.getCat2()))
+            .collect(Collectors.toList());
+
     return HttpResponse.toResponse(
-        HttpStatus.OK, "여행 데이터", tourService.tourInfoList(tourInfoParam));
+        HttpStatus.OK, "여행 데이터", tourAreaInfoResponsesServiceCodeTypeAndTitleConvert);
   }
 
-  @GetMapping
-  public List<TourAreaInfoResponseDto> areaInfo() {
-    Map<String, Object> tourInfoParam = new HashMap<>();
-    tourInfoParam.put("cat1", "");
-    tourInfoParam.put("cat2", "");
-    tourInfoParam.put("cat3", "");
-    tourInfoParam.put("keyword", "");
+  @GetMapping(value = "/tourinfo")
+  public List<CommonTourResponseDto> tourInfo(
+      final ServiceHighCode serviceHighCode,
+      final ServiceMiddleCode serviceMiddleCode,
+      final String serviceLowCode,
+      final String keyword) {
+    final CommonTourInfoVo commonTourInitVo =
+        CommonTourInfoVo.builder()
+            .serviceHighCode(serviceHighCode)
+            .serviceMiddleCode(serviceMiddleCode)
+            .serviceLowCode(serviceLowCode)
+            .keyword(keyword)
+            .build();
 
-    return tourService.tourInfoList(tourInfoParam);
+    return tourService.tourInfoList(commonTourInitVo);
   }
 
   /**
@@ -110,24 +129,6 @@ public class TourApiController {
 
     log.info(sb.toString());
     return parsingFromURL.getParsingURL(sb.toString());
-  }
-
-  @GetMapping(value = "/area")
-  public HttpResponse<List<CommonCodeMapperValue>> findTourAreaInfo() {
-    return HttpResponse.toResponse(
-        HttpStatus.OK,
-        "지역코드 조회",
-        Arrays.stream(AreaCode.values())
-            .map(CommonCodeMapperValue::new)
-            .collect(Collectors.toList()));
-  }
-
-  @GetMapping(value = "/{areaCode}/sigungu")
-  public HttpResponse<List<TourSigunguCodeVo>> findTourSigunguInfo(
-      @PathVariable(value = "areaCode") @NotNull(message = "지역코드가 존재하지 않습니다.")
-          final AreaCode areaCode) {
-    return HttpResponse.toResponse(
-        HttpStatus.OK, "시군구 조회", tourService.tourSigunguCodeList(areaCode));
   }
 
   /**
@@ -168,6 +169,18 @@ public class TourApiController {
     return parsingFromURL.getParsingURL(sb.toString());
   }
 
+  @GetMapping(value = "/areabasedlist/re")
+  public String reAreaBasedList(Integer numOfRows) {
+    StringBuilder sb =
+        new StringBuilder()
+            .append(KOR_SERVICE_URL)
+            .append(AREA_BASED_LIST)
+            .append(SERVICE_DEV_KEY)
+            .append(TourUriUtils.tourInitUri(MobileOSType.ETC, "AppTest", numOfRows));
+    log.info(sb.toString());
+    return parsingFromURL.getParsingURL(sb.toString());
+  }
+
   /**
    * 지역기반 관광정보 조회
    *
@@ -177,6 +190,7 @@ public class TourApiController {
   @GetMapping(value = "/areabasedlist")
   public String tourAreaBasedList(
       @RequestBody(required = false) TourAreaBasedListVo tourAreaBasedListVo) {
+
     String tourAreaBasedListUrl =
         KOR_SERVICE_URL
             + AREA_BASED_LIST
@@ -511,5 +525,33 @@ public class TourApiController {
             + "&_type=json";
     log.info(tourDetailImageUrl);
     return parsingFromURL.getParsingURL(tourDetailImageUrl);
+  }
+
+  @GetMapping(value = "/area")
+  public HttpResponse<List<CommonCodeMapperValue>> findTourAreaInfo() {
+    return HttpResponse.toResponse(
+        HttpStatus.OK,
+        "지역코드 조회",
+        Arrays.stream(AreaCode.values())
+            .map(CommonCodeMapperValue::new)
+            .collect(Collectors.toList()));
+  }
+
+  @GetMapping(value = "/sigungu")
+  public HttpResponse<Map<AreaCode, List<TourSigunguCodeVo>>> sigunguInfo() {
+    return HttpResponse.toResponse(HttpStatus.OK, "성공", tourService.newSigunguCodeList());
+  }
+
+  @GetMapping(value = "/{areaCode}/sigungu")
+  public HttpResponse<List<TourSigunguCodeVo>> findTourSigunguInfo(
+      @PathVariable(value = "areaCode") @NotNull(message = "지역코드가 존재하지 않습니다.")
+          final AreaCode areaCode) {
+    return HttpResponse.toResponse(
+        HttpStatus.OK, "시군구 조회", tourService.tourSigunguCodeList(areaCode));
+  }
+
+  @GetMapping(value = "/content-type-id")
+  public HttpResponse<Map<ServiceContentTypeCode, List<CommonTourResponseDto>>> tourInfo() {
+    return HttpResponse.toResponse(HttpStatus.OK, "성공", tourService.newTourInfoListTest());
   }
 }

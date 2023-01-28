@@ -2,8 +2,10 @@ package com.diden.demo.tour.definition;
 
 import lombok.Getter;
 
+import java.util.Arrays;
+
 @Getter
-public enum AreaCode implements CommonCodeMapperType{
+public enum AreaCode implements CommonCodeMapperType {
   SEOUL(1, "서울"),
   INCHEON(2, "인천"),
   DAEJEON(3, "대전"),
@@ -21,6 +23,7 @@ public enum AreaCode implements CommonCodeMapperType{
   JEONBUK(37, "전라북도"),
   JEONNAM(38, "전라남도"),
   JEJU(39, "제주도"),
+  NONE(null, null),
   ;
   private final Integer code;
   private final String title;
@@ -33,5 +36,12 @@ public enum AreaCode implements CommonCodeMapperType{
   @Override
   public String getCodeName() {
     return name();
+  }
+
+  public static AreaCode findArea(Integer parameterCode) {
+    return Arrays.stream(AreaCode.values())
+        .filter(v -> v.getCode().equals(parameterCode))
+        .findFirst()
+        .orElse(AreaCode.NONE);
   }
 }

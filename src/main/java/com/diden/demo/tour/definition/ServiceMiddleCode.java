@@ -1,5 +1,7 @@
 package com.diden.demo.tour.definition;
 
+import java.util.Arrays;
+
 import static com.diden.demo.tour.definition.ServiceContentTypeCode.*;
 
 public enum ServiceMiddleCode implements MiddleCodeMapperType {
@@ -64,5 +66,12 @@ public enum ServiceMiddleCode implements MiddleCodeMapperType {
   @Override
   public ServiceContentTypeCode getContentType() {
     return contentType;
+  }
+
+  public static ServiceMiddleCode codeToEnum(String code) {
+    return Arrays.stream(ServiceMiddleCode.values())
+        .filter(v -> v.getCode().equals(code))
+        .findFirst()
+        .orElse(ServiceMiddleCode.NONE);
   }
 }

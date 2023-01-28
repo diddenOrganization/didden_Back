@@ -1,5 +1,7 @@
 package com.diden.demo.tour.definition;
 
+import java.util.Arrays;
+
 import static com.diden.demo.tour.definition.ServiceContentTypeCode.*;
 
 public enum ServiceHighCode implements HighCodeMapperType {
@@ -38,5 +40,12 @@ public enum ServiceHighCode implements HighCodeMapperType {
   @Override
   public ServiceContentTypeCode getContentType() {
     return contentType;
+  }
+
+  public static ServiceHighCode codeToEnum(String code) {
+    return Arrays.stream(ServiceHighCode.values())
+        .filter(v -> v.getCode().equals(code))
+        .findFirst()
+        .orElse(ServiceHighCode.NONE);
   }
 }
