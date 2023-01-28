@@ -75,19 +75,8 @@ public class TourApiController {
     tourInfoParam.put("cat3", cat3);
     tourInfoParam.put("keyword", keyword);
 
-    List<TourAreaInfoResponseDto> tourAreaInfoResponseDtos =
-        tourService.tourInfoList(tourInfoParam);
-
-    List<TourAreaInfoResponseDto> tourAreaInfoResponsesServiceCodeTypeAndTitleConvert =
-        tourAreaInfoResponseDtos.stream()
-            .map(
-                dto ->
-                    dto.convertServiceTypeCodeByEnumTypeCodeAndTitleSetting(
-                        dto, dto.getContentTypeId(), dto.getCat1(), dto.getCat2()))
-            .collect(Collectors.toList());
-
     return HttpResponse.toResponse(
-        HttpStatus.OK, "여행 데이터", tourAreaInfoResponsesServiceCodeTypeAndTitleConvert);
+        HttpStatus.OK, "여행 데이터", tourService.tourInfoList(tourInfoParam));
   }
 
   @GetMapping(value = "/tourinfo")
