@@ -1,5 +1,6 @@
 package com.diden.demo.tour.vo;
 
+import com.diden.demo.tour.definition.AreaCode;
 import com.diden.demo.tour.definition.ServiceContentTypeCode;
 import com.diden.demo.tour.definition.ServiceHighCode;
 import com.diden.demo.tour.definition.ServiceMiddleCode;
@@ -7,6 +8,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -40,6 +44,12 @@ public class TourAreaInfoResponseDto {
   private String contentTypeName;
   private String highCodeName;
   private String middleCodeName;
+
+  private AreaCode areaTypeCode;
+  private TourSigunguCodeVo tourSigunguCodeVo;
+
+  private String sigunuName;
+  private String areaName;
 
   @Builder
   public TourAreaInfoResponseDto(
@@ -85,7 +95,7 @@ public class TourAreaInfoResponseDto {
     this.mLevel = mLevel;
   }
 
-  public TourAreaInfoResponseDto serviceTypeCodeByEnumTypeCodeAndTitleSettingConverter(
+  public TourAreaInfoResponseDto convertServiceTypeCodeByEnumTypeCodeAndTitleSetting(
       final TourAreaInfoResponseDto tourAreaInfoResponseDto,
       final String serviceContentTypeCode,
       final String serviceHighCode,
@@ -100,13 +110,13 @@ public class TourAreaInfoResponseDto {
     tourAreaInfoResponseDto.setServiceHighCode(highCodeConvert);
     tourAreaInfoResponseDto.setServiceMiddleCode(middleCodeConvert);
 
-    tourAreaInfoResponseDto.serviceTypeCodeTitleConvert(
+    tourAreaInfoResponseDto.convertServiceTypeCodeTitle(
         tourAreaInfoResponseDto, contentTypeCodeConvert, highCodeConvert, middleCodeConvert);
 
     return tourAreaInfoResponseDto;
   }
 
-  public void serviceTypeCodeTitleConvert(
+  public void convertServiceTypeCodeTitle(
       final TourAreaInfoResponseDto tourAreaInfoResponseDto,
       final ServiceContentTypeCode serviceContentTypeCode,
       final ServiceHighCode serviceHighCode,
@@ -115,5 +125,25 @@ public class TourAreaInfoResponseDto {
     tourAreaInfoResponseDto.setContentTypeName(serviceContentTypeCode.getTitle());
     tourAreaInfoResponseDto.setHighCodeName(serviceHighCode.getTitle());
     tourAreaInfoResponseDto.setMiddleCodeName(serviceMiddleCode.getTitle());
+  }
+
+  public TourAreaInfoResponseDto convertSigunuAndAreaCodeByTitle(
+      final TourAreaInfoResponseDto tourAreaInfoResponseDto,
+      final String areaCode,
+      final String sigunuCode,
+      final Map<AreaCode, List<TourSigunguCodeVo>> areaCodeListMap) {
+    final AreaCode areaTypeCode = AreaCode.findArea(Integer.parseInt(areaCode));
+
+    List<TourSigunguCodeVo> tourSigunguCodeVos = areaCodeListMap.get(areaTypeCode);
+    System.out.println("tourSigunguCodeVos = " + tourSigunguCodeVos);
+
+    TourSigunguCodeVo tourSigunguCode =
+        new TourSigunguCodeVo()
+            .findNameByTourSigunguCodeVoList(tourSigunguCodeVos, Integer.parseInt(sigunuCode));
+
+    tourAreaInfoResponseDto.setAreaName(areaTypeCode.getTitle());
+    tourAreaInfoResponseDto.setSigunuName(tourSigunguCode.getName());
+
+    return tourAreaInfoResponseDto;
   }
 }

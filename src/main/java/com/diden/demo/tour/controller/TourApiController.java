@@ -82,7 +82,7 @@ public class TourApiController {
         tourAreaInfoResponseDtos.stream()
             .map(
                 dto ->
-                    dto.serviceTypeCodeByEnumTypeCodeAndTitleSettingConverter(
+                    dto.convertServiceTypeCodeByEnumTypeCodeAndTitleSetting(
                         dto, dto.getContentTypeId(), dto.getCat1(), dto.getCat2()))
             .collect(Collectors.toList());
 
