@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -25,8 +26,18 @@ public class TourServiceImpl implements TourService {
 
   @Override
   public List<TourAreaInfoResponseDto> tourInfoList(Map<String, Object> tourInfoParam) {
-    System.out.println("tourInfoParam=" + tourInfoParam);
-    return tourMapper.tourInfoList(tourInfoParam);
+    final List<TourAreaInfoResponseDto> tourAreaInfoResponseDtos = tourMapper.tourInfoList(tourInfoParam);
+
+    return tourAreaInfoResponseDtos.stream()
+        .map(
+            dto ->
+                dto.convertServiceTypeCodeByEnumTypeCodeAndTitleSetting(
+                    dto, dto.getContentTypeId(), dto.getCat1(), dto.getCat2()))
+        .map(
+            dto ->
+                dto.convertSigunuAndAreaCodeByTitle(
+                    dto, dto.getAreaCode(), dto.getSigunuCode(), this.newSigunguCodeList()))
+        .collect(Collectors.toList());
   }
 
   @Override

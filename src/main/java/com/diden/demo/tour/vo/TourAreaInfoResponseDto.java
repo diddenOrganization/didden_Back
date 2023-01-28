@@ -132,12 +132,11 @@ public class TourAreaInfoResponseDto {
       final String areaCode,
       final String sigunuCode,
       final Map<AreaCode, List<TourSigunguCodeVo>> areaCodeListMap) {
+
     final AreaCode areaTypeCode = AreaCode.findArea(Integer.parseInt(areaCode));
+    final List<TourSigunguCodeVo> tourSigunguCodeVos = areaCodeListMap.get(areaTypeCode);
 
-    List<TourSigunguCodeVo> tourSigunguCodeVos = areaCodeListMap.get(areaTypeCode);
-    System.out.println("tourSigunguCodeVos = " + tourSigunguCodeVos);
-
-    TourSigunguCodeVo tourSigunguCode =
+    final TourSigunguCodeVo tourSigunguCode =
         new TourSigunguCodeVo()
             .findNameByTourSigunguCodeVoList(tourSigunguCodeVos, Integer.parseInt(sigunuCode));
 
