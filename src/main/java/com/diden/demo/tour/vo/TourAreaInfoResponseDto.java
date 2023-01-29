@@ -95,7 +95,18 @@ public class TourAreaInfoResponseDto {
     this.mLevel = mLevel;
   }
 
-  public TourAreaInfoResponseDto convertServiceTypeCodeByEnumTypeCodeAndTitleSetting(
+  public void convertServiceTypeCodeTitle(
+      final TourAreaInfoResponseDto tourAreaInfoResponseDto,
+      final ServiceContentTypeCode serviceContentTypeCode,
+      final ServiceHighCode serviceHighCode,
+      final ServiceMiddleCode serviceMiddleCode) {
+
+    tourAreaInfoResponseDto.setContentTypeName(serviceContentTypeCode.getTitle());
+    tourAreaInfoResponseDto.setHighCodeName(serviceHighCode.getTitle());
+    tourAreaInfoResponseDto.setMiddleCodeName(serviceMiddleCode.getTitle());
+  }
+
+  public void convertServiceTypeCodeByEnumTypeCodeAndTitleSetting(
       final TourAreaInfoResponseDto tourAreaInfoResponseDto,
       final String serviceContentTypeCode,
       final String serviceHighCode,
@@ -109,25 +120,9 @@ public class TourAreaInfoResponseDto {
     tourAreaInfoResponseDto.setServiceContentTypeCode(contentTypeCodeConvert);
     tourAreaInfoResponseDto.setServiceHighCode(highCodeConvert);
     tourAreaInfoResponseDto.setServiceMiddleCode(middleCodeConvert);
-
-    tourAreaInfoResponseDto.convertServiceTypeCodeTitle(
-        tourAreaInfoResponseDto, contentTypeCodeConvert, highCodeConvert, middleCodeConvert);
-
-    return tourAreaInfoResponseDto;
   }
 
-  public void convertServiceTypeCodeTitle(
-      final TourAreaInfoResponseDto tourAreaInfoResponseDto,
-      final ServiceContentTypeCode serviceContentTypeCode,
-      final ServiceHighCode serviceHighCode,
-      final ServiceMiddleCode serviceMiddleCode) {
-
-    tourAreaInfoResponseDto.setContentTypeName(serviceContentTypeCode.getTitle());
-    tourAreaInfoResponseDto.setHighCodeName(serviceHighCode.getTitle());
-    tourAreaInfoResponseDto.setMiddleCodeName(serviceMiddleCode.getTitle());
-  }
-
-  public TourAreaInfoResponseDto convertSigunuAndAreaCodeByTitle(
+  public void convertSigunuAndAreaCodeByTitle(
       final TourAreaInfoResponseDto tourAreaInfoResponseDto,
       final String areaCode,
       final String sigunuCode,
@@ -142,7 +137,5 @@ public class TourAreaInfoResponseDto {
 
     tourAreaInfoResponseDto.setAreaName(areaTypeCode.getTitle());
     tourAreaInfoResponseDto.setSigunuName(tourSigunguCode.getName());
-
-    return tourAreaInfoResponseDto;
   }
 }

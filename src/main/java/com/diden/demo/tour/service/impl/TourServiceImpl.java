@@ -13,10 +13,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -27,17 +27,16 @@ public class TourServiceImpl implements TourService {
   @Override
   public List<TourAreaInfoResponseDto> tourInfoList(Map<String, Object> tourInfoParam) {
     final List<TourAreaInfoResponseDto> tourAreaInfoResponseDtos = tourMapper.tourInfoList(tourInfoParam);
+    final List<TourAreaInfoResponseDto> collectResult = new ArrayList<>();
 
-    return tourAreaInfoResponseDtos.stream()
-        .map(
-            dto ->
-                dto.convertServiceTypeCodeByEnumTypeCodeAndTitleSetting(
-                    dto, dto.getContentTypeId(), dto.getCat1(), dto.getCat2()))
-        .map(
-            dto ->
-                dto.convertSigunuAndAreaCodeByTitle(
-                    dto, dto.getAreaCode(), dto.getSigunuCode(), this.newSigunguCodeList()))
-        .collect(Collectors.toList());
+    for(TourAreaInfoResponseDto dto : tourAreaInfoResponseDtos) {
+      dto.convertServiceTypeCodeByEnumTypeCodeAndTitleSetting(dto, dto.getContentTypeId(), dto.getCat1(), dto.getCat2());
+      dto.convertServiceTypeCodeTitle(dto, dto.getServiceContentTypeCode(), dto.getServiceHighCode(), dto.getServiceMiddleCode());
+      dto.convertSigunuAndAreaCodeByTitle(dto, dto.getAreaCode(), dto.getSigunuCode(), this.newSigunguCodeList());
+      collectResult.add(dto);
+    }
+
+    return collectResult;
   }
 
   @Override
