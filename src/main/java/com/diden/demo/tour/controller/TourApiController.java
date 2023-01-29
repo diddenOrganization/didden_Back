@@ -67,7 +67,7 @@ public class TourApiController {
   public HttpResponse<List<TourAreaInfoResponseDto>> searchKeyword(
       @RequestParam String cat1,
       @RequestParam String cat2,
-      @RequestParam String cat3,
+      @RequestParam(required = false) String cat3,
       @RequestParam(required = false) String keyword) {
     Map<String, Object> tourInfoParam = new HashMap<>();
     tourInfoParam.put("cat1", cat1);
