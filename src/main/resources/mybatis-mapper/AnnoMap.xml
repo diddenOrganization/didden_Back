@@ -3,13 +3,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.diden.demo.anno.AnnoMapper">
-    <select id="findAll" resultType="com.diden.demo.anno.AnnoVo">
+    <select id="findAll" parameterType="Integer" resultType="com.diden.demo.anno.AnnoVo">
         SELECT ANNO_ID
-             , ANNO_TITLE
-             , ANNO_CONTENT
-             , ANNO_CREATEDATE
+        , ANNO_TITLE
+        , ANNO_CONTENT
+        , ANNO_CREATEDATE
         FROM TB_ANNOUNCEMENT
-        ORDER BY ANNO_CREATEDATE DESC
+        <where>
+            <if test="findId != null and findId != 0">
+                AND ANNO_ID <![CDATA[<=]]> #{findId}
+            </if>
+        </where>
+        ORDER BY ANNO_CREATEDATE DESC FETCH NEXT #{limit} + 1 ROWS ONLY
     </select>
 
     <select id="findOne" parameterType="com.diden.demo.anno.AnnoVo" resultType="com.diden.demo.anno.AnnoVo">

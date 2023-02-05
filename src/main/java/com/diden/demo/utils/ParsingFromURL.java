@@ -2,7 +2,7 @@ package com.diden.demo.utils;
 
 import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -13,9 +13,8 @@ import java.net.URL;
  *
  * <p>Retrofit 찾아보기
  */
-@ComponentScan
 @Slf4j
-@Deprecated
+@Component
 public class ParsingFromURL {
 
   private final ParsingJson parsingJson = new ParsingJson();

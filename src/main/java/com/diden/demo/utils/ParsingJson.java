@@ -8,7 +8,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 
 @Component
-@Deprecated
 public class ParsingJson {
   public String getParsingJsonFromURL(HttpURLConnection conn) {
     JsonParser jp = new JsonParser();

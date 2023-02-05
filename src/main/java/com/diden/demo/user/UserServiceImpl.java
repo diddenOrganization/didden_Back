@@ -1,6 +1,7 @@
 package com.diden.demo.user;
 
 import com.diden.demo.error.exception.BadRequestException;
+import com.diden.demo.social.SocialAdepter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -14,7 +15,6 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
   private final UserMapper userMapper;
-  private final List<SocialAdepter> socialAdepterList;
 
   public boolean existsUserEmail(final String userEmail) {
     if (StringUtils.isBlank(userEmail)) {
@@ -88,27 +88,17 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void socialSignup(final String loginType, final String accessToken) {
-
-    for (SocialAdepter socialAdepter : this.socialAdepterList) {
-      if (socialAdepter.supports(loginType)) {
-        final UserVo socialUserVo = socialAdepter.process(accessToken);
-        userInsert(socialUserVo);
-        return;
-      }
-    }
-
-    throw new IllegalArgumentException("소셜 회원가입 실패");
-  }
-
-  @Override
   public String findByLoginType(final String authorization) {
     return userMapper.findByLoginType(authorization);
   }
 
   @Override
-  public List<UserVo> pageable(Integer rowStartNumber) {
-    return userMapper.pageable(rowStartNumber);
-  }
+  public List<UserVo> pageable(final Integer rowStartNumber, final Integer rowLimitNumber) {
+    final List<UserVo> pageableUserList = userMapper.pageable(rowStartNumber, rowLimitNumber);
+    if (pageableUserList.size() > rowLimitNumber) {
+      pageableUserList.remove(rowLimitNumber.intValue());
+    }
 
+    return pageableUserList;
+  }
 }

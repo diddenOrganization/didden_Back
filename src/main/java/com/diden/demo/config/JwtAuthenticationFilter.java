@@ -15,7 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -42,7 +41,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         throw new BadRequestException("계정이 존재하지 않습니다.");
       }
 
-      return new UsernamePasswordAuthenticationToken(userVo.getUserEmail(), userVo.getUserPassword());
+      return new UsernamePasswordAuthenticationToken(
+          userVo.getUserEmail(), userVo.getUserPassword());
     } catch (IOException io) {
       io.printStackTrace();
       throw new RuntimeException("request.getInputStream() IO 에러");
@@ -54,7 +54,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
       HttpServletRequest request,
       HttpServletResponse response,
       FilterChain chain,
-      Authentication authResult) throws IOException {
+      Authentication authResult)
+      throws IOException {
     final String accessToken = jwtTokenUtil.createAccessToken(authResult);
     final String refreshToken = jwtTokenUtil.createRefreshToken(authResult);
 
@@ -70,13 +71,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             .build();
 
     userService.userTokenUpdate(userVo);
-    response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + accessToken);
+    response.addHeader(JwtProperties.AUTHORIZATION, JwtProperties.TOKEN_PREFIX + accessToken);
     response.addHeader(JwtProperties.REFRESH_TOKEN, JwtProperties.TOKEN_PREFIX + refreshToken);
     response.setStatus(HttpStatus.OK.value());
     response.setContentType(MediaType.APPLICATION_JSON_VALUE);
     HttpResponse<Void> httpResponse =
-            HttpResponse.<Void>builder().status(HttpStatus.OK).message("로그인 성공").build();
+        HttpResponse.<Void>builder().status(HttpStatus.OK).message("로그인 성공").build();
     response.getWriter().write(LazyHolderObject.getGson().toJson(httpResponse));
-
   }
 }

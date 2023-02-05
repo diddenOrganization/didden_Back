@@ -1,7 +1,6 @@
 package com.diden.demo.config.adepter;
 
 import com.diden.demo.error.exception.SocialProcessException;
-import com.diden.demo.utils.JwtSocialKakaoTokenUtils;
 import com.diden.demo.utils.JwtSocialNaverTokenUtils;
 import com.diden.demo.utils.JwtSocialTokenCheckInterface;
 import com.google.gson.JsonObject;
@@ -13,18 +12,30 @@ import static com.diden.demo.utils.AccountTypeEnum.NAVER;
 
 @Slf4j
 public class LoginLogoutNaver implements LoginLogoutAdepter {
+  final JwtSocialTokenCheckInterface jwtSocialNaverTokenUtils = new JwtSocialNaverTokenUtils();
+
   @Override
   public boolean supports(String handler) {
     return (NAVER.getAccountType().equals(handler));
   }
 
+  /**
+   *
+   * <a href="https://developers.naver.com/docs/common/openapiguide/errorcode.md">네이버 에러 코드</a>
+   * @param authorization
+   * @return
+   * @throws IOException
+   */
   @Override
   public boolean loginProcess(String authorization) throws IOException {
-    final JwtSocialTokenCheckInterface naver = new JwtSocialNaverTokenUtils();
-    final JsonObject obj = naver.socialAccessToken(authorization);
-    log.info("login check : {}", obj);
-    log.info("login boolean : {}", obj != null);
-    return obj != null;
+    final JsonObject jsonObject =
+        jwtSocialNaverTokenUtils.socialExecuteResponse(authorization);
+
+    if(jsonObject.get("error_code") != null && jsonObject.get("error_code").isJsonPrimitive()) {
+      throw new SocialProcessException(jsonObject.get("message").getAsString());
+    }
+
+    return true;
   }
 
   @Override

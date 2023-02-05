@@ -19,10 +19,20 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
   protected void doFilterInternal(
       final HttpServletRequest request, final HttpServletResponse response, final FilterChain chain)
       throws ServletException, IOException {
-    // 토큰 검증
+
+    log.info(
+        ":::::::::::::::::::::::::::::::::::::: Request Start ::::::::::::::::::::::::::::::::::::::");
+    log.info(
+        "::::::::: request URI ==> [{}] {} :::::::::",
+        request.getMethod(),
+        request.getRequestURI());
+
     log.info(":: JwtAuthorizationFilter.doFilterInternal.loginTokenCheckMethod  ==  토큰 검증 시작 ::");
-    if (this.tokenAdepterInterface.loginTokenCheckMethod(request)) {
+    if (this.tokenAdepterInterface.loginTokenCheckMethod(request)) { // 토큰 검증
       chain.doFilter(request, response);
     }
+
+    log.info(
+        ":::::::::::::::::::::::::::::::::::::: Request End ::::::::::::::::::::::::::::::::::::::");
   }
 }

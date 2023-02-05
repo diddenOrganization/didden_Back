@@ -1,15 +1,13 @@
 package com.diden.demo.error;
 
-import com.diden.demo.error.exception.BadRequestException;
-import com.diden.demo.error.exception.DataNotProcessExceptions;
-import com.diden.demo.error.exception.NotFoundDataException;
-import com.diden.demo.error.exception.TokenException;
+import com.diden.demo.error.exception.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -42,6 +40,8 @@ public class GeneralExceptionHandler {
     TokenException.class,
     IllegalArgumentException.class,
     HttpMessageNotReadableException.class,
+    MissingServletRequestParameterException.class,
+    SocialProcessException.class,
   })
   public ExceptionVo badRequest(final RuntimeException e) {
     log.error(e.toString());
@@ -58,7 +58,8 @@ public class GeneralExceptionHandler {
         .message(
             e.getConstraintViolations().stream()
                 .map(ConstraintViolation::getMessage)
-                .collect(Collectors.joining()))
+                .findFirst()
+                .get())
         .status(HttpStatus.BAD_REQUEST)
         .build();
   }

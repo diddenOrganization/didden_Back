@@ -25,6 +25,7 @@ class LoginLogoutNaverTest {
    */
   private final String NAVER_ACCESS_TOKEN =
       "AAAAOumpWX76h1R2gXT0kmj5QDDVTEmzjPgNIQLAKXWyCDHZhs-HhIyADsKgAnorOuTlsWkjHQ9_JED6s8KZ8wLCW5A";
+  private LoginLogoutAdepter loginLogoutAdepter;
 
   @Test
   void supports() {}
@@ -40,6 +41,17 @@ class LoginLogoutNaverTest {
         apiService.getJwtNaverAccessToken(JwtProperties.TOKEN_PREFIX + NAVER_ACCESS_TOKEN);
 
     System.out.println(naverUser.execute().body().get("response"));
+  }
+
+  @Test
+  void loginProcess_naver() throws IOException {
+    // Client ID : 7wEVAYsChBxD4sQAPzzJ
+    // Client Secret : LXVTpar6AQ
+    // String apiUri = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
+    //String naverAccessToken = "AAAAOHoCJbQ5XV_ttOMxYIc16OjMcwCoYoDumOv--YvaxntTpaYpBm4-NlVrr0ND12t2Q6Lqc_NqlsLLEX4XhGZo5S4";
+    String naverAccessToken = "AAAAOHoCJbQ5XV_ttOMxYIc16OjMcwCoYoDumOv--YvaxntTpaYpBm4-NlVrr0ND12t2Q6Lqc_NqlsLLEX4XhGZo5S4";
+    loginLogoutAdepter = new LoginLogoutNaver();
+    loginLogoutAdepter.loginProcess(naverAccessToken);
   }
 
   @Test
