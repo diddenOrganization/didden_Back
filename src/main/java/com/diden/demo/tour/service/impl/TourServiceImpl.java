@@ -90,4 +90,15 @@ public class TourServiceImpl implements TourService {
     }
     return tourDataList;
   }
+
+
+  @Override
+  public void tourInfoOverViewUpdate(Map<String, Object> tourInfoParam) {
+    tourMapper.tourInfoOverViewUpdate(tourInfoParam);
+  }
+
+  @Override
+  public void tourInfoAreaNameUpdate(Map<String, Object> tourInfoParam) {
+    tourMapper.tourInfoOverViewUpdate(tourInfoParam);
+  }
 }

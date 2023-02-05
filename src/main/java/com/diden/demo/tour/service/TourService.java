@@ -24,4 +24,7 @@ public interface TourService {
   List<CommonTourResponseDto> tourInfoList(CommonTourInfoVo commonTourInfoVo);
   Map<ServiceContentTypeCode, List<CommonTourResponseDto>> newTourInfoListTest();
   Map<AreaCode, List<TourSigunguCodeVo>> newSigunguCodeList();
+  void tourInfoOverViewUpdate(Map<String, Object> tourInfoParam);
+
+  void tourInfoAreaNameUpdate(Map<String, Object> tourInfoParam);
 }

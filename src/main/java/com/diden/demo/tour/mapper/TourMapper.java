@@ -40,5 +40,8 @@ public interface TourMapper {
   List<CommonTourResponseDto> newTourInfoListTest(@Param("contentTypeId") Integer contentTypeId, @Param("areaCode") Integer areaCode);
 
   List<TourSigunguCodeVo> newSigunguCodeList(@Param("areaCode") Integer areaCode);
+  void tourInfoOverViewUpdate(Map<String, Object> tourInfoParam);
+
+  void tourInfoAreaNameUpdate(Map<String, Object> tourInfoParam);
 
 }
