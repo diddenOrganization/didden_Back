@@ -65,7 +65,7 @@ public class TourApiController {
      * @param cat1, cat2, cat3, keyword
      * @return
      */
-    @GetMapping(value = "/tour/api/info/searchKeyword")
+    @GetMapping(value = "/searchKeyword")
     public List<TourAreaInfoResponseDto> searchKeyword(
         @RequestParam String cat1,
         @RequestParam String cat2,
