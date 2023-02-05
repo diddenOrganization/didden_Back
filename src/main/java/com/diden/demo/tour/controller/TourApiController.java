@@ -1,7 +1,6 @@
 package com.diden.demo.tour.controller;
 
 import com.diden.demo.tour._dto.CommonTourResponseDto;
-import com.diden.demo.tour._vo.CommonTourInfoVo;
 import com.diden.demo.tour.definition.*;
 import com.diden.demo.tour.service.TourService;
 import com.diden.demo.tour.vo.TourAreaInfoResponseDto;
@@ -62,12 +61,12 @@ public class TourApiController {
 
     /**
      * 키워드 검색 조회
-     *
-     * @param "/tour/api/info/searchKeyword"
+     *  @param "/tour/api/info/searchKeyword"
      * @param cat1, cat2, cat3, keyword
+     * @return
      */
     @GetMapping(value = "/tour/api/info/searchKeyword")
-    public List<Map<String, Object>> searchKeyword(
+    public List<TourAreaInfoResponseDto> searchKeyword(
         @RequestParam String cat1,
         @RequestParam String cat2,
         @RequestParam String cat3,
@@ -79,16 +78,16 @@ public class TourApiController {
       tourInfoParam.put("cat3", cat3);
       tourInfoParam.put("keyword", keyword);
 
-      List<Map<String, Object>> mList = tourService.tourInfoList(tourInfoParam);
+      List<TourAreaInfoResponseDto> mList = tourService.tourInfoList(tourInfoParam);
       ObjectMapper mapper = new ObjectMapper();
       ParsingFromURL parsingFromURL = new ParsingFromURL();
       Map<String, Object> map = new HashMap<>();
 
       for(int i = 0; i < mList.size(); i++){
           log.info("mList.get("+i+") = "+mList.get(i));
-          String overview = (String) mList.get(i).get("overview");
-          String contentId = (String) mList.get(i).get("contentid");
-          String areaCode = (String) mList.get(i).get("areacode");
+          String overview = (String) mList.get(i).getOverview();
+          String contentId = (String) mList.get(i).getContentId();
+          String areaCode = (String) mList.get(i).getAreaCode();
 
           if(overview == null){
               map = new HashMap<>();
@@ -100,7 +99,7 @@ public class TourApiController {
                                   + "?serviceKey="
                                   + SERVICE_DEV_KEY
                                   + "&contentId="
-                                  + new ObjectMapper().writeValueAsString(mList.get(i).get("contentid")).replaceAll("\"","")
+                                  + new ObjectMapper().writeValueAsString(mList.get(i).getContentId()).replaceAll("\"","")
                                   + "&overviewYN=Y&MobileOS=ETC&MobileApp=AppTest";
 
                   JsonNode OverViewjson = mapper.readTree(parsingFromURL.getParsingURL(tourDetailCommonUrl));
@@ -124,7 +123,7 @@ public class TourApiController {
                           + "?serviceKey="
                           + SERVICE_DEV_KEY
                           + "&areaCode="
-                          + new ObjectMapper().writeValueAsString(mList.get(i).get("areacode")).replaceAll("\"","")
+                          + new ObjectMapper().writeValueAsString(mList.get(i).getAreaCode()).replaceAll("\"","")
                           + "&numOfRows=1&pageNo=1&MobileOS=ETC&MobileApp=AppTest";
                   JsonNode AreaNamejson = mapper.readTree(parsingFromURL.getParsingURL(tourAreaCodeUrl));
 
