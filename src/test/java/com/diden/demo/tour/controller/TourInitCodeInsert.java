@@ -1,9 +1,9 @@
 package com.diden.demo.tour.controller;
 
 import com.diden.demo.TestStartConfig;
-import com.diden.demo.tour.mapper.TourMapper;
-import com.diden.demo.tour.vo.TourAreaCodeVo;
-import com.diden.demo.utils.ParsingFromURL;
+import com.diden.demo.common.utils.ParsingFromURL;
+import com.diden.demo.domain.tour.mapper.TourMapper;
+import com.diden.demo.domain.tour.vo.TourAreaCodeVo;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

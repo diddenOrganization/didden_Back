@@ -1,8 +1,8 @@
 package com.diden.demo.anno;
 
-import com.diden.demo.config.LazyHolderObject;
-import com.diden.demo.user.UserVo;
-import com.diden.demo.utils.JwtProperties;
+import com.diden.demo.common.config.properties.JwtProperties;
+import com.diden.demo.common.utils.LazyHolderObject;
+import com.diden.demo.domain.anno.vo.response.AnnoVo;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,7 +38,7 @@ class AnnoControllerTest {
   @Commit
   @BeforeEach
   void setup() throws Exception {
-    UserVo userVo = UserVo.builder().userEmail("bioman3238@gmail.com").userPassword("test").build();
+    UserDto userVo = UserDto.builder().userEmail("bioman3238@gmail.com").userPassword("test").build();
 
     accessToken =
         mockMvc

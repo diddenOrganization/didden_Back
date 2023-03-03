@@ -1,12 +1,13 @@
 package com.diden.demo.utils;
 
+import com.diden.demo.common.config.properties.JwtProperties;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
 
-import static com.diden.demo.utils.JwtProperties.SECRET;
+import static com.diden.demo.common.config.properties.JwtProperties.SECRET;
 
 class JwtTokenUtilTest {
 

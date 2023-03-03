@@ -1,8 +1,7 @@
 package com.diden.demo.config;
 
-import com.diden.demo.user.UserVo;
-import com.diden.demo.utils.JwtProperties;
-import com.diden.demo.utils.JwtTokenUtil;
+import com.diden.demo.common.config.properties.JwtProperties;
+import com.diden.demo.common.jwt.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,7 +25,7 @@ class JwtAuthorizationFilterTest {
   @Test
   @DisplayName("JWT 토큰인가 - 정상적으로 토큰 인가 확인")
   void doFilterInternal() throws Exception {
-    UserVo userVo = UserVo.builder().userEmail("test@test").userPassword("1234").build();
+    UserDto userVo = UserDto.builder().userEmail("test@test").userPassword("1234").build();
     Authentication authentication =
         new UsernamePasswordAuthenticationToken(userVo.getUserEmail(), userVo.getUserPassword());
 

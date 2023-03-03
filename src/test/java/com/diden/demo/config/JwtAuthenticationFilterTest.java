@@ -1,7 +1,6 @@
 package com.diden.demo.config;
 
-import com.diden.demo.user.UserVo;
-import com.diden.demo.utils.AccountTypeEnum;
+import com.diden.demo.domain.user.enums.AccountTypeEnum;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -29,8 +28,8 @@ class JwtAuthenticationFilterTest {
   @Rollback
   @DisplayName("JWT 인증필터 - 로그인 성공")
   void login() throws Exception {
-    UserVo user =
-        UserVo.builder()
+    UserDto user =
+        UserDto.builder()
             .userEmail("bioman3238@gmail.com")
             .userPassword("test")
             .userLoginType(AccountTypeEnum.DEFAULT.getAccountType())

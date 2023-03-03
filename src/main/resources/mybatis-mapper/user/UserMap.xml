@@ -2,12 +2,12 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.diden.demo.user.UserMapper">
-    <resultMap id="userVo" type="com.diden.demo.user.UserVo">
-        <result column="USER_GENDER" property="userGender"
-                typeHandler="com.diden.demo.user.UserGenderConverterHandler"/>
-        <result column="USER_PRIVACY_CONSENT" property="userPrivacyConsent"
-                typeHandler="com.diden.demo.user.UserPrivacyConsentConverterHandler"/>
+<mapper namespace="com.diden.demo.domain.user.repository.UserMapper">
+    <resultMap id="userVo" type="com.diden.demo.api.user.dto.UserDto">
+        <result column="USER_GENDER" property="userGenderEnum"
+                typeHandler="com.diden.demo.domain.user.converter.UserGenderConverterHandler"/>
+        <result column="USER_PRIVACY_CONSENT" property="userPrivacyConsentEnum"
+                typeHandler="com.diden.demo.domain.user.converter.UserPrivacyConsentConverterHandler"/>
     </resultMap>
 
     <select id="emailDuplicateCheck" resultType="boolean">
@@ -58,7 +58,7 @@
         FROM TB_USER
     </select>
 
-    <select id="userInfo" parameterType="com.diden.demo.user.UserVo" resultMap="userVo">
+    <select id="userInfo" parameterType="com.diden.demo.api.user.dto.UserDto" resultMap="userVo">
         SELECT USER_ID
              , USER_NAME
              , USER_PASSWORD
@@ -97,7 +97,7 @@
         WHERE USER_EMAIL = #{userEmail}
     </select>
 
-    <select id="userRefreshTokenInfo" parameterType="com.diden.demo.user.UserVo"
+    <select id="userRefreshTokenInfo" parameterType="com.diden.demo.api.user.dto.UserDto"
             resultMap="userVo">
         SELECT USER_ID
              , USER_NAME
@@ -117,7 +117,7 @@
         WHERE USER_REFRESH_TOKEN = #{userRefreshToken}
     </select>
 
-    <select id="userCount" parameterType="com.diden.demo.user.UserVo" resultType="_integer">
+    <select id="userCount" parameterType="com.diden.demo.api.user.dto.UserDto" resultType="_integer">
         SELECT COUNT(*)
         FROM TB_USER
         <where>
@@ -125,14 +125,14 @@
         </where>
     </select>
 
-    <select id="userCheck" parameterType="com.diden.demo.user.UserVo" resultType="_integer">
+    <select id="userCheck" parameterType="com.diden.demo.api.user.dto.UserDto" resultType="_integer">
         SELECT COUNT(*)
         FROM TB_USER
         WHERE USER_EMAIL = #{userEmail}
           AND USER_PASSWORD = #{userPassword}
     </select>
 
-    <insert id="userInsert" parameterType="com.diden.demo.user.UserVo">
+    <insert id="userInsert" parameterType="com.diden.demo.api.user.dto.UserDto">
         INSERT INTO TB_USER ( USER_PASSWORD
                             , USER_NICKNAME
                             , USER_BIRTHDAY
@@ -146,36 +146,36 @@
         VALUES ( #{userPassword}
                , #{userNickname}
                , #{userBirthday}
-               , #{userGender.gender}
+               , #{userGenderEnum.gender}
                , #{userEmail}
                , #{userPhoneNumber}
-               , #{userPrivacyConsent.choice}
+               , #{userPrivacyConsentEnum.choice}
                , #{userLoginType}
                , #{userRefreshToken}
                , #{userAccessToken})
     </insert>
 
-    <update id="userUpdate" parameterType="com.diden.demo.user.UserVo">
+    <update id="userUpdate" parameterType="com.diden.demo.api.user.dto.UserDto">
         UPDATE tb_user
         SET USER_PASSWORD        = #{userPassword}
           , USER_NICKNAME        = #{userNickname}
           , USER_BIRTHDAY        = #{userBirthday}
-          , USER_GENDER          = #{userGender.gender}
+          , USER_GENDER          = #{userGenderEnum.gender}
           , USER_EMAIL           = #{userEmail}
           , USER_PHONE_NUMBER    = #{userPhoneNumber}
-          , USER_PRIVACY_CONSENT = #{userPrivacyConsent.choice}
+          , USER_PRIVACY_CONSENT = #{userPrivacyConsentEnum.choice}
           , USER_UPDATE_DATE     = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
         WHERE USER_EMAIL = #{userEmail}
     </update>
 
-    <update id="userTokenUpdate" parameterType="com.diden.demo.user.UserVo">
+    <update id="userTokenUpdate" parameterType="com.diden.demo.api.user.dto.UserDto">
         UPDATE tb_user
         SET USER_REFRESH_TOKEN = #{userRefreshToken},
             USER_ACCESS_TOKEN  = #{userAccessToken}
         WHERE USER_EMAIL = #{userEmail}
     </update>
 
-    <delete id="userDelete" parameterType="com.diden.demo.user.UserVo">
+    <delete id="userDelete" parameterType="com.diden.demo.api.user.dto.UserDto">
         DELETE
         FROM TB_USER
         WHERE USER_EMAIL = #{userId}
