@@ -58,6 +58,7 @@ public class TourApiController {
     System.out.println("URL => " + tourDetailCommonUrl);
     return parsingFromURL.getParsingURL(tourDetailCommonUrl);
   }
+    
 
     /**
      * 키워드 검색 조회

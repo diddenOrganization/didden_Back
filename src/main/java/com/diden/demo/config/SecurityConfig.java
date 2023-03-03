@@ -25,7 +25,7 @@ public class SecurityConfig {
   private final TokenAdepterInterface tokenAdepterInterface;
   private final ExceptionHandlerFilter exceptionHandlerFilter;
   private final JwtLogoutHandlerFilter jwtLogoutHandlerFilter;
-  private final AuthenticationEntryPoint customAuthenticationEntryPoint;
+  private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
   @Bean
   public BCryptPasswordEncoder bCryptPasswordEncoder() {

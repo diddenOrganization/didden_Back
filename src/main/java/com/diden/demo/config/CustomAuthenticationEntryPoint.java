@@ -25,12 +25,12 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
       HttpServletResponse response,
       AuthenticationException authException) {
 
-    response.setStatus(HttpStatus.FORBIDDEN.value());
+    response.setStatus(HttpStatus.UNAUTHORIZED.value());
     response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
     final ExceptionVo<Object> exceptionVo =
         ExceptionVo.builder()
-            .status(HttpStatus.FORBIDDEN)
+            .status(HttpStatus.UNAUTHORIZED)
             .message(authException.getLocalizedMessage())
             .build();
 
