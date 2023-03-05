@@ -1,11 +1,13 @@
 package com.diden.demo.api.anno.controller;
 
+import com.diden.demo.api.anno.dto.request.AnnoDtoRequest;
 import com.diden.demo.api.anno.dto.response.AnnoDtoResponse;
 import com.diden.demo.common.error.exception.BadRequestException;
 import com.diden.demo.common.error.exception.DataNotProcessExceptions;
 import com.diden.demo.common.response.HttpResponse;
 import com.diden.demo.common.utils.LazyHolderObject;
 import com.diden.demo.domain.anno.service.AnnoService;
+import com.diden.demo.domain.anno.vo.request.AnnoVoRequest;
 import com.diden.demo.domain.anno.vo.response.AnnoVo;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +33,6 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/anno", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AnnoController {
   private final AnnoService annoService;
-  private final Gson gson = LazyHolderObject.getGson();
 
   /**
    * 공지사항 전체목록
@@ -53,8 +54,7 @@ public class AnnoController {
       nextSeq = Integer.valueOf(annoVoList.pollLast().getAnnoId());
     }
 
-    return HttpResponse.toPageResponse(
-        HttpStatus.OK, "공지사항 목록을 호출합니다.", annoVoList, nextSeq);
+    return HttpResponse.toPageResponse(HttpStatus.OK, "공지사항 목록을 호출합니다.", annoVoList, nextSeq);
   }
 
   /**
@@ -65,19 +65,20 @@ public class AnnoController {
    *     annoService.findOne(newAnnoVo));
    */
   @GetMapping(value = "/{id}")
-  public HttpResponse<AnnoVo> findOne(
+  public HttpResponse<AnnoDtoResponse> findOne(
       @PathVariable("id") @NotBlank(message = "공지사항 아이디가 존재하지 않습니다.") final String paramId) {
     if (!StringUtils.isNumeric(paramId)) {
       throw new BadRequestException("숫자만 입력할 수 있습니다.");
     }
 
-    final AnnoVo newAnnoVo = AnnoVo.builder().annoId(paramId).build();
-    final AnnoVo findAnno = annoService.findOne(newAnnoVo);
+    final AnnoDtoRequest annoDtoRequest = AnnoDtoRequest.builder().annoId(paramId).build();
+    final AnnoVo findAnno = annoService.findOne(AnnoDtoRequest.transportDataByAnnoDtoRequest(annoDtoRequest));
+    final AnnoDtoResponse annoDtoResponse = AnnoDtoResponse.transformDataByAnnoVo(findAnno);
 
-    if (findAnno == null) {
+    if (annoDtoResponse == null) {
       return HttpResponse.toResponse(HttpStatus.OK, "공지사항이 존재하지 않습니다.", null);
     } else {
-      return HttpResponse.toResponse(HttpStatus.OK, "공지사항 1건 호출합니다.", findAnno);
+      return HttpResponse.toResponse(HttpStatus.OK, "공지사항 1건 호출합니다.", annoDtoResponse);
     }
   }
 
@@ -90,15 +91,17 @@ public class AnnoController {
   @PostMapping
   public HttpResponse<Void> save(
       @RequestBody(required = false) @NotNull(message = "공지사항이 존재하지 않습니다.") @Valid
-          final AnnoVo annoVo) {
-    final AnnoVo newAnnoVo =
-        AnnoVo.builder()
-            .annoId(annoVo.getAnnoId())
-            .annoTitle(annoVo.getAnnoTitle())
-            .annoContent(annoVo.getAnnoContent())
+          final AnnoDtoRequest annoDtoRequest) {
+    final AnnoDtoRequest newAnnoDtoRequest =
+            AnnoDtoRequest.builder()
+            .annoId(annoDtoRequest.getAnnoId())
+            .annoTitle(annoDtoRequest.getAnnoTitle())
+            .annoContent(annoDtoRequest.getAnnoContent())
             .build();
 
-    if (annoService.save(newAnnoVo) > 0) {
+    final int save = annoService.save(AnnoDtoRequest.transportDataByAnnoDtoRequest(newAnnoDtoRequest));
+
+    if (save > 0) {
       return HttpResponse.toResponse(HttpStatus.CREATED, "공지사항이 생성되었습니다.");
     } else {
       throw new DataNotProcessExceptions("공지사항이 저장되지 않았습니다.");
@@ -114,25 +117,25 @@ public class AnnoController {
    *     annoService.findOne(newAnnoVo));
    */
   @PatchMapping(value = "/{id}")
-  public HttpResponse<AnnoVo> update(
-      @RequestBody(required = false) @NotNull(message = "공지사항이 존재하지 않습니다.") @Valid
-          final AnnoVo annoVo,
-      @PathVariable(value = "id") @NotBlank(message = "공지사항 아이디가 존재하지 않습니다.")
-          final String paramId) {
+  public HttpResponse<AnnoDtoResponse> update(
+      @RequestBody(required = false) @NotNull(message = "공지사항이 존재하지 않습니다.") @Valid final AnnoDtoRequest annoDtoRequest,
+      @PathVariable(value = "id") @NotBlank(message = "공지사항 아이디가 존재하지 않습니다.") final String paramId) {
     if (!StringUtils.isNumeric(paramId)) {
       throw new BadRequestException("숫자만 입력할 수 있습니다.");
     }
 
-    final AnnoVo newAnnoVo =
-        AnnoVo.builder()
+    final AnnoDtoRequest newAnnoDtoRequest =
+            AnnoDtoRequest.builder()
             .annoId(paramId)
-            .annoTitle(annoVo.getAnnoTitle())
-            .annoContent(annoVo.getAnnoContent())
+            .annoTitle(annoDtoRequest.getAnnoTitle())
+            .annoContent(annoDtoRequest.getAnnoContent())
             .build();
 
-    if (annoService.update(newAnnoVo) > 0) {
-      return HttpResponse.toResponse(
-          HttpStatus.OK, "공지사항이 수정되었습니다.", annoService.findOne(newAnnoVo));
+    final AnnoVoRequest annoVoRequest = AnnoDtoRequest.transportDataByAnnoDtoRequest(newAnnoDtoRequest);
+    final int update = annoService.update(AnnoDtoRequest.transportDataByAnnoDtoRequest(newAnnoDtoRequest));
+
+    if (update > 0) {
+      return HttpResponse.toResponse(HttpStatus.OK, "공지사항이 수정되었습니다.", AnnoDtoResponse.transformDataByAnnoVo(annoService.findOne(annoVoRequest)));
     } else {
       return HttpResponse.toResponse(HttpStatus.OK, "공지사항이 존재하지 않습니다.", null);
     }

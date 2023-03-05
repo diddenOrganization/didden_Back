@@ -1,6 +1,7 @@
 package com.diden.demo.domain.main.repository;
 
-import com.diden.demo.domain.main.vo.MainContentVo;
+import com.diden.demo.domain.main.vo.request.MainContentVoRequest;
+import com.diden.demo.domain.main.vo.response.MainContentVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -11,11 +12,11 @@ public interface MainContentMapper {
   List<MainContentVo> findMainContentImageAll();
 
   /** findMainContentImageOne 메인화면 이미지 목록 한개 출력 */
-  MainContentVo findMainContentImageOne(MainContentVo mainContentVo);
+  MainContentVo findMainContentImageOne(MainContentVoRequest mainContentVoRequest);
 
   /** findMainContentImageCount 메인화면 이미지 목록 갯수 */
   Long findMainContentImageCount();
 
   /** */
-  void saveMainContentImages(MainContentVo mainContentVo);
+  void saveMainContentImages(MainContentVoRequest mainContentVoRequest);
 }

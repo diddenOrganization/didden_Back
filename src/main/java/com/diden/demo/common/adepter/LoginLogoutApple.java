@@ -1,6 +1,6 @@
 package com.diden.demo.common.adepter;
 
-import com.diden.demo.common.error.exception.SocialProcessException;
+import com.diden.demo.domain.user.exception.SocialProcessException;
 
 import static com.diden.demo.domain.user.enums.AccountTypeEnum.APPLE;
 

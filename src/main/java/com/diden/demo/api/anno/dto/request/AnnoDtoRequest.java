@@ -1,5 +1,6 @@
 package com.diden.demo.api.anno.dto.request;
 
+import com.diden.demo.domain.anno.vo.request.AnnoVoRequest;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -20,5 +21,14 @@ public class AnnoDtoRequest {
     this.annoTitle = annoTitle;
     this.annoContent = annoContent;
     this.annoCreateDate = annoCreateDate;
+  }
+
+  public static AnnoVoRequest transportDataByAnnoDtoRequest(AnnoDtoRequest annoDtoRequest) {
+    return AnnoVoRequest.builder()
+            .annoId(annoDtoRequest.getAnnoId())
+            .annoTitle(annoDtoRequest.getAnnoTitle())
+            .annoContent(annoDtoRequest.getAnnoContent())
+            .annoCreateDate(annoDtoRequest.getAnnoCreateDate())
+            .build();
   }
 }

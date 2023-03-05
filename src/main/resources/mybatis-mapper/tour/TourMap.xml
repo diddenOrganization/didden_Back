@@ -2,8 +2,8 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.diden.demo.domain.tour.mapper.TourMapper">
-    <resultMap id="commonTourResponseDto" type="com.diden.demo.domain.tour._dto.CommonTourResponseDto">
+<mapper namespace="com.diden.demo.domain.tour.repository.TourMapper">
+    <resultMap id="commonTourResponseDto" type="com.diden.demo.api.tour.dto.response.CommonTourResponseDto">
         <result column="AREACODE" property="areaCode"
                 typeHandler="com.diden.demo.domain.tour.converter.AreaCodeConverterHandler"/>
         <result column="SERVICECONTENTTYPECODE" property="serviceContentTypeCode"

@@ -1,7 +1,7 @@
 package com.diden.demo.common.jwt;
 
 import com.diden.demo.common.config.properties.SocialJwtProperties;
-import com.diden.demo.common.error.exception.SocialProcessException;
+import com.diden.demo.domain.user.exception.SocialProcessException;
 import com.diden.demo.common.utils.LazyHolderObject;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;

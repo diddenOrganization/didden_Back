@@ -1,9 +1,9 @@
 package com.diden.demo.common.utils;
 
-import com.diden.demo.domain.tour.definition.MobileOSType;
-import com.diden.demo.domain.tour.definition.ServiceContentTypeCode;
-import com.diden.demo.domain.tour.definition.ServiceHighCode;
-import com.diden.demo.domain.tour.definition.ServiceMiddleCode;
+import com.diden.demo.domain.tour.enums.MobileOSType;
+import com.diden.demo.domain.tour.enums.ServiceContentTypeCode;
+import com.diden.demo.domain.tour.enums.ServiceHighCode;
+import com.diden.demo.domain.tour.enums.ServiceMiddleCode;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Optional;

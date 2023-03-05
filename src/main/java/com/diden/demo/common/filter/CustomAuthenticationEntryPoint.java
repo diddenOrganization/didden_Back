@@ -1,6 +1,6 @@
 package com.diden.demo.common.filter;
 
-import com.diden.demo.common.error.ExceptionVo;
+import com.diden.demo.common.error.dto.response.ExceptionDtoResponse;
 import com.diden.demo.common.utils.LazyHolderObject;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
@@ -29,20 +29,20 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     response.setStatus(HttpStatus.UNAUTHORIZED.value());
     response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
-    final ExceptionVo<Object> exceptionVo =
-        ExceptionVo.builder()
+    final ExceptionDtoResponse<Object> exceptionDtoResponse =
+        ExceptionDtoResponse.builder()
             .status(HttpStatus.UNAUTHORIZED)
             .message(authException.getLocalizedMessage())
             .build();
 
     if (authException instanceof InsufficientAuthenticationException) {
-      exceptionVo.setMessage("로그인을 하지 않았거나 토큰이 정상적이지 않습니다.");
+      exceptionDtoResponse.setMessage("로그인을 하지 않았거나 토큰이 정상적이지 않습니다.");
     }
 
     try {
       log.error(authException.toString());
-      log.debug(":: CustomAuthenticationEntryPoint.commence = {} ::", exceptionVo);
-      response.getWriter().write(gson.toJson(exceptionVo));
+      log.debug(":: CustomAuthenticationEntryPoint.commence = {} ::", exceptionDtoResponse);
+      response.getWriter().write(gson.toJson(exceptionDtoResponse));
     } catch (IOException e) {
       log.error("{}", e.toString());
       e.printStackTrace();

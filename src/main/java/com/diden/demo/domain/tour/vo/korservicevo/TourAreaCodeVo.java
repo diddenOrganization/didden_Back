@@ -1,6 +1,6 @@
 package com.diden.demo.domain.tour.vo.korservicevo;
 
-import com.diden.demo.domain.tour.TourProperties;
+import com.diden.demo.common.config.properties.TourProperties;
 import com.google.gson.annotations.SerializedName;
 import lombok.Builder;
 import lombok.Getter;

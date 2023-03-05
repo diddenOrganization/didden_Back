@@ -1,6 +1,6 @@
 package com.diden.demo.domain.tour.converter;
 
-import com.diden.demo.domain.tour.definition.AreaCode;
+import com.diden.demo.domain.tour.enums.AreaCode;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;

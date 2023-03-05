@@ -1,9 +1,9 @@
 package com.diden.demo.domain.tour.vo;
 
-import com.diden.demo.domain.tour.definition.AreaCode;
-import com.diden.demo.domain.tour.definition.ServiceContentTypeCode;
-import com.diden.demo.domain.tour.definition.ServiceHighCode;
-import com.diden.demo.domain.tour.definition.ServiceMiddleCode;
+import com.diden.demo.domain.tour.enums.AreaCode;
+import com.diden.demo.domain.tour.enums.ServiceContentTypeCode;
+import com.diden.demo.domain.tour.enums.ServiceHighCode;
+import com.diden.demo.domain.tour.enums.ServiceMiddleCode;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

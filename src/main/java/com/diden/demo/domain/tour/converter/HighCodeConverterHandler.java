@@ -1,6 +1,6 @@
 package com.diden.demo.domain.tour.converter;
 
-import com.diden.demo.domain.tour.definition.ServiceHighCode;
+import com.diden.demo.domain.tour.enums.ServiceHighCode;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
 

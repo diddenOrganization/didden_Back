@@ -1,7 +1,8 @@
 package com.diden.demo.domain.main.service;
 
 import com.diden.demo.domain.main.repository.MainContentMapper;
-import com.diden.demo.domain.main.vo.MainContentVo;
+import com.diden.demo.domain.main.vo.request.MainContentVoRequest;
+import com.diden.demo.domain.main.vo.response.MainContentVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class MainContentServiceImpl implements MainContentService {
   }
 
   @Override
-  public MainContentVo findMainContentImageOne(MainContentVo mainContentVo) {
+  public MainContentVo findMainContentImageOne(MainContentVoRequest mainContentVoRequest) {
     return null;
   }
 
@@ -30,7 +31,7 @@ public class MainContentServiceImpl implements MainContentService {
   }
 
   @Override
-  public void saveMainContentImages(MainContentVo mainContentVo) {
-    mainContentMapper.saveMainContentImages(mainContentVo);
+  public void saveMainContentImages(MainContentVoRequest mainContentVoRequest) {
+    mainContentMapper.saveMainContentImages(mainContentVoRequest);
   }
 }

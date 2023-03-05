@@ -1,6 +1,7 @@
 package com.diden.demo.domain.anno.service;
 
 import com.diden.demo.domain.anno.repository.AnnoMapper;
+import com.diden.demo.domain.anno.vo.request.AnnoVoRequest;
 import com.diden.demo.domain.anno.vo.response.AnnoVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,16 +18,16 @@ public class AnnoServiceImpl implements AnnoService {
     return annoMapper.findAll(findId, limit);
   }
 
-  public AnnoVo findOne(final AnnoVo annoVo) {
-    return annoMapper.findOne(annoVo);
+  public AnnoVo findOne(final AnnoVoRequest annoVoRequest) {
+    return annoMapper.findOne(annoVoRequest);
   }
 
-  public int save(final AnnoVo annoVo) {
-    return annoMapper.save(annoVo);
+  public int save(final AnnoVoRequest annoVoRequest) {
+    return annoMapper.save(annoVoRequest);
   }
 
-  public int update(final AnnoVo annoVo) {
-    return annoMapper.update(annoVo);
+  public int update(final AnnoVoRequest annoVoRequest) {
+    return annoMapper.update(annoVoRequest);
   }
 
   public int delete(final String annoId) {

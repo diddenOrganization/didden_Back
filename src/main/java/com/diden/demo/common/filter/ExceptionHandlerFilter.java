@@ -1,6 +1,6 @@
 package com.diden.demo.common.filter;
 
-import com.diden.demo.common.error.ExceptionVo;
+import com.diden.demo.common.error.dto.response.ExceptionDtoResponse;
 import com.diden.demo.common.error.exception.BadRequestException;
 import com.diden.demo.common.error.exception.TokenException;
 import com.diden.demo.common.utils.LazyHolderObject;
@@ -50,12 +50,12 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
   public void setExceptionResponse(HttpStatus status, HttpServletResponse response, Throwable ex) {
     response.setStatus(status.value());
     response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-    final ExceptionVo<Object> exceptionVo =
-        ExceptionVo.builder().status(status).message(ex.getMessage()).build();
+    final ExceptionDtoResponse<Object> exceptionDtoResponse =
+        ExceptionDtoResponse.builder().status(status).message(ex.getMessage()).build();
 
     try {
-      log.debug(":: ExceptionHandlerFilter.setExceptionResponse = {} ::", exceptionVo);
-      response.getWriter().write(gson.toJson(exceptionVo));
+      log.debug(":: ExceptionHandlerFilter.setExceptionResponse = {} ::", exceptionDtoResponse);
+      response.getWriter().write(gson.toJson(exceptionDtoResponse));
     } catch (IOException e) {
       log.error("{}", e.toString());
       e.printStackTrace();

@@ -1,6 +1,6 @@
 package com.diden.demo.domain.user.adepter;
 
-import com.diden.demo.common.error.exception.SocialProcessException;
+import com.diden.demo.domain.user.exception.SocialProcessException;
 import com.diden.demo.domain.user.vo.request.UserVoRequest;
 import org.springframework.stereotype.Service;
 

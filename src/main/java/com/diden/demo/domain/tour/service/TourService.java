@@ -1,9 +1,9 @@
 package com.diden.demo.domain.tour.service;
 
-import com.diden.demo.domain.tour._dto.CommonTourResponseDto;
-import com.diden.demo.domain.tour._vo.CommonTourInfoVo;
-import com.diden.demo.domain.tour.definition.AreaCode;
-import com.diden.demo.domain.tour.definition.ServiceContentTypeCode;
+import com.diden.demo.api.tour.dto.response.CommonTourResponseDto;
+import com.diden.demo.api.tour.dto.request.CommonTourInfoVo;
+import com.diden.demo.domain.tour.enums.AreaCode;
+import com.diden.demo.domain.tour.enums.ServiceContentTypeCode;
 import com.diden.demo.domain.tour.vo.TourAreaCodeVo;
 import com.diden.demo.domain.tour.vo.TourAreaInfoResponseDto;
 import com.diden.demo.domain.tour.vo.TourSigunguCodeVo;

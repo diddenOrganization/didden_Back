@@ -1,7 +1,7 @@
 package com.diden.demo.domain.user.adepter;
 
 import com.diden.demo.common.config.properties.SocialJwtProperties;
-import com.diden.demo.common.error.exception.SocialProcessException;
+import com.diden.demo.domain.user.exception.SocialProcessException;
 import com.diden.demo.common.jwt.JwtSocialKakaoTokenUtils;
 import com.diden.demo.common.jwt.JwtSocialTokenCheckInterface;
 import com.diden.demo.domain.user.enums.AccountTypeEnum;
