@@ -59,7 +59,7 @@ class JwtSocialKakaoTokenUtilsTest extends TestStartConfig {
             .userEmail(responseKakaoAccount.get("email").getAsString())
             .userNickname(
                 responseKakaoAccount.getAsJsonObject("profile").get("nickname").getAsString())
-            .userPrivacyConsent(PrivacyConsentEnum.AGREED)
+            .userPrivacyConsentEnum(PrivacyConsentEnum.AGREED)
             .userLoginType(AccountTypeEnum.KAKAO.getAccountType())
             .userAccessToken(kakaoAccessToken)
             .build();

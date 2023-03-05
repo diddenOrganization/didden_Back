@@ -1,7 +1,10 @@
 package com.diden.demo.user;
 
+import com.diden.demo.api.user.dto.request.UserDtoRequest;
 import com.diden.demo.common.utils.LazyHolderObject;
 import com.diden.demo.domain.user.enums.AccountTypeEnum;
+import com.diden.demo.domain.user.enums.GenderEnum;
+import com.diden.demo.domain.user.enums.PrivacyConsentEnum;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,8 +39,8 @@ class UserApiControllerTest {
   @Rollback
   @BeforeEach
   void setup() throws Exception {
-    final UserDto userVo =
-        UserDto.builder().userEmail("bioman3238@gmail.com").userPassword("test").build();
+    final UserDtoRequest userVo =
+            UserDtoRequest.builder().userEmail("bioman3238@gmail.com").userPassword("test").build();
 
     /*authorization =
     mockMvc
@@ -86,15 +89,15 @@ class UserApiControllerTest {
   @Rollback
   @DisplayName("회원가입 - 성공")
   void userInsert() throws Exception {
-    UserDto user =
-        UserDto.builder()
+    UserDtoRequest user =
+        UserDtoRequest.builder()
             .userPassword("1234")
             .userNickname("테스터")
             .userBirthday("19930509")
-            .userGender(UserDto.Gender.MALE)
+            .userGenderEnum(GenderEnum.MALE)
             .userEmail("qwe@qwe.com")
             .userPhoneNumber("01010101010")
-            .userPrivacyConsent(UserDto.PrivacyConsent.AGREED)
+            .userPrivacyConsentEnum(PrivacyConsentEnum.AGREED)
             .userLoginType(AccountTypeEnum.DEFAULT.getAccountType())
             .build();
 
@@ -112,12 +115,12 @@ class UserApiControllerTest {
   @NullAndEmptySource
   @DisplayName("회원가입 - 로그인 타입 누락")
   void userInsertLoginTypeNullCheck(String args) throws Exception {
-    UserDto user =
-        UserDto.builder()
+    UserDtoRequest user =
+        UserDtoRequest.builder()
             .userPassword("1234")
             .userNickname("테스터")
             .userBirthday("19930509")
-            .userGender(UserDto.Gender.MALE)
+            .userGenderEnum(GenderEnum.MALE)
             .userEmail("qwe@qwe.com")
             .userPhoneNumber("01010101010")
             .userLoginType(args)
@@ -136,18 +139,18 @@ class UserApiControllerTest {
   @Rollback
   @ParameterizedTest
   @DisplayName("회원가입 - 개인정보")
-  @EnumSource(value = UserDto.PrivacyConsent.class)
-  void userInsertPrivacyConsentCheck(UserDto.PrivacyConsent args) throws Exception {
-    UserDto user =
-        UserDto.builder()
+  @EnumSource(value = PrivacyConsentEnum.class)
+  void userInsertPrivacyConsentCheck(PrivacyConsentEnum args) throws Exception {
+    UserDtoRequest user =
+        UserDtoRequest.builder()
             .userPassword("1234")
             .userNickname("테스터")
             .userBirthday("19930509")
-            .userGender(UserDto.Gender.MALE)
+            .userGenderEnum(GenderEnum.MALE)
             .userEmail("qwe@qwe.com")
             .userPhoneNumber("01010101010")
             .userLoginType(AccountTypeEnum.DEFAULT.getAccountType())
-            .userPrivacyConsent(args)
+            .userPrivacyConsentEnum(args)
             .build();
 
     mockMvc
@@ -160,18 +163,18 @@ class UserApiControllerTest {
   @Rollback
   @ParameterizedTest
   @DisplayName("회원가입 - 성별")
-  @EnumSource(value = UserDto.Gender.class)
-  void userInsertGenderCheck(UserDto.Gender args) throws Exception {
-    UserDto user =
-        UserDto.builder()
+  @EnumSource(value = GenderEnum.class)
+  void userInsertGenderCheckEnum(GenderEnum args) throws Exception {
+    UserDtoRequest user =
+        UserDtoRequest.builder()
             .userPassword("1234")
             .userNickname("테스터")
             .userBirthday("19930509")
             .userEmail("qwe@qwe.com")
             .userPhoneNumber("01010101010")
             .userLoginType(AccountTypeEnum.DEFAULT.getAccountType())
-            .userGender(args)
-            .userPrivacyConsent(UserDto.PrivacyConsent.AGREED)
+            .userGenderEnum(args)
+            .userPrivacyConsentEnum(PrivacyConsentEnum.AGREED)
             .build();
 
     mockMvc
@@ -188,15 +191,15 @@ class UserApiControllerTest {
   @NullAndEmptySource
   @DisplayName("회원가입 - 성별 null check")
   void userInsertGenderNullCheck(String args) throws Exception {
-    UserDto user =
-        UserDto.builder()
+    UserDtoRequest user =
+        UserDtoRequest.builder()
             .userPassword("1234")
             .userNickname("테스터")
             .userBirthday("19930509")
             .userEmail("qwe@qwe.com")
             .userPhoneNumber("01010101010")
             .userLoginType(AccountTypeEnum.DEFAULT.getAccountType())
-            .userPrivacyConsent(UserDto.PrivacyConsent.AGREED)
+            .userPrivacyConsentEnum(PrivacyConsentEnum.AGREED)
             .build();
 
     mockMvc
