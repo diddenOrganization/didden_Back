@@ -2,16 +2,16 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.diden.demo.tour.mapper.TourMapper">
-    <resultMap id="commonTourResponseDto" type="com.diden.demo.tour._dto.CommonTourResponseDto">
+<mapper namespace="com.diden.demo.domain.tour.repository.TourMapper">
+    <resultMap id="commonTourResponseDto" type="com.diden.demo.api.tour.dto.response.CommonTourResponseDto">
         <result column="AREACODE" property="areaCode"
-                typeHandler="com.diden.demo.tour.converter.AreaCodeConverterHandler"/>
+                typeHandler="com.diden.demo.domain.tour.converter.AreaCodeConverterHandler"/>
         <result column="SERVICECONTENTTYPECODE" property="serviceContentTypeCode"
-                typeHandler="com.diden.demo.tour.converter.ContentTypeCodeConverterHandler"/>
+                typeHandler="com.diden.demo.domain.tour.converter.ContentTypeCodeConverterHandler"/>
         <result column="SERVICEHIGHCODE" property="serviceHighCode"
-                typeHandler="com.diden.demo.tour.converter.HighCodeConverterHandler"/>
+                typeHandler="com.diden.demo.domain.tour.converter.HighCodeConverterHandler"/>
         <result column="SERVICEMIDDLECODE" property="serviceMiddleCode"
-                typeHandler="com.diden.demo.tour.converter.MiddleCodeConverterHandler"/>
+                typeHandler="com.diden.demo.domain.tour.converter.MiddleCodeConverterHandler"/>
     </resultMap>
 
     <insert id="insertSigunguCode">
@@ -19,13 +19,13 @@
         values (#{code}, #{name}, #{areaCode})
     </insert>
 
-    <select id="findAreaCodeList" resultType="com.diden.demo.tour.vo.TourAreaCodeVo">
+    <select id="findAreaCodeList" resultType="com.diden.demo.domain.tour.vo.TourAreaCodeVo">
         select CODE, NAME, USE
         from TB_AREA_CODE
     </select>
 
 
-    <select id="findSigunguCodeList" resultType="com.diden.demo.tour.vo.TourSigunguCodeVo">
+    <select id="findSigunguCodeList" resultType="com.diden.demo.domain.tour.vo.TourSigunguCodeVo">
         select CODE,
                NAME,
                USE,
@@ -34,7 +34,7 @@
         where AREA_CODE = #{areaCode}
     </select>
 
-    <select id="tourInfoList" resultType="com.diden.demo.tour.vo.TourAreaInfoResponseDto">
+    <select id="tourInfoList" resultType="com.diden.demo.domain.tour.vo.TourAreaInfoResponseDto">
         SELECT *
         FROM TB_AREA_TOUR_INFO
         WHERE 1=1
@@ -105,7 +105,7 @@
         </where>
     </select>
 
-    <select id="newSigunguCodeList" parameterType="_integer" resultType="com.diden.demo.tour.vo.TourSigunguCodeVo">
+    <select id="newSigunguCodeList" parameterType="_integer" resultType="com.diden.demo.domain.tour.vo.TourSigunguCodeVo">
         select CODE,
                NAME,
                USE

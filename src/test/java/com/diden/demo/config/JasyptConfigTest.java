@@ -1,6 +1,7 @@
 package com.diden.demo.config;
 
 import com.diden.demo.TestStartConfig;
+import com.diden.demo.common.config.JasyptConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.jasypt.encryption.StringEncryptor;
 import org.junit.jupiter.api.Test;
@@ -10,7 +11,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
 class JasyptConfigTest extends TestStartConfig {
-  @Autowired JasyptConfig jasyptConfig;
+  @Autowired
+  JasyptConfig jasyptConfig;
 
   @Test
   void passwordEncryptor() {

@@ -3,9 +3,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<mapper namespace="com.diden.demo.file.mapper.FileMapper">
+<mapper namespace="com.diden.demo.domain.file.repository.FileMapper">
 
-    <select id="fileList" resultType="com.diden.demo.file.vo.FileVo">
+    <select id="fileList" resultType="com.diden.demo.domain.file.vo.FileVo">
         SELECT FILE_ID
              , FILE_NAME
              , FILE_SIZE
@@ -16,7 +16,7 @@
         FROM TB_FILE
     </select>
 
-    <select id="fileRead" parameterType="com.diden.demo.file.vo.FileVo" resultType="com.diden.demo.file.vo.FileVo">
+    <select id="fileRead" parameterType="com.diden.demo.domain.file.vo.FileVo" resultType="com.diden.demo.domain.file.vo.FileVo">
         SELECT *
         FROM (SELECT FILE_ID
                    , FILE_NAME
@@ -30,7 +30,7 @@
         WHERE ROWNUM = 1
     </select>
 
-    <insert id="fileInsert" parameterType="com.diden.demo.file.vo.FileVo">
+    <insert id="fileInsert" parameterType="com.diden.demo.domain.file.vo.FileVo">
         INSERT INTO TB_FILE ( FILE_ID
                             , FILE_NAME
                             , FILE_SIZE

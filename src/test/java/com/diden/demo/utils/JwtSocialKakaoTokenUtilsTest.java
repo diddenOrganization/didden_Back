@@ -1,18 +1,23 @@
 package com.diden.demo.utils;
 
 import com.diden.demo.TestStartConfig;
-import com.diden.demo.config.LazyHolderObject;
-import com.diden.demo.user.UserService;
-import com.diden.demo.user.UserVo;
+import com.diden.demo.api.user.dto.request.UserDtoRequest;
+import com.diden.demo.common.config.properties.SocialJwtProperties;
+import com.diden.demo.common.jwt.JwtSocialKakaoTokenUtils;
+import com.diden.demo.common.jwt.JwtSocialTokenCheckInterface;
+import com.diden.demo.common.utils.LazyHolderObject;
+import com.diden.demo.domain.user.enums.AccountTypeEnum;
+import com.diden.demo.domain.user.enums.PrivacyConsentEnum;
+import com.diden.demo.domain.user.service.UserService;
+import com.diden.demo.domain.user.vo.request.UserVoRequest;
+import com.diden.demo.domain.user.vo.response.UserVo;
 import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.test.annotation.Rollback;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 
@@ -48,25 +53,26 @@ class JwtSocialKakaoTokenUtilsTest extends TestStartConfig {
     log.info(":: 카카오 소셜 인증 == {} ::", response);
     log.info(":: 카카오 소셜 어카운트 == {} ::", responseKakaoAccount);
 
-    final UserVo userVo =
-        UserVo.builder()
+    final UserDtoRequest userDtoRequest =
+            UserDtoRequest.builder()
             .userPassword(kakaoAccessToken)
             .userEmail(responseKakaoAccount.get("email").getAsString())
             .userNickname(
                 responseKakaoAccount.getAsJsonObject("profile").get("nickname").getAsString())
-            .userPrivacyConsent(UserVo.PrivacyConsent.AGREED)
+            .userPrivacyConsentEnum(PrivacyConsentEnum.AGREED)
             .userLoginType(AccountTypeEnum.KAKAO.getAccountType())
             .userAccessToken(kakaoAccessToken)
             .build();
 
-    log.info(":: result == {} ::", userVo);
-    log.info(":: gson == {} ::", LazyHolderObject.getGson().toJson(userVo));
+    UserVoRequest userVoRequest = UserDtoRequest.transportDataByUserDtoRequest(userDtoRequest);
+    log.info(":: result == {} ::", userVoRequest);
+    log.info(":: gson == {} ::", LazyHolderObject.getGson().toJson(userVoRequest));
 
-    userService.userInsert(userVo);
-    final UserVo findUser = userService.userInfo(userVo);
+    userService.userInsert(userVoRequest);
+    final UserVo findUser = userService.userInfo(userVoRequest);
 
     log.info(":: result == {} ::", findUser);
 
-    assertThat(findUser.getUserNickname()).isNotBlank().isEqualTo(userVo.getUserNickname());
+    assertThat(findUser.getUserNickname()).isNotBlank().isEqualTo(userVoRequest.getUserNickname());
   }
 }

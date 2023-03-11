@@ -1,8 +1,8 @@
 package com.diden.demo.main;
 
 import com.diden.demo.TestStartConfig;
-import com.diden.demo.utils.JwtProperties;
-import com.diden.demo.utils.JwtTokenUtil;
+import com.diden.demo.common.config.properties.JwtProperties;
+import com.diden.demo.common.jwt.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

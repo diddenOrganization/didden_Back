@@ -1,15 +1,15 @@
 package com.diden.demo.tour.controller;
 
 import com.diden.demo.TestStartConfig;
-import com.diden.demo.config.LazyHolderObject;
-import com.diden.demo.tour._dto.CommonTourResponseDto;
-import com.diden.demo.tour.definition.AreaCode;
-import com.diden.demo.tour.definition.ServiceContentTypeCode;
-import com.diden.demo.tour.mapper.TourMapper;
-import com.diden.demo.tour.service.TourService;
-import com.diden.demo.tour.service.impl.TourServiceImpl;
-import com.diden.demo.tour.vo.TourAreaInfoResponseDto;
-import com.diden.demo.tour.vo.TourSigunguCodeVo;
+import com.diden.demo.common.utils.LazyHolderObject;
+import com.diden.demo.api.tour.dto.response.CommonTourResponseDto;
+import com.diden.demo.domain.tour.enums.AreaCode;
+import com.diden.demo.domain.tour.enums.ServiceContentTypeCode;
+import com.diden.demo.domain.tour.repository.TourMapper;
+import com.diden.demo.domain.tour.service.TourService;
+import com.diden.demo.domain.tour.service.TourServiceImpl;
+import com.diden.demo.domain.tour.vo.TourAreaInfoResponseDto;
+import com.diden.demo.domain.tour.vo.TourSigunguCodeVo;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

@@ -982,12 +982,12 @@ public class UserVo {
     private String userPassword = null;
     private String userNickname = null;
     private String userBirthday = null;
-    private String userGender = null;
+    private String userGenderEnum = null;
     private String userEmail = null;
     private String userPhoneNumber = null;
     private String userCreateDate = null;
     private String userUpdateDate = null;
-    private String userPrivacyConsent = null;
+    private String userPrivacyConsentEnum = null;
 }
 ```
 
@@ -1000,12 +1000,12 @@ public class UserVo {
   "userPassword": "test",
   "userNickname": "test",
   "userBirthday": "test",
-  "userGender": "test",
+  "userGenderEnum": "test",
   "userEmail": "test",
   "userPhoneNumber": "test",
   "userCreateDate": "test",
   "userUpdateDate": "test",
-  "userPrivacyConsent": "1"
+  "userPrivacyConsentEnum": "1"
 }
 ```
 

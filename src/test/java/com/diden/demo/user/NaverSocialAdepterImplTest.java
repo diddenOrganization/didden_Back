@@ -1,7 +1,7 @@
 package com.diden.demo.user;
 
-import com.diden.demo.social.NaverSocialAdepterImpl;
-import com.diden.demo.social.SocialAdepter;
+import com.diden.demo.domain.user.adepter.NaverSocialAdepterImpl;
+import com.diden.demo.domain.user.adepter.SocialAdepter;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

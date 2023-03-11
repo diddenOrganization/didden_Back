@@ -1,8 +1,15 @@
 package com.diden.demo.utils;
 
 import com.diden.demo.TestStartConfig;
-import com.diden.demo.user.UserService;
-import com.diden.demo.user.UserVo;
+import com.diden.demo.api.user.dto.request.UserDtoRequest;
+import com.diden.demo.common.config.properties.SocialJwtProperties;
+import com.diden.demo.common.jwt.JwtSocialNaverTokenUtils;
+import com.diden.demo.common.jwt.JwtSocialTokenCheckInterface;
+import com.diden.demo.domain.user.enums.AccountTypeEnum;
+import com.diden.demo.domain.user.enums.PrivacyConsentEnum;
+import com.diden.demo.domain.user.service.UserService;
+import com.diden.demo.domain.user.vo.request.UserVoRequest;
+import com.diden.demo.domain.user.vo.response.UserVo;
 import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -43,22 +50,23 @@ class JwtSocialNaverTokenUtilsTest extends TestStartConfig {
     log.info(":: 카카오 소셜 인증 == {} ::", response);
     log.info(":: 카카오 소셜 어카운트 == {} ::", responseNaverAccount);
 
-    final UserVo userVo =
-        UserVo.builder()
+    final UserDtoRequest userDtoRequest =
+            UserDtoRequest.builder()
             .userPassword(naverAccessToken)
             .userEmail(responseNaverAccount.get("email").getAsString())
             .userNickname(responseNaverAccount.get("name").getAsString())
-            .userPrivacyConsent(UserVo.PrivacyConsent.AGREED)
+            .userPrivacyConsent(PrivacyConsentEnum.AGREED)
             .userLoginType(AccountTypeEnum.NAVER.getAccountType())
             .userAccessToken(naverAccessToken)
             .build();
 
-    log.info(":: result == {} ::", userVo);
+    UserVoRequest userVoRequest = UserDtoRequest.transportDataByUserDtoRequest(userDtoRequest);
+    log.info(":: result == {} ::", userDtoRequest);
 
-    userService.userInsert(userVo);
-    final UserVo findUser = userService.userInfo(userVo);
+    userService.userInsert(userVoRequest);
+    final UserVo findUser = userService.userInfo(userVoRequest);
 
-    assertThat(findUser.getUserNickname()).isNotBlank().isEqualTo(userVo.getUserNickname());
+    assertThat(findUser.getUserNickname()).isNotBlank().isEqualTo(userVoRequest.getUserNickname());
   }
 
   @Test
