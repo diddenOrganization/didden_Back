@@ -1,6 +1,6 @@
 package com.diden.demo.tour.repository;
 
-import com.diden.demo.domain.tour.domain.TourAreaInfo;
+import com.diden.demo.domain.tour.entity.TourAreaInfo;
 import com.diden.demo.domain.tour.repository.TourRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;

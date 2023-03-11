@@ -1,4 +1,4 @@
-package com.diden.demo.domain.tour.domain;
+package com.diden.demo.domain.tour.entity;
 
 import lombok.Getter;
 import lombok.Setter;
