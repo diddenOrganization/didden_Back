@@ -1,8 +1,8 @@
 package com.diden.demo.utils;
 
-import com.diden.demo.tour.MobileOSType;
-import com.diden.demo.tour.ServiceHighCode;
-import com.diden.demo.tour.ServiceMiddleCode;
+import com.diden.demo.domain.tour.enums.MobileOSType;
+import com.diden.demo.domain.tour.enums.ServiceHighCode;
+import com.diden.demo.domain.tour.enums.ServiceMiddleCode;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 

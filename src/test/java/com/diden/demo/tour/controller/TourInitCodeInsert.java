@@ -30,8 +30,6 @@ public class TourInitCodeInsert extends TestStartConfig {
   @Autowired ResourceLoader resourceLoader;
   @Autowired ParsingFromURL parsingFromURL;
 
-
-
   @Test
   @Commit
   void sigunguCodeInsert() {
@@ -56,9 +54,7 @@ public class TourInitCodeInsert extends TestStartConfig {
 
       for (TourAreaCodeVo tourAreaCodeVo : listObj) {
         tourMapper.insertSigunguCode(
-            Integer.parseInt(tourAreaCodeVo.getCode()),
-            tourAreaCodeVo.getName(),
-            Integer.parseInt(getData.getCode()));
+            tourAreaCodeVo.getCode(), tourAreaCodeVo.getName(), getData.getCode());
       }
     }
   }

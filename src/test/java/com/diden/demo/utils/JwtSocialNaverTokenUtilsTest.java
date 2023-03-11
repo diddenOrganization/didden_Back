@@ -55,7 +55,7 @@ class JwtSocialNaverTokenUtilsTest extends TestStartConfig {
             .userPassword(naverAccessToken)
             .userEmail(responseNaverAccount.get("email").getAsString())
             .userNickname(responseNaverAccount.get("name").getAsString())
-            .userPrivacyConsent(PrivacyConsentEnum.AGREED)
+            .userPrivacyConsentEnum(PrivacyConsentEnum.AGREED)
             .userLoginType(AccountTypeEnum.NAVER.getAccountType())
             .userAccessToken(naverAccessToken)
             .build();

@@ -1,6 +1,6 @@
 package com.diden.demo.domain.tour.repository;
 
-import com.diden.demo.domain.tour.domain.TourAreaInfo;
+import com.diden.demo.domain.tour.entity.TourAreaInfo;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
