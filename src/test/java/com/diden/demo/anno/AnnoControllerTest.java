@@ -3,6 +3,7 @@ package com.diden.demo.anno;
 import com.diden.demo.common.config.properties.JwtProperties;
 import com.diden.demo.common.utils.LazyHolderObject;
 import com.diden.demo.domain.anno.vo.response.AnnoVo;
+import com.diden.demo.domain.user.vo.response.UserVo;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,7 +39,7 @@ class AnnoControllerTest {
   @Commit
   @BeforeEach
   void setup() throws Exception {
-    UserDto userVo = UserDto.builder().userEmail("bioman3238@gmail.com").userPassword("test").build();
+    UserVo userVo = UserVo.builder().userEmail("bioman3238@gmail.com").userPassword("test").build();
 
     accessToken =
         mockMvc
@@ -48,7 +49,7 @@ class AnnoControllerTest {
             .andDo(print())
             .andReturn()
             .getResponse()
-            .getHeader(JwtProperties.HEADER_STRING);
+            .getHeader(JwtProperties.AUTHORIZATION);
   }
 
   @Test
@@ -80,7 +81,7 @@ class AnnoControllerTest {
   @DisplayName("공지사항 1건 조회 - 목록 1건 조회")
   void findOne() throws Exception {
     mockMvc
-        .perform(get("/anno/1").header(JwtProperties.HEADER_STRING, accessToken))
+        .perform(get("/anno/1").header(JwtProperties.AUTHORIZATION, accessToken))
         .andExpect(status().is2xxSuccessful())
         .andExpect(jsonPath("$.status").value("OK"))
         .andExpect(jsonPath("$.message").value("공지사항 1건 호출합니다."))
@@ -102,7 +103,7 @@ class AnnoControllerTest {
   @DisplayName("공지사항 1건 조회 - path 공백")
   void findOne_empty_path_var() throws Exception {
     mockMvc
-        .perform(get("/anno/ ").header(JwtProperties.HEADER_STRING, accessToken))
+        .perform(get("/anno/ ").header(JwtProperties.AUTHORIZATION, accessToken))
         .andExpect(status().is4xxClientError())
         .andExpect(jsonPath("$.status").value("BAD_REQUEST"))
         .andExpect(jsonPath("$.message").value("공지사항 아이디가 존재하지 않습니다."))
@@ -113,7 +114,7 @@ class AnnoControllerTest {
   @DisplayName("공지사항 1건 조회 - 공지사항 데이터 없음")
   void findOne_not_data() throws Exception {
     mockMvc
-        .perform(get("/anno/30").header(JwtProperties.HEADER_STRING, accessToken))
+        .perform(get("/anno/30").header(JwtProperties.AUTHORIZATION, accessToken))
         .andExpect(status().is2xxSuccessful())
         .andExpect(jsonPath("$.status").value("OK"))
         .andExpect(jsonPath("$.message").value("공지사항이 존재하지 않습니다."))
@@ -124,7 +125,7 @@ class AnnoControllerTest {
   @DisplayName("공지사항 1건 조회 - path 문자")
   void findOne_not_number() throws Exception {
     mockMvc
-        .perform(get("/anno/aa").header(JwtProperties.HEADER_STRING, accessToken))
+        .perform(get("/anno/aa").header(JwtProperties.AUTHORIZATION, accessToken))
         .andExpect(status().is4xxClientError())
         .andExpect(jsonPath("$.status").value("BAD_REQUEST"))
         .andExpect(jsonPath("$.message").value("숫자만 입력할 수 있습니다."))
@@ -139,7 +140,7 @@ class AnnoControllerTest {
     mockMvc
         .perform(
             post("/anno")
-                .header(JwtProperties.HEADER_STRING, accessToken)
+                .header(JwtProperties.AUTHORIZATION, accessToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(gson.toJson(annoVo)))
         .andExpect(status().is2xxSuccessful())
@@ -156,7 +157,7 @@ class AnnoControllerTest {
     mockMvc
         .perform(
             post("/anno")
-                .header(JwtProperties.HEADER_STRING, accessToken)
+                .header(JwtProperties.AUTHORIZATION, accessToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(gson.toJson(annoVo)))
         .andExpect(status().is4xxClientError())
@@ -173,7 +174,7 @@ class AnnoControllerTest {
     mockMvc
         .perform(
             post("/anno")
-                .header(JwtProperties.HEADER_STRING, accessToken)
+                .header(JwtProperties.AUTHORIZATION, accessToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(gson.toJson(annoVo)))
         .andExpect(status().is4xxClientError())
@@ -190,7 +191,7 @@ class AnnoControllerTest {
     mockMvc
         .perform(
             post("/anno")
-                .header(JwtProperties.HEADER_STRING, accessToken)
+                .header(JwtProperties.AUTHORIZATION, accessToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(gson.toJson(annoVo)))
         .andExpect(status().is4xxClientError())
@@ -207,7 +208,7 @@ class AnnoControllerTest {
     mockMvc
         .perform(
             post("/anno")
-                .header(JwtProperties.HEADER_STRING, accessToken)
+                .header(JwtProperties.AUTHORIZATION, accessToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(gson.toJson(annoVo)))
         .andExpect(status().is4xxClientError())
@@ -224,7 +225,7 @@ class AnnoControllerTest {
     mockMvc
         .perform(
             post("/anno")
-                .header(JwtProperties.HEADER_STRING, accessToken)
+                .header(JwtProperties.AUTHORIZATION, accessToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(gson.toJson(annoVo)))
         .andExpect(status().is4xxClientError())
@@ -240,7 +241,7 @@ class AnnoControllerTest {
     mockMvc
         .perform(
             post("/anno")
-                .header(JwtProperties.HEADER_STRING, accessToken)
+                .header(JwtProperties.AUTHORIZATION, accessToken)
                 .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().is4xxClientError())
         .andExpect(jsonPath("$.status").value("BAD_REQUEST"))
@@ -256,7 +257,7 @@ class AnnoControllerTest {
     mockMvc
         .perform(
             patch("/anno/1")
-                .header(JwtProperties.HEADER_STRING, accessToken)
+                .header(JwtProperties.AUTHORIZATION, accessToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(gson.toJson(annoVo)))
         .andExpect(status().is2xxSuccessful())
@@ -287,7 +288,7 @@ class AnnoControllerTest {
     mockMvc
         .perform(
             patch("/anno/99")
-                .header(JwtProperties.HEADER_STRING, accessToken)
+                .header(JwtProperties.AUTHORIZATION, accessToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(gson.toJson(annoVo)))
         .andExpect(status().is2xxSuccessful())
@@ -304,7 +305,7 @@ class AnnoControllerTest {
     mockMvc
         .perform(
             patch("/anno/ ")
-                .header(JwtProperties.HEADER_STRING, accessToken)
+                .header(JwtProperties.AUTHORIZATION, accessToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(gson.toJson(annoVo)))
         .andExpect(status().is4xxClientError())
@@ -321,7 +322,7 @@ class AnnoControllerTest {
     mockMvc
         .perform(
             patch("/anno/asd ")
-                .header(JwtProperties.HEADER_STRING, accessToken)
+                .header(JwtProperties.AUTHORIZATION, accessToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(gson.toJson(annoVo)))
         .andExpect(status().is4xxClientError())
@@ -338,7 +339,7 @@ class AnnoControllerTest {
     mockMvc
         .perform(
             patch("/anno/1")
-                .header(JwtProperties.HEADER_STRING, accessToken)
+                .header(JwtProperties.AUTHORIZATION, accessToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(gson.toJson(annoVo)))
         .andExpect(status().is4xxClientError())
@@ -355,7 +356,7 @@ class AnnoControllerTest {
     mockMvc
         .perform(
             patch("/anno/1")
-                .header(JwtProperties.HEADER_STRING, accessToken)
+                .header(JwtProperties.AUTHORIZATION, accessToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(gson.toJson(annoVo)))
         .andExpect(status().is4xxClientError())
@@ -372,7 +373,7 @@ class AnnoControllerTest {
     mockMvc
         .perform(
             patch("/anno/1")
-                .header(JwtProperties.HEADER_STRING, accessToken)
+                .header(JwtProperties.AUTHORIZATION, accessToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(gson.toJson(annoVo)))
         .andExpect(status().is4xxClientError())
@@ -389,7 +390,7 @@ class AnnoControllerTest {
     mockMvc
         .perform(
             patch("/anno/1")
-                .header(JwtProperties.HEADER_STRING, accessToken)
+                .header(JwtProperties.AUTHORIZATION, accessToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(gson.toJson(annoVo)))
         .andExpect(status().is4xxClientError())
@@ -406,7 +407,7 @@ class AnnoControllerTest {
     mockMvc
         .perform(
             patch("/anno/1")
-                .header(JwtProperties.HEADER_STRING, accessToken)
+                .header(JwtProperties.AUTHORIZATION, accessToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(gson.toJson(annoVo)))
         .andExpect(status().is4xxClientError())
@@ -422,7 +423,7 @@ class AnnoControllerTest {
     mockMvc
         .perform(
             patch("/anno/1")
-                .header(JwtProperties.HEADER_STRING, accessToken)
+                .header(JwtProperties.AUTHORIZATION, accessToken)
                 .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().is4xxClientError())
         .andExpect(jsonPath("$.status").value("BAD_REQUEST"))
@@ -437,7 +438,7 @@ class AnnoControllerTest {
     mockMvc
         .perform(
             delete("/anno/1")
-                .header(JwtProperties.HEADER_STRING, accessToken)
+                .header(JwtProperties.AUTHORIZATION, accessToken)
                 .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().is2xxSuccessful())
         .andExpect(jsonPath("$.status").value("OK"))
@@ -452,7 +453,7 @@ class AnnoControllerTest {
     mockMvc
         .perform(
             delete("/anno/99")
-                .header(JwtProperties.HEADER_STRING, accessToken)
+                .header(JwtProperties.AUTHORIZATION, accessToken)
                 .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().is2xxSuccessful())
         .andExpect(jsonPath("$.status").value("OK"))
@@ -467,7 +468,7 @@ class AnnoControllerTest {
     mockMvc
         .perform(
             delete("/anno/ ")
-                .header(JwtProperties.HEADER_STRING, accessToken)
+                .header(JwtProperties.AUTHORIZATION, accessToken)
                 .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().is4xxClientError())
         .andExpect(jsonPath("$.status").value("BAD_REQUEST"))
@@ -482,7 +483,7 @@ class AnnoControllerTest {
     mockMvc
         .perform(
             delete("/anno/asdsd")
-                .header(JwtProperties.HEADER_STRING, accessToken)
+                .header(JwtProperties.AUTHORIZATION, accessToken)
                 .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().is4xxClientError())
         .andExpect(jsonPath("$.status").value("BAD_REQUEST"))

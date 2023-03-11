@@ -2,6 +2,7 @@ package com.diden.demo.domain.anno.entity;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Table(name = "TB_ANNOUNCEMENT")
+@ToString
 public class Anno {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

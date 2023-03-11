@@ -1,6 +1,8 @@
 package com.diden.demo.domain.anno.service;
 
 import com.diden.demo.domain.anno.repository.AnnoMapper;
+import com.diden.demo.domain.anno.repository.AnnoRepository;
+import com.diden.demo.domain.anno.repository.AnnoRepositoryCustom;
 import com.diden.demo.domain.anno.vo.request.AnnoVoRequest;
 import com.diden.demo.domain.anno.vo.response.AnnoVo;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +14,7 @@ import java.util.Deque;
 @RequiredArgsConstructor
 public class AnnoServiceImpl implements AnnoService {
   private final AnnoMapper annoMapper;
+  private final AnnoRepository annoRepository;
 
   @Override
   public Deque<AnnoVo> findAll(Integer findId, Integer limit) {
