@@ -1,5 +1,6 @@
 package com.diden.demo.domain.mail.service;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSendException;
@@ -16,9 +17,10 @@ import java.util.TimerTask;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class MailApiServiceImpl implements MailApiService {
 
-  @Autowired private JavaMailSender javaMailSender;
+  private final JavaMailSender javaMailSender;
 
   public void authEmail(HttpSession session, String to, String from) {
     int authKey = (int) (Math.random() * (99999 - 10000 + 1)) + 10000; // 인증번호 5자리 생성

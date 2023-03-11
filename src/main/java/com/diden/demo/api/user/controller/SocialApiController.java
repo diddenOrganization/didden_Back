@@ -1,6 +1,6 @@
 package com.diden.demo.api.user.controller;
 
-import com.diden.demo.api.user.dto.UserSocialSignUpDto;
+import com.diden.demo.api.user.dto.request.UserSocialSignUpDtoRequest;
 import com.diden.demo.common.error.exception.BadRequestException;
 import com.diden.demo.common.response.HttpResponse;
 import com.diden.demo.domain.user.service.SocialService;
@@ -29,23 +29,21 @@ public class SocialApiController {
 
   @PostMapping("/login")
   public HttpResponse<Void> userSocialLogin(
-      @RequestBody @NotNull(message = "로그인 정보가 존재하지 않습니다.")
-          final UserSocialSignUpDto userSocialSignUpDto)
-      throws IOException {
-    if (userSocialSignUpDto.getLoginType() == null) {
+      @RequestBody @NotNull(message = "로그인 정보가 존재하지 않습니다.") final UserSocialSignUpDtoRequest userSocialSignUpDtoRequest) throws IOException {
+
+    if (userSocialSignUpDtoRequest.getLoginType() == null) {
       throw new BadRequestException("로그인 타입이 존재하지 않습니다.");
     }
 
-    if (userSocialSignUpDto.getLoginType() == AccountTypeEnum.DEFAULT) {
+    if (userSocialSignUpDtoRequest.getLoginType() == AccountTypeEnum.DEFAULT) {
       throw new BadRequestException("일반회원 가입은 대상항목이 아닙니다.");
     }
 
-    if (StringUtils.isBlank(userSocialSignUpDto.getAccessToken())) {
+    if (StringUtils.isBlank(userSocialSignUpDtoRequest.getAccessToken())) {
       throw new BadRequestException("소셜 엑세스 토큰이 존재하지 않습니다.");
     }
 
-    socialService.socialLoginAndSignupProcess(userSocialSignUpDto.getLoginType(), userSocialSignUpDto.getAccessToken());
-
+    socialService.socialLoginAndSignupProcess(userSocialSignUpDtoRequest.getLoginType(), userSocialSignUpDtoRequest.getAccessToken());
     return HttpResponse.toResponse(HttpStatus.OK, "소셜 로그인 성공");
   }
 }
