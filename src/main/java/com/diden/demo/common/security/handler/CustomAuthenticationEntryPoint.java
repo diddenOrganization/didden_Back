@@ -1,4 +1,4 @@
-package com.diden.demo.common.filter;
+package com.diden.demo.common.security.handler;
 
 import com.diden.demo.common.error.dto.response.ExceptionDtoResponse;
 import com.diden.demo.common.utils.LazyHolderObject;

@@ -1,14 +1,28 @@
 jasypt:
   encryptor:
-    password: "${password}" # 암호화에 사용할 Passowrd 설정
-    bean: jasyptStringEncryptor # Bean 이름
+    password: "${password}" # 암호화에 사용할 Password 설정
+    #bean: jasyptStringEncryptor # Bean 이름
 
 spring:
   datasource:
-    url: ENC(obiFG6cJsmR1erpg46K0QmUuKW0LY4Bm2fhZKtM6/bi7JfXTuR8MWGc7yswxf8QyIMGdL6iyYjuehsBUG1MfGziw989Ttv1ZFI35ZM/4RH9DJDSZgGNsQOj3NJprUIXQ)
-    driver-class-name: ENC(Buur8cwc8t/JoN/14LwTVivPQDSdf4ZmFF8tgUqyZwLMwH91HFqxCcj8J/Dq6pvc)
-    username: ENC(UHt96JlmrJnnGxC0kDYQXA==)
-    password: ENC(qBXfL3kT/WKsvL6S7wpzkVuDBQegEbdl)
+    url: ENC(J46oehlVm5cCyqMPNwGMj0scrqUX7SUKBgO44sKyp4KjT7AUcDiGnVzxadO+6xrmj2KBFDl6cxE/UWzsp7MP5Zhi66a78oX0HeoakVkei4gVp1eHA9b1sQ==)
+    #    driver-class-name: ENC(YhpKgGTzU0eMRPFjTqDdrbfx4NDKV/myTZoALMCm6PLRZPF6XkaULg==)
+    username: ENC(JNuKgdWgouQI1TP6VWqJSA==)
+    password: ENC(wtWsOAlclIGOo0VeudJMXP3QKfmPlDrGTtf6yLa/ehw=)
+    #url: jdbc:oracle:thin:@tourdev_medium?TNS_ADMIN=/Users/ohjeung/key/Wallet_tourdev
+    #driver-class-name: oracle.jdbc.OracleDriver
+    #username: admin
+    #password: Tourproject1234!
+    hikari:
+      driver-class-name: oracle.jdbc.OracleDriver
+      maximum-pool-size: 3
 
 logging:
+  level:
+    org:
+      springframework:
+      web: debug
   config: classpath:log4j2-local.xml
+#logging.level.org.springframework.web= debug
+
+

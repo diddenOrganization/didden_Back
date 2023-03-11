@@ -36,21 +36,16 @@ public class TokenCheckAdepter implements TokenAdepterInterface {
       return true;
     }
 
-    final String byLoginType =
-        userService.findByLoginType(tokenPrefixCheckAndReplace(authorization)); // 로그인 타입 조회
+    final String byLoginType = userService.findByLoginType(tokenPrefixCheckAndReplace(authorization)); // 로그인 타입 조회
     if (StringUtils.isBlank(byLoginType)) {
       throw new BadRequestException("사용자가 존재하지 않습니다.");
     }
 
-    final LoginLogoutAdepter loginAdepterHandler =
-        loginLogoutAdepterMap.get(AccountTypeEnum.getAccountEnumType(byLoginType));
+    final LoginLogoutAdepter loginAdepterHandler = loginLogoutAdepterMap.get(AccountTypeEnum.getAccountEnumType(byLoginType));
     final boolean process = loginAdepterHandler.loginProcess(authorization); // 토큰 검증
 
     if (process) { // 인가, 인증 토큰 강제 설정
-      final Authentication authentication =
-          new UsernamePasswordAuthenticationToken(
-              "인가, 인증 토큰 강제 설정", null, Collections.singleton(new SimpleGrantedAuthority("YesMan")));
-
+      final Authentication authentication = new UsernamePasswordAuthenticationToken("인가, 인증 토큰 강제 설정", null, Collections.singleton(new SimpleGrantedAuthority("YesMan")));
       SecurityContextHolder.getContext().setAuthentication(authentication);
       return true;
     } else {
@@ -67,8 +62,7 @@ public class TokenCheckAdepter implements TokenAdepterInterface {
     }
 
     final String byLoginType = userService.findByLoginType(replaceTokenPrefix(authorization));
-    final LoginLogoutAdepter loginAdepterHandler =
-        loginLogoutAdepterMap.get(AccountTypeEnum.getAccountEnumType(byLoginType));
+    final LoginLogoutAdepter loginAdepterHandler = loginLogoutAdepterMap.get(AccountTypeEnum.getAccountEnumType(byLoginType));
     final boolean process = loginAdepterHandler.logoutProcess(authorization); // 토큰 검증
 
     throw new IllegalArgumentException("로그인 타입이 존재하지 않습니다.");

@@ -43,10 +43,10 @@ public class KakaoSocialAdepterImpl implements SocialAdepter {
         .userPassword(accessToken)
         .userEmail(responseKakaoAccount.get("email").getAsString())
         .userNickname(responseKakaoAccount.getAsJsonObject("profile").get("nickname").getAsString())
-        .userPrivacyConsent(PrivacyConsentEnum.AGREED)
+        .userPrivacyConsentEnum(PrivacyConsentEnum.AGREED)
         .userLoginType(AccountTypeEnum.KAKAO.getAccountType())
         .userAccessToken(accessToken)
-        .userGender(
+        .userGenderEnum(
             StringUtils.equals(responseKakaoAccount.get("gender").getAsString(), "male")
                 ? GenderEnum.MALE
                 : GenderEnum.FEMALE)

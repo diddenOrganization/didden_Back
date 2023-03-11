@@ -43,7 +43,7 @@ public class NaverSocialAdepterImpl implements SocialAdepter {
         .userPassword(accessToken)
         .userEmail(responseNaverAccount.get("email").getAsString())
         .userNickname(responseNaverAccount.get("name").getAsString())
-        .userPrivacyConsent(PrivacyConsentEnum.AGREED)
+        .userPrivacyConsentEnum(PrivacyConsentEnum.AGREED)
         .userLoginType(AccountTypeEnum.NAVER.getAccountType())
         .userAccessToken(accessToken)
         .build();

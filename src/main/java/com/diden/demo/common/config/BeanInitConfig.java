@@ -6,7 +6,6 @@ import com.diden.demo.domain.user.adepter.KakaoSocialAdepterImpl;
 import com.diden.demo.domain.user.adepter.NaverSocialAdepterImpl;
 import com.diden.demo.domain.user.adepter.SocialAdepter;
 import com.diden.demo.domain.user.enums.AccountTypeEnum;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,8 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-@RequiredArgsConstructor
-public class SpringConfig {
+public class BeanInitConfig {
   private final Map<AccountTypeEnum, SocialAdepter> socialAdepterMap = new HashMap<>();
   private final Map<AccountTypeEnum, LoginLogoutAdepter> loginLogoutAdepterMap = new HashMap<>();
 

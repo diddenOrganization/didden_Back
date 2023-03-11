@@ -1,4 +1,4 @@
-package com.diden.demo.common.filter;
+package com.diden.demo.common.security.handler;
 
 import com.diden.demo.common.adepter.TokenCheckAdepter;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,7 @@ import java.io.IOException;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class JwtLogoutHandlerFilter implements LogoutHandler {
+public class CustomLogoutHandler implements LogoutHandler {
 
   private final TokenCheckAdepter tokenCheckAdepter;
 

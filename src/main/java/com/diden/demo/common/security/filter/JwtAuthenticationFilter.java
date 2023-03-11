@@ -1,4 +1,4 @@
-package com.diden.demo.common.filter;
+package com.diden.demo.common.security.filter;
 
 import com.diden.demo.api.user.dto.request.UserDtoRequest;
 import com.diden.demo.common.config.properties.JwtProperties;
@@ -17,6 +17,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
@@ -31,19 +32,15 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
   private final JwtTokenUtil jwtTokenUtil = new JwtTokenUtil();
 
   @Override
-  public Authentication attemptAuthentication(
-      HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+  public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
     try {
-      final UserDtoRequest userDtoRequest =
-          LazyHolderObject.getGson()
-              .fromJson(new InputStreamReader(request.getInputStream()), UserDtoRequest.class);
+      final UserDtoRequest userDtoRequest = LazyHolderObject.getGson().fromJson(new InputStreamReader(request.getInputStream()), UserDtoRequest.class);
 
       if (userService.userCheck(UserDtoRequest.transportDataByUserDtoRequest(userDtoRequest)) == 0) {
         throw new BadRequestException("계정이 존재하지 않습니다.");
       }
 
-      return new UsernamePasswordAuthenticationToken(
-          userDtoRequest.getUserEmail(), userDtoRequest.getUserPassword());
+      return new UsernamePasswordAuthenticationToken(userDtoRequest.getUserEmail(), userDtoRequest.getUserPassword());
     } catch (IOException io) {
       io.printStackTrace();
       throw new RuntimeException("request.getInputStream() IO 에러");
@@ -60,18 +57,22 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     final String accessToken = jwtTokenUtil.createAccessToken(authResult);
     final String refreshToken = jwtTokenUtil.createRefreshToken(authResult);
 
-    if (StringUtils.isBlank(accessToken) && StringUtils.isBlank(refreshToken)) {
-      throw new TokenException("토큰이 생성되지 않았습니다.");
+    if (StringUtils.isBlank(accessToken)) {
+      throw new TokenException("엑세스토큰이 생성되지 않았습니다.");
     }
 
-    final UserDtoRequest userDtoRequest =
-        UserDtoRequest.builder()
+    if (StringUtils.isBlank(refreshToken)) {
+      throw new TokenException("리프레쉬토큰이 생성되지 않았습니다.");
+    }
+
+    final UserDtoRequest userDtoRequest = UserDtoRequest.builder()
             .userEmail(authResult.getPrincipal().toString())
             .userRefreshToken(refreshToken)
             .userAccessToken(accessToken)
             .build();
 
     userService.userTokenUpdate(UserDtoRequest.transportDataByUserDtoRequest(userDtoRequest));
+
     response.addHeader(JwtProperties.AUTHORIZATION, JwtProperties.TOKEN_PREFIX + accessToken);
     response.addHeader(JwtProperties.REFRESH_TOKEN, JwtProperties.TOKEN_PREFIX + refreshToken);
     response.setStatus(HttpStatus.OK.value());

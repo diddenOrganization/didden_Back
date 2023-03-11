@@ -1,10 +1,14 @@
 package com.diden.demo.common.config;
 
-import com.diden.demo.common.adepter.TokenAdepterInterface;
-import com.diden.demo.common.filter.*;
 import com.diden.demo.common.response.HttpResponse;
+import com.diden.demo.common.security.filter.ExceptionHandlerFilter;
+import com.diden.demo.common.security.filter.JwtAuthenticationFilter;
+import com.diden.demo.common.security.filter.JwtAuthorizationFilter;
+import com.diden.demo.common.security.handler.CustomAccessDeniedHandler;
+import com.diden.demo.common.security.handler.CustomAuthenticationEntryPoint;
+import com.diden.demo.common.security.handler.CustomLogoutHandler;
+import com.diden.demo.common.security.handler.CustomLogoutSuccessHandler;
 import com.diden.demo.common.utils.LazyHolderObject;
-import com.diden.demo.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -23,10 +27,12 @@ import java.io.IOException;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-  private final UserService userService;
-  private final TokenAdepterInterface tokenAdepterInterface;
   private final ExceptionHandlerFilter exceptionHandlerFilter;
-  private final JwtLogoutHandlerFilter jwtLogoutHandlerFilter;
+  private final JwtAuthenticationFilter jwtAuthenticationFilter;
+  private final JwtAuthorizationFilter jwtAuthorizationFilter;
+  private final CustomLogoutHandler customLogoutHandler;
+  private final CustomAccessDeniedHandler customAccessDeniedHandler;
+  private final CustomLogoutSuccessHandler customLogoutSuccessHandler;
   private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
   @Bean
@@ -36,9 +42,13 @@ public class SecurityConfig {
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+
     return httpSecurity
-        .csrf()
-        .disable()
+        .csrf().disable()
+        .formLogin().disable()
+        .httpBasic().disable()
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        .and()
         .authorizeRequests(
             request ->
                 request
@@ -50,28 +60,17 @@ public class SecurityConfig {
                     .permitAll()
                     .anyRequest()
                     .permitAll())
-        .addFilter(new JwtAuthenticationFilter(userService))
+        .addFilter(jwtAuthenticationFilter)
         .addFilterBefore(exceptionHandlerFilter, WebAsyncManagerIntegrationFilter.class)
-        .addFilterAfter(
-            new JwtAuthorizationFilter(tokenAdepterInterface), JwtAuthenticationFilter.class)
-        .formLogin()
-        .disable()
-        .httpBasic()
-        .disable()
-        .sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        .addFilterAfter(jwtAuthorizationFilter, JwtAuthenticationFilter.class)
+        .logout()
+        .logoutUrl("/logout")
+        .addLogoutHandler(customLogoutHandler)
+        .logoutSuccessHandler(customLogoutSuccessHandler)
         .and()
-        .logout(
-            logout ->
-                logout
-                    .logoutUrl("/logout")
-                    .addLogoutHandler(jwtLogoutHandlerFilter)
-                    .logoutSuccessHandler(
-                        (request, response, authentication) -> {
-                          this.responseHandlers(HttpStatus.OK, response, "로그아웃이 되었습니다.");
-                        }))
         .exceptionHandling()
         .authenticationEntryPoint(customAuthenticationEntryPoint)
+        .accessDeniedHandler(customAccessDeniedHandler)
         .and()
         .build();
 

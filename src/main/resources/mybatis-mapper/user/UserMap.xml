@@ -3,7 +3,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.diden.demo.domain.user.repository.UserMapper">
-    <resultMap id="userVo" type="com.diden.demo.api.user.dto.UserDto">
+    <resultMap id="userVo" type="com.diden.demo.domain.user.vo.response.UserVo">
         <result column="USER_GENDER" property="userGenderEnum"
                 typeHandler="com.diden.demo.domain.user.converter.UserGenderConverterHandler"/>
         <result column="USER_PRIVACY_CONSENT" property="userPrivacyConsentEnum"
@@ -58,7 +58,7 @@
         FROM TB_USER
     </select>
 
-    <select id="userInfo" parameterType="com.diden.demo.api.user.dto.UserDto" resultMap="userVo">
+    <select id="userInfo" parameterType="com.diden.demo.domain.user.vo.response.UserVo" resultMap="userVo">
         SELECT USER_ID
              , USER_NAME
              , USER_PASSWORD
@@ -97,7 +97,7 @@
         WHERE USER_EMAIL = #{userEmail}
     </select>
 
-    <select id="userRefreshTokenInfo" parameterType="com.diden.demo.api.user.dto.UserDto"
+    <select id="userRefreshTokenInfo" parameterType="com.diden.demo.domain.user.vo.response.UserVo"
             resultMap="userVo">
         SELECT USER_ID
              , USER_NAME
@@ -117,7 +117,7 @@
         WHERE USER_REFRESH_TOKEN = #{userRefreshToken}
     </select>
 
-    <select id="userCount" parameterType="com.diden.demo.api.user.dto.UserDto" resultType="_integer">
+    <select id="userCount" parameterType="com.diden.demo.domain.user.vo.response.UserVo" resultType="_integer">
         SELECT COUNT(*)
         FROM TB_USER
         <where>
@@ -125,14 +125,14 @@
         </where>
     </select>
 
-    <select id="userCheck" parameterType="com.diden.demo.api.user.dto.UserDto" resultType="_integer">
+    <select id="userCheck" parameterType="com.diden.demo.domain.user.vo.response.UserVo" resultType="_integer">
         SELECT COUNT(*)
         FROM TB_USER
         WHERE USER_EMAIL = #{userEmail}
           AND USER_PASSWORD = #{userPassword}
     </select>
 
-    <insert id="userInsert" parameterType="com.diden.demo.api.user.dto.UserDto">
+    <insert id="userInsert" parameterType="com.diden.demo.domain.user.vo.response.UserVo">
         INSERT INTO TB_USER ( USER_PASSWORD
                             , USER_NICKNAME
                             , USER_BIRTHDAY
@@ -155,7 +155,7 @@
                , #{userAccessToken})
     </insert>
 
-    <update id="userUpdate" parameterType="com.diden.demo.api.user.dto.UserDto">
+    <update id="userUpdate" parameterType="com.diden.demo.domain.user.vo.response.UserVo">
         UPDATE tb_user
         SET USER_PASSWORD        = #{userPassword}
           , USER_NICKNAME        = #{userNickname}
@@ -168,14 +168,14 @@
         WHERE USER_EMAIL = #{userEmail}
     </update>
 
-    <update id="userTokenUpdate" parameterType="com.diden.demo.api.user.dto.UserDto">
+    <update id="userTokenUpdate" parameterType="com.diden.demo.domain.user.vo.response.UserVo">
         UPDATE tb_user
         SET USER_REFRESH_TOKEN = #{userRefreshToken},
             USER_ACCESS_TOKEN  = #{userAccessToken}
         WHERE USER_EMAIL = #{userEmail}
     </update>
 
-    <delete id="userDelete" parameterType="com.diden.demo.api.user.dto.UserDto">
+    <delete id="userDelete" parameterType="com.diden.demo.domain.user.vo.response.UserVo">
         DELETE
         FROM TB_USER
         WHERE USER_EMAIL = #{userId}

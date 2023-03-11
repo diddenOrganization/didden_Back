@@ -1,10 +1,14 @@
 package com.diden.demo.common.response;
 
+import com.diden.demo.common.utils.LazyHolderObject;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
+import java.io.IOException;
 
 @Getter
 public final class HttpResponse<T> {
@@ -47,4 +51,6 @@ public final class HttpResponse<T> {
         .nextSeq(nextSeq)
         .build();
   }
+
+
 }
