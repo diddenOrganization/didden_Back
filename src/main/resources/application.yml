@@ -1,4 +1,7 @@
 server:
+  tomcat:
+    keep-alive-timeout: 60000
+    connection-timeout: 30000
   servlet:
     context-path: /
     encoding:
