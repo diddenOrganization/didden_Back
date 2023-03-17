@@ -104,5 +104,7 @@ public final class TourProperties {
   public static final String TYPE_JSON = "&_type=json";
   public static final String SERVICE_DEV_KEY =
       "serviceKey=96EIT1koaTBt2OfbhSFR9PyKGOKS%2FAMqgeugwN1XT2QwjnE97ZiG1uszeNCPJquN2y2XIYC8GX8BlAcpvUcusw%3D%3D";
+  public static final String SERVICE_DEV_KEY1 =
+      "serviceKey=96EIT1koaTBt2OfbhSFR9PyKGOKS/AMqgeugwN1XT2QwjnE97ZiG1uszeNCPJquN2y2XIYC8GX8BlAcpvUcusw==";
   public static final String KOR_SERVICE_URL = "http://apis.data.go.kr/B551011/KorService/";
 }
