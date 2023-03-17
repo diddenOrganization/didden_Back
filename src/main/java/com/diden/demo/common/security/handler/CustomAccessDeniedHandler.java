@@ -32,6 +32,6 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
         response.setStatus(HttpStatus.FORBIDDEN.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        response.getWriter().write(gson.toJson(exceptionDtoResponse));
+        //response.getWriter().write(gson.toJson(exceptionDtoResponse));
     }
 }

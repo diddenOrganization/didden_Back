@@ -77,8 +77,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     response.addHeader(JwtProperties.REFRESH_TOKEN, JwtProperties.TOKEN_PREFIX + refreshToken);
     response.setStatus(HttpStatus.OK.value());
     response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-    HttpResponse<Void> httpResponse =
+    /*HttpResponse<Void> httpResponse =
         HttpResponse.<Void>builder().status(HttpStatus.OK).message("로그인 성공").build();
-    response.getWriter().write(LazyHolderObject.getGson().toJson(httpResponse));
+    response.getWriter().write(LazyHolderObject.getGson().toJson(httpResponse));*/
   }
 }

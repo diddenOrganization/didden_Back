@@ -53,12 +53,12 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
     final ExceptionDtoResponse<Object> exceptionDtoResponse =
         ExceptionDtoResponse.builder().status(status).message(ex.getMessage()).build();
 
-    try {
+    /*try {
       log.debug(":: ExceptionHandlerFilter.setExceptionResponse = {} ::", exceptionDtoResponse);
       response.getWriter().write(gson.toJson(exceptionDtoResponse));
     } catch (IOException e) {
       log.error("{}", e.toString());
       e.printStackTrace();
-    }
+    }*/
   }
 }

@@ -99,6 +99,6 @@ public class SecurityConfig {
     response.setContentType(MediaType.APPLICATION_JSON_VALUE);
     HttpResponse<Void> httpResponse =
         HttpResponse.<Void>builder().status(status).message(message).build();
-    response.getWriter().write(LazyHolderObject.getGson().toJson(httpResponse));
+    //response.getWriter().write(LazyHolderObject.getGson().toJson(httpResponse));
   }
 }

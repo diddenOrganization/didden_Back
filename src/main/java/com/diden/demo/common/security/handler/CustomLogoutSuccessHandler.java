@@ -26,6 +26,6 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 
         response.setStatus(ok.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        response.getWriter().write(LazyHolderObject.getGson().toJson(toResponse(ok, "로그아웃 성공.")));
+        //response.getWriter().write(LazyHolderObject.getGson().toJson(toResponse(ok, "로그아웃 성공.")));
     }
 }
