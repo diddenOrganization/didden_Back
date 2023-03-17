@@ -10,6 +10,8 @@ import com.diden.demo.domain.tour.vo.TourAreaInfoResponseDto;
 import com.diden.demo.domain.tour.vo.TourSigunguCodeVo;
 import com.diden.demo.domain.tour.vo.korservicevo.*;
 import com.diden.demo.domain.tour.vo.response.CommonCodeMapperValue;
+import com.diden.demo.domain.tour.vo.response.HighCodeMapperValue;
+import com.diden.demo.domain.tour.vo.response.MiddleCodeMapperValue;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -591,5 +593,25 @@ public class TourApiController {
   @GetMapping(value = "/content-type-id")
   public HttpResponse<Map<ServiceContentTypeCode, List<CommonTourResponseDto>>> tourInfo() {
     return HttpResponse.toResponse(HttpStatus.OK, "성공", tourService.newTourInfoListTest());
+  }
+
+  @GetMapping(value = "/high-code")
+  public HttpResponse<List<HighCodeMapperValue>> findTourHighCode() {
+    return HttpResponse.toResponse(
+        HttpStatus.OK,
+        "대분류 조회",
+        Arrays.stream(ServiceHighCode.values())
+            .map(HighCodeMapperValue::new)
+            .collect(Collectors.toList()));
+  }
+
+  @GetMapping(value = "/middle-code")
+  public HttpResponse<List<MiddleCodeMapperValue>> findTourMiddleCode() {
+    return HttpResponse.toResponse(
+        HttpStatus.OK,
+        "중분류 조회",
+        Arrays.stream(ServiceMiddleCode.values())
+            .map(MiddleCodeMapperValue::new)
+            .collect(Collectors.toList()));
   }
 }
