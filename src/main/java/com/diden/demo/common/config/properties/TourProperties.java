@@ -68,6 +68,7 @@ public final class TourProperties {
    * <a href="https://api.visitkorea.or.kr/#/useKoreaGuide">국문관광정보 > 공통 정보 조회(공통정보 조회)</a>
    */
   public static final String DETAIL_COMMON = "detailCommon?";
+  public static final String DETAIL_COMMON1 = "detailCommon1?";
   /**
    *
    *
@@ -107,4 +108,5 @@ public final class TourProperties {
   public static final String SERVICE_DEV_KEY1 =
       "serviceKey=96EIT1koaTBt2OfbhSFR9PyKGOKS/AMqgeugwN1XT2QwjnE97ZiG1uszeNCPJquN2y2XIYC8GX8BlAcpvUcusw==";
   public static final String KOR_SERVICE_URL = "http://apis.data.go.kr/B551011/KorService/";
+  public static final String KOR_SERVICE_URL1 = "http://apis.data.go.kr/B551011/KorService1/";
 }

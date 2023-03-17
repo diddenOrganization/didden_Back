@@ -153,7 +153,7 @@
     </insert>
 
     <update id="tourInfoUpdate" parameterType="map">
-        UPDATE tb_user
+        UPDATE TB_AREA_TOUR_INFO
         SET ADDR1         = #{addr1}
           , ADDR2         = #{addr2}
           , AREACODE      = #{areacode}
@@ -172,7 +172,12 @@
           , TEL           = #{tel}
           , TITLE         = #{title}
           , ZIPCODE       = #{zipcode}
+          , OVERVIEW = #{overview}
         WHERE CONTENTID = #{contentid}
+    </update>
+
+    <update id="tourInfoOverViewUpdate" parameterType="map">
+        update TB_AREA_TOUR_INFO set OVERVIEW = #{overview} where CONTENTID = #{contentid}
     </update>
 
     <delete id="tourInfoDelete">

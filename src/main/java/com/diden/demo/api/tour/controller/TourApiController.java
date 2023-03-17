@@ -1,6 +1,7 @@
 package com.diden.demo.api.tour.controller;
 
 import com.diden.demo.common.response.HttpResponse;
+import com.diden.demo.common.utils.LazyHolderObject;
 import com.diden.demo.common.utils.ParsingFromURL;
 import com.diden.demo.common.utils.TourUriUtils;
 import com.diden.demo.api.tour.dto.response.CommonTourResponseDto;
@@ -15,6 +16,9 @@ import com.diden.demo.domain.tour.vo.response.MiddleCodeMapperValue;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -26,10 +30,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.net.URLEncoder;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.diden.demo.common.config.properties.TourProperties.*;
@@ -71,10 +72,10 @@ public class TourApiController {
      */
     @GetMapping(value = "/searchKeyword")
     public List<TourAreaInfoResponseDto> searchKeyword(
-        @RequestParam String cat1,
-        @RequestParam String cat2,
-        @RequestParam String cat3,
-        @RequestParam String keyword) {
+        @RequestParam(required = false) String cat1,
+        @RequestParam(required = false) String cat2,
+        @RequestParam(required = false) String cat3,
+        @RequestParam(required = false) String keyword) {
       System.out.println("==================================== searchkeyword");
       Map<String, Object> tourInfoParam = new HashMap<>();
       tourInfoParam.put("cat1", cat1);
@@ -95,23 +96,33 @@ public class TourApiController {
 
           if(overview == null){
               map = new HashMap<>();
-              JsonNode OverView;
               try {
                   String tourDetailCommonUrl =
-                          KOR_SERVICE_URL
-                                  + "detailCommon"
-                                  + "?serviceKey="
-                                  + SERVICE_DEV_KEY
+                          KOR_SERVICE_URL1
+                                  + DETAIL_COMMON1
+                                  + SERVICE_DEV_KEY1
                                   + "&contentId="
                                   + new ObjectMapper().writeValueAsString(mList.get(i).getContentId()).replaceAll("\"","")
-                                  + "&overviewYN=Y&MobileOS=ETC&MobileApp=AppTest";
+                                  + "&overviewYN=Y&MobileOS=ETC&MobileApp=AppTest" + TYPE_JSON;
 
-                  JsonNode OverViewjson = mapper.readTree(parsingFromURL.getParsingURL(tourDetailCommonUrl));
-                  log.info("OverViewjson = "+OverViewjson);
-                  OverView = OverViewjson.get("body").get("items").get("item").get("overview");
-                  map.put("contentid", contentId);
-                  map.put("overview", OverView);
-                  tourService.tourInfoOverViewUpdate(map);
+                  final JsonObject jsonObject = LazyHolderObject.getGson().fromJson(parsingFromURL.getParsingURL(tourDetailCommonUrl), JsonObject.class);
+                  log.info("OverViewjson = "+jsonObject);
+
+                  final String resultMsg = jsonObject.get("response")
+                          .getAsJsonObject().get("header")
+                          .getAsJsonObject().get("resultMsg").getAsString();
+
+                  if("OK".equals(resultMsg)) {
+                      String asString = jsonObject.get("response")
+                              .getAsJsonObject().get("body")
+                              .getAsJsonObject().get("items")
+                              .getAsJsonObject().get("item")
+                              .getAsJsonArray().get(0)
+                              .getAsJsonObject().get("overview").getAsString();
+                      map.put("contentid", contentId);
+                      map.put("overview", asString);
+                      tourService.tourInfoOverViewUpdate(map);
+                  }
 
               } catch (JsonProcessingException e) {
                   e.printStackTrace();
@@ -304,51 +315,6 @@ public class TourApiController {
             + "&_type=json";
     log.info(tourLocationBasedListUrl);
     return parsingFromURL.getParsingURL(tourLocationBasedListUrl);
-  }
-
-  /**
-   * 키워드 검색 조회
-   *
-   * @param "/searchkeyword"
-   * @param tourSearchKeywordVo
-   */
-  @SneakyThrows
-  @GetMapping(value = "/searchkeyword")
-  public String tourSearchKeyword(
-      @RequestBody(required = false) TourSearchKeywordVo tourSearchKeywordVo) {
-    String tourSearchKeywordUrl =
-        KOR_SERVICE_URL
-            + SEARCH_KEYWORD
-            + SERVICE_DEV_KEY
-            + "&numOfRows="
-            + tourSearchKeywordVo.getNumOfRows()
-            + "&pageNo="
-            + tourSearchKeywordVo.getPageNo()
-            + "&MobileOS="
-            + tourSearchKeywordVo.getMobileOS()
-            + "&MobileApp="
-            + tourSearchKeywordVo.getMobileApp()
-            + "&listYN="
-            + tourSearchKeywordVo.getListYN()
-            + "&arrange="
-            + tourSearchKeywordVo.getArrange()
-            + "&contentTypeId="
-            + tourSearchKeywordVo.getContentTypeId()
-            + "&areaCode="
-            + tourSearchKeywordVo.getAreaCode()
-            + "&sigunguCode="
-            + tourSearchKeywordVo.getSigunguCode()
-            + "&cat1="
-            + tourSearchKeywordVo.getCat1()
-            + "&cat2="
-            + tourSearchKeywordVo.getCat2()
-            + "&cat3="
-            + tourSearchKeywordVo.getCat3()
-            + "&keyword="
-            + URLEncoder.encode(tourSearchKeywordVo.getKeyword(), "UTF-8")
-            + "&_type=json";
-    log.info(tourSearchKeywordUrl);
-    return parsingFromURL.getParsingURL(tourSearchKeywordUrl);
   }
 
   /**
