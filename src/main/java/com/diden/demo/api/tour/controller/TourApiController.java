@@ -1,5 +1,6 @@
 package com.diden.demo.api.tour.controller;
 
+import com.diden.demo.api.user.dto.response.UserDtoResponse;
 import com.diden.demo.common.response.HttpResponse;
 import com.diden.demo.common.utils.LazyHolderObject;
 import com.diden.demo.common.utils.ParsingFromURL;
@@ -71,7 +72,7 @@ public class TourApiController {
      * @return
      */
     @GetMapping(value = "/searchKeyword")
-    public List<TourAreaInfoResponseDto> searchKeyword(
+    public HttpResponse<List<TourAreaInfoResponseDto>> searchKeyword(
         @RequestParam(required = false) String cat1,
         @RequestParam(required = false) String cat2,
         @RequestParam(required = false) String cat3,
@@ -155,7 +156,7 @@ public class TourApiController {
           }
       }
 
-        return tourService.tourInfoList(tourInfoParam);
+        return HttpResponse.toResponse(HttpStatus.OK, "데이터 성공", tourService.tourInfoList(tourInfoParam));
     }
 
   /**
