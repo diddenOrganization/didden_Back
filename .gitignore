@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+
+### TEST code ###
+src/test/java/com/diden/demo
