@@ -24,6 +24,7 @@ class MainContentControllerTest extends TestStartConfig {
 
   @BeforeEach
   void setup() {
+    
     UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
         new UsernamePasswordAuthenticationToken("test@test", "test");
     JwtTokenUtil jwtTokenUtil = new JwtTokenUtil();
