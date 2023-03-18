@@ -39,13 +39,13 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
       exceptionDtoResponse.setMessage("로그인을 하지 않았거나 토큰이 정상적이지 않습니다.");
     }
 
-    try {
+    /*try {
       log.error(authException.toString());
       log.debug(":: CustomAuthenticationEntryPoint.commence = {} ::", exceptionDtoResponse);
       response.getWriter().write(gson.toJson(exceptionDtoResponse));
     } catch (IOException e) {
       log.error("{}", e.toString());
       e.printStackTrace();
-    }
+    }*/
   }
 }
