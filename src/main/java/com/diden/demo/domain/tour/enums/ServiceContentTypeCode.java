@@ -1,11 +1,12 @@
 package com.diden.demo.domain.tour.enums;
 
+import com.diden.demo.domain.tour.vo.response.CommonCodeMapperType;
 import lombok.Getter;
 
 import java.util.Arrays;
 
 @Getter
-public enum ServiceContentTypeCode {
+public enum ServiceContentTypeCode implements CommonCodeMapperType {
   TOURISM_TYPE(12, "관광지"),
   CULTURAL_FACILITIES_TYPE(14, "문화시설"),
   FESTIVAL_TYPE(15, "행사/공연/축제"),
@@ -33,5 +34,10 @@ public enum ServiceContentTypeCode {
         .filter(v -> v.getCode().equals(code))
         .findFirst()
         .orElse(null);
+  }
+
+  @Override
+  public String getCodeName() {
+    return null;
   }
 }
