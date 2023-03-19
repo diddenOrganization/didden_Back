@@ -26,6 +26,8 @@ public class ReceivedAreaBasedListV4DtoRequest extends CommonRequiredDtoRequest{
         return ReceivedAreaBasedListV4DtoRequest.builder()
                 .mobileOSType(mobileOSType)
                 .serviceContentTypeCode(serviceContentTypeCode)
+                .numOfRows(numOfRows)
+                .pageNo(pageNo)
                 .build();
     }
 
