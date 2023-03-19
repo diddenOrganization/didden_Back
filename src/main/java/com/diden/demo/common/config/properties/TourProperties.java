@@ -107,6 +107,8 @@ public final class TourProperties {
       "serviceKey=96EIT1koaTBt2OfbhSFR9PyKGOKS%2FAMqgeugwN1XT2QwjnE97ZiG1uszeNCPJquN2y2XIYC8GX8BlAcpvUcusw%3D%3D";
   public static final String SERVICE_DEV_KEY1 =
       "serviceKey=96EIT1koaTBt2OfbhSFR9PyKGOKS/AMqgeugwN1XT2QwjnE97ZiG1uszeNCPJquN2y2XIYC8GX8BlAcpvUcusw==";
+  public static final String SERVICE_DEV_KEY_ORIGIN =
+      "96EIT1koaTBt2OfbhSFR9PyKGOKS/AMqgeugwN1XT2QwjnE97ZiG1uszeNCPJquN2y2XIYC8GX8BlAcpvUcusw==";
   public static final String KOR_SERVICE_URL = "http://apis.data.go.kr/B551011/KorService/";
-  public static final String KOR_SERVICE_URL1 = "http://apis.data.go.kr/B551011/KorService1/";
+  public static final String KOR_SERVICE_URL1 = "https://apis.data.go.kr/B551011/KorService1";
 }
