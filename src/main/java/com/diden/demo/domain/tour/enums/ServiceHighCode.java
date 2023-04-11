@@ -7,8 +7,8 @@ import java.util.Arrays;
 import static com.diden.demo.domain.tour.enums.ServiceContentTypeCode.*;
 
 public enum ServiceHighCode implements HighCodeMapperType {
-  NATURE("A01", "자연", TOURISM_TYPE),
-  TOURIST_LIBERAL_ARTS("A02", "관광지_인문(문화/예술/역사)", TOURISM_TYPE),
+  NATURE("A01", "자연", TOURISM_TYPE_A01),
+  TOURIST_LIBERAL_ARTS("A02", "관광지_인문(문화/예술/역사)", TOURISM_TYPE_A02),
   CULTURAL_LIBERAL_ARTS("A02", "문화시설_인문(문화/예술/역사)", CULTURAL_FACILITIES_TYPE),
   EVENT_LIBERAL_ARTS("A02", "행사_인문(문화/예술/역사)", FESTIVAL_TYPE),
   RECOMMENDED_COURSE("C01", "추천코스", TRAVEL_TYPE),
