@@ -92,7 +92,7 @@ public class AnnoController {
   public HttpResponse<Void> save(
       @RequestBody(required = false) @NotNull(message = "공지사항이 존재하지 않습니다.") @Valid
           final AnnoDtoRequest annoDtoRequest) {
-    // TEST TEST
+    // test test  
     final AnnoDtoRequest newAnnoDtoRequest =
             AnnoDtoRequest.builder()
             .annoId(annoDtoRequest.getAnnoId())

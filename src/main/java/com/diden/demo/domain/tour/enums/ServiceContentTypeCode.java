@@ -7,7 +7,8 @@ import java.util.Arrays;
 
 @Getter
 public enum ServiceContentTypeCode implements CommonCodeMapperType {
-  TOURISM_TYPE(12, "관광지"),
+  TOURISM_TYPE_A01(12, "관광지"),
+  TOURISM_TYPE_A02(12, "관광지"),
   CULTURAL_FACILITIES_TYPE(14, "문화시설"),
   FESTIVAL_TYPE(15, "행사/공연/축제"),
   TRAVEL_TYPE(25, "여행코스"),
