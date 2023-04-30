@@ -77,6 +77,7 @@ public final class TourProperties {
    * <a href="https://api.visitkorea.or.kr/#/useKoreaGuide">국문관광정보 > 공통 정보 조회(소개정보 조회)</a>
    */
   public static final String DETAIL_INTRO = "detailIntro?";
+  public static final String DETAIL_INTRO1 = "detailIntro1?";
   /**
    *
    *

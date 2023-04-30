@@ -1,12 +1,13 @@
-package com.diden.demo.api.tour.dto.request;
+package com.diden.demo.api.tour.dto.request.receive;
 
+import com.diden.demo.api.tour.dto.request.CommonRequiredDtoRequest;
 import com.diden.demo.domain.tour.enums.MobileOSType;
 import com.diden.demo.domain.tour.enums.ServiceContentTypeCode;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class ReceivedAreaBasedListV4DtoRequest extends CommonRequiredDtoRequest{
+public class ReceivedAreaBasedListV4DtoRequest extends CommonRequiredDtoRequest {
     private Integer contentTypeId;
     private Integer numOfRows;
     private Integer pageNo;

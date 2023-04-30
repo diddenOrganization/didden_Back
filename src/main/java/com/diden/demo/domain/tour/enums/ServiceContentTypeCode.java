@@ -26,19 +26,24 @@ public enum ServiceContentTypeCode implements CommonCodeMapperType {
     this.title = title;
   }
 
+  public static ServiceContentTypeCode codeToEnum(Integer code) {
+    return Arrays.stream(ServiceContentTypeCode.values())
+            .filter(v -> v.getCode().equals(code))
+            .findFirst()
+            .orElse(null);
+  }
+
+
   public String getName() {
     return name();
   }
 
-  public static ServiceContentTypeCode codeToEnum(Integer code) {
-    return Arrays.stream(ServiceContentTypeCode.values())
-        .filter(v -> v.getCode().equals(code))
-        .findFirst()
-        .orElse(null);
-  }
-
   @Override
   public String getCodeName() {
-    return null;
+    return this.title;
+  }
+
+  public String getCodeTypeCasting() {
+    return this.code.toString();
   }
 }

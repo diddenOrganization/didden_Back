@@ -1,5 +1,7 @@
 package com.diden.demo.api.tour.controller;
 
+import com.diden.demo.api.tour.dto.response.TourCommonV4ResponseDto;
+import com.diden.demo.api.tour.service.TourApiService;
 import com.diden.demo.common.response.HttpResponse;
 import com.diden.demo.domain.tour.enums.ServiceContentTypeCode;
 import com.diden.demo.domain.tour.enums.ServiceHighCode;
@@ -9,11 +11,14 @@ import com.diden.demo.domain.tour.vo.response.HighCodeMapperValue;
 import com.diden.demo.domain.tour.vo.response.MiddleCodeMapperValue;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
@@ -26,6 +31,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/tour", produces = MediaType.APPLICATION_JSON_VALUE)
 public class TourFrontApiController {
+    private final TourApiService tourApiService;
+
     @GetMapping(value = "/high-code")
     public HttpResponse<List<HighCodeMapperValue>> findTourHighCode() {
         return HttpResponse.toResponse(
@@ -54,6 +61,14 @@ public class TourFrontApiController {
                 Arrays.stream(ServiceContentTypeCode.values())
                         .map(CommonCodeMapperValue::new)
                         .collect(Collectors.toList()));
+    }
+
+    @GetMapping
+    public HttpResponse<List<TourCommonV4ResponseDto>> getTours(@RequestParam Integer page, @RequestParam Integer size) {
+        return HttpResponse.toResponse(
+                HttpStatus.OK,
+                "문화시설 조회",
+                tourApiService.pageSlice(PageRequest.of(page, size)).getContent());
     }
 
 
