@@ -1,11 +1,12 @@
-package com.diden.demo.api.tour.dto.request;
+package com.diden.demo.api.tour.dto.request.receive;
 
+import com.diden.demo.api.tour.dto.request.CommonRequiredDtoRequest;
 import com.diden.demo.domain.tour.enums.MobileOSType;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class ReceivedDetailCommonV4DtoRequest extends CommonRequiredDtoRequest{
+public class ReceivedDetailCommonV4DtoRequest extends CommonRequiredDtoRequest {
 
     private String contentId;
     private String defaultYN;
