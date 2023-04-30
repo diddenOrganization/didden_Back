@@ -84,8 +84,8 @@ public class TourShoppingV4 implements TourEntitySupportInterface<TourShoppingV4
 
     @Override
     public void settingValue(JsonObject jsonObject) {
-        this.chkbabycarriageShopping = jsonObject.get("chkbabycarriageShopping").getAsString();
-        this.chkcreditcardShopping = jsonObject.get("chkcreditcardShopping").getAsString();
+        this.chkbabycarriageShopping = jsonObject.get("chkbabycarriageshopping").getAsString();
+        this.chkcreditcardShopping = jsonObject.get("chkcreditcardshopping").getAsString();
         this.chkpetshopping = jsonObject.get("chkpetshopping").getAsString();
         this.culturecenter = jsonObject.get("culturecenter").getAsString();
         this.fairday = jsonObject.get("fairday").getAsString();

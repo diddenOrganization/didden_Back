@@ -39,7 +39,7 @@ public class TourRestaurantV4 implements TourEntitySupportInterface<TourRestaura
     private String reservationfood;
     private String restdatefood;
     private String scalefood;
-    private Long seat;
+    private String seat;
     private String smoking;
 
     public TourRestaurantV4() {
@@ -95,7 +95,7 @@ public class TourRestaurantV4 implements TourEntitySupportInterface<TourRestaura
         this.reservationfood = jsonObject.get("reservationfood").getAsString();
         this.restdatefood = jsonObject.get("restdatefood").getAsString();
         this.scalefood = jsonObject.get("scalefood").getAsString();
-        this.seat = jsonObject.get("seat").getAsLong();
+        this.seat = jsonObject.get("seat").getAsString();
         this.smoking = jsonObject.get("smoking").getAsString();
     }
 }

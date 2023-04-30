@@ -27,7 +27,7 @@ public class TourAccommodationV4 implements TourEntitySupportInterface<TourAccom
     private String middleCode;
     private String title;
 
-    private Long accomcountlodging;
+    private String accomcountlodging;
     private String benikia;
     private String checkintime;
     private String checkouttime;
@@ -38,7 +38,7 @@ public class TourAccommodationV4 implements TourEntitySupportInterface<TourAccom
     private String infocenterlodging;
     private String parkinglodging;
     private String pickup;
-    private Long roomcount;
+    private String roomcount;
     private String reservationlodging;
     private String reservationurl;
     private String roomtype;
@@ -99,7 +99,7 @@ public class TourAccommodationV4 implements TourEntitySupportInterface<TourAccom
 
     @Override
     public void settingValue(JsonObject jsonObject) {
-        this.accomcountlodging = jsonObject.get("accomcountlodging").getAsLong();
+        this.accomcountlodging = jsonObject.get("accomcountlodging").getAsString();
         this.benikia = jsonObject.get("benikia").getAsString();
         this.checkintime = jsonObject.get("checkintime").getAsString();
         this.checkouttime = jsonObject.get("checkouttime").getAsString();
@@ -110,7 +110,7 @@ public class TourAccommodationV4 implements TourEntitySupportInterface<TourAccom
         this.infocenterlodging = jsonObject.get("infocenterlodging").getAsString();
         this.parkinglodging = jsonObject.get("parkinglodging").getAsString();
         this.pickup = jsonObject.get("pickup").getAsString();
-        this.roomcount = jsonObject.get("roomcount").getAsLong();
+        this.roomcount = jsonObject.get("roomcount").getAsString();
         this.reservationlodging = jsonObject.get("reservationlodging").getAsString();
         this.reservationurl = jsonObject.get("reservationurl").getAsString();
         this.roomtype = jsonObject.get("roomtype").getAsString();
