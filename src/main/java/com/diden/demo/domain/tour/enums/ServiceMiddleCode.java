@@ -1,8 +1,11 @@
 package com.diden.demo.domain.tour.enums;
 
+import com.diden.demo.common.utils.ValidatorUtils;
 import com.diden.demo.domain.tour.vo.response.MiddleCodeMapperType;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static com.diden.demo.domain.tour.enums.ServiceContentTypeCode.*;
 
@@ -31,7 +34,7 @@ public enum ServiceMiddleCode implements MiddleCodeMapperType {
   COMBINED_LEPORTS(ServiceHighCode.LEPORTS, "A0305", "복합 레포츠", LEPORTS_TYPE),
   ACCOMMODATION(ServiceHighCode.ACCOMMODATION, "B0201", "숙박시설", HOTEL_TYPE),
   SHOPPING(ServiceHighCode.SHOPPING, "A0401", "쇼핑", SHOPPING_TYPE),
-  FOOD(ServiceHighCode.FOOD, "A0502", "음식점", SHOPPING_TYPE),
+  FOOD(ServiceHighCode.FOOD, "A0502", "음식점", FOOD_TYPE),
   NONE(ServiceHighCode.NONE, "", null, null),
   ;
   private ServiceHighCode serviceHighCode;
@@ -75,5 +78,13 @@ public enum ServiceMiddleCode implements MiddleCodeMapperType {
         .filter(v -> v.getCode().equals(code))
         .findFirst()
         .orElse(ServiceMiddleCode.NONE);
+  }
+
+  public static boolean isNullOrEmpty(List<ServiceMiddleCode> serviceMiddleCodes) {
+    return ValidatorUtils.isListNullOrEmpty(serviceMiddleCodes);
+  }
+
+  public boolean isEqualsTitle(final String title) {
+    return StringUtils.equals(this.getTitle(), title);
   }
 }

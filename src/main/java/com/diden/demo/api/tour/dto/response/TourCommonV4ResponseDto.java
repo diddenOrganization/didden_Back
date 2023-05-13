@@ -52,6 +52,6 @@ public class TourCommonV4ResponseDto {
     }
 
     public Slice<TourCommonV4ResponseDto> receiveSliceByVo(Slice<TourCommonV4ResponseVo> slice) {
-        return new SliceImpl<>(slice.stream().map(this::receiveByVo).collect(Collectors.toList()));
+        return new SliceImpl<>(slice.stream().map(this::receiveByVo).collect(Collectors.toList()), slice.getPageable(), slice.hasNext());
     }
 }

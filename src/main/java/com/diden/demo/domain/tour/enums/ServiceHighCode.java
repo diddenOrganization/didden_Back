@@ -1,8 +1,11 @@
 package com.diden.demo.domain.tour.enums;
 
+import com.diden.demo.common.utils.ValidatorUtils;
 import com.diden.demo.domain.tour.vo.response.HighCodeMapperType;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static com.diden.demo.domain.tour.enums.ServiceContentTypeCode.*;
 
@@ -49,5 +52,13 @@ public enum ServiceHighCode implements HighCodeMapperType {
         .filter(v -> v.getCode().equals(code))
         .findFirst()
         .orElse(ServiceHighCode.NONE);
+  }
+
+  public static boolean isNullOrEmpty(List<ServiceHighCode> serviceHighCodes) {
+    return ValidatorUtils.isListNullOrEmpty(serviceHighCodes);
+  }
+
+  public boolean isEqualsTitle(final String title) {
+    return StringUtils.equals(this.getTitle(), title);
   }
 }

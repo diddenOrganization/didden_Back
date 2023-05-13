@@ -12,7 +12,6 @@ import com.diden.demo.domain.tour.vo.response.MiddleCodeMapperValue;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -31,7 +30,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/tour", produces = MediaType.APPLICATION_JSON_VALUE)
 public class TourFrontApiController {
-    private final TourApiService tourApiService;
+
 
     @GetMapping(value = "/high-code")
     public HttpResponse<List<HighCodeMapperValue>> findTourHighCode() {
@@ -63,13 +62,7 @@ public class TourFrontApiController {
                         .collect(Collectors.toList()));
     }
 
-    @GetMapping
-    public HttpResponse<List<TourCommonV4ResponseDto>> getTours(@RequestParam Integer page, @RequestParam Integer size) {
-        return HttpResponse.toResponse(
-                HttpStatus.OK,
-                "문화시설 조회",
-                tourApiService.pageSlice(PageRequest.of(page, size)).getContent());
-    }
+
 
 
 }

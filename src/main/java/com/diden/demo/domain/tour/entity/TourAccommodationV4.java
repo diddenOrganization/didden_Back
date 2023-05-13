@@ -15,19 +15,11 @@ import javax.persistence.Table;
 @ToString
 @Table(name = "TB_TOUR_ACCOMMODATION_V4")
 @AllArgsConstructor
-public class TourAccommodationV4 implements TourEntitySupportInterface<TourAccommodationV4> {
+public class TourAccommodationV4 extends TourCommonEntityV4 implements TourEntitySupportInterface<TourAccommodationV4> {
     @Id
     private Long contentId;
-    private String address;
-    private String cellphone;
-    private String detailImage;
-    private String thumbnailImage;
-    private Integer serviceCode;
-    private String highCode;
-    private String middleCode;
-    private String title;
 
-    private Long accomcountlodging;
+    private String accomcountlodging;
     private String benikia;
     private String checkintime;
     private String checkouttime;
@@ -38,7 +30,7 @@ public class TourAccommodationV4 implements TourEntitySupportInterface<TourAccom
     private String infocenterlodging;
     private String parkinglodging;
     private String pickup;
-    private Long roomcount;
+    private String roomcount;
     private String reservationlodging;
     private String reservationurl;
     private String roomtype;
@@ -61,16 +53,8 @@ public class TourAccommodationV4 implements TourEntitySupportInterface<TourAccom
     public TourAccommodationV4() {
     }
 
-    public TourAccommodationV4(Long contentId, String address, String cellphone, String detailImage, String thumbnailImage, Integer serviceCode, String highCode, String middleCode, String title) {
+    public TourAccommodationV4(Long contentId) {
         this.contentId = contentId;
-        this.address = address;
-        this.cellphone = cellphone;
-        this.detailImage = detailImage;
-        this.thumbnailImage = thumbnailImage;
-        this.serviceCode = serviceCode;
-        this.highCode = highCode;
-        this.middleCode = middleCode;
-        this.title = title;
     }
 
     @Override
@@ -80,16 +64,8 @@ public class TourAccommodationV4 implements TourEntitySupportInterface<TourAccom
 
     @Override
     public TourAccommodationV4 init(JsonObject jsonObject) {
-        return new TourAccommodationV4(
-                jsonObject.get("contentid").getAsLong(),
-                jsonObject.get("addr1").getAsString(),
-                jsonObject.get("tel").getAsString(),
-                jsonObject.get("firstimage").getAsString(),
-                jsonObject.get("firstimage2").getAsString(),
-                jsonObject.get("contenttypeid").getAsInt(),
-                jsonObject.get("cat1").getAsString(),
-                jsonObject.get("cat2").getAsString(),
-                jsonObject.get("title").getAsString());
+        super.commonInit(jsonObject);
+        return new TourAccommodationV4(jsonObject.get("contentid").getAsLong());
     }
 
     @Override
@@ -99,7 +75,7 @@ public class TourAccommodationV4 implements TourEntitySupportInterface<TourAccom
 
     @Override
     public void settingValue(JsonObject jsonObject) {
-        this.accomcountlodging = jsonObject.get("accomcountlodging").getAsLong();
+        this.accomcountlodging = jsonObject.get("accomcountlodging").getAsString();
         this.benikia = jsonObject.get("benikia").getAsString();
         this.checkintime = jsonObject.get("checkintime").getAsString();
         this.checkouttime = jsonObject.get("checkouttime").getAsString();
@@ -110,7 +86,7 @@ public class TourAccommodationV4 implements TourEntitySupportInterface<TourAccom
         this.infocenterlodging = jsonObject.get("infocenterlodging").getAsString();
         this.parkinglodging = jsonObject.get("parkinglodging").getAsString();
         this.pickup = jsonObject.get("pickup").getAsString();
-        this.roomcount = jsonObject.get("roomcount").getAsLong();
+        this.roomcount = jsonObject.get("roomcount").getAsString();
         this.reservationlodging = jsonObject.get("reservationlodging").getAsString();
         this.reservationurl = jsonObject.get("reservationurl").getAsString();
         this.roomtype = jsonObject.get("roomtype").getAsString();

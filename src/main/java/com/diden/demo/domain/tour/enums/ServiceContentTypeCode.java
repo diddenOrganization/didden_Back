@@ -1,9 +1,13 @@
 package com.diden.demo.domain.tour.enums;
 
+import com.diden.demo.common.utils.ValidatorUtils;
 import com.diden.demo.domain.tour.vo.response.CommonCodeMapperType;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 @Getter
 public enum ServiceContentTypeCode implements CommonCodeMapperType {
@@ -45,5 +49,17 @@ public enum ServiceContentTypeCode implements CommonCodeMapperType {
 
   public String getCodeTypeCasting() {
     return this.code.toString();
+  }
+
+  public boolean isPresentA02() {
+    return Objects.equals(ServiceContentTypeCode.TOURISM_TYPE_A02, this);
+  }
+
+  public static boolean isNullOrEmpty(List<ServiceContentTypeCode> serviceContentTypeCodes) {
+    return ValidatorUtils.isListNullOrEmpty(serviceContentTypeCodes);
+  }
+
+  public static boolean isNotNullOrEmpty(List<ServiceContentTypeCode> serviceContentTypeCodes) {
+    return !ValidatorUtils.isListNullOrEmpty(serviceContentTypeCodes);
   }
 }
