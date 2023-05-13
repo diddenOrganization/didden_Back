@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/tour", produces = MediaType.APPLICATION_JSON_VALUE)
 public class TourFrontApiController {
-    private final TourApiService tourApiService;
+
 
     @GetMapping(value = "/high-code")
     public HttpResponse<List<HighCodeMapperValue>> findTourHighCode() {
@@ -62,13 +62,7 @@ public class TourFrontApiController {
                         .collect(Collectors.toList()));
     }
 
-    @GetMapping
-    public HttpResponse<List<TourCommonV4ResponseDto>> getTours(@RequestParam Integer page, @RequestParam Integer size) {
-        return HttpResponse.toResponse(
-                HttpStatus.OK,
-                "문화시설 조회",
-                tourApiService.pageSlice(PageRequest.of(page, size)).getContent());
-    }
+
 
 
 }

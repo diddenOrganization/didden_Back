@@ -15,17 +15,9 @@ import javax.persistence.Table;
 @ToString
 @Table(name = "TB_TOUR_RESTAURANT_V4")
 @AllArgsConstructor
-public class TourRestaurantV4 implements TourEntitySupportInterface<TourRestaurantV4> {
+public class TourRestaurantV4 extends TourCommonEntityV4 implements TourEntitySupportInterface<TourRestaurantV4> {
     @Id
     private Long contentId;
-    private String address;
-    private String cellphone;
-    private String detailImage;
-    private String thumbnailImage;
-    private Integer serviceCode;
-    private String highCode;
-    private String middleCode;
-    private String title;
 
     private String chkcreditcardfood;
     private String discountinfofood;
@@ -45,16 +37,8 @@ public class TourRestaurantV4 implements TourEntitySupportInterface<TourRestaura
     public TourRestaurantV4() {
     }
 
-    public TourRestaurantV4(Long contentId, String address, String cellphone, String detailImage, String thumbnailImage, Integer serviceCode, String highCode, String middleCode, String title) {
+    public TourRestaurantV4(Long contentId) {
         this.contentId = contentId;
-        this.address = address;
-        this.cellphone = cellphone;
-        this.detailImage = detailImage;
-        this.thumbnailImage = thumbnailImage;
-        this.serviceCode = serviceCode;
-        this.highCode = highCode;
-        this.middleCode = middleCode;
-        this.title = title;
     }
 
     @Override
@@ -64,16 +48,8 @@ public class TourRestaurantV4 implements TourEntitySupportInterface<TourRestaura
 
     @Override
     public TourRestaurantV4 init(JsonObject jsonObject) {
-        return new TourRestaurantV4(
-                jsonObject.get("contentid").getAsLong(),
-                jsonObject.get("addr1").getAsString(),
-                jsonObject.get("tel").getAsString(),
-                jsonObject.get("firstimage").getAsString(),
-                jsonObject.get("firstimage2").getAsString(),
-                jsonObject.get("contenttypeid").getAsInt(),
-                jsonObject.get("cat1").getAsString(),
-                jsonObject.get("cat2").getAsString(),
-                jsonObject.get("title").getAsString());
+        super.commonInit(jsonObject);
+        return new TourRestaurantV4(jsonObject.get("contentid").getAsLong());
     }
 
     @Override

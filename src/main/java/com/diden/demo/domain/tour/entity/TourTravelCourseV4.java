@@ -15,17 +15,9 @@ import javax.persistence.Table;
 @ToString
 @Table(name = "TB_TOUR_TRAVEL_COURSE_V4")
 @AllArgsConstructor
-public class TourTravelCourseV4 implements TourEntitySupportInterface<TourTravelCourseV4> {
+public class TourTravelCourseV4 extends TourCommonEntityV4 implements TourEntitySupportInterface<TourTravelCourseV4> {
     @Id
     private Long contentId;
-    private String address;
-    private String cellphone;
-    private String detailImage;
-    private String thumbnailImage;
-    private Integer serviceCode;
-    private String highCode;
-    private String middleCode;
-    private String title;
 
     private String distance;
     private String infocentertourcourse;
@@ -36,16 +28,8 @@ public class TourTravelCourseV4 implements TourEntitySupportInterface<TourTravel
     public TourTravelCourseV4() {
     }
 
-    public TourTravelCourseV4(Long contentId, String address, String cellphone, String detailImage, String thumbnailImage, Integer serviceCode, String highCode, String middleCode, String title) {
+    public TourTravelCourseV4(Long contentId) {
         this.contentId = contentId;
-        this.address = address;
-        this.cellphone = cellphone;
-        this.detailImage = detailImage;
-        this.thumbnailImage = thumbnailImage;
-        this.serviceCode = serviceCode;
-        this.highCode = highCode;
-        this.middleCode = middleCode;
-        this.title = title;
     }
 
     @Override
@@ -55,16 +39,8 @@ public class TourTravelCourseV4 implements TourEntitySupportInterface<TourTravel
 
     @Override
     public TourTravelCourseV4 init(JsonObject jsonObject) {
-        return new TourTravelCourseV4(
-                jsonObject.get("contentid").getAsLong(),
-                jsonObject.get("addr1").getAsString(),
-                jsonObject.get("tel").getAsString(),
-                jsonObject.get("firstimage").getAsString(),
-                jsonObject.get("firstimage2").getAsString(),
-                jsonObject.get("contenttypeid").getAsInt(),
-                jsonObject.get("cat1").getAsString(),
-                jsonObject.get("cat2").getAsString(),
-                jsonObject.get("title").getAsString());
+        super.commonInit(jsonObject);
+        return new TourTravelCourseV4(jsonObject.get("contentid").getAsLong());
     }
 
     @Override

@@ -15,17 +15,9 @@ import javax.persistence.Table;
 @ToString
 @Table(name = "TB_TOUR_CULTURE_FACILITY_V4")
 @AllArgsConstructor
-public class TourCultureFacilityV4 implements TourEntitySupportInterface<TourCultureFacilityV4> {
+public class TourCultureFacilityV4 extends TourCommonEntityV4 implements TourEntitySupportInterface<TourCultureFacilityV4> {
     @Id
     private Long contentId;
-    private String address;
-    private String cellphone;
-    private String detailImage;
-    private String thumbnailImage;
-    private Integer serviceCode;
-    private String highCode;
-    private String middleCode;
-    private String title;
 
     private String accomcountculture;
     private String chkbabycarriageculture;
@@ -44,18 +36,9 @@ public class TourCultureFacilityV4 implements TourEntitySupportInterface<TourCul
     public TourCultureFacilityV4() {
     }
 
-    public TourCultureFacilityV4(Long contentId, String address, String cellphone, String detailImage, String thumbnailImage, Integer serviceCode, String highCode, String middleCode, String title) {
+    public TourCultureFacilityV4(Long contentId) {
         this.contentId = contentId;
-        this.address = address;
-        this.cellphone = cellphone;
-        this.detailImage = detailImage;
-        this.thumbnailImage = thumbnailImage;
-        this.serviceCode = serviceCode;
-        this.highCode = highCode;
-        this.middleCode = middleCode;
-        this.title = title;
     }
-
 
     @Override
     public boolean isContentTypeSupported(ServiceContentTypeCode contentType) {
@@ -64,16 +47,8 @@ public class TourCultureFacilityV4 implements TourEntitySupportInterface<TourCul
 
     @Override
     public TourCultureFacilityV4 init(JsonObject jsonObject) {
-        return new TourCultureFacilityV4(
-                jsonObject.get("contentid").getAsLong(),
-                jsonObject.get("addr1").getAsString(),
-                jsonObject.get("tel").getAsString(),
-                jsonObject.get("firstimage").getAsString(),
-                jsonObject.get("firstimage2").getAsString(),
-                jsonObject.get("contenttypeid").getAsInt(),
-                jsonObject.get("cat1").getAsString(),
-                jsonObject.get("cat2").getAsString(),
-                jsonObject.get("title").getAsString());
+        super.commonInit(jsonObject);
+        return new TourCultureFacilityV4(jsonObject.get("contentid").getAsLong());
     }
 
     @Override
