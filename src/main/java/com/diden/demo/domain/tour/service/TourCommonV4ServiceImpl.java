@@ -7,6 +7,7 @@ import com.diden.demo.domain.tour.enums.ServiceMiddleCode;
 import com.diden.demo.domain.tour.vo.response.TourCommonV4ResponseVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -22,33 +23,47 @@ public class TourCommonV4ServiceImpl implements TourCommonV4Service {
     private final Map<ServiceContentTypeCode, JpaRepository> contentTypeAdepterMap;
 
     @Override
-    public Slice<TourCommonV4ResponseVo> selectCommonData(PageRequest pageRequest, List<ServiceContentTypeCode> serviceContentTypeCodes, List<ServiceHighCode> serviceHighCodes, List<ServiceMiddleCode> serviceMiddleCodes) {
+    public Slice<TourCommonV4ResponseVo> selectCommonData(PageRequest pageRequest, List<ServiceContentTypeCode> serviceContentTypeCodes, List<ServiceHighCode> serviceHighCodes, List<ServiceMiddleCode> serviceMiddleCodes, String keyword) {
         final List<TourCommonEntityV4> contentTypeCodeList = new ArrayList<>();
         final Map<Long, TourCommonEntityV4> findAllTourCommonEntityV4Map = new HashMap<>();
         final Map<Long, TourCommonEntityV4> tourCommonEntityV4Map = new HashMap<>();
 
-        findAllCodeData(contentTypeCodeList, findAllTourCommonEntityV4Map); // 전체 조회
+        // 여행 데이터 전체 조회
+        this.findAllCodeData(contentTypeCodeList, findAllTourCommonEntityV4Map);
 
+        // 여행 데이터가 아예 없을 경우
         if (contentTypeCodeList.isEmpty()) {
             return new TourCommonV4ResponseVo().selectSliceInit();
         }
 
+        // 필터를 선택하지 않았을 경우
         if (ServiceContentTypeCode.isNullOrEmpty(serviceContentTypeCodes) && ServiceHighCode.isNullOrEmpty(serviceHighCodes) && ServiceMiddleCode.isNullOrEmpty(serviceMiddleCodes)) {
-            log.info(":: Select Map<Long, TourCommonEntityV4> Size => {} ::", findAllTourCommonEntityV4Map.size());
-            return new TourCommonV4ResponseVo().selectSliceInit(pageRequest, findAllTourCommonEntityV4Map);
+            final Map<Long, TourCommonEntityV4> defaultMapOrSearchMap = this.getDefaultMapOrSearchMap(findAllTourCommonEntityV4Map, keyword);
+
+            log.info(":: Select Map<Long, TourCommonEntityV4> Size => {} ::", defaultMapOrSearchMap.size());
+            return new TourCommonV4ResponseVo().selectSliceInit(pageRequest, defaultMapOrSearchMap);
         }
 
-        contentTypeCodeFilter(serviceContentTypeCodes, contentTypeCodeList, tourCommonEntityV4Map);
-        highCodeFilter(serviceHighCodes, contentTypeCodeList, tourCommonEntityV4Map);
-        middleCodeFilter(serviceMiddleCodes, contentTypeCodeList, tourCommonEntityV4Map);
+        this.contentTypeCodeFilter(serviceContentTypeCodes, contentTypeCodeList, tourCommonEntityV4Map); // 컨텐츠 타입 코드로 여행 데이터 조회
+        this.highCodeFilter(serviceHighCodes, contentTypeCodeList, tourCommonEntityV4Map); // 대분류 코드로 여행 데이터 조회
+        this.middleCodeFilter(serviceMiddleCodes, contentTypeCodeList, tourCommonEntityV4Map); // 중분류 코드로 여행 데이터 조회
 
-        log.info(":: Select Map<Long, TourCommonEntityV4> Size => {} ::", tourCommonEntityV4Map.isEmpty() ? findAllTourCommonEntityV4Map.size() : tourCommonEntityV4Map.size());
+        final Map<Long, TourCommonEntityV4> defaultMapOrSearchMap = this.getDefaultMapOrSearchMap(tourCommonEntityV4Map, keyword);
 
-        return new TourCommonV4ResponseVo().selectSliceInit(pageRequest, tourCommonEntityV4Map.isEmpty() ? findAllTourCommonEntityV4Map : tourCommonEntityV4Map);
+        log.info(":: Select Map<Long, TourCommonEntityV4> Size => {} ::", defaultMapOrSearchMap.size());
+        return new TourCommonV4ResponseVo().selectSliceInit(pageRequest, defaultMapOrSearchMap);
     }
 
-    private void findAllCodeData(List<TourCommonEntityV4> contentTypeCodeList, Map<Long, TourCommonEntityV4> findAllTourCommonEntityV4Map) {
-        for (ServiceContentTypeCode contentTypeCode : ServiceContentTypeCode.values()) { // 여행 데이터 전체 조회
+    private Map<Long, TourCommonEntityV4> getDefaultMapOrSearchMap(final Map<Long, TourCommonEntityV4> tourCommonEntityV4Map, String keyword) {
+        if (StringUtils.isBlank(keyword)) {
+            return tourCommonEntityV4Map;
+        }
+
+        return tourCommonEntityV4Map.values().stream().filter(o -> o.getTitle().contains(keyword)).collect(Collectors.toMap(key -> key.getContentId(), value -> value));
+    }
+
+    private void findAllCodeData(List<TourCommonEntityV4> contentTypeCodeList, final Map<Long, TourCommonEntityV4> findAllTourCommonEntityV4Map) {
+        for (final ServiceContentTypeCode contentTypeCode : ServiceContentTypeCode.values()) {
             if(contentTypeCode.isPresentA02()) {
                 continue;
             }
@@ -56,10 +71,11 @@ public class TourCommonV4ServiceImpl implements TourCommonV4Service {
             final JpaRepository jpaRepository = contentTypeAdepterMap.get(contentTypeCode);
             contentTypeCodeList.addAll(jpaRepository.findAll());
         }
+
         contentTypeCodeList.forEach(o -> findAllTourCommonEntityV4Map.put(o.getContentId(), o));
     }
 
-    private static void contentTypeCodeFilter(List<ServiceContentTypeCode> serviceContentTypeCodes, List<TourCommonEntityV4> contentTypeCodeList, Map<Long, TourCommonEntityV4> tourCommonEntityV4Map) {
+    private void contentTypeCodeFilter(List<ServiceContentTypeCode> serviceContentTypeCodes, List<TourCommonEntityV4> contentTypeCodeList, Map<Long, TourCommonEntityV4> tourCommonEntityV4Map) {
         if (ServiceContentTypeCode.isNullOrEmpty(serviceContentTypeCodes)) {
             return;
         }
@@ -76,7 +92,7 @@ public class TourCommonV4ServiceImpl implements TourCommonV4Service {
         findContentTypeCodeList.forEach(o -> tourCommonEntityV4Map.put(o.getContentId(), o));
     }
 
-    private static void highCodeFilter(List<ServiceHighCode> serviceHighCodes, List<TourCommonEntityV4> contentTypeCodeList, Map<Long, TourCommonEntityV4> tourCommonEntityV4Map) {
+    private void highCodeFilter(List<ServiceHighCode> serviceHighCodes, List<TourCommonEntityV4> contentTypeCodeList, Map<Long, TourCommonEntityV4> tourCommonEntityV4Map) {
         if (ServiceHighCode.isNullOrEmpty(serviceHighCodes)) {
             return;
         }
@@ -92,7 +108,7 @@ public class TourCommonV4ServiceImpl implements TourCommonV4Service {
         highCodeList.forEach(o -> tourCommonEntityV4Map.put(o.getContentId(), o));
     }
 
-    private static void middleCodeFilter(List<ServiceMiddleCode> serviceMiddleCodes, List<TourCommonEntityV4> contentTypeCodeList, Map<Long, TourCommonEntityV4> tourCommonEntityV4Map) {
+    private void middleCodeFilter(List<ServiceMiddleCode> serviceMiddleCodes, List<TourCommonEntityV4> contentTypeCodeList, Map<Long, TourCommonEntityV4> tourCommonEntityV4Map) {
         if (ServiceMiddleCode.isNullOrEmpty(serviceMiddleCodes)) {
             return;
         }
@@ -105,38 +121,5 @@ public class TourCommonV4ServiceImpl implements TourCommonV4Service {
             );
         }
         middleCodeList.forEach(o -> tourCommonEntityV4Map.put(o.getContentId(), o));
-    }
-
-
-
-
-    @Override
-    public Map<Long, TourCommonEntityV4> findToursByContentType(List<ServiceContentTypeCode> serviceContentTypeCodes) {
-        final List<TourCommonEntityV4> tourList = new ArrayList<>();
-        final Map<Long, TourCommonEntityV4> byList = new HashMap<>();
-
-        for (ServiceContentTypeCode contentTypeCode : serviceContentTypeCodes) {
-            if(contentTypeCode.isPresentA02()) continue;
-
-            JpaRepository jpaRepository = contentTypeAdepterMap.get(contentTypeCode);
-            tourList.addAll(jpaRepository.findAll());
-        }
-
-        tourList.forEach(o -> byList.put(o.getContentId(), o));
-        return byList;
-    }
-
-    @Override
-    public Map<Long, TourCommonEntityV4> tourListFindByHighCode(Map<Long, TourCommonEntityV4> findTours, List<ServiceHighCode> serviceHighCodes) {
-        for (Map.Entry<Long, TourCommonEntityV4> entry : findTours.entrySet()) {
-            //serviceHighCodes.stream().filter(o -> entry.getValue().getHighCode().equals(o.getCode())).collect(Collectors.toMap(, ));
-        }
-
-        return null;
-    }
-
-    @Override
-    public Map<Long, TourCommonEntityV4> tourListFindByMiddleCode(Map<Long, TourCommonEntityV4> findTours, List<ServiceMiddleCode> serviceMiddleCodes) {
-        return null;
     }
 }
