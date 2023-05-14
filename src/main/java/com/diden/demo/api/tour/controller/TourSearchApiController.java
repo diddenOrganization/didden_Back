@@ -42,10 +42,12 @@ public class TourSearchApiController {
           @RequestParam final Integer size,
       @RequestParam(required = false) final List<ServiceContentTypeCode> serviceContentTypeCodes,
       @RequestParam(required = false) final List<ServiceHighCode> serviceHighCodes,
-      @RequestParam(required = false) final List<ServiceMiddleCode> serviceMiddleCodes) {
+      @RequestParam(required = false) final List<ServiceMiddleCode> serviceMiddleCodes,
+      @RequestParam(required = false) final String keyword
+  ) {
 
     final Slice<TourCommonV4ResponseDto> tourCommonV4ResponseDtos =
-        tourApiService.pageSlice(PageRequest.of(page, size), serviceContentTypeCodes, serviceHighCodes, serviceMiddleCodes);
+        tourApiService.pageSlice(PageRequest.of(page, size), serviceContentTypeCodes, serviceHighCodes, serviceMiddleCodes, keyword);
 
     return HttpResponse.toSlicedResponse(
         HttpStatus.OK,

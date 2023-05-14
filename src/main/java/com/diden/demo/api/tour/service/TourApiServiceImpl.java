@@ -5,7 +5,6 @@ import com.diden.demo.domain.tour.enums.ServiceContentTypeCode;
 import com.diden.demo.domain.tour.enums.ServiceHighCode;
 import com.diden.demo.domain.tour.enums.ServiceMiddleCode;
 import com.diden.demo.domain.tour.service.TourCommonV4Service;
-import com.diden.demo.domain.tour.service.TourCultureFacilityV4Service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -21,7 +20,7 @@ public class TourApiServiceImpl implements TourApiService {
     private final TourCommonV4Service tourCommonV4Service;
 
     @Override
-    public Slice<TourCommonV4ResponseDto> pageSlice(PageRequest pageRequest, List<ServiceContentTypeCode> serviceContentTypeCodes, List<ServiceHighCode> serviceHighCodes, List<ServiceMiddleCode> serviceMiddleCodes) {
-        return new TourCommonV4ResponseDto().receiveSliceByVo(tourCommonV4Service.selectCommonData(pageRequest, serviceContentTypeCodes, serviceHighCodes, serviceMiddleCodes));
+    public Slice<TourCommonV4ResponseDto> pageSlice(PageRequest pageRequest, List<ServiceContentTypeCode> serviceContentTypeCodes, List<ServiceHighCode> serviceHighCodes, List<ServiceMiddleCode> serviceMiddleCodes, String keyword) {
+        return new TourCommonV4ResponseDto().receiveSliceByVo(tourCommonV4Service.selectCommonData(pageRequest, serviceContentTypeCodes, serviceHighCodes, serviceMiddleCodes, keyword));
     }
 }

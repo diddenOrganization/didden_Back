@@ -10,6 +10,6 @@ import org.springframework.data.domain.Slice;
 import java.util.List;
 
 public interface TourApiService {
-    Slice<TourCommonV4ResponseDto> pageSlice(PageRequest pageRequest, List<ServiceContentTypeCode> serviceContentTypeCodes, List<ServiceHighCode> serviceHighCodes, List<ServiceMiddleCode> serviceMiddleCodes);
+    Slice<TourCommonV4ResponseDto> pageSlice(PageRequest pageRequest, List<ServiceContentTypeCode> serviceContentTypeCodes, List<ServiceHighCode> serviceHighCodes, List<ServiceMiddleCode> serviceMiddleCodes, String keyword);
 
 }
