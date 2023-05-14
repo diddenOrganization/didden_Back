@@ -26,4 +26,6 @@ public interface TourService {
   void tourInfoOverViewUpdate(Map<String, Object> tourInfoParam);
 
   void tourInfoAreaNameUpdate(Map<String, Object> tourInfoParam);
+
+
 }

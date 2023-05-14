@@ -1,6 +1,5 @@
 package com.diden.demo.api.tour.dto.response;
 
-import com.diden.demo.domain.tour.entity.TourCultureFacilityV4;
 import com.diden.demo.domain.tour.vo.response.TourCommonV4ResponseVo;
 import lombok.Builder;
 import lombok.Getter;
