@@ -35,7 +35,6 @@ public class TourCommonV4ServiceImpl implements TourCommonV4Service {
 
         if (ServiceContentTypeCode.isNullOrEmpty(serviceContentTypeCodes) && ServiceHighCode.isNullOrEmpty(serviceHighCodes) && ServiceMiddleCode.isNullOrEmpty(serviceMiddleCodes)) {
             log.info(":: Select Map<Long, TourCommonEntityV4> Size => {} ::", findAllTourCommonEntityV4Map.size());
-            log.info(":: Select Map<Long, TourCommonEntityV4> Data => {} ::", findAllTourCommonEntityV4Map);
             return new TourCommonV4ResponseVo().selectSliceInit(pageRequest, findAllTourCommonEntityV4Map);
         }
 
@@ -44,7 +43,6 @@ public class TourCommonV4ServiceImpl implements TourCommonV4Service {
         middleCodeFilter(serviceMiddleCodes, contentTypeCodeList, tourCommonEntityV4Map);
 
         log.info(":: Select Map<Long, TourCommonEntityV4> Size => {} ::", tourCommonEntityV4Map.isEmpty() ? findAllTourCommonEntityV4Map.size() : tourCommonEntityV4Map.size());
-        log.info(":: Select Map<Long, TourCommonEntityV4> Data => {} ::", tourCommonEntityV4Map.isEmpty() ? findAllTourCommonEntityV4Map : tourCommonEntityV4Map);
 
         return new TourCommonV4ResponseVo().selectSliceInit(pageRequest, tourCommonEntityV4Map.isEmpty() ? findAllTourCommonEntityV4Map : tourCommonEntityV4Map);
     }
