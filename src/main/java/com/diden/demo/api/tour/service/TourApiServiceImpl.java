@@ -18,13 +18,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class TourApiServiceImpl implements TourApiService {
-    private final TourCultureFacilityV4Service tourCultureFacilityV4Service;
     private final TourCommonV4Service tourCommonV4Service;
-
-    @Override
-    public Slice<TourCommonV4ResponseDto> pageSlice(PageRequest pageRequest) {
-        return new TourCommonV4ResponseDto().receiveSliceByVo(tourCultureFacilityV4Service.selectCommonData(pageRequest));
-    }
 
     @Override
     public Slice<TourCommonV4ResponseDto> pageSlice(PageRequest pageRequest, List<ServiceContentTypeCode> serviceContentTypeCodes, List<ServiceHighCode> serviceHighCodes, List<ServiceMiddleCode> serviceMiddleCodes) {

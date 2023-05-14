@@ -36,6 +36,8 @@ public class TourCommonV4ServiceImpl implements TourCommonV4Service {
         }
 
         if (ServiceContentTypeCode.isNullOrEmpty(serviceContentTypeCodes) && ServiceHighCode.isNullOrEmpty(serviceHighCodes) && ServiceMiddleCode.isNullOrEmpty(serviceMiddleCodes)) {
+            log.info(":: Select Map<Long, TourCommonEntityV4> Size => {} ::", findAllTourCommonEntityV4Map.size());
+            log.info(":: Select Map<Long, TourCommonEntityV4> Data => {} ::", findAllTourCommonEntityV4Map);
             return new TourCommonV4ResponseVo().selectSliceInit(pageRequest, findAllTourCommonEntityV4Map);
         }
 

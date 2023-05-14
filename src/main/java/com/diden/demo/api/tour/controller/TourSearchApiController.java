@@ -28,31 +28,29 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/tour/search", produces = MediaType.APPLICATION_JSON_VALUE)
 public class TourSearchApiController {
-    private final TourApiService tourApiService;
-
-    @GetMapping
-    public HttpResponse<List<TourCommonV4ResponseDto>> getTours(@RequestParam Integer page, @RequestParam Integer size) {
-        final Slice<TourCommonV4ResponseDto> tourCommonV4ResponseDtos = tourApiService.pageSlice(PageRequest.of(page, size));
-
-        return HttpResponse.toSlicedResponse(
-                HttpStatus.OK,
-                "성공",
-                tourCommonV4ResponseDtos.getContent(), tourCommonV4ResponseDtos.hasNext());
-    }
+  private final TourApiService tourApiService;
 
   @GetMapping("/list")
   public HttpResponse<List<TourCommonV4ResponseDto>> getTours(
-      @Parameter(schema = @Schema(title = "페이지", description = "1,2,3,4 ... 한 페이지를 뜻 합니다.", example = "0")) @RequestParam Integer page,
-      @Parameter(schema = @Schema(title = "출력할 수", description = "한 페이지에 데이터가 N개 를 출력합니다.", example = "10")) @RequestParam Integer size,
-      @RequestParam(required = false) List<ServiceContentTypeCode> serviceContentTypeCodes,
-      @RequestParam(required = false) List<ServiceHighCode> serviceHighCodes,
-      @RequestParam(required = false) List<ServiceMiddleCode> serviceMiddleCodes) {
+      @Parameter(
+              schema =
+                  @Schema(title = "페이지", description = "1,2,3,4 ... 한 페이지를 뜻 합니다.", example = "0"))
+          @RequestParam final Integer page,
+      @Parameter(
+              schema =
+                  @Schema(title = "출력할 수", description = "한 페이지에 데이터가 N개 를 출력합니다.", example = "10"))
+          @RequestParam final Integer size,
+      @RequestParam(required = false) final List<ServiceContentTypeCode> serviceContentTypeCodes,
+      @RequestParam(required = false) final List<ServiceHighCode> serviceHighCodes,
+      @RequestParam(required = false) final List<ServiceMiddleCode> serviceMiddleCodes) {
 
-        final Slice<TourCommonV4ResponseDto> tourCommonV4ResponseDtos = tourApiService.pageSlice(PageRequest.of(page, size), serviceContentTypeCodes, serviceHighCodes, serviceMiddleCodes);
+    final Slice<TourCommonV4ResponseDto> tourCommonV4ResponseDtos =
+        tourApiService.pageSlice(PageRequest.of(page, size), serviceContentTypeCodes, serviceHighCodes, serviceMiddleCodes);
 
-        return HttpResponse.toSlicedResponse(
-                HttpStatus.OK,
-                "성공",
-                tourCommonV4ResponseDtos.getContent(), tourCommonV4ResponseDtos.hasNext());
-    }
+    return HttpResponse.toSlicedResponse(
+        HttpStatus.OK,
+        "성공",
+        tourCommonV4ResponseDtos.getContent(),
+        tourCommonV4ResponseDtos.hasNext());
+  }
 }
