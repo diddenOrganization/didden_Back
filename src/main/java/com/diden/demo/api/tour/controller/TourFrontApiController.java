@@ -15,10 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,6 +27,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/tour", produces = MediaType.APPLICATION_JSON_VALUE)
 public class TourFrontApiController {
+
+    private final TourApiService tourApiService;
 
 
     @GetMapping(value = "/high-code")
@@ -54,6 +53,16 @@ public class TourFrontApiController {
 
     @GetMapping(value = "/content-type-code")
     public HttpResponse<List<CommonCodeMapperValue>> findTourContentTypeCode() {
+        return HttpResponse.toResponse(
+                HttpStatus.OK,
+                "컨텐츠 서비스 코드",
+                Arrays.stream(ServiceContentTypeCode.values())
+                        .map(CommonCodeMapperValue::new)
+                        .collect(Collectors.toList()));
+    }
+
+    @GetMapping(value = "/{contentId}/details")
+    public HttpResponse<List<CommonCodeMapperValue>> getTourContentDetail(@PathVariable(value = "contentId") final String contentId) {
         return HttpResponse.toResponse(
                 HttpStatus.OK,
                 "컨텐츠 서비스 코드",
