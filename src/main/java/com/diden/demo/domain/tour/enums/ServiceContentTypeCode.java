@@ -44,7 +44,7 @@ public enum ServiceContentTypeCode implements CommonCodeMapperType {
 
   @Override
   public String getCodeName() {
-    return this.title;
+    return name();
   }
 
   public String getCodeTypeCasting() {

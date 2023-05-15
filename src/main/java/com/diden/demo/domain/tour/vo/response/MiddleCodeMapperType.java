@@ -8,4 +8,5 @@ public interface MiddleCodeMapperType {
     String getCode();
     String getTitle();
     ServiceContentTypeCode getContentType();
+    String getCodeName();
 }
