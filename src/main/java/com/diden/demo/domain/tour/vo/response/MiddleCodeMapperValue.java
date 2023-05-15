@@ -12,11 +12,13 @@ public class MiddleCodeMapperValue {
   private String code;
   private String title;
   private ServiceContentTypeCode contentTypeCode;
+  private String codeName;
 
   public MiddleCodeMapperValue(MiddleCodeMapperType middleCodeMapperType) {
     this.serviceHighCode = middleCodeMapperType.getServiceHighCode();
     this.code = middleCodeMapperType.getCode();
     this.title = middleCodeMapperType.getTitle();
     this.contentTypeCode = middleCodeMapperType.getContentType();
+    this.codeName = middleCodeMapperType.getCodeName();
   }
 }

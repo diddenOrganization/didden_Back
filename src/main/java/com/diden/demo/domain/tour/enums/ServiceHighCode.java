@@ -47,6 +47,11 @@ public enum ServiceHighCode implements HighCodeMapperType {
     return contentType;
   }
 
+  @Override
+  public String getCodeName() {
+    return name();
+  }
+
   public static ServiceHighCode codeToEnum(String code) {
     return Arrays.stream(ServiceHighCode.values())
         .filter(v -> v.getCode().equals(code))

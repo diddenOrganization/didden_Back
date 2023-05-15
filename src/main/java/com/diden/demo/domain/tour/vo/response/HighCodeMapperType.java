@@ -6,4 +6,5 @@ public interface HighCodeMapperType {
     String getCode();
     String getTitle();
     ServiceContentTypeCode getContentType();
+    String getCodeName();
 }

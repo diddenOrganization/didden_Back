@@ -73,6 +73,11 @@ public enum ServiceMiddleCode implements MiddleCodeMapperType {
     return contentType;
   }
 
+  @Override
+  public String getCodeName() {
+    return name();
+  }
+
   public static ServiceMiddleCode codeToEnum(String code) {
     return Arrays.stream(ServiceMiddleCode.values())
         .filter(v -> v.getCode().equals(code))
