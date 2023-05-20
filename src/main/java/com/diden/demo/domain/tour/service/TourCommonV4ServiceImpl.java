@@ -23,7 +23,7 @@ public class TourCommonV4ServiceImpl implements TourCommonV4Service {
     private final Map<ServiceContentTypeCode, JpaRepository> contentTypeAdepterMap;
 
     @Override
-    public Slice<TourCommonV4ResponseVo> selectCommonData(PageRequest pageRequest, List<ServiceContentTypeCode> serviceContentTypeCodes, List<ServiceHighCode> serviceHighCodes, List<ServiceMiddleCode> serviceMiddleCodes, String keyword) {
+    public Slice<TourCommonV4ResponseVo> selectCommonData(Pageable pageable, List<ServiceContentTypeCode> serviceContentTypeCodes, List<ServiceHighCode> serviceHighCodes, List<ServiceMiddleCode> serviceMiddleCodes, String keyword) {
         final List<TourCommonEntityV4> contentTypeCodeList = new ArrayList<>();
         final Map<Long, TourCommonEntityV4> findAllTourCommonEntityV4Map = new HashMap<>();
         final Map<Long, TourCommonEntityV4> tourCommonEntityV4Map = new HashMap<>();
@@ -41,7 +41,7 @@ public class TourCommonV4ServiceImpl implements TourCommonV4Service {
             final Map<Long, TourCommonEntityV4> defaultMapOrSearchMap = this.getDefaultMapOrSearchMap(findAllTourCommonEntityV4Map, keyword);
 
             log.info(":: Select Map<Long, TourCommonEntityV4> Size => {} ::", defaultMapOrSearchMap.size());
-            return new TourCommonV4ResponseVo().selectSliceInit(pageRequest, defaultMapOrSearchMap);
+            return new TourCommonV4ResponseVo().selectSliceInit(pageable, defaultMapOrSearchMap);
         }
 
         this.contentTypeCodeFilter(serviceContentTypeCodes, contentTypeCodeList, tourCommonEntityV4Map); // 컨텐츠 타입 코드로 여행 데이터 조회
@@ -51,7 +51,7 @@ public class TourCommonV4ServiceImpl implements TourCommonV4Service {
         final Map<Long, TourCommonEntityV4> defaultMapOrSearchMap = this.getDefaultMapOrSearchMap(tourCommonEntityV4Map, keyword);
 
         log.info(":: Select Map<Long, TourCommonEntityV4> Size => {} ::", defaultMapOrSearchMap.size());
-        return new TourCommonV4ResponseVo().selectSliceInit(pageRequest, defaultMapOrSearchMap);
+        return new TourCommonV4ResponseVo().selectSliceInit(pageable, defaultMapOrSearchMap);
     }
 
     private Map<Long, TourCommonEntityV4> getDefaultMapOrSearchMap(final Map<Long, TourCommonEntityV4> tourCommonEntityV4Map, String keyword) {
