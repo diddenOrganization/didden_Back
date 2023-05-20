@@ -76,14 +76,14 @@ public class TourCommonV4ResponseVo {
         return new SliceImpl<>(slice.stream().map(this::selectInit).collect(Collectors.toList()), slice.getPageable(), slice.hasNext());
     }
 
-    public Slice<TourCommonV4ResponseVo> selectSliceInit(PageRequest pageRequest, Map<Long, TourCommonEntityV4> tourCommonEntityV4Map) {
+    public Slice<TourCommonV4ResponseVo> selectSliceInit(Pageable pageable, Map<Long, TourCommonEntityV4> tourCommonEntityV4Map) {
         final List<TourCommonEntityV4> collectList = new ArrayList<>(tourCommonEntityV4Map.values());
 
-        final int start = (int) pageRequest.getOffset();
-        final int end = Math.min((start + pageRequest.getPageSize()), collectList.size());
+        final int start = (int) pageable.getOffset();
+        final int end = Math.min((start + pageable.getPageSize()), collectList.size());
 
         final List<TourCommonV4ResponseVo> byObject = collectList.stream().map(this::commonInit).collect(Collectors.toList());
-        final Page<TourCommonV4ResponseVo> page = new PageImpl<>(byObject.subList(start, end), pageRequest, byObject.size());
+        final Page<TourCommonV4ResponseVo> page = new PageImpl<>(byObject.subList(start, end), pageable, byObject.size());
 
         return new SliceImpl<>(page.getContent(), page.getPageable(), page.hasNext());
     }
