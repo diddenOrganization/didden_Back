@@ -1,13 +1,12 @@
 package com.diden.demo.domain.tour.enums;
 
+import static com.diden.demo.domain.tour.enums.ServiceContentTypeCode.*;
+
 import com.diden.demo.common.utils.ValidatorUtils;
 import com.diden.demo.domain.tour.vo.response.MiddleCodeMapperType;
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.Arrays;
 import java.util.List;
-
-import static com.diden.demo.domain.tour.enums.ServiceContentTypeCode.*;
+import org.apache.commons.lang3.StringUtils;
 
 public enum ServiceMiddleCode implements MiddleCodeMapperType {
   NATURAL_TOURIST(ServiceHighCode.NATURE, "A0101", "자연관광지", TOURISM_TYPE_A01),
@@ -17,8 +16,7 @@ public enum ServiceMiddleCode implements MiddleCodeMapperType {
   EXPERIENCE_TOURIST(ServiceHighCode.TOURIST_LIBERAL_ARTS, "A0203", "체험관광지", TOURISM_TYPE_A02),
   INDUSTRIAL_TOURIST(ServiceHighCode.TOURIST_LIBERAL_ARTS, "A0204", "산업관광지", TOURISM_TYPE_A02),
   ARCHITECTURE_SCULPTURES(ServiceHighCode.TOURIST_LIBERAL_ARTS, "A0205", "건축/조형물", TOURISM_TYPE_A02),
-  CULTURAL_FACILITIES(
-      ServiceHighCode.CULTURAL_LIBERAL_ARTS, "A0206", "문화시설", CULTURAL_FACILITIES_TYPE),
+  CULTURAL_FACILITIES(ServiceHighCode.CULTURAL_LIBERAL_ARTS, "A0206", "문화시설", CULTURAL_FACILITIES_TYPE),
   FESTIVAL(ServiceHighCode.EVENT_LIBERAL_ARTS, "A0207", "축제", FESTIVAL_TYPE),
   PERFORMANCE_EVENT(ServiceHighCode.EVENT_LIBERAL_ARTS, "A0208", "공연/행사", FESTIVAL_TYPE),
   FAMILY_COURSE(ServiceHighCode.RECOMMENDED_COURSE, "C0112", "가족코스", TRAVEL_TYPE),

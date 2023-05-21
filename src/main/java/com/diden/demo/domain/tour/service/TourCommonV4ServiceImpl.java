@@ -1,6 +1,8 @@
 package com.diden.demo.domain.tour.service;
 
+import com.diden.demo.common.error.exception.DataNotProcessExceptions;
 import com.diden.demo.domain.tour.entity.TourCommonEntityV4;
+import com.diden.demo.domain.tour.entity.TourEntitySupportInterface;
 import com.diden.demo.domain.tour.enums.ServiceContentTypeCode;
 import com.diden.demo.domain.tour.enums.ServiceHighCode;
 import com.diden.demo.domain.tour.enums.ServiceMiddleCode;
@@ -21,6 +23,8 @@ import java.util.stream.Collectors;
 public class TourCommonV4ServiceImpl implements TourCommonV4Service {
 
     private final Map<ServiceContentTypeCode, JpaRepository> contentTypeAdepterMap;
+
+
 
     @Override
     public Slice<TourCommonV4ResponseVo> selectCommonData(Pageable pageable, List<ServiceContentTypeCode> serviceContentTypeCodes, List<ServiceHighCode> serviceHighCodes, List<ServiceMiddleCode> serviceMiddleCodes, String keyword) {
@@ -54,6 +58,11 @@ public class TourCommonV4ServiceImpl implements TourCommonV4Service {
         return new TourCommonV4ResponseVo().selectSliceInit(pageable, defaultMapOrSearchMap);
     }
 
+    @Override
+    public TourEntitySupportInterface selectTourByContentTypeAndContentId(ServiceContentTypeCode serviceContentTypeCode, Long contentId) throws Throwable {
+        return (TourEntitySupportInterface) contentTypeAdepterMap.get(serviceContentTypeCode).findById(contentId).orElseThrow(() -> {throw new DataNotProcessExceptions("여행 데이터가 존재하지 않습니다.");});
+    }
+
     private Map<Long, TourCommonEntityV4> getDefaultMapOrSearchMap(final Map<Long, TourCommonEntityV4> tourCommonEntityV4Map, String keyword) {
         if (StringUtils.isBlank(keyword)) {
             return tourCommonEntityV4Map;
@@ -84,7 +93,7 @@ public class TourCommonV4ServiceImpl implements TourCommonV4Service {
 
         for (ServiceContentTypeCode contentTypeCode : serviceContentTypeCodes) { // 전체 조회 중에서 대분류 조회
             findContentTypeCodeList.addAll(contentTypeCodeList.stream()
-                    .filter(o -> contentTypeCode.getCode().equals(o.getServiceCode()))
+                    .filter(o -> contentTypeCode.getCode().equals(o.getServiceCode().getCode()))
                     .collect(Collectors.toList())
             );
         }
@@ -100,7 +109,7 @@ public class TourCommonV4ServiceImpl implements TourCommonV4Service {
 
         for (ServiceHighCode highCode : serviceHighCodes) { // 전체 조회 중에서 대분류 조회
             highCodeList.addAll(contentTypeCodeList.stream()
-                    .filter(o -> highCode.getCode().equals(o.getHighCode()))
+                    .filter(o -> highCode.getCode().equals(o.getHighCode().getCode()))
                     .collect(Collectors.toList())
             );
         }
@@ -116,7 +125,7 @@ public class TourCommonV4ServiceImpl implements TourCommonV4Service {
 
         for (ServiceMiddleCode middleCode : serviceMiddleCodes) { // 전체 조회 중에서 중분류 조회
             middleCodeList.addAll(contentTypeCodeList.stream()
-                    .filter(o -> middleCode.getCode().equals(o.getMiddleCode()))
+                    .filter(o -> middleCode.getCode().equals(o.getMiddleCode().getCode()))
                     .collect(Collectors.toList())
             );
         }

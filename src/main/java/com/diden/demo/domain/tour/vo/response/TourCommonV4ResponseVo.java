@@ -2,6 +2,9 @@ package com.diden.demo.domain.tour.vo.response;
 
 import com.diden.demo.domain.tour.entity.TourCommonEntityV4;
 import com.diden.demo.domain.tour.entity.TourCultureFacilityV4;
+import com.diden.demo.domain.tour.enums.ServiceContentTypeCode;
+import com.diden.demo.domain.tour.enums.ServiceHighCode;
+import com.diden.demo.domain.tour.enums.ServiceMiddleCode;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,13 +25,13 @@ public class TourCommonV4ResponseVo {
     private String cellphone;
     private String detailImage;
     private String thumbnailImage;
-    private Integer serviceCode;
-    private String highCode;
-    private String middleCode;
+    private ServiceContentTypeCode serviceCode;
+    private ServiceHighCode highCode;
+    private ServiceMiddleCode middleCode;
     private String title;
 
     @Builder
-    public TourCommonV4ResponseVo(Long contentId, String address, String cellphone, String detailImage, String thumbnailImage, Integer serviceCode, String highCode, String middleCode, String title) {
+    public TourCommonV4ResponseVo(Long contentId, String address, String cellphone, String detailImage, String thumbnailImage, ServiceContentTypeCode serviceCode, ServiceHighCode highCode, ServiceMiddleCode middleCode, String title) {
         this.contentId = contentId;
         this.address = address;
         this.cellphone = cellphone;

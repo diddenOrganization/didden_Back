@@ -40,7 +40,7 @@ spring:
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
-    groups-order: DESC
+    groups-order: asc
     operationsSorter: method
     disable-swagger-default-url: true
     display-request-duration: true

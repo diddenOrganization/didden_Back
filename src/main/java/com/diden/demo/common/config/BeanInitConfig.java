@@ -1,8 +1,8 @@
 package com.diden.demo.common.config;
 
+import com.diden.demo.api.tour.dto.response.*;
 import com.diden.demo.common.adepter.*;
-import com.diden.demo.domain.tour.entity.TourCommonEntityV4;
-import com.diden.demo.domain.tour.entity.TourEntitySupportInterface;
+import com.diden.demo.domain.tour.entity.*;
 import com.diden.demo.domain.tour.enums.ServiceContentTypeCode;
 import com.diden.demo.domain.tour.repository.*;
 import com.diden.demo.domain.user.adepter.AppleSocialAdepterImpl;
@@ -10,14 +10,12 @@ import com.diden.demo.domain.user.adepter.KakaoSocialAdepterImpl;
 import com.diden.demo.domain.user.adepter.NaverSocialAdepterImpl;
 import com.diden.demo.domain.user.adepter.SocialAdepter;
 import com.diden.demo.domain.user.enums.AccountTypeEnum;
+import java.util.HashMap;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Configuration
 @RequiredArgsConstructor
@@ -25,6 +23,7 @@ public class BeanInitConfig {
   private final Map<AccountTypeEnum, SocialAdepter> socialAdepterMap = new HashMap<>();
   private final Map<AccountTypeEnum, LoginLogoutAdepter> loginLogoutAdepterMap = new HashMap<>();
   private final Map<ServiceContentTypeCode, JpaRepository> contentTypeAdepterMap = new HashMap<>();
+  private final Map<ServiceContentTypeCode, TourEntitySupportResponseInterface> responseAdepterMap = new HashMap<>();
   private final TourRestaurantV4Repository tourRestaurantV4Repository;
   private final TourShoppingV4Repository tourShoppingV4Repository;
   private final TourTourismV4Repository tourTourismV4Repository;
@@ -63,5 +62,18 @@ public class BeanInitConfig {
     contentTypeAdepterMap.put(ServiceContentTypeCode.FOOD_TYPE, tourRestaurantV4Repository);
 
     return contentTypeAdepterMap;
+  }
+
+  @Bean
+  public Map<ServiceContentTypeCode, TourEntitySupportResponseInterface> responseAdepterMap() {
+    responseAdepterMap.put(ServiceContentTypeCode.TOURISM_TYPE_A01, new TourTourismV4Response());
+    responseAdepterMap.put(ServiceContentTypeCode.CULTURAL_FACILITIES_TYPE, new TourCultureFacilityV4Response());
+    responseAdepterMap.put(ServiceContentTypeCode.FESTIVAL_TYPE, new TourEventV4Response());
+    responseAdepterMap.put(ServiceContentTypeCode.TRAVEL_TYPE, new TourTravelCourseV4Response());
+    responseAdepterMap.put(ServiceContentTypeCode.LEPORTS_TYPE, new TourRecreationV4Response());
+    responseAdepterMap.put(ServiceContentTypeCode.HOTEL_TYPE, new TourAccommodationV4Response());
+    responseAdepterMap.put(ServiceContentTypeCode.SHOPPING_TYPE, new TourShoppingV4Response());
+    responseAdepterMap.put(ServiceContentTypeCode.FOOD_TYPE, new TourRestaurantV4Response());
+    return responseAdepterMap;
   }
 }
