@@ -11,18 +11,31 @@ import lombok.Getter;
 @Schema(title = "TourCultureFacilityV4Response - CULTURAL_FACILITIES_TYPE", description = "CULTURAL_FACILITIES_TYPE = 문화시설")
 public class TourCultureFacilityV4Response implements TourEntitySupportResponseInterface {
     private Long contentId;
+    @Schema(title = "수용인원")
     private String accomcountculture;
+    @Schema(title = "유모차대여정보")
     private String chkbabycarriageculture;
+    @Schema(title = "신용카드가능정보")
     private String chkcreditcardculture;
+    @Schema(title = "애완동물동반가능정보")
     private String chkpetculture;
+    @Schema(title = "할인정보")
     private String discountinfo;
+    @Schema(title = "문의및안내")
     private String infocenterculture;
+    @Schema(title = "주차시설")
     private String parkingculture;
+    @Schema(title = "주차요금")
     private String parkingfee;
+    @Schema(title = "쉬는날")
     private String restdateculture;
+    @Schema(title = "이용요금")
     private String usefee;
+    @Schema(title = "이용시간")
     private String usetimeculture;
+    @Schema(title = "규모")
     private String scale;
+    @Schema(title = "관람소요시간")
     private String spendtime;
 
     public TourCultureFacilityV4Response() {

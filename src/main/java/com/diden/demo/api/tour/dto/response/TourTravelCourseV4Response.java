@@ -12,10 +12,15 @@ import lombok.Getter;
 public class TourTravelCourseV4Response implements TourEntitySupportResponseInterface {
 
     private Long contentId;
+    @Schema(title = "코스총거리")
     private String distance;
+    @Schema(title = "문의및안내")
     private String infocentertourcourse;
+    @Schema(title = "코스일정")
     private String schedule;
+    @Schema(title = "코스총소요시간")
     private String taketime;
+    @Schema(title = "코스테마")
     private String theme;
 
     public TourTravelCourseV4Response() {

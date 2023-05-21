@@ -14,23 +14,41 @@ import lombok.Getter;
 @Schema(title = "TourEventV4Response - FESTIVAL_TYPE", description = "FESTIVAL_TYPE = 행사/공연/축제")
 public class TourEventV4Response implements TourEntitySupportResponseInterface{
     private Long contentId;
+    @Schema(title = "관람 가능 연령")
     private String agelimit;
+    @Schema(title = "예매처")
     private String bookingplace;
+    @Schema(title = "할인 정보")
     private String discountinfofestival;
+    @Schema(title = "행사 종료일")
     private String eventenddate;
+    @Schema(title = "행사 홈페이지")
     private String eventhomepage;
+    @Schema(title = "행사 장소")
     private String eventplace;
+    @Schema(title = "행사 시작일")
     private String eventstartdate;
+    @Schema(title = "축제 등급")
     private String festivalgrade;
+    @Schema(title = "행사장 위치 안내")
     private String placeinfo;
+    @Schema(title = "공연 시간")
     private String playtime;
+    @Schema(title = "행사 프로그램")
     private String program;
+    @Schema(title = "관람 소요 시간")
     private String spendtimefestival;
+    @Schema(title = "주최자 정보")
     private String sponsor1;
+    @Schema(title = "주최자 연락처")
     private String sponsor1tel;
+    @Schema(title = "주관사 정보")
     private String sponsor2;
+    @Schema(title = "주관사 연락처")
     private String sponsor2tel;
+    @Schema(title = "부대 행사")
     private String subevent;
+    @Schema(title = "이용 요금")
     private String usetimefestival;
 
     public TourEventV4Response() {

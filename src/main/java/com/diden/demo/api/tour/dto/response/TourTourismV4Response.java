@@ -11,20 +11,35 @@ import lombok.Getter;
 public class TourTourismV4Response implements TourEntitySupportResponseInterface {
 
     private Long contentId;
+    @Schema(title = "수용 인원")
     private String accomcount;
+    @Schema(title = "유모차 대여 정보")
     private String chkbabycarriage;
+    @Schema(title = "신용카드 가능 정보")
     private String chkcreditcard;
+    @Schema(title = "애완동물 동반 가능 정보")
     private String chkpet;
+    @Schema(title = "체험 가능 연령")
     private String expagerange;
+    @Schema(title = "체험 안내")
     private String expguide;
+    @Schema(title = "세계 문화 유산 유무")
     private String heritage1;
+    @Schema(title = "세계 자연 유산 유무")
     private String heritage2;
+    @Schema(title = "세계 기록 유산 유무")
     private String heritage3;
+    @Schema(title = "문의 및 안내")
     private String infocenter;
+    @Schema(title = "개장일")
     private String opendate;
+    @Schema(title = "주차 시설")
     private String parking;
+    @Schema(title = "쉬는 날")
     private String restdate;
+    @Schema(title = "이용 시기")
     private String useseason;
+    @Schema(title = "이용 시간")
     private String usetime;
 
     public TourTourismV4Response() {

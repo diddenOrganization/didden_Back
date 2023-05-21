@@ -12,20 +12,35 @@ public class TourShoppingV4Response implements TourEntitySupportResponseInterfac
 
     private Long contentId;
 
+    @Schema(title = "유모차 대여 가능 여부")
     private String chkbabycarriageShopping;
+    @Schema(title = "신용카드 가능 여부")
     private String chkcreditcardShopping;
+    @Schema(title = "애완동물 동반 가능 여부")
     private String chkpetshopping;
+    @Schema(title = "문화센터 바로가기")
     private String culturecenter;
+    @Schema(title = "장서는 날")
     private String fairday;
+    @Schema(title = "문의 및 안내")
     private String infocentershopping;
+    @Schema(title = "개장일")
     private String opendateshopping;
+    @Schema(title = "영업시간")
     private String opentime;
+    @Schema(title = "주차시설")
     private String parkingshopping;
+    @Schema(title = "쉬는 날")
     private String restdateshopping;
+    @Schema(title = "화장실 설명")
     private String restroom;
+    @Schema(title = "판매 품목")
     private String saleitem;
+    @Schema(title = "판매 품목별 가격")
     private String saleitemcost;
+    @Schema(title = "규모")
     private String scaleshopping;
+    @Schema(title = "매장 안내")
     private String shopguide;
 
     public TourShoppingV4Response() {
