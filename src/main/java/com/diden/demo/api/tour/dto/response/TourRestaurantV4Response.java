@@ -12,19 +12,33 @@ import lombok.Getter;
 public class TourRestaurantV4Response implements TourEntitySupportResponseInterface {
 
     private Long contentId;
+    @Schema(title = "신용카드 가능 여부")
     private String chkcreditcardfood;
+    @Schema(title = "할인 정보")
     private String discountinfofood;
+    @Schema(title = "대표 메뉴")
     private String firstmenu;
+    @Schema(title = "문의 및 안내")
     private String infocenterfood;
+    @Schema(title = "어린이 놀이방 여부")
     private String kidsfacility;
+    @Schema(title = "개업일")
     private String opendatefood;
+    @Schema(title = "영업시간")
     private String opentimefood;
+    @Schema(title = "포장 가능 여부")
     private String packing;
+    @Schema(title = "주차시설")
     private String parkingfood;
+    @Schema(title = "예약 안내")
     private String reservationfood;
+    @Schema(title = "쉬는 날")
     private String restdatefood;
+    @Schema(title = "규모")
     private String scalefood;
+    @Schema(title = "좌석 수")
     private String seat;
+    @Schema(title = "금연/흡연 여부")
     private String smoking;
 
     public TourRestaurantV4Response() {

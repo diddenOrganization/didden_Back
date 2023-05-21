@@ -10,35 +10,65 @@ import lombok.Getter;
 @Schema(title = "TourAccommodationV4Response - HOTEL_TYPE", description = "HOTEL_TYPE = 숙박")
 public class TourAccommodationV4Response implements TourEntitySupportResponseInterface {
     private Long contentId;
+    @Schema(title = "수용가능인원")
     private String accomcountlodging;
+    @Schema(title = "베니키아여부")
     private String benikia;
+    @Schema(title = "입실시간")
     private String checkintime;
+    @Schema(title = "퇴실시간")
     private String checkouttime;
+    @Schema(title = "객실내취사여부")
     private String chkcooking;
+    @Schema(title = "식음료장")
     private String foodplace;
+    @Schema(title = "굿스테이여부")
     private String goodstay;
+    @Schema(title = "한옥여부")
     private String hanok;
+    @Schema(title = "문의및안내")
     private String infocenterlodging;
+    @Schema(title = "주차시설")
     private String parkinglodging;
+    @Schema(title = "픽업서비스")
     private String pickup;
+    @Schema(title = "객실수")
     private String roomcount;
+    @Schema(title = "예약안내")
     private String reservationlodging;
+    @Schema(title = "예약안내홈페이지")
     private String reservationurl;
+    @Schema(title = "객실유형")
     private String roomtype;
+    @Schema(title = "규모")
     private String scalelodging;
+    @Schema(title = "부대시설 (기타)")
     private String subfacility;
+    @Schema(title = "바비큐장여부")
     private String barbecue;
+    @Schema(title = "뷰티시설정보")
     private String beauty;
+    @Schema(title = "식음료장여부")
     private String beverage;
+    @Schema(title = "자전거대여여부")
     private String bicycle;
+    @Schema(title = "캠프파이어여부")
     private String campfire;
+    @Schema(title = "휘트니스센터여부")
     private String fitness;
+    @Schema(title = "노래방여부")
     private String karaoke;
+    @Schema(title = "공용샤워실여부")
     private String publicbath;
+    @Schema(title = "공용 PC실여부")
     private String publicpc;
+    @Schema(title = "사우나실여부")
     private String sauna;
+    @Schema(title = "세미나실여부")
     private String seminar;
+    @Schema(title = "스포츠시설여부")
     private String sports;
+    @Schema(title = "환불규정")
     private String refundregulation;
 
     public TourAccommodationV4Response() {
