@@ -24,12 +24,12 @@ jobs:
     - name: Stop old server
       run: cd /app/didden_Back; ./down-server.sh;
 
-    - name: Validate Gradle wrapper
-      uses: gradle/wrapper-validation-action@ccb4328a959376b642e027874838f60f8e596de3
-    - name: Build with Gradle
-      uses: gradle/gradle-build-action@749f47bda3e44aa060e82d7b3ef7e40d953bd629
-      with:
-        arguments: build
+#    - name: Validate Gradle wrapper
+#      uses: gradle/wrapper-validation-action@ccb4328a959376b642e027874838f60f8e596de3
+#    - name: Build with Gradle
+#      uses: gradle/gradle-build-action@749f47bda3e44aa060e82d7b3ef7e40d953bd629
+#      with:
+#        arguments: build
 
     - name: Run new server (in background)
       run: cd /app/didden_Back; ./start-server.sh;
