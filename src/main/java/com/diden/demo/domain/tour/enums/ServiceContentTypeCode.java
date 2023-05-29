@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Getter
+
 public enum ServiceContentTypeCode implements CommonCodeMapperType {
   TOURISM_TYPE_A01(12, "관광지"),
   TOURISM_TYPE_A02(12, "관광지"),
