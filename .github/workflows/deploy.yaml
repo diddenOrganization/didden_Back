@@ -1,0 +1,27 @@
+name: App install and start
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, linux, ARM64]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Java Version
+      uses: actions/setup-java@v1
+      with:
+        java-version: 11
+
+    - name: Source Git Pull
+      run: cd /app/didden_Back; ./git-pull.sh;
+
+    - name: Stop old server
+      run: cd /app/didden_Back; ./down-server.sh;
+
+    - name: Run new server (in background)
+      run: cd /app/didden_Back; ./start-server.sh;
