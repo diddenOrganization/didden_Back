@@ -9,14 +9,13 @@ on:
     branches:
       - develop
   workflow_dispatch:
+
 jobs:
-  deployment:
+  deploy:
     runs-on: self-hosted
 
     steps:
     - uses: actions/checkout@v2
-      with:
-        clean: false
 
     - name: Use Java Version
       uses: actions/setup-java@v1
