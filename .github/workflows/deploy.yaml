@@ -8,6 +8,8 @@ on:
 jobs:
   deploy:
     runs-on: [self-hosted, linux, ARM64]
+    env:
+      working-directory: /app/didden_Back
 
     steps:
     - uses: actions/checkout@v3
@@ -15,14 +17,16 @@ jobs:
     - name: Use Java Version
       uses: actions/setup-java@v3
       with:
-#        java-version: '11'
-        distribution: auto
+        java-version: '11'
+        distribution: 'temurin'
 
     - name: Source Git Pull
       run: cd /app/didden_Back; ./git-pull.sh;
+      working-directory: ${{ env.working-directory }}
 
     - name: Stop old server
       run: cd /app/didden_Back; ./down-server.sh;
+      working-directory: ${{ env.working-directory }}
 
 #    - name: Validate Gradle wrapper
 #      uses: gradle/wrapper-validation-action@ccb4328a959376b642e027874838f60f8e596de3
@@ -33,3 +37,4 @@ jobs:
 
     - name: Run new server (in background)
       run: cd /app/didden_Back; ./start-server.sh;
+      working-directory: ${{ env.working-directory }}
