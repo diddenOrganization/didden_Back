@@ -53,7 +53,7 @@ public class TourApiController {
    * @param contentId
    */
   @GetMapping(value = "/detailCommon")
-  
+
   public String tourDetailCommon(@RequestParam String contentId) {
     String tourDetailCommonUrl =
         KOR_SERVICE_URL
