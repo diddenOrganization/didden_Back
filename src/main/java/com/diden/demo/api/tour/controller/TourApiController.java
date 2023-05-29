@@ -41,6 +41,7 @@ import static com.diden.demo.common.config.properties.TourProperties.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/tour/api/info", produces = MediaType.APPLICATION_JSON_VALUE)
+
 public class TourApiController {
   private final TourService tourService;
   private final ParsingFromURL parsingFromURL;
