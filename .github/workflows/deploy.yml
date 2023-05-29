@@ -6,11 +6,11 @@ concurrency:
 
 on:
   push:
-    branches: [ develop ]
+    branches: develop
   workflow_dispatch:
 jobs:
   build:
-    runs-on: [ self-hosted ]
+    runs-on: self-hosted
 
     steps:
     - uses: actions/checkout@v2
