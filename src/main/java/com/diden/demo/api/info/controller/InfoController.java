@@ -1,5 +1,7 @@
 package com.diden.demo.api.info.controller;
 
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,8 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Hidden
+@Tag(name = "이미지 경로 Controller", description = "서버에 저장된 이미지 경로를 확인하는 Controller 입니다.")
 @Slf4j
 @Controller
 public class InfoController {
