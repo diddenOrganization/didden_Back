@@ -2,12 +2,12 @@ package com.diden.demo.domain.tour.enums;
 
 import com.diden.demo.common.utils.ValidatorUtils;
 import com.diden.demo.domain.tour.vo.response.CommonCodeMapperType;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Getter
 
@@ -62,5 +62,15 @@ public enum ServiceContentTypeCode implements CommonCodeMapperType {
 
   public static boolean isNotNullOrEmpty(List<ServiceContentTypeCode> serviceContentTypeCodes) {
     return !ValidatorUtils.isListNullOrEmpty(serviceContentTypeCodes);
+  }
+
+  public static List<ServiceContentTypeCode> codeObjectsChangeByParameters(List<String> parameters) {
+    if (Objects.isNull(parameters) || parameters.isEmpty()) {
+      return null;
+    }
+
+    return parameters.stream()
+            .map(o -> ServiceContentTypeCode.valueOf(o))
+            .collect(Collectors.toList());
   }
 }

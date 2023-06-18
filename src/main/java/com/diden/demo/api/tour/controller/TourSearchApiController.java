@@ -11,9 +11,15 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.StringTokenizer;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -40,19 +46,29 @@ public class TourSearchApiController {
   })
   @GetMapping
   @PageableAsQueryParam
-  public HttpResponse<List<TourCommonV4ResponseDto>> getTours(
-      @Parameter(hidden = true) final Pageable pageable,
-      @Parameter(description = "서비스 컨텐츠 타입 코드를 선택합니다.") @RequestParam(required = false) final List<ServiceContentTypeCode> serviceContentTypeCodes,
-      @Parameter(description = "대분류 코드를 선택합니다.") @RequestParam(required = false) final List<ServiceHighCode> serviceHighCodes,
-      @Parameter(description = "중분류 코드를 선택합니다.") @RequestParam(required = false) final List<ServiceMiddleCode> serviceMiddleCodes,
-      @Parameter(description = "여행지를 검색합니다. (여행지 제목)", example = "여행") @RequestParam(required = false) final String keyword) {
+  public HttpResponse<List<TourCommonV4ResponseDto>> getTours_New(
+          @Parameter(hidden = true) final Pageable pageable,
+          @Parameter(description = "서비스 컨텐츠 타입 코드를 입력합니다. (구분자 ,)" , example = "TOURISM_TYPE_A01,CULTURAL_FACILITIES_TYPE,FESTIVAL_TYPE")              @RequestParam(required = false) final Optional<String> optServiceContentTypeCodes,
+          @Parameter(description = "대분류 코드를 입력합니다. (구분자 ,)"          , example = "NATURE,TOURIST_LIBERAL_ARTS,CULTURAL_LIBERAL_ARTS,EVENT_LIBERAL_ARTS") @RequestParam(required = false) final Optional<String> optServiceHighCodes,
+          @Parameter(description = "중분류 코드를 입력합니다. (구분자 ,)"          , example = "NATURAL_TOURIST,TOURISM_RESOURCES,CULTURAL_FACILITIES,FESTIVAL")       @RequestParam(required = false) final Optional<String> optServiceMiddleCodes,
+          @Parameter(description = "여행지를 검색합니다. (여행지 제목)"            , example = "여행")                                                                  @RequestParam(required = false) final String keyword) {
 
-    final Slice<TourCommonV4ResponseDto> tourCommonV4ResponseDtos = tourApiService.pageSlice(pageable, serviceContentTypeCodes, serviceHighCodes, serviceMiddleCodes, keyword);
+    final List<String> arrayContentTypeCodeList = Arrays.asList(StringUtils.split(optServiceContentTypeCodes.orElseGet(() -> ""), ","));
+    final List<String> arrayHighCodeList = Arrays.asList(StringUtils.split(optServiceHighCodes.orElseGet(() -> ""), ","));
+    final List<String> arrayMiddleCodeList = Arrays.asList(StringUtils.split(optServiceMiddleCodes.orElseGet(() -> ""), ","));
+
+    final List<ServiceContentTypeCode> serviceContentTypeCodeList = ServiceContentTypeCode.codeObjectsChangeByParameters(arrayContentTypeCodeList);
+    final List<ServiceHighCode> serviceHighCodeList = ServiceHighCode.codeObjectsChangeByParameters(arrayHighCodeList);
+    final List<ServiceMiddleCode> serviceMiddleCodeList = ServiceMiddleCode.codeObjectsChangeByParameters(arrayMiddleCodeList);
+
+    final Slice<TourCommonV4ResponseDto> tourCommonV4ResponseDtos = tourApiService.pageSlice(pageable, serviceContentTypeCodeList, serviceHighCodeList, serviceMiddleCodeList, keyword);
 
     return HttpResponse.toSlicedResponse(
-        HttpStatus.OK,
-        "성공",
-        tourCommonV4ResponseDtos.getContent(),
-        tourCommonV4ResponseDtos.hasNext());
+            HttpStatus.OK,
+            "성공",
+            tourCommonV4ResponseDtos.getContent(),
+            tourCommonV4ResponseDtos.hasNext());
   }
+
+
 }

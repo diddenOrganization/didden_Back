@@ -10,6 +10,7 @@ import com.diden.demo.domain.anno.service.AnnoService;
 import com.diden.demo.domain.anno.vo.request.AnnoVoRequest;
 import com.diden.demo.domain.anno.vo.response.AnnoVo;
 import com.google.gson.Gson;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -26,6 +27,7 @@ import java.util.Deque;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Tag(name = "공지사항 API", description = "공지사항 관련된 API 목록입니다.")
 @Slf4j
 @Validated
 @RestController
