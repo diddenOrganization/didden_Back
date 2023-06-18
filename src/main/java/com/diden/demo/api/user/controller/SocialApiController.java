@@ -5,6 +5,7 @@ import com.diden.demo.common.error.exception.BadRequestException;
 import com.diden.demo.common.response.HttpResponse;
 import com.diden.demo.domain.user.service.SocialService;
 import com.diden.demo.domain.user.enums.AccountTypeEnum;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 
+@Hidden
 @Slf4j
 @Validated
 @RestController

@@ -1,11 +1,12 @@
 package com.diden.demo.api.tour.controller;
 
-import com.diden.demo.api.user.dto.response.UserDtoResponse;
+import static com.diden.demo.common.config.properties.TourProperties.*;
+
+import com.diden.demo.api.tour.dto.response.CommonTourResponseDto;
 import com.diden.demo.common.response.HttpResponse;
 import com.diden.demo.common.utils.LazyHolderObject;
 import com.diden.demo.common.utils.ParsingFromURL;
 import com.diden.demo.common.utils.TourUriUtils;
-import com.diden.demo.api.tour.dto.response.CommonTourResponseDto;
 import com.diden.demo.domain.tour.enums.*;
 import com.diden.demo.domain.tour.service.TourService;
 import com.diden.demo.domain.tour.vo.TourAreaInfoResponseDto;
@@ -17,25 +18,21 @@ import com.diden.demo.domain.tour.vo.response.MiddleCodeMapperValue;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import java.util.*;
+import java.util.stream.Collectors;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.net.URLEncoder;
-import java.util.*;
-import java.util.stream.Collectors;
-
-import static com.diden.demo.common.config.properties.TourProperties.*;
-
+@Hidden
 @Slf4j
 @Validated
 @RestController

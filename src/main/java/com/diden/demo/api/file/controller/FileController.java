@@ -6,6 +6,7 @@ import com.diden.demo.domain.file.vo.FileVo;
 import com.diden.demo.domain.tour.vo.TourItemVo;
 import com.diden.demo.domain.tour.vo.TourVo;
 import com.google.gson.*;
+import io.swagger.v3.oas.annotations.Hidden;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+@Hidden
 @RestController
 @Deprecated
 public class FileController {

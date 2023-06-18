@@ -5,6 +5,10 @@ import com.diden.demo.api.mail.dto.request.SendMailDtoRequest;
 import com.diden.demo.common.error.exception.BadRequestException;
 import com.diden.demo.common.response.HttpResponse;
 import com.diden.demo.domain.mail.service.MailApiService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -24,6 +28,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.UnsupportedEncodingException;
 
+@Tag(name = "메일 API", description = "메일 관련된 API 목록입니다.")
 @Slf4j
 @Validated
 @RestController
@@ -33,6 +38,10 @@ public class MailApiController {
   private final MailApiService mailApiService;
 
 
+  @Operation(summary = "메일 발송", description = "인증코드 메일 발송 기능입니다.")
+  @ApiResponses(value = {
+          @ApiResponse(responseCode = "200", description = "성공")
+  })
   @PostMapping(value = "/send")
   public HttpResponse<Void> Mail(
       HttpServletRequest request,
@@ -51,6 +60,10 @@ public class MailApiController {
    * @param "/sendmail"
    * @param
    */
+  @Operation(summary = "이메일 인증 코드 검증", description = "이메일 본인인증 코드 검증 기능입니다.")
+  @ApiResponses(value = {
+          @ApiResponse(responseCode = "200", description = "성공")
+  })
   @PostMapping(value = "/certification")
   public HttpResponse<Void> Certification(
       HttpServletRequest request,
