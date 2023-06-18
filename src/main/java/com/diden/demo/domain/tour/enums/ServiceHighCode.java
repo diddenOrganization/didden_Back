@@ -6,6 +6,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static com.diden.demo.domain.tour.enums.ServiceContentTypeCode.*;
 
@@ -65,5 +67,15 @@ public enum ServiceHighCode implements HighCodeMapperType {
 
   public boolean isEqualsTitle(final String title) {
     return StringUtils.equals(this.getTitle(), title);
+  }
+
+  public static List<ServiceHighCode> codeObjectsChangeByParameters(List<String> parameters) {
+    if (Objects.isNull(parameters) || parameters.isEmpty()) {
+      return null;
+    }
+
+    return parameters.stream()
+            .map(o -> ServiceHighCode.valueOf(o))
+            .collect(Collectors.toList());
   }
 }

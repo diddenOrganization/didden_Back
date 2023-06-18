@@ -6,6 +6,9 @@ import com.diden.demo.common.utils.ValidatorUtils;
 import com.diden.demo.domain.tour.vo.response.MiddleCodeMapperType;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 import org.apache.commons.lang3.StringUtils;
 
 public enum ServiceMiddleCode implements MiddleCodeMapperType {
@@ -89,5 +92,15 @@ public enum ServiceMiddleCode implements MiddleCodeMapperType {
 
   public boolean isEqualsTitle(final String title) {
     return StringUtils.equals(this.getTitle(), title);
+  }
+
+  public static List<ServiceMiddleCode> codeObjectsChangeByParameters(List<String> parameters) {
+    if (Objects.isNull(parameters) || parameters.isEmpty()) {
+      return null;
+    }
+
+    return parameters.stream()
+            .map(o -> ServiceMiddleCode.valueOf(o))
+            .collect(Collectors.toList());
   }
 }
