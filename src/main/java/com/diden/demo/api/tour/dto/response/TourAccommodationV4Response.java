@@ -2,6 +2,9 @@ package com.diden.demo.api.tour.dto.response;
 
 import com.diden.demo.domain.tour.entity.TourAccommodationV4;
 import com.diden.demo.domain.tour.entity.TourEntitySupportInterface;
+import com.diden.demo.domain.tour.enums.ServiceContentTypeCode;
+import com.diden.demo.domain.tour.enums.ServiceHighCode;
+import com.diden.demo.domain.tour.enums.ServiceMiddleCode;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,6 +13,16 @@ import lombok.Getter;
 @Schema(title = "TourAccommodationV4Response - HOTEL_TYPE", description = "HOTEL_TYPE = 숙박")
 public class TourAccommodationV4Response implements TourEntitySupportResponseInterface {
     private Long contentId;
+
+    private String address;
+    private String cellphone;
+    private String detailImage;
+    private String thumbnailImage;
+    private ServiceContentTypeCode serviceCode;
+    private ServiceHighCode highCode;
+    private ServiceMiddleCode middleCode;
+    private String title;
+
     @Schema(title = "수용가능인원")
     private String accomcountlodging;
     @Schema(title = "베니키아여부")
@@ -75,8 +88,16 @@ public class TourAccommodationV4Response implements TourEntitySupportResponseInt
     }
 
     @Builder
-    public TourAccommodationV4Response(Long contentId, String accomcountlodging, String benikia, String checkintime, String checkouttime, String chkcooking, String foodplace, String goodstay, String hanok, String infocenterlodging, String parkinglodging, String pickup, String roomcount, String reservationlodging, String reservationurl, String roomtype, String scalelodging, String subfacility, String barbecue, String beauty, String beverage, String bicycle, String campfire, String fitness, String karaoke, String publicbath, String publicpc, String sauna, String seminar, String sports, String refundregulation) {
+    public TourAccommodationV4Response(Long contentId, String address, String cellphone, String detailImage, String thumbnailImage, ServiceContentTypeCode serviceCode, ServiceHighCode highCode, ServiceMiddleCode middleCode, String title, String accomcountlodging, String benikia, String checkintime, String checkouttime, String chkcooking, String foodplace, String goodstay, String hanok, String infocenterlodging, String parkinglodging, String pickup, String roomcount, String reservationlodging, String reservationurl, String roomtype, String scalelodging, String subfacility, String barbecue, String beauty, String beverage, String bicycle, String campfire, String fitness, String karaoke, String publicbath, String publicpc, String sauna, String seminar, String sports, String refundregulation) {
         this.contentId = contentId;
+        this.address = address;
+        this.cellphone = cellphone;
+        this.detailImage = detailImage;
+        this.thumbnailImage = thumbnailImage;
+        this.serviceCode = serviceCode;
+        this.highCode = highCode;
+        this.middleCode = middleCode;
+        this.title = title;
         this.accomcountlodging = accomcountlodging;
         this.benikia = benikia;
         this.checkintime = checkintime;
@@ -110,11 +131,23 @@ public class TourAccommodationV4Response implements TourEntitySupportResponseInt
     }
 
 
+
+
     @Override
     public TourEntitySupportResponseInterface getTourResponse(TourEntitySupportInterface entity) {
         TourAccommodationV4 tourAccommodationV4 = (TourAccommodationV4) entity;
         return TourAccommodationV4Response.builder()
                 .contentId(tourAccommodationV4.getContentId())
+
+                .address(tourAccommodationV4.getAddress())
+                .cellphone(tourAccommodationV4.getCellphone())
+                .detailImage(tourAccommodationV4.getDetailImage())
+                .thumbnailImage(tourAccommodationV4.getThumbnailImage())
+                .serviceCode(tourAccommodationV4.getServiceCode())
+                .highCode(tourAccommodationV4.getHighCode())
+                .middleCode(tourAccommodationV4.getMiddleCode())
+                .title(tourAccommodationV4.getTitle())
+
                 .accomcountlodging(tourAccommodationV4.getAccomcountlodging())
                 .benikia(tourAccommodationV4.getBenikia())
                 .checkintime(tourAccommodationV4.getCheckintime())

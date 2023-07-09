@@ -3,6 +3,9 @@ package com.diden.demo.api.tour.dto.response;
 import com.diden.demo.domain.tour.entity.TourAccommodationV4;
 import com.diden.demo.domain.tour.entity.TourCultureFacilityV4;
 import com.diden.demo.domain.tour.entity.TourEntitySupportInterface;
+import com.diden.demo.domain.tour.enums.ServiceContentTypeCode;
+import com.diden.demo.domain.tour.enums.ServiceHighCode;
+import com.diden.demo.domain.tour.enums.ServiceMiddleCode;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,6 +14,16 @@ import lombok.Getter;
 @Schema(title = "TourCultureFacilityV4Response - CULTURAL_FACILITIES_TYPE", description = "CULTURAL_FACILITIES_TYPE = 문화시설")
 public class TourCultureFacilityV4Response implements TourEntitySupportResponseInterface {
     private Long contentId;
+
+    private String address;
+    private String cellphone;
+    private String detailImage;
+    private String thumbnailImage;
+    private ServiceContentTypeCode serviceCode;
+    private ServiceHighCode highCode;
+    private ServiceMiddleCode middleCode;
+    private String title;
+
     @Schema(title = "수용인원")
     private String accomcountculture;
     @Schema(title = "유모차대여정보")
@@ -42,8 +55,16 @@ public class TourCultureFacilityV4Response implements TourEntitySupportResponseI
     }
 
     @Builder
-    public TourCultureFacilityV4Response(Long contentId, String accomcountculture, String chkbabycarriageculture, String chkcreditcardculture, String chkpetculture, String discountinfo, String infocenterculture, String parkingculture, String parkingfee, String restdateculture, String usefee, String usetimeculture, String scale, String spendtime) {
+    public TourCultureFacilityV4Response(Long contentId, String address, String cellphone, String detailImage, String thumbnailImage, ServiceContentTypeCode serviceCode, ServiceHighCode highCode, ServiceMiddleCode middleCode, String title, String accomcountculture, String chkbabycarriageculture, String chkcreditcardculture, String chkpetculture, String discountinfo, String infocenterculture, String parkingculture, String parkingfee, String restdateculture, String usefee, String usetimeculture, String scale, String spendtime) {
         this.contentId = contentId;
+        this.address = address;
+        this.cellphone = cellphone;
+        this.detailImage = detailImage;
+        this.thumbnailImage = thumbnailImage;
+        this.serviceCode = serviceCode;
+        this.highCode = highCode;
+        this.middleCode = middleCode;
+        this.title = title;
         this.accomcountculture = accomcountculture;
         this.chkbabycarriageculture = chkbabycarriageculture;
         this.chkcreditcardculture = chkcreditcardculture;
@@ -59,11 +80,22 @@ public class TourCultureFacilityV4Response implements TourEntitySupportResponseI
         this.spendtime = spendtime;
     }
 
+
     @Override
     public TourEntitySupportResponseInterface getTourResponse(TourEntitySupportInterface entity) {
         TourCultureFacilityV4 tourCultureFacilityV4 = (TourCultureFacilityV4) entity;
         return TourCultureFacilityV4Response.builder()
                 .contentId(tourCultureFacilityV4.getContentId())
+
+                .address(tourCultureFacilityV4.getAddress())
+                .cellphone(tourCultureFacilityV4.getCellphone())
+                .detailImage(tourCultureFacilityV4.getDetailImage())
+                .thumbnailImage(tourCultureFacilityV4.getThumbnailImage())
+                .serviceCode(tourCultureFacilityV4.getServiceCode())
+                .highCode(tourCultureFacilityV4.getHighCode())
+                .middleCode(tourCultureFacilityV4.getMiddleCode())
+                .title(tourCultureFacilityV4.getTitle())
+
                 .accomcountculture(tourCultureFacilityV4.getAccomcountculture())
                 .chkbabycarriageculture(tourCultureFacilityV4.getChkbabycarriageculture())
                 .chkcreditcardculture(tourCultureFacilityV4.getChkcreditcardculture())

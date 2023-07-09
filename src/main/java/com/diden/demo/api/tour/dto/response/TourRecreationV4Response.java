@@ -2,6 +2,9 @@ package com.diden.demo.api.tour.dto.response;
 
 import com.diden.demo.domain.tour.entity.TourEntitySupportInterface;
 import com.diden.demo.domain.tour.entity.TourRecreationV4;
+import com.diden.demo.domain.tour.enums.ServiceContentTypeCode;
+import com.diden.demo.domain.tour.enums.ServiceHighCode;
+import com.diden.demo.domain.tour.enums.ServiceMiddleCode;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,6 +14,16 @@ import lombok.Getter;
 public class TourRecreationV4Response implements TourEntitySupportResponseInterface {
 
     private Long contentId;
+
+    private String address;
+    private String cellphone;
+    private String detailImage;
+    private String thumbnailImage;
+    private ServiceContentTypeCode serviceCode;
+    private ServiceHighCode highCode;
+    private ServiceMiddleCode middleCode;
+    private String title;
+
     @Schema(title = "수용인원")
     private String accomcountleports;
     @Schema(title = "유모차대여정보")
@@ -44,8 +57,16 @@ public class TourRecreationV4Response implements TourEntitySupportResponseInterf
     }
 
     @Builder
-    public TourRecreationV4Response(Long contentId, String accomcountleports, String chkbabycarriageleports, String chkcreditcardleports, String chkpetleports, String expagerangeleports, String infocenterleports, String openperiod, String parkingfeeleports, String parkingleports, String reservation, String restdateleports, String scaleleports, String usefeeleports, String usetimeleports) {
+    public TourRecreationV4Response(Long contentId, String address, String cellphone, String detailImage, String thumbnailImage, ServiceContentTypeCode serviceCode, ServiceHighCode highCode, ServiceMiddleCode middleCode, String title, String accomcountleports, String chkbabycarriageleports, String chkcreditcardleports, String chkpetleports, String expagerangeleports, String infocenterleports, String openperiod, String parkingfeeleports, String parkingleports, String reservation, String restdateleports, String scaleleports, String usefeeleports, String usetimeleports) {
         this.contentId = contentId;
+        this.address = address;
+        this.cellphone = cellphone;
+        this.detailImage = detailImage;
+        this.thumbnailImage = thumbnailImage;
+        this.serviceCode = serviceCode;
+        this.highCode = highCode;
+        this.middleCode = middleCode;
+        this.title = title;
         this.accomcountleports = accomcountleports;
         this.chkbabycarriageleports = chkbabycarriageleports;
         this.chkcreditcardleports = chkcreditcardleports;
@@ -62,11 +83,23 @@ public class TourRecreationV4Response implements TourEntitySupportResponseInterf
         this.usetimeleports = usetimeleports;
     }
 
+
+
     @Override
     public TourEntitySupportResponseInterface getTourResponse(TourEntitySupportInterface entity) {
         TourRecreationV4 tourRecreationV4 = (TourRecreationV4) entity;
         return TourRecreationV4Response.builder()
                 .contentId(tourRecreationV4.getContentId())
+
+                .address(tourRecreationV4.getAddress())
+                .cellphone(tourRecreationV4.getCellphone())
+                .detailImage(tourRecreationV4.getDetailImage())
+                .thumbnailImage(tourRecreationV4.getThumbnailImage())
+                .serviceCode(tourRecreationV4.getServiceCode())
+                .highCode(tourRecreationV4.getHighCode())
+                .middleCode(tourRecreationV4.getMiddleCode())
+                .title(tourRecreationV4.getTitle())
+
                 .accomcountleports(tourRecreationV4.getAccomcountleports())
                 .chkbabycarriageleports(tourRecreationV4.getChkbabycarriageleports())
                 .chkcreditcardleports(tourRecreationV4.getChkcreditcardleports())

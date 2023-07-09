@@ -2,6 +2,9 @@ package com.diden.demo.api.tour.dto.response;
 
 import com.diden.demo.domain.tour.entity.TourEntitySupportInterface;
 import com.diden.demo.domain.tour.entity.TourTourismV4;
+import com.diden.demo.domain.tour.enums.ServiceContentTypeCode;
+import com.diden.demo.domain.tour.enums.ServiceHighCode;
+import com.diden.demo.domain.tour.enums.ServiceMiddleCode;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,6 +14,15 @@ import lombok.Getter;
 public class TourTourismV4Response implements TourEntitySupportResponseInterface {
 
     private Long contentId;
+
+    private String address;
+    private String cellphone;
+    private String detailImage;
+    private String thumbnailImage;
+    private ServiceContentTypeCode serviceCode;
+    private ServiceHighCode highCode;
+    private ServiceMiddleCode middleCode;
+    private String title;
     @Schema(title = "수용 인원")
     private String accomcount;
     @Schema(title = "유모차 대여 정보")
@@ -46,8 +58,16 @@ public class TourTourismV4Response implements TourEntitySupportResponseInterface
     }
 
     @Builder
-    public TourTourismV4Response(Long contentId, String accomcount, String chkbabycarriage, String chkcreditcard, String chkpet, String expagerange, String expguide, String heritage1, String heritage2, String heritage3, String infocenter, String opendate, String parking, String restdate, String useseason, String usetime) {
+    public TourTourismV4Response(Long contentId, String address, String cellphone, String detailImage, String thumbnailImage, ServiceContentTypeCode serviceCode, ServiceHighCode highCode, ServiceMiddleCode middleCode, String title, String accomcount, String chkbabycarriage, String chkcreditcard, String chkpet, String expagerange, String expguide, String heritage1, String heritage2, String heritage3, String infocenter, String opendate, String parking, String restdate, String useseason, String usetime) {
         this.contentId = contentId;
+        this.address = address;
+        this.cellphone = cellphone;
+        this.detailImage = detailImage;
+        this.thumbnailImage = thumbnailImage;
+        this.serviceCode = serviceCode;
+        this.highCode = highCode;
+        this.middleCode = middleCode;
+        this.title = title;
         this.accomcount = accomcount;
         this.chkbabycarriage = chkbabycarriage;
         this.chkcreditcard = chkcreditcard;
@@ -65,11 +85,23 @@ public class TourTourismV4Response implements TourEntitySupportResponseInterface
         this.usetime = usetime;
     }
 
+
+
     @Override
     public TourEntitySupportResponseInterface getTourResponse(TourEntitySupportInterface entity) {
         TourTourismV4 tourTourismV4 = (TourTourismV4) entity;
         return TourTourismV4Response.builder()
                 .contentId(tourTourismV4.getContentId())
+
+                .address(tourTourismV4.getAddress())
+                .cellphone(tourTourismV4.getCellphone())
+                .detailImage(tourTourismV4.getDetailImage())
+                .thumbnailImage(tourTourismV4.getThumbnailImage())
+                .serviceCode(tourTourismV4.getServiceCode())
+                .highCode(tourTourismV4.getHighCode())
+                .middleCode(tourTourismV4.getMiddleCode())
+                .title(tourTourismV4.getTitle())
+
                 .accomcount(tourTourismV4.getAccomcount())
                 .chkbabycarriage(tourTourismV4.getChkbabycarriage())
                 .chkcreditcard(tourTourismV4.getChkcreditcard())
