@@ -1,8 +1,12 @@
 plugins {
     id 'org.springframework.boot' version '2.7.9'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
     id 'java'
     id 'org.springdoc.openapi-gradle-plugin' version "1.6.0"
+}
+
+ext {
+    set('springCloudVersion', "2021.0.7")
 }
 
 configurations {
@@ -20,9 +24,15 @@ repositories {
     mavenCentral()
 }
 
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
 dependencies {
-    implementation 'com.fasterxml.jackson.core:jackson-core:2.13.4'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.4'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.13.5'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.5'
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.4'
     implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.0'
     implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4'
@@ -41,7 +51,7 @@ dependencies {
     implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
     implementation 'org.bouncycastle:bcprov-jdk15on:1.70'
     implementation 'org.jetbrains:annotations:24.0.1'
-    implementation 'org.json:json:20220320'
+    implementation 'org.json:json:20230227'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
     implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -51,7 +61,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-validation:2.7.3'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:3.1.6'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 
     implementation group: 'com.oracle.database.jdbc', name: 'ojdbc11', version: '23.2.0.0'
     implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'

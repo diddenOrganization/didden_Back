@@ -2,6 +2,9 @@ package com.diden.demo.api.tour.dto.response;
 
 import com.diden.demo.domain.tour.entity.TourEntitySupportInterface;
 import com.diden.demo.domain.tour.entity.TourShoppingV4;
+import com.diden.demo.domain.tour.enums.ServiceContentTypeCode;
+import com.diden.demo.domain.tour.enums.ServiceHighCode;
+import com.diden.demo.domain.tour.enums.ServiceMiddleCode;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,6 +14,16 @@ import lombok.Getter;
 public class TourShoppingV4Response implements TourEntitySupportResponseInterface{
 
     private Long contentId;
+
+    private String address;
+    private String cellphone;
+    private String detailImage;
+    private String thumbnailImage;
+    private ServiceContentTypeCode serviceCode;
+    private ServiceHighCode highCode;
+    private ServiceMiddleCode middleCode;
+    private String title;
+
 
     @Schema(title = "유모차 대여 가능 여부")
     private String chkbabycarriageShopping;
@@ -47,8 +60,16 @@ public class TourShoppingV4Response implements TourEntitySupportResponseInterfac
     }
 
     @Builder
-    public TourShoppingV4Response(Long contentId, String chkbabycarriageShopping, String chkcreditcardShopping, String chkpetshopping, String culturecenter, String fairday, String infocentershopping, String opendateshopping, String opentime, String parkingshopping, String restdateshopping, String restroom, String saleitem, String saleitemcost, String scaleshopping, String shopguide) {
+    public TourShoppingV4Response(Long contentId, String address, String cellphone, String detailImage, String thumbnailImage, ServiceContentTypeCode serviceCode, ServiceHighCode highCode, ServiceMiddleCode middleCode, String title, String chkbabycarriageShopping, String chkcreditcardShopping, String chkpetshopping, String culturecenter, String fairday, String infocentershopping, String opendateshopping, String opentime, String parkingshopping, String restdateshopping, String restroom, String saleitem, String saleitemcost, String scaleshopping, String shopguide) {
         this.contentId = contentId;
+        this.address = address;
+        this.cellphone = cellphone;
+        this.detailImage = detailImage;
+        this.thumbnailImage = thumbnailImage;
+        this.serviceCode = serviceCode;
+        this.highCode = highCode;
+        this.middleCode = middleCode;
+        this.title = title;
         this.chkbabycarriageShopping = chkbabycarriageShopping;
         this.chkcreditcardShopping = chkcreditcardShopping;
         this.chkpetshopping = chkpetshopping;
@@ -66,11 +87,25 @@ public class TourShoppingV4Response implements TourEntitySupportResponseInterfac
         this.shopguide = shopguide;
     }
 
+
+
+
+
     @Override
     public TourEntitySupportResponseInterface getTourResponse(TourEntitySupportInterface entity) {
         TourShoppingV4 tourShoppingV4 = (TourShoppingV4) entity;
         return TourShoppingV4Response.builder()
                 .contentId(tourShoppingV4.getContentId())
+
+                .address(tourShoppingV4.getAddress())
+                .cellphone(tourShoppingV4.getCellphone())
+                .detailImage(tourShoppingV4.getDetailImage())
+                .thumbnailImage(tourShoppingV4.getThumbnailImage())
+                .serviceCode(tourShoppingV4.getServiceCode())
+                .highCode(tourShoppingV4.getHighCode())
+                .middleCode(tourShoppingV4.getMiddleCode())
+                .title(tourShoppingV4.getTitle())
+
                 .chkbabycarriageShopping(tourShoppingV4.getChkbabycarriageShopping())
                 .chkcreditcardShopping(tourShoppingV4.getChkcreditcardShopping())
                 .chkpetshopping(tourShoppingV4.getChkpetshopping())

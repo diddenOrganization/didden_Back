@@ -6,6 +6,9 @@ import com.diden.demo.domain.tour.entity.TourEntitySupportInterface;
 import javax.persistence.Id;
 
 import com.diden.demo.domain.tour.entity.TourEventV4;
+import com.diden.demo.domain.tour.enums.ServiceContentTypeCode;
+import com.diden.demo.domain.tour.enums.ServiceHighCode;
+import com.diden.demo.domain.tour.enums.ServiceMiddleCode;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,6 +17,16 @@ import lombok.Getter;
 @Schema(title = "TourEventV4Response - FESTIVAL_TYPE", description = "FESTIVAL_TYPE = 행사/공연/축제")
 public class TourEventV4Response implements TourEntitySupportResponseInterface{
     private Long contentId;
+
+    private String address;
+    private String cellphone;
+    private String detailImage;
+    private String thumbnailImage;
+    private ServiceContentTypeCode serviceCode;
+    private ServiceHighCode highCode;
+    private ServiceMiddleCode middleCode;
+    private String title;
+
     @Schema(title = "관람 가능 연령")
     private String agelimit;
     @Schema(title = "예매처")
@@ -55,8 +68,16 @@ public class TourEventV4Response implements TourEntitySupportResponseInterface{
     }
 
     @Builder
-    public TourEventV4Response(Long contentId, String agelimit, String bookingplace, String discountinfofestival, String eventenddate, String eventhomepage, String eventplace, String eventstartdate, String festivalgrade, String placeinfo, String playtime, String program, String spendtimefestival, String sponsor1, String sponsor1tel, String sponsor2, String sponsor2tel, String subevent, String usetimefestival) {
+    public TourEventV4Response(Long contentId, String address, String cellphone, String detailImage, String thumbnailImage, ServiceContentTypeCode serviceCode, ServiceHighCode highCode, ServiceMiddleCode middleCode, String title, String agelimit, String bookingplace, String discountinfofestival, String eventenddate, String eventhomepage, String eventplace, String eventstartdate, String festivalgrade, String placeinfo, String playtime, String program, String spendtimefestival, String sponsor1, String sponsor1tel, String sponsor2, String sponsor2tel, String subevent, String usetimefestival) {
         this.contentId = contentId;
+        this.address = address;
+        this.cellphone = cellphone;
+        this.detailImage = detailImage;
+        this.thumbnailImage = thumbnailImage;
+        this.serviceCode = serviceCode;
+        this.highCode = highCode;
+        this.middleCode = middleCode;
+        this.title = title;
         this.agelimit = agelimit;
         this.bookingplace = bookingplace;
         this.discountinfofestival = discountinfofestival;
@@ -77,11 +98,23 @@ public class TourEventV4Response implements TourEntitySupportResponseInterface{
         this.usetimefestival = usetimefestival;
     }
 
+
+
     @Override
     public TourEntitySupportResponseInterface getTourResponse(TourEntitySupportInterface entity) {
         TourEventV4 tourEventV4 = (TourEventV4) entity;
         return TourEventV4Response.builder()
                 .contentId(tourEventV4.getContentId())
+
+                .address(tourEventV4.getAddress())
+                .cellphone(tourEventV4.getCellphone())
+                .detailImage(tourEventV4.getDetailImage())
+                .thumbnailImage(tourEventV4.getThumbnailImage())
+                .serviceCode(tourEventV4.getServiceCode())
+                .highCode(tourEventV4.getHighCode())
+                .middleCode(tourEventV4.getMiddleCode())
+                .title(tourEventV4.getTitle())
+
                 .agelimit(tourEventV4.getAgelimit())
                 .bookingplace(tourEventV4.getBookingplace())
                 .discountinfofestival(tourEventV4.getDiscountinfofestival())

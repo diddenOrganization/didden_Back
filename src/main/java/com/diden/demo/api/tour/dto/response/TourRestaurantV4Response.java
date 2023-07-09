@@ -3,6 +3,9 @@ package com.diden.demo.api.tour.dto.response;
 import com.diden.demo.domain.tour.entity.TourEntitySupportInterface;
 import com.diden.demo.domain.tour.entity.TourRecreationV4;
 import com.diden.demo.domain.tour.entity.TourRestaurantV4;
+import com.diden.demo.domain.tour.enums.ServiceContentTypeCode;
+import com.diden.demo.domain.tour.enums.ServiceHighCode;
+import com.diden.demo.domain.tour.enums.ServiceMiddleCode;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,6 +15,16 @@ import lombok.Getter;
 public class TourRestaurantV4Response implements TourEntitySupportResponseInterface {
 
     private Long contentId;
+
+    private String address;
+    private String cellphone;
+    private String detailImage;
+    private String thumbnailImage;
+    private ServiceContentTypeCode serviceCode;
+    private ServiceHighCode highCode;
+    private ServiceMiddleCode middleCode;
+    private String title;
+
     @Schema(title = "신용카드 가능 여부")
     private String chkcreditcardfood;
     @Schema(title = "할인 정보")
@@ -45,8 +58,16 @@ public class TourRestaurantV4Response implements TourEntitySupportResponseInterf
     }
 
     @Builder
-    public TourRestaurantV4Response(Long contentId, String chkcreditcardfood, String discountinfofood, String firstmenu, String infocenterfood, String kidsfacility, String opendatefood, String opentimefood, String packing, String parkingfood, String reservationfood, String restdatefood, String scalefood, String seat, String smoking) {
+    public TourRestaurantV4Response(Long contentId, String address, String cellphone, String detailImage, String thumbnailImage, ServiceContentTypeCode serviceCode, ServiceHighCode highCode, ServiceMiddleCode middleCode, String title, String chkcreditcardfood, String discountinfofood, String firstmenu, String infocenterfood, String kidsfacility, String opendatefood, String opentimefood, String packing, String parkingfood, String reservationfood, String restdatefood, String scalefood, String seat, String smoking) {
         this.contentId = contentId;
+        this.address = address;
+        this.cellphone = cellphone;
+        this.detailImage = detailImage;
+        this.thumbnailImage = thumbnailImage;
+        this.serviceCode = serviceCode;
+        this.highCode = highCode;
+        this.middleCode = middleCode;
+        this.title = title;
         this.chkcreditcardfood = chkcreditcardfood;
         this.discountinfofood = discountinfofood;
         this.firstmenu = firstmenu;
@@ -63,11 +84,23 @@ public class TourRestaurantV4Response implements TourEntitySupportResponseInterf
         this.smoking = smoking;
     }
 
+
+
     @Override
     public TourEntitySupportResponseInterface getTourResponse(TourEntitySupportInterface entity) {
         TourRestaurantV4 tourRestaurantV4 = (TourRestaurantV4) entity;
         return TourRestaurantV4Response.builder()
                 .contentId(tourRestaurantV4.getContentId())
+
+                .address(tourRestaurantV4.getAddress())
+                .cellphone(tourRestaurantV4.getCellphone())
+                .detailImage(tourRestaurantV4.getDetailImage())
+                .thumbnailImage(tourRestaurantV4.getThumbnailImage())
+                .serviceCode(tourRestaurantV4.getServiceCode())
+                .highCode(tourRestaurantV4.getHighCode())
+                .middleCode(tourRestaurantV4.getMiddleCode())
+                .title(tourRestaurantV4.getTitle())
+
                 .chkcreditcardfood(tourRestaurantV4.getChkcreditcardfood())
                 .discountinfofood(tourRestaurantV4.getDiscountinfofood())
                 .firstmenu(tourRestaurantV4.getFirstmenu())
