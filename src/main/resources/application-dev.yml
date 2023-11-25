@@ -7,7 +7,7 @@ spring:
     url: ENC(tmt4LJIxSWxcWrHjgLb6qOSBA+opDb7aM6Pfp29TeGE2q6W02gC+B/AKjMmpRSZdrHRYX0IiiDq6Qgu3jWceGa0rOhnSoW44)
     #driver-class-name: ENC(AKaNZGwQG6u2E7LYXcwK3aZZ6toeD7cLUb0CAcK+tUJFkJwaPp0Usg==)
     username: ENC(ltNBgjsUTTEvaF7NbpeSzA==)
-    password: ENC(wtWsOAlclIGOo0VeudJMXP3QKfmPlDrGTtf6yLa/ehw=)
+    password: ENC(WHuBQCj7W9kQWlBHeJX4YjuGLsd3KkYr/pWgCNWwUL8=)
     hikari:
       driver-class-name: oracle.jdbc.OracleDriver
       maximum-pool-size: 3
